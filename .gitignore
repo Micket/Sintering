@@ -1,0 +1,7 @@
+*.dvi
+*.pdf
+*.synctex.gz
+*.aux
+*.tex~
+*.tex.backup
+*.mat
