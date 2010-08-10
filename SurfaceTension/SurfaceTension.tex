@@ -20,6 +20,7 @@
 \newcommand{\defeq}{:=}
 \newcommand{\element}{{\rm e}}
 \newcommand{\linear}{{\rm lin}}
+\DeclareMathOperator{\diff}{D}
 
 \begin{document}
 \section{Surface tension in FEA}
@@ -59,22 +60,39 @@ After applying the divergence theorem to the curvature integral, we obtain
  =&\int_A^B\dderiv{\to w}{s}\cdot\to e_s t \intd s\\
  =&t \int_a^b \dderiv{\to w}{\xi}\cdot \to e_s \intd\xi\\
 \end{align}
+and its tangent TODO
+\begin{align}
+  &\int_\Omega\to \nabla_s\cdot\to w\intd A \otimes \to\nabla\\
+ =&t \int_a^b \left(\dderiv{\to w}{\xi}\cdot \to e_s\right)\otimes\to\nabla\intd\xi\\
+ =&t \int_a^b \dderiv{}{\xi}\left(\dderiv{\to w}{\xi}\cdot \to e_s\right)\otimes\to e_s\intd\xi\\
+ =&t \int_a^b \left(\dderiv{^2\to w}{\xi^2}\cdot \to e_s + \dderiv{\to w}{\xi}\cdot\dderiv{\to e_s}{\xi}\right)\otimes\to e_s\intd\xi\\
+ \dderiv{\to e_s}{\xi} &= \dderiv{^2\to x}{\xi}J^{-1} - \dderiv{\to x}{\xi}J^{-2}\dderiv{J}{\xi}
+\end{align}
 
 The boundary term is trivial
 \begin{align}
  &\int_{\partial\Omega} \to w\cdot \to m\intd S = \to w \cdot\to m t
 \end{align}
+and its tangent TODO
+\begin{align}
+ \diff\left[\int_{\partial\Omega} \to w\cdot \to m\intd S\right] &= \diff[\to w \cdot\to m]t\\
+ &= ...
+\end{align}
+
 
 The load vector for a load along one edge and the special case of linear edges becomes
 \begin{gather}
  \to w = \um{N}\cdot\um{C} = \begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}\cdot \um{C}\\
  \um F^\element = \gamma t \int_a^b \dderiv{{\um N^\element}^\T}{\xi}\cdot \to e_s \intd\xi\\
+ \um F^\element = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix}
 \end{gather}
 and the special case of linear elements
 \begin{gather}
- \um F^\element_\linear = \gamma t \left[{\um N^\element}^\T\right]_{a}^{b}\cdot \to e_s =
-  \gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\\
- \um F^\element_\linear = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix}
+ \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\\
+ \um K^\element_\linear = \gamma t \left(
+	L^{-1}\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\1&0&-1&0\\0&1&0&-1\end{bmatrix}+
+	L^{-3}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}^\T
+  \right)
 \end{gather}
 
 \section{Axisymmetric}
@@ -142,7 +160,7 @@ and the special case of linear elements
 
 Introducing another parameter $\zeta$ in order to obtain a nice mapping.
 \begin{align}
- \to x[\xi,\eta,\zeta] = \zeta\sum_i N_i[\xi,\eta]\to x_i
+ \to x[\xi,\eta,\zeta] = (1-\zeta)\sum_i N_i[\xi,\eta]\to x_i
 \end{align}
 
 \begin{gather}
@@ -175,14 +193,14 @@ and we obtain
 \begin{align}
  &\iint_\Omega\to \nabla_s\cdot\to w\intd A\\
 =&\iint_\omega(\ts I-\to n\otimes\to n):(\to w\otimes \ts J^{-\T}\cdot\to\nabla_\xi)J\intd\xi\intd\eta\big|_{\zeta=1}\\
-=&\iint_\omega(\ts I-\to n\otimes\to n):\left((\to w\otimes\to\nabla_\xi) \cdot\ts J^{-1}\right)J\intd\xi\intd\eta\big|_{\zeta=1}\\
-=&\iint_\omega((\ts I-\to n\otimes\to n)\cdot\to J^{-\T}):(\to w\otimes\to\nabla_\xi)J\intd\xi\intd\eta\big|_{\zeta=1}
+=&\iint_\omega(\ts I-\to n\otimes\to n):\left((\to w\otimes\to\nabla_\xi) \cdot\ts J^{-1}\right)J\intd\xi\intd\eta\big|_{\zeta=0}\\
+=&\iint_\omega((\ts I-\to n\otimes\to n)\cdot\to J^{-\T}):(\to w\otimes\to\nabla_\xi)J\intd\xi\intd\eta\big|_{\zeta=0}
 \end{align}
 
 And given an edge along $\xi$;
 \begin{align}
  &\int_{\partial\Omega}\to w\cdot\to m\intd S\\
-=&\int_{\partial\Omega}\to w\cdot\to m\norm{\pderiv{\to x}{\xi}}\intd \xi\\
+=&\int_{\partial\omega}\to w\cdot\to m\norm{\pderiv{\to x}{\xi}}\intd \xi\\
  \hat{\to n} &= \to e_\xi \times \to e_\eta\\
  \hat{\to m} &= \to e_\xi \times \hat{\to n} = \to e_\xi\times (\to e_\xi \times \to e_\eta)\\
  \to m &= \hat{\to m}\norm{\to m}^{-1}

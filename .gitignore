@@ -2,6 +2,7 @@
 *.pdf
 *.synctex.gz
 *.aux
+*.log
 *.tex~
 *.tex.backup
 *.mat
