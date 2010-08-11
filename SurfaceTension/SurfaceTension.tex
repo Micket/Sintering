@@ -60,39 +60,51 @@ After applying the divergence theorem to the curvature integral, we obtain
  =&\int_A^B\dderiv{\to w}{s}\cdot\to e_s t \intd s\\
  =&t \int_a^b \dderiv{\to w}{\xi}\cdot \to e_s \intd\xi\\
 \end{align}
-and its tangent TODO
+and its tangent, calculated easily with the following derivations
+\begin{gather}
+ \pderiv{\to x'}{\to x_i} = N_i' \ts I\\
+ \pderiv{J}{\to x_i} = J^{-1} \to x'\cdot \pderiv{\to x'}{\to x_i} = J^{-1} N_i' \to x'
+\end{gather}
+to obtain
 \begin{align}
-  &\int_\Omega\to \nabla_s\cdot\to w\intd A \otimes \to\nabla\\
- =&t \int_a^b \left(\dderiv{\to w}{\xi}\cdot \to e_s\right)\otimes\to\nabla\intd\xi\\
- =&t \int_a^b \dderiv{}{\xi}\left(\dderiv{\to w}{\xi}\cdot \to e_s\right)\otimes\to e_s\intd\xi\\
- =&t \int_a^b \left(\dderiv{^2\to w}{\xi^2}\cdot \to e_s + \dderiv{\to w}{\xi}\cdot\dderiv{\to e_s}{\xi}\right)\otimes\to e_s\intd\xi\\
- \dderiv{\to e_s}{\xi} &= \dderiv{^2\to x}{\xi}J^{-1} - \dderiv{\to x}{\xi}J^{-2}\dderiv{J}{\xi}
+ \int_\Omega\to \nabla_s\cdot\to w\intd A \otimes \pderiv{}{\to x_i}
+ =&t \int_a^b \left(\dderiv{\to w}{\xi}\cdot \to e_s\right)\otimes \pderiv{}{\to x_i}  \intd\xi\\
+ =&t \int_a^b \dderiv{\to w}{\xi}\cdot \pderiv{\to e_s}{\to x_i} \intd\xi\\
+ =&t \int_a^b \dderiv{\to w}{\xi}\cdot \left(\pderiv{\to x'}{\to x_i}J^{-1}-\to x'\otimes\pderiv{J}{\to x_i}J^{-2}\right) \intd\xi\\
+ =&t \int_a^b \dderiv{\to w}{\xi}\cdot \left(\ts I-\to x'\otimes\to x' J^{-2}\right)N_i' J^{-1} \intd\xi
 \end{align}
 
 The boundary term is trivial
 \begin{align}
- &\int_{\partial\Omega} \to w\cdot \to m\intd S = \to w \cdot\to m t
+ &\int_{\partial\Omega} \to w\cdot \to m\intd S = \to w \cdot\to m t = - \to w \cdot \to e_s t
 \end{align}
-and its tangent TODO
+and its tangent
 \begin{align}
- \diff\left[\int_{\partial\Omega} \to w\cdot \to m\intd S\right] &= \diff[\to w \cdot\to m]t\\
- &= ...
+ \int_{\partial\Omega} \to w\cdot \to m\intd S\otimes \pderiv{}{\to x_i} &= -t(\to w \cdot \to e_s)\otimes \pderiv{}{\to x_i}\\
+ &= -t \to w\cdot\pderiv{\to e_s}{\to x_i}\\
+ &= -t \to w\cdot \left(\ts I-\to x'\otimes\to x' J^{-2}\right)N_i' J^{-1}
 \end{align}
-
+for a boundary located at $\to x_1$.
 
 The load vector for a load along one edge and the special case of linear edges becomes
 \begin{gather}
  \to w = \um{N}\cdot\um{C} = \begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}\cdot \um{C}\\
  \um F^\element = \gamma t \int_a^b \dderiv{{\um N^\element}^\T}{\xi}\cdot \to e_s \intd\xi\\
- \um F^\element = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix}
+ \um F^\element = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix} = - \gamma t \begin{bmatrix}e_{s,x}\\e_{s,y}\end{bmatrix}
 \end{gather}
 and the special case of linear elements
 \begin{gather}
  \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\\
- \um K^\element_\linear = \gamma t \left(
-	L^{-1}\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\1&0&-1&0\\0&1&0&-1\end{bmatrix}+
-	L^{-3}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}^\T
+ \um K^\element_\linear = \gamma t L^{-1}\left(
+	\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\1&0&-1&0\\0&1&0&-1\end{bmatrix}+
+	L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}^\T
   \right)
+\end{gather}
+and for the boundary
+\begin{gather}
+ \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_1-x_2\\y_1-y_2\end{bmatrix}\\
+ \um K^\element_\linear = \gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\end{bmatrix} + L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
+ \um K^\element_\linear = \gamma t L^{-1}\frac12 \left(\ts I-\frac14 L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}^\T \right)
 \end{gather}
 
 \section{Axisymmetric}
