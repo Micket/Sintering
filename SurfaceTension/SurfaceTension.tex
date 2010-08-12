@@ -4,22 +4,20 @@
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools,dsfont}
 \usepackage{tikz}
 
-%\newcommand{\to}[1]{\;{}^1#1}
-%\renewcommand{\to}[1]{{\mathbf{#1}}}
 \renewcommand{\to}[1]{\text{\boldmath $#1$}} % Bold, cursive
-\newcommand{\ts}[1]{\text{\boldmath $\rm #1$}} % Bold, straigt
+\newcommand{\ts}[1]{\text{\boldmath $\mathrm{#1}$}} % Bold, straigt
 \newcommand{\td}[1]{\text{\boldmath $\mathcal{#1}$}} % Bold, 
-\newcommand{\tf}[1]{\text{\boldmath $\sf #1$}} % Bold, sans-serif
+\newcommand{\tf}[1]{\text{\boldmath $\mathsf{#1}$}} % Bold, sans-serif
 \newcommand{\uv}[1]{\mathds{#1}}
 \newcommand{\um}[1]{\mathds{#1}}
-\newcommand{\intd}[1]{{\rm d}#1}
+\newcommand{\intd}[1]{\mathrm{d}#1}
 \newcommand{\pderiv}[2]{\frac{\partial#1}{\partial#2}}
-\newcommand{\dderiv}[2]{\frac{{\rm d}#1}{{\rm d}#2}}
+\newcommand{\dderiv}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
 \newcommand{\norm}[1]{\left\lVert{#1}\right\rVert}
-\newcommand{\T}{{\rm T}}
+\newcommand{\T}{\mathrm{T}}
 \newcommand{\defeq}{:=}
-\newcommand{\element}{{\rm e}}
-\newcommand{\linear}{{\rm lin}}
+\newcommand{\element}{\mathrm{e}}
+\newcommand{\linear}{\mathrm{lin}}
 \DeclareMathOperator{\diff}{D}
 
 \begin{document}
@@ -28,7 +26,6 @@ This document derives expressions necessary to calculate the load vector in FE a
 \begin{align}
  \int_\Omega 2 H \to w\cdot \to n\intd A = \int_{\partial\Omega} \to w\cdot\to m\intd S - \int_\Omega \to \nabla_s \cdot \to w \intd A
 \end{align}
-
 
 \section{Extruded 2D}
 
@@ -89,8 +86,12 @@ for a boundary located at $\to x_1$.
 The load vector for a load along one edge and the special case of linear edges becomes
 \begin{gather}
  \to w = \um{N}\cdot\um{C} = \begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}\cdot \um{C}\\
- \um F^\element = \gamma t \int_a^b \dderiv{{\um N^\element}^\T}{\xi}\cdot \to e_s \intd\xi\\
- \um F^\element = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix} = - \gamma t \begin{bmatrix}e_{s,x}\\e_{s,y}\end{bmatrix}
+ \uv F^\element = \gamma t \int_a^b \dderiv{{\um N^\element}^\T}{\xi}\cdot \to e_s \intd\xi\\
+ \um K^\element = 
+\end{gather}
+\begin{gather}
+ \uv F^\element = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix} = - \gamma t \begin{bmatrix}e_{s,x}\\e_{s,y}\end{bmatrix}
+ \um K^\element = 
 \end{gather}
 and the special case of linear elements
 \begin{gather}
@@ -104,7 +105,6 @@ and for the boundary
 \begin{gather}
  \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_1-x_2\\y_1-y_2\end{bmatrix}\\
  \um K^\element_\linear = \gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\end{bmatrix} + L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
- \um K^\element_\linear = \gamma t L^{-1}\frac12 \left(\ts I-\frac14 L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}^\T \right)
 \end{gather}
 
 \section{Axisymmetric}
