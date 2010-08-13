@@ -2,6 +2,7 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools,dsfont}
+\usepackage{a4wide}
 \usepackage{tikz}
 
 \renewcommand{\to}[1]{\text{\boldmath $#1$}} % Bold, cursive
@@ -25,10 +26,11 @@
 This document derives expressions necessary to calculate the load vector in FE analysis for isotropic surface tension. First rewriting the curvature in order to avoid the second derivative.
 \begin{align}
  \int_\Omega 2 H \to w\cdot \to n\intd A = \int_{\partial\Omega} \to w\cdot\to m\intd S - \int_\Omega \to \nabla_s \cdot \to w \intd A
+ \label{eq:curvature}
 \end{align}
 
 \section{Extruded 2D}
-
+The surface $\Omega$ is the extruded 2D line shown in figure \ref{fig:extruded}.
 \begin{figure}[htpb]
  \centering
  \begin{tikzpicture}
@@ -38,20 +40,21 @@ This document derives expressions necessary to calculate the load vector in FE a
   \draw[fill,black] (0,0) circle (0.05) (1,1) circle (0.05);
  \end{tikzpicture}
  \caption{Geometry and coordinate system for 2D (and axisymmetric)}
+ \label{fig:extruded}
 \end{figure}
 
+The geometry is parameterized as
 \begin{align}
  \to x &= \sum_i N_i[\xi]\to x_i
 \end{align}
-
+so the divergence and integral can be rewritten by obtaining
 \begin{gather}
- \dderiv{s}{\xi} = \norm{\dderiv{\to x}{\xi}} = J\\
+ J \defeq \dderiv{s}{\xi} = \norm{\dderiv{\to x}{\xi}}\\
  \to e_s = \dderiv{\to x}{\xi} J^{-1}\\
  \intd A = t \intd s = t J \intd \xi\\
  \to \nabla_s = \pderiv{}{s}\to e_s = \pderiv{}{\xi}\to e_s J
 \end{gather}
-
-After applying the divergence theorem to the curvature integral, we obtain
+and plugging them into the integral in \eqref{eq:curvature}
 \begin{align}
   &\int_\Omega\to \nabla_s\cdot\to w\intd A\\
  =&\int_A^B\dderiv{\to w}{s}\cdot\to e_s t \intd s\\
@@ -77,21 +80,20 @@ The boundary term is trivial
 \end{align}
 and its tangent
 \begin{align}
- \int_{\partial\Omega} \to w\cdot \to m\intd S\otimes \pderiv{}{\to x_i} &= -t(\to w \cdot \to e_s)\otimes \pderiv{}{\to x_i}\\
- &= -t \to w\cdot\pderiv{\to e_s}{\to x_i}\\
+ \int_{\partial\Omega} \to w\cdot \to m\intd S\otimes \pderiv{}{\to x_i} &= -t \to w\cdot\pderiv{\to e_s}{\to x_i}\\
  &= -t \to w\cdot \left(\ts I-\to x'\otimes\to x' J^{-2}\right)N_i' J^{-1}
 \end{align}
 for a boundary located at $\to x_1$.
 
-The load vector for a load along one edge and the special case of linear edges becomes
+The load vector for a load along one edge becomes
 \begin{gather}
  \to w = \um{N}\cdot\um{C} = \begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}\cdot \um{C}\\
  \uv F^\element = \gamma t \int_a^b \dderiv{{\um N^\element}^\T}{\xi}\cdot \to e_s \intd\xi\\
- \um K^\element = 
+ \um K^\element = \gamma t \int_a^b \dderiv{{\um N^\element}^\T}{\xi}\cdot \left(\ts I-\to x'\otimes\to x' J^{-2}\right)\cdot{\um N^\element}' J^{-1} \intd\xi
 \end{gather}
 \begin{gather}
- \uv F^\element = \gamma t \begin{bmatrix}m_x\\m_y\end{bmatrix} = - \gamma t \begin{bmatrix}e_{s,x}\\e_{s,y}\end{bmatrix}
- \um K^\element = 
+ \uv F^\element = \gamma t \begin{bmatrix}m_x\\m_y\\0\\\vdots\end{bmatrix} = - \gamma t \begin{bmatrix}e_{s,x}\\e_{s,y}\\0\\\vdots\end{bmatrix}\\
+ \um K^\element = -\gamma t {\um N^\element}^\T \cdot (\ts I - \to x'\otimes \to x' J^{-2})\cdot {\um N^\element}' J^{-1}
 \end{gather}
 and the special case of linear elements
 \begin{gather}
@@ -103,8 +105,8 @@ and the special case of linear elements
 \end{gather}
 and for the boundary
 \begin{gather}
- \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_1-x_2\\y_1-y_2\end{bmatrix}\\
- \um K^\element_\linear = \gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\end{bmatrix} + L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
+ \uv F^\element_\linear = -\gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\\
+ \um K^\element_\linear = -\gamma t L^{-1} \left(\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\0&0&0&0\\0&0&0&0\end{bmatrix} + L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
 \end{gather}
 
 \section{Axisymmetric}
@@ -119,7 +121,8 @@ With cylindrical coordinates $\to r = r\to e_r + z \to e_z$.
  z &= z\\
  \ts Q &= \begin{bmatrix}\cos[\theta] & 0\\ \sin[\theta] & 0\\ 0 & 1\end{bmatrix}\\
  \to x &= \ts Q[\theta] \cdot \to r[\xi]\\
- \to w &= \ts Q[\theta] \cdot \to v[\xi]
+ \to w &= \ts Q[\theta] \cdot \to v[\xi]\\
+ \to m &= \ts Q[\theta] \cdot \to t[\xi]
 \end{align}
 
 Since we have a convenient orthogonality, we can treat $\xi$ and $\theta$ seperarely.
@@ -151,22 +154,38 @@ Since we have a convenient orthogonality, we can treat $\xi$ and $\theta$ sepera
 
 The boundary term is computed as
 \begin{align}
- \to m &= \ts Q\cdot \to t\\
- &\int_{\partial\Omega} \to w\cdot\to m\intd S\\
-=&\int_0^{2\pi} (\ts Q^\T\cdot \ts Q):(\to v\cdot\to t) r \intd \theta\\
-=& 2\pi r \to v \cdot \to t
+ \int_{\partial\Omega} \to w\cdot\to m\intd S &= \int_0^{2\pi} (\ts Q^\T\cdot \ts Q):(\to v\cdot\to t) r \intd \theta\\
+  &= 2\pi r \to v \cdot \to t
+\end{align}
+and its tangent (with edge at $\to r_1$)
+\begin{align}
+ \int_{\partial\Omega} \to w\cdot\to m\intd S \otimes \pderiv{}{\to r} &= 2\pi (r \to v \cdot \to t)\otimes \pderiv{}{\to r_i}\\
+  &= 2 \pi \to v\cdot\left(\to t\otimes\pderiv{r}{\to r_i} + r \pderiv{\to t}{\to r_i}\right)\\
+  &= -2 \pi \to v\cdot\left(\to t\otimes ... + r \left(\ts I-\to r'\otimes\to r' J_\xi^{-2}\right)N_i' J_\xi^{-1}\right)
 \end{align}
 
-The load vector for a load along one edge and the special case of linear edges becomes
+
+The load vector for an element is
 \begin{gather}
  \to v = \um{N}\cdot\um{C} = \begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}\cdot \um{C}\\
- \um F^\element = 2\pi \gamma \int_a^b \left(\norm{\to r'}^{-1}r\to r'\cdot{\um N^\element}'^\T + \norm{\to r'}{\um N^\element}^\T\cdot\begin{bmatrix}1&0\end{bmatrix}\right) \intd\xi\\
- \um F^\element = 2\pi \gamma r \begin{bmatrix}t_1\\t_2\end{bmatrix}
+ \uv F^\element = 2\pi \gamma \int_a^b \left(\norm{\to r'}^{-1}r\to r'\cdot{\um N^\element}'^\T + \norm{\to r'}{\um N^\element}^\T\cdot\begin{bmatrix}1&0\end{bmatrix}\right) \intd\xi\\
+ \um K^\element = TODO
 \end{gather}
+\begin{gather}
+ \uv F^\element = 2\pi \gamma r \begin{bmatrix}t_1\\t_2\\0\\\vdots\end{bmatrix}\\
+ \um K^\element = TODO
+\end{gather}
+
 and the special case of linear elements
 \begin{gather}
- \um F^\element_\linear = \pi \gamma \left(\frac{r_1+r_2}{L}\begin{bmatrix}r_1-r_2\\z_1-z_2\\r_2-r_1\\z_2-z_1\end{bmatrix} + L\begin{bmatrix}1\\0\\1\\0\end{bmatrix}\right)
+ \uv F^\element_\linear = \pi \gamma \left(\frac{r_1+r_2}{L}\begin{bmatrix}r_1-r_2\\z_1-z_2\\r_2-r_1\\z_2-z_1\end{bmatrix} + L\begin{bmatrix}1\\0\\1\\0\end{bmatrix}\right)\\
+ \um K^\element_\linear = TODO
 \end{gather}
+\begin{gather}
+ \uv F^\element_\linear = 2\pi \gamma r_1 L^{-1} \begin{bmatrix}r_1-r_2\\z_1-z_2\\0\\0\end{bmatrix}\\
+ \um K^\element_\linear = TODO
+\end{gather}
+
 
 \section{General 3D}
 
