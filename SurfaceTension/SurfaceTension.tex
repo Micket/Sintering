@@ -45,7 +45,7 @@ The surface $\Omega$ is the extruded 2D line shown in figure \ref{fig:extruded}.
 
 The geometry is parameterized as
 \begin{align}
- \to x &= \sum_i N_i[\xi]\to x_i
+ \to x &= \sum_i N_i[\xi]\to x_i  = \um N \cdot \um X
 \end{align}
 so the divergence and integral can be rewritten by obtaining
 \begin{gather}
@@ -61,10 +61,10 @@ and plugging them into the integral in \eqref{eq:curvature}
  =&t \int_a^b \dderiv{\to w}{\xi}\cdot \to e_s \intd\xi\\
 \end{align}
 and its tangent, calculated easily with the following derivations
-\begin{gather}
- \pderiv{\to x'}{\to x_i} = N_i' \ts I\\
- \pderiv{J}{\to x_i} = J^{-1} \to x'\cdot \pderiv{\to x'}{\to x_i} = J^{-1} N_i' \to x'
-\end{gather}
+\begin{align}
+ \pderiv{\to x'}{\to x_i} &= N_i' \ts I, & \pderiv{\to x'}{\um X} &= \um N'\\
+ \pderiv{J}{\to x_i} &= J^{-1} \to x'\cdot \pderiv{\to x'}{\to x_i} = J^{-1} N_i' \to x', & \pderiv{J}{\um X} &= J^{-1} \um N'^\T \cdot \to x'^\T
+\end{align}
 to obtain
 \begin{align}
  \int_\Omega\to \nabla_s\cdot\to w\intd A \otimes \pderiv{}{\to x_i}
