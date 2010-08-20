@@ -5,7 +5,7 @@
 \usepackage{a4wide}
 \usepackage{hyperref}
 \usepackage{tikz}
-\usepackage{parskip} 
+\usepackage{parskip}
 
 \renewcommand{\to}[1]{\text{\boldmath $#1$}} % Bold, cursive
 \newcommand{\ts}[1]{\text{\boldmath $\mathrm{#1}$}} % Bold, straigt
@@ -22,6 +22,7 @@
 \newcommand{\element}{\mathrm{e}}
 \newcommand{\linear}{\mathrm{lin}}
 \DeclareMathOperator{\diff}{D}
+\DeclareMathOperator{\sign}{sign}
 
 \begin{document}
 \section{Surface tension in FEA}
@@ -56,7 +57,8 @@ The geometry is parameterized as
 \begin{align}
  \to x &= \sum_{i=1}^n N_i[\xi]\to x_i
   = \um N \cdot \uv X
-  = \underbrace{\begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}}_{2\times 2n}\cdot \underbrace{\begin{bmatrix}x_1\\y_1\\x_2\\y_2\\ \vdots\end{bmatrix}}_{2n\times 1}
+  = \underbrace{\begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}}_{2\times 2n}\cdot \underbrace{\begin{bmatrix}x_1\\y_1\\x_2\\y_2\\ \vdots\end{bmatrix}}_{2n\times 1}\\
+ \to w &= \um N\cdot \uv C
 \end{align}
 so the divergence and integral can be rewritten by obtaining
 \begin{gather}
@@ -85,40 +87,43 @@ and its tangent
 \end{align}
 
 The boundary term is trivial
-\begin{align}
- &\int_{\partial\Omega} \to w\cdot \to m\intd S = \to w \cdot\to m t = - \to w \cdot \to e_s t
-\end{align}
-and its tangent (with edge at $\to x_1$)
+\begin{gather}
+ \to m = \sign[\xi]\to e_s\\
+ \int_{\partial\Omega} \to w\cdot \to m\intd S = \to w \cdot\to m t = \sign[\xi]\to w \cdot \to e_s t
+\end{gather}
+and its tangent
 \begin{align}
  \int_{\partial\Omega} \to w\cdot \to m\intd S\otimes \pderiv{}{\uv X} &= t \to w\cdot\pderiv{\to m}{\uv X}\\
- &= -t \to w\cdot\pderiv{\to e_s}{\uv X}\\
- &= -t \to w\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J^{-1}
+ &= \sign[\xi]t \to w\cdot\pderiv{\to e_s}{\uv X}\\
+ &= \sign[\xi]t \to w\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J^{-1}
 \end{align}
 
 The load vector becomes
 \begin{gather}
- \to w = \um N\cdot\uv C\\
  \uv F^\element = -\gamma t \int_{-1}^{1} {\um N^\element}'^\T\cdot \to e_s \intd\xi\\
- \um K^\element = -\gamma t \int_{-1}^{1} {\um N^\element}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N^\element}' J^{-1} \intd\xi
+ \um K^\element = \gamma t \int_{-1}^{1} {\um N^\element}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N^\element}' J^{-1} \intd\xi
 \end{gather}
-and the boundary term (at $\to x_1$)
+and the boundary term
 \begin{gather}
- \uv F^\element = \gamma t \begin{bmatrix}m_x\\m_y\\0\\\vdots\end{bmatrix} = - \gamma t \begin{bmatrix}e_{s,x}\\e_{s,y}\\0\\\vdots\end{bmatrix}\\
- \um K^\element = -\gamma t {\um N^\element}^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N^\element}' J^{-1}
+ \uv F^\element = \sign[\xi]\gamma t {\um N^\element}^\T\cdot\to e_s\\
+ \um K^\element = -\sign[\xi]\gamma t J^{-1} {\um N^\element}^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N^\element}'
 \end{gather}
-and the special case of linear elements
+
+\subsection{Linear elements}
 \begin{gather}
  \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\\
  \um K^\element_\linear = \gamma t L^{-1}\left(
-	\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\1&0&-1&0\\0&1&0&-1\end{bmatrix}+
+	\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\-1&0&1&0\\0&-1&0&1\end{bmatrix}+
 	L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}^\T
   \right)
 \end{gather}
-and for the boundary
+and for the boundary (boundary at $\to x_1$)
 \begin{gather}
  \uv F^\element_\linear = -\gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\\
- \um K^\element_\linear = -\gamma t L^{-1} \left(\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\0&0&0&0\\0&0&0&0\end{bmatrix} + L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
+ \um K^\element_\linear = \gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\0&0&0&0\\0&0&0&0\end{bmatrix} - L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
 \end{gather}
+
+
 
 \section{Axisymmetric}
 For brevity, the notation $(\bullet)' = \pderiv{\bullet}{\xi}$ or $(\bullet)' = \pderiv{\bullet}{\theta}$ is used for $f[\xi]$ and $f[\theta]$ respectively.
@@ -148,6 +153,7 @@ Since we have a convenient orthogonality, we can treat $\xi$ and $\theta$ sepera
 and for the tangent the following derivations are also usefull
 \begin{align}
  \to e_s &\defeq \to r' J_\xi^{-1} \\
+ \uv A &\defeq {\um N^\element}'^\T \cdot \to e_s & \uv B &\defeq {\um N^\element}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\\
  \pderiv{\to r'}{\to r_i} &= N_i' \ts I
 	& \pderiv{\to r'}{\uv R} &= \um N'\\
  \pderiv{J_\xi}{\to r_i} &= \to e_s \cdot \pderiv{\to r'}{\to r_i} = \to e_s N_i'
@@ -197,7 +203,8 @@ and its tangent (with edge at $\to r_1$)
 \begin{align}
  \int_{\partial\Omega} \to w\cdot\to m\intd S \otimes \pderiv{}{\uv R} &= 2\pi (r \to v \cdot \to t)\otimes \pderiv{}{\uv R}\\
   &= 2 \pi \to v\cdot\left(\to t\otimes\pderiv{r}{\uv R} + r \pderiv{\to t}{\uv R}\right)\\
-  &= -2 \pi \to v\cdot\left(\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) + r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)
+  &= -2 \pi \to v\cdot\left(\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) + r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)\\
+  &= -2 \pi \left(\to v\cdot\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) + r \to v\cdot\left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)
 \end{align}
 
 The load vector for an element is
@@ -205,7 +212,7 @@ The load vector for an element is
  \uv F^\element = -2\pi \gamma \int_{-1}^{1} \left(r{\um N^\element}'^\T\cdot\to e_s + J_\xi{\um N^\element}^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) \intd\xi
 \end{gather}
 \begin{multline}
- \um K^\element = -2\pi \int_{-1}^{1} \bigg(
+ \um K^\element = 2\pi \int_{-1}^{1} \bigg(
 	{\um N^\element}'^\T \cdot \to e_s \otimes {\um N^\element}^\T\cdot \begin{bmatrix}1\\0\end{bmatrix} +\\
 	{\um N^\element}'^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N^\element}' J_\xi^{-1} r +
 	{\um N^\element}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes \to e_s\cdot {\um N^\element}'
@@ -213,26 +220,28 @@ The load vector for an element is
 \end{multline}
 or after some manipulation to obtain
 \begin{gather}
-  \uv A = {\um N^\element}'^\T \cdot \to e_s\\
-  \uv B = {\um N^\element}'^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\\
-  \um K^\element = -2\pi \int_{-1}^{1} \bigg(
+  \uv F^\element = -2\pi \gamma \int_{-1}^{1} \left(r\uv A + J_\xi\uv B\right) \intd\xi\\
+  \um K^\element = 2\pi \int_{-1}^{1} \bigg(
 	\uv A \otimes \uv B +
 	\uv B\otimes \uv A +
-	J_\xi^{-1} r({\um N^\element}'^\T \cdot {\um N^\element}' + \uv A\otimes \uv A)
+	J_\xi^{-1} r({\um N^\element}'^\T \cdot {\um N^\element}' - \uv A\otimes \uv A)
 	\bigg)\intd\xi
 \end{gather}
-
-
+and for the edge
 \begin{gather}
- \uv F^\element = 2\pi \gamma r \begin{bmatrix}t_1\\t_2\\0\\\vdots\end{bmatrix}
+ \uv F^\element = 2\pi \gamma r \begin{bmatrix}t_1\\t_2\\0\\\vdots\end{bmatrix}\\
+ \um K^\element = -2 \pi \gamma {\um N^\element}^\T\cdot\left(\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N^\element\right) + r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)
 \end{gather}
 
-and the special case of linear elements
+\subsection{Linear elements}
+
 \begin{gather}
- \uv F^\element_\linear = \pi \gamma \left(\frac{r_1+r_2}{L}\begin{bmatrix}r_2-r_1\\z_2-z_1\\r_1-r_2\\z_1-z_2\end{bmatrix} - L\begin{bmatrix}1\\0\\1\\0\end{bmatrix}\right)\\
- \um K^\element_\linear = -\pi \gamma \left(L^{-1}\begin{bmatrix}r_2-r_1\\z_2-z1\\r_1-r_2\\z_1-z_2\end{bmatrix}\cdot\begin{bmatrix}1\\0\\1\\0\end{bmatrix}^\T
-  + ...
-  + ...
+ \nonumber \hat{\uv A} = -L^{-1}\begin{bmatrix}r_2-r_1\\z_2-z_1\\r_1-r_2\\z_1-z_2\end{bmatrix}, \quad
+ \hat{\uv B} = \begin{bmatrix}1\\0\\1\\0\end{bmatrix},\quad J_\xi = \frac12 L\\
+ \uv F^\element_\linear = -\pi \gamma \left((r_1+r_2)\hat{\uv A} + L\hat{\uv B}\right)\\
+ \um K^\element_\linear = \pi \gamma \left(
+  \hat{\uv A}\otimes\uv B + \hat{\uv B}\otimes\hat{\uv A}
+  + 2L^{-1} r \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\-1&0&1&0\\0&-1&0&1\end{bmatrix} - \hat{\uv A}\otimes\hat{\uv A}\right)
   \right)
 \end{gather}
 \begin{gather}
