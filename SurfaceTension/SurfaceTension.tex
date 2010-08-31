@@ -21,6 +21,7 @@
 \newcommand{\defeq}{:=}
 \newcommand{\element}{\mathrm{e}}
 \newcommand{\linear}{\mathrm{lin}}
+\newcommand{\boundary}{\text{boundary}}
 \DeclareMathOperator{\diff}{D}
 \DeclareMathOperator{\sign}{sign}
 
@@ -29,13 +30,38 @@
 This document derives expressions necessary to calculate the load vector in FE analysis for isotropic surface tension. First rewriting the curvature in order to avoid the second derivative.
 \begin{align}
  \int_\Omega 2 H \to w\cdot \to n\intd A = \int_{\partial\Omega} \to w\cdot\to m\intd S - \int_\Omega \to \nabla_s \cdot \to w \intd A
- \label{eq:curvature}
+ \label{eq:curvature} 
 \end{align}
 where both integrals will need to be calculated. The difficult part comes from the surface divergence,
 \begin{align}
  \to \nabla_s \defeq \left(\ts I - \to n\otimes\to n \right)\cdot \to \nabla
 \end{align}
 which can be complicated to compute. The boundary term over $\partial\Omega$ is where the free surface ends. It could be on side of an finite element surface, possibly several.
+
+\section{Summary}
+\begin{align}
+\uv A &\defeq {\um N}'^\T \cdot \to e_s & \uv B &\defeq {\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix} & \uv D \defeq \uv N^\T \cdot \to e_s
+\end{align}
+\subsection{Extruded 2D}
+\begin{align}
+ \uv F &= -\gamma t \int_{-1}^{1} \uv A \intd\xi\\
+ \um K &= \gamma t \int_{-1}^{1} \left(\um N'^\T\cdot\um N' - \uv A\otimes\uv A\right) J^{-1} \intd\xi\\
+ \uv F_\boundary &= \gamma t \sign[\xi] \uv D\\
+ \um K_\boundary &= -\gamma t \sign[\xi]J^{-1} (\um N^\T \cdot \um N'- \uv D\otimes \uv A)
+\end{align}
+
+\subsection{Axisymmetric}
+\begin{align}
+  \uv F &= -2\pi \gamma \int_{-1}^{1} \left(r\uv A + J_\xi\uv B\right) \intd\xi\\
+  \um K &= 2\pi \int_{-1}^{1} \bigg(
+	\uv A \otimes \uv B +
+	\uv B\otimes \uv A +
+	J_\xi^{-1} r({\um N}'^\T \cdot {\um N}' - \uv A\otimes \uv A)
+	\bigg)\intd\xi\\
+ \uv F_\boundary &= 2\pi\gamma\sign[\xi] r \uv D\\
+ \um K_\boundary &= -2 \pi \gamma\sign[\xi] \left(\uv D\otimes\uv B + J_\xi^{-1} r \left(\um N^\T\cdot\um N' -\uv D\otimes\uv A\right) \right)
+\end{align}
+
 
 \section{Extruded 2D}
 For brevity, the notation $(\bullet)' = \pderiv{\bullet}{\xi}$ is used.
@@ -100,30 +126,28 @@ and its tangent
 
 The load vector becomes
 \begin{gather}
- \uv F^\element = -\gamma t \int_{-1}^{1} {\um N^\element}'^\T\cdot \to e_s \intd\xi\\
- \um K^\element = \gamma t \int_{-1}^{1} {\um N^\element}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N^\element}' J^{-1} \intd\xi
+ \uv F = -\gamma t \int_{-1}^{1} {\um N}'^\T\cdot \to e_s \intd\xi\\
+ \um K = \gamma t \int_{-1}^{1} {\um N}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N}' J^{-1} \intd\xi
 \end{gather}
 and the boundary term
 \begin{gather}
- \uv F^\element = \sign[\xi]\gamma t {\um N^\element}^\T\cdot\to e_s\\
- \um K^\element = -\sign[\xi]\gamma t J^{-1} {\um N^\element}^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N^\element}'
+ \uv F = \sign[\xi]\gamma t {\um N}^\T\cdot\to e_s\\
+ \um K = -\sign[\xi]\gamma t J^{-1} {\um N}^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N}'
 \end{gather}
 
 \subsection{Linear elements}
 \begin{gather}
- \uv F^\element_\linear = \gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\\
- \um K^\element_\linear = \gamma t L^{-1}\left(
-	\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\-1&0&1&0\\0&-1&0&1\end{bmatrix}+
-	L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}^\T
+ \uv F_\linear = \gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\\
+ \um K_\linear = \gamma t L^{-1}\left(
+	\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\-1&0&1&0\\0&-1&0&1\end{bmatrix}-
+	L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\otimes\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}
   \right)
 \end{gather}
 and for the boundary (boundary at $\to x_1$)
 \begin{gather}
- \uv F^\element_\linear = -\gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\\
- \um K^\element_\linear = \gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\0&0&0&0\\0&0&0&0\end{bmatrix} - L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\cdot\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}^\T\right)\\
+ \uv F_\linear = -\gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\\
+ \um K_\linear = -\gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\0&0&0&0\\0&0&0&0\end{bmatrix} - L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\otimes\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}2\right)\\
 \end{gather}
-
-
 
 \section{Axisymmetric}
 For brevity, the notation $(\bullet)' = \pderiv{\bullet}{\xi}$ or $(\bullet)' = \pderiv{\bullet}{\theta}$ is used for $f[\xi]$ and $f[\theta]$ respectively.
@@ -152,8 +176,10 @@ Since we have a convenient orthogonality, we can treat $\xi$ and $\theta$ sepera
 \end{align}
 and for the tangent the following derivations are also usefull
 \begin{align}
- \to e_s &\defeq \to r' J_\xi^{-1} \\
- \uv A &\defeq {\um N^\element}'^\T \cdot \to e_s & \uv B &\defeq {\um N^\element}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\\
+ \to e_s &\defeq \to r' J_\xi^{-1} & \uv D &\defeq \um N^\T \cdot \to e_s\\
+ \uv A &\defeq {\um N}'^\T \cdot \to e_s & \uv B &\defeq \pderiv{r}{\uv R} = {\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\\
+\end{align}
+\begin{align}
  \pderiv{\to r'}{\to r_i} &= N_i' \ts I
 	& \pderiv{\to r'}{\uv R} &= \um N'\\
  \pderiv{J_\xi}{\to r_i} &= \to e_s \cdot \pderiv{\to r'}{\to r_i} = \to e_s N_i'
@@ -197,56 +223,58 @@ and its tangent
 The boundary term is computed as
 \begin{align}
  \int_{\partial\Omega} \to w\cdot\to m\intd S &= \int_0^{2\pi} (\ts Q^\T\cdot \ts Q):(\to v\cdot\to t) r \intd \theta\\
-  &= 2\pi r \to v \cdot \to t
+  &= 2\pi r \to v \cdot \to t = 2\pi\sign[\xi]r \to v\cdot \to e_s
 \end{align}
-and its tangent (with edge at $\to r_1$)
+and its tangent
 \begin{align}
- \int_{\partial\Omega} \to w\cdot\to m\intd S \otimes \pderiv{}{\uv R} &= 2\pi (r \to v \cdot \to t)\otimes \pderiv{}{\uv R}\\
-  &= 2 \pi \to v\cdot\left(\to t\otimes\pderiv{r}{\uv R} + r \pderiv{\to t}{\uv R}\right)\\
-  &= -2 \pi \to v\cdot\left(\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) + r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)\\
-  &= -2 \pi \left(\to v\cdot\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) + r \to v\cdot\left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)
+ \int_{\partial\Omega} \to w\cdot\to m\intd S \otimes \pderiv{}{\uv R} &= 2\pi\sign[\xi] (r \to v \cdot \to e_s)\otimes \pderiv{}{\uv R}\\
+  &= 2 \pi \sign[\xi]\left(\to v\cdot\to e_s\otimes\pderiv{r}{\uv R} + r \to v\cdot\pderiv{\to t}{\uv R}\right)\\
+  &= 2 \pi \sign[\xi]\left(\to v\cdot\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) +  J_\xi^{-1} r \to v\cdot\left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N'\right)
 \end{align}
 
 The load vector for an element is
 \begin{gather}
- \uv F^\element = -2\pi \gamma \int_{-1}^{1} \left(r{\um N^\element}'^\T\cdot\to e_s + J_\xi{\um N^\element}^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) \intd\xi
+ \uv F = -2\pi \gamma \int_{-1}^{1} \left(r{\um N}'^\T\cdot\to e_s + J_\xi{\um N}^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) \intd\xi
 \end{gather}
 \begin{multline}
- \um K^\element = 2\pi \int_{-1}^{1} \bigg(
-	{\um N^\element}'^\T \cdot \to e_s \otimes {\um N^\element}^\T\cdot \begin{bmatrix}1\\0\end{bmatrix} +\\
-	{\um N^\element}'^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N^\element}' J_\xi^{-1} r +
-	{\um N^\element}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes \to e_s\cdot {\um N^\element}'
+ \um K = 2\pi \int_{-1}^{1} \bigg(
+	{\um N}'^\T \cdot \to e_s \otimes {\um N}^\T\cdot \begin{bmatrix}1\\0\end{bmatrix} +\\
+	{\um N}'^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N}' J_\xi^{-1} r +
+	{\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes \to e_s\cdot {\um N}'
 	\bigg)\intd\xi
 \end{multline}
-or after some manipulation to obtain
+or
 \begin{gather}
-  \uv F^\element = -2\pi \gamma \int_{-1}^{1} \left(r\uv A + J_\xi\uv B\right) \intd\xi\\
-  \um K^\element = 2\pi \int_{-1}^{1} \bigg(
+  \uv F = -2\pi \gamma \int_{-1}^{1} \left(r\uv A + J_\xi\uv B\right) \intd\xi\\
+  \um K = 2\pi \int_{-1}^{1} \bigg(
 	\uv A \otimes \uv B +
 	\uv B\otimes \uv A +
-	J_\xi^{-1} r({\um N^\element}'^\T \cdot {\um N^\element}' - \uv A\otimes \uv A)
+	J_\xi^{-1} r({\um N}'^\T \cdot {\um N}' - \uv A\otimes \uv A)
 	\bigg)\intd\xi
 \end{gather}
-and for the edge
-\begin{gather}
- \uv F^\element = 2\pi \gamma r \begin{bmatrix}t_1\\t_2\\0\\\vdots\end{bmatrix}\\
- \um K^\element = -2 \pi \gamma {\um N^\element}^\T\cdot\left(\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N^\element\right) + r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J_\xi^{-1}\right)
-\end{gather}
+and for the boundary
+\begin{align}
+ \uv F &= 2\pi\gamma\sign[\xi] r {\uv N}^\T \cdot \to e_s = 2\pi\gamma\sign[\xi]\uv D\\
+ \um K &= -2 \pi \gamma \sign[\xi]\um N^\T\cdot\left(\to e_s\otimes\left(\um N^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) + J_\xi^{-1} r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' \right)\\
+       &= -2 \pi \gamma \sign[\xi]\left(\uv D\otimes\uv B + J_\xi^{-1} r \left(\um N^\T\cdot\um N' -\uv D\otimes\uv A\right) \right)
+\end{align}
 
 \subsection{Linear elements}
 
 \begin{gather}
  \nonumber \hat{\uv A} = -L^{-1}\begin{bmatrix}r_2-r_1\\z_2-z_1\\r_1-r_2\\z_1-z_2\end{bmatrix}, \quad
  \hat{\uv B} = \begin{bmatrix}1\\0\\1\\0\end{bmatrix},\quad J_\xi = \frac12 L\\
- \uv F^\element_\linear = -\pi \gamma \left((r_1+r_2)\hat{\uv A} + L\hat{\uv B}\right)\\
- \um K^\element_\linear = \pi \gamma \left(
+ \uv F_\linear = -\pi \gamma \left((r_1+r_2)\hat{\uv A} + L\hat{\uv B}\right)\\
+ \um K_\linear = \pi \gamma \left(
   \hat{\uv A}\otimes\uv B + \hat{\uv B}\otimes\hat{\uv A}
   + 2L^{-1} r \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\-1&0&1&0\\0&-1&0&1\end{bmatrix} - \hat{\uv A}\otimes\hat{\uv A}\right)
   \right)
 \end{gather}
+and for boundary at $\to r_1$;
 \begin{gather}
- \uv F^\element_\linear = 2\pi \gamma r_1 L^{-1} \begin{bmatrix}r_1-r_2\\z_1-z_2\\0\\0\end{bmatrix}\\
- \um K^\element_\linear = TODO
+ \nonumber \uv B = \begin{bmatrix}1\\0\\0\\0\end{bmatrix}, \quad \uv D = L^{-1}\begin{bmatrix}r_2-r_1\\z_2-z_1\\0\\0\end{bmatrix}\\
+ \uv K_\linear = 2\pi \gamma\left(\uv D\otimes \uv B + L^{-1} r_1 \left(\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\0&0&0&0\\0&0&0&0\end{bmatrix}- \uv D\otimes \hat{\uv A}\right)\right)\\
+ \uv F_\linear = -2\pi \gamma r_1 L^{-1} \begin{bmatrix}r_2-r_1\\z_2-z_1\\0\\0\end{bmatrix}
 \end{gather}
 
 \section{General 3D}
@@ -290,14 +318,14 @@ And given an edge along $\xi$;
 It becomes a bit tricky to express the load vector nicely due to the appearance of a third order tensor, it will need to be reshaped.
 After some rewriting the expression becomes
 \begin{align}
- \hat{\uv N}^\element &= \begin{bmatrix} N_1^\element\\ N_2^\element\\ \vdots\end{bmatrix}\\
- \hat{\um B}^\element &= \ts J^{-\T}\cdot(\to\nabla_\xi\cdot(\hat{\uv N}^\element)^\T)\\
- \hat{\um F}^\element &= \iint_\omega(\ts I-\to n \cdot \to n^\T)\cdot \hat{\um B}^\element J\intd\xi\intd\eta\big|_{\zeta=0}\\
- \uv F^\element &= \begin{bmatrix}\hat{\uv F}^\element_{1:}\\\hat{\uv F}^\element_{2:}\\\vdots\end{bmatrix}
+ \hat{\uv N} &= \begin{bmatrix} N_1\\ N_2\\ \vdots\end{bmatrix}\\
+ \hat{\um B} &= \ts J^{-\T}\cdot(\to\nabla_\xi\cdot(\hat{\uv N})^\T)\\
+ \hat{\um F} &= \iint_\omega(\ts I-\to n \cdot \to n^\T)\cdot \hat{\um B} J\intd\xi\intd\eta\big|_{\zeta=0}\\
+ \uv F &= \begin{bmatrix}\hat{\uv F}_{1:}\\\hat{\uv F}_{2:}\\\vdots\end{bmatrix}
 \end{align}
 and along the boundary
 \begin{align}
- \uv F^\element &= \int_{\partial\omega}{\um N^\element}^\T\cdot\to m J_\xi \intd \xi
+ \uv F &= \int_{\partial\omega}{\um N}^\T\cdot\to m J_\xi \intd \xi
 \end{align}
 
 
