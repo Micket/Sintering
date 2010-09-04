@@ -30,7 +30,7 @@
 This document derives expressions necessary to calculate the load vector in FE analysis for isotropic surface tension. First rewriting the curvature in order to avoid the second derivative.
 \begin{align}
  \int_\Omega 2 H \to w\cdot \to n\intd A = \int_{\partial\Omega} \to w\cdot\to m\intd S - \int_\Omega \to \nabla_s \cdot \to w \intd A
- \label{eq:curvature} 
+ \label{eq:curvature}
 \end{align}
 where both integrals will need to be calculated. The difficult part comes from the surface divergence,
 \begin{align}
@@ -83,15 +83,14 @@ The geometry is parameterized as
 \begin{align}
  \to x &= \sum_{i=1}^n N_i[\xi]\to x_i
   = \um N \cdot \uv X
-  = \underbrace{\begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}}_{2\times 2n}\cdot \underbrace{\begin{bmatrix}x_1\\y_1\\x_2\\y_2\\ \vdots\end{bmatrix}}_{2n\times 1}\\
- \to w &= \um N\cdot \uv C
+  = \underbrace{\begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}}_{2\times 2n}\cdot \underbrace{\begin{bmatrix}x_1\\y_1\\x_2\\y_2\\ \vdots\end{bmatrix}}_{2n\times 1}
 \end{align}
 so the divergence and integral can be rewritten by obtaining
 \begin{gather}
  J \defeq \dderiv{s}{\xi} = \norm{\to x'}\\
  \to e_s \defeq \to x' J^{-1}\\
  \intd A = t \intd s = t J \intd \xi     \label{eq:intdA_2d}\\
- \to \nabla_s = \pderiv{}{s}\to e_s = \pderiv{}{\xi}\to e_s J    \label{eq:nabla_s_2d}
+ \to \nabla_s = \pderiv{}{s}\to e_s = \pderiv{}{\xi}\to e_s J^{-1}    \label{eq:nabla_s_2d}
 \end{gather}
 and for the tangent the following derivations are also usefull
 \begin{align}
