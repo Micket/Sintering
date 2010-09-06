@@ -2,9 +2,7 @@
 \usepackage[utf8]{inputenc} % In case one needs to specify character encoding
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usepackage[super,comma]{natbib}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
-\usepackage{float}
 
 \newcommand{\NSCM}{23}
 \newcommand{\submissionyear}{2010}
@@ -20,19 +18,44 @@
 
 \title{Multiscale Modeling of Sintering of Hard Metals}
 
-\author{Mikael \"Ohman$^*$, Kenneth Runesson and Fredrik Larsson}
+\author{Mikael Öhman$^*$, Kenneth Runesson and Fredrik Larsson}
 
-\heading{Mikael \"Ohman, Kenneth Runesson and Fredrik Larsson}
+\heading{Mikael Öhman, Kenneth Runesson and Fredrik Larsson}
 
-\address{Department of Applied Mechanics\\
+\address{%
+Department of Applied Mechanics\\
 Chalmers University of Technology\\
 Gothenburg, Sweden\\
-e-mail: \url{mikael.ohman@chalmers.se}, web page: \url{http://www.chalmers.se/am/EN/}}
+e-mail: \url{mikael.ohman@chalmers.se}, web page: \url{http://www.chalmers.se/am/EN/}
+}
 
 \keywords{Sintering, Sintering stress, Surface tension, Homogenization, FE$^2$}
 
 \abstract{%
-In this contribution, multiscale modeling of sintering is shown. 
+In this contribution, multiscale modeling of sintering is shown 
+The sintered material is assumed to consist of hard particles (WC) with a melted binder (Co).
+
+The sintering phenomenon on the meso scale can be explained by the effect of surface tension on the melted binder and
+the homogenized effect of the surface tension is what is called the sintering stress.
+From the macroscopic perspective the specimen (green body) shrinks due to this volumetric sintering stress. In the case of inhomogenous
+initial density in the green body, this can result in deformed shapes.
+
+%Basis:
+%Sintering, sinterin stress, inhomogenuous shrinkage
+
+%To model this with finite elements, computational homogenization has been applied to a representative volume element of the meso scale.
+%For the macro scale
+%Method:
+%Multiscale (FE$^2$, Homogenization)
+%Macro scale: deformation.
+%Micro scale: Stokes flow, surface tension.
+
+%Examples, 
+Examples are shown for a 2D, fully coupled, FE$^2$ problem as a proof of concept.
+This is shown for both with and without hard inclusions and a viscous melt subjected to surface tension.
+The examples show how inhomogenous initial density will cause the macroscopic body to shear during the sintering process.
+On the meso scale, it is shown how particles are merged, driven by the surface tension potential energy.
+
 }
 
 \begin{document}
