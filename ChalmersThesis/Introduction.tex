@@ -1,0 +1,36 @@
+\section{Introduction}
+% \subsection{Background}
+Due to the magnitude of the velocity of a high speed train (HST) the flow around it becomes an increasingly important factor. 
+The unsteadiness and the different forces and moments that start acting on the train have a big impact on the stability of the train 
+and safety and comfort of the passengers. This can probably be countered using damping in the bogies and coupling between the trains.
+This is the reason behind this project. To find the forces and moments affecting the train 
+and if it's the effects on discomfort and instability can be reduced.
+In previous studies of HST instabilities it has either been purely aerodynamic or dynamic with simplified aerodynamic forces.
+In this case it is intended to combine them to get an as accurate simulation as possible. 
+
+\subsection{Purpose}
+The purpose of this project is to combine two different fields, 
+aerodynamics and dynamics, to accurately simulate the HST by
+considering all the forces acting on the train in order to get an accurate model.
+The goal of this project is to combine the aerodynamic forces that acts on a HST 
+with the dynamics on the trains bogie and coupling. 
+An interesting final result would be to find how sensitive the dynamics in the train is to varying velocity.
+
+From vehicle dynamics side the focus of the project will be two folds:
+\begin{itemize}
+\item Create low-order mathematical and computational models for vibration dynamics and stability analysis of HST taking into account 
+aerodynamic excitations. 
+The models must implement the conventional bogie and conventional car-body coupling functional component mechanical models.
+\item Using created models simulate the vibration dynamics and study stability of motion of HST for the two scenarios.
+\end{itemize}
+
+\subsection{Limitations}
+Two different scenarios were studied. One where two trains meet each other and one where a single train has left a tunnel and is met by a strong wind gust. The model of the train used for the CFD simulations was an ICE2 train. The train consists of two locomotives and one car in the middle making it symmetrical. It has bogies and inter-car gaps. The parameters for the dynamics model were that of a typical HST. For the meeting trains the simulation was carried out at three different velocities, 67 m/s, 70 m/s and 73 m/s, which correspond to 240, 250 and 260 km/h respectively. For the scenario where the train coming out of a tunnel the speed of the train was 70 m/s and the speed of the wind gust was 35 m/s.
+
+\subsection{Approach}
+The aerodynamics was simulated with AVL-Fire CFD solver. For the double train, two train models were used with a moving mesh to simulate the two trains meeting each other. For the second scenario with the HST coming out of the tunnel a model of a ICE2 train in a simulated windtunnel with a moving crosswind was used. The forces and moments acting on the each train car on one of the trains were then handed over for the dynamics calculations.
+
+The dynamics were simulated with a low order mathematical model using MATLAB and functional components for bogie and coupling.
+The input were the forces and moments calculated from the CFD simulations and the forces acting on the wheels from the rail.
+Unknown parameters, such as damping coefficients in the bogie, were decided by minimizing a cost function for comfort and stability.
+As a last step, active damping was added to the model.

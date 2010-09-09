@@ -2,7 +2,14 @@
 *.pdf
 *.synctex.gz
 *.aux
+*.blg
 *.log
+*.out
+*.ps
+*.bbl
+*.toc
 *.tex~
-*.tex.backup
+*.backup
 *.mat
+*.zip
+
