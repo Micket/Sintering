@@ -1,77 +1,49 @@
 % USE PDFLATEX WITH THIS DOCUMENT. If you wish to use ordinary latex (why?) then convert the figures in figures/ to eps.
-% If you are using Chalmers linux system, you might need to change to a newer tex dist.
-% Do so with: vcs-what latex 
-% look up the newest version and select it, a.t.m that would be: vcs-select -p texlive-20080816
-% I recommend using kile in linux. Make it available by adding the unsup software 
-% echo unsup ~/.vcs4/pathsetup
 \documentclass[a4paper,12pt,twoside]{chalmers-thesis}
 \usepackage[english]{babel}
-%\usepackage[latin1]{inputenc} % Use the same as the encoding of the textfile
-\usepackage[utf8]{inputenc} % But this is probably the best choice. This doument is currently in utf8 (so is all other files)
-\usepackage{amsmath,amsfonts,amsthm,mathtools} % Math. Look up the amsmath manual (google) for many great examples.
-\usepackage{graphicx} % Figures and placements, float must be loaded before hypperref
-\usepackage[colorlinks,citecolor=blue]{hyperref} % Warning this package conflicts with the package algorithm
-\usepackage{fancyhdr,url,tikz} % Other usefull stuff. tikz is good for making drawings (but difficult)
-\usepackage{listings} % Source code
-\usepackage{a4wide} % Gives a wider page
-\usepackage{mycommands} % Here you can define your personal favourites. See mycommands.cls
-\usepackage{pgfplots} % Another nice library for plots
+\usepackage[utf8]{inputenc}
 
 \coverfigure{figures/COVER_93_iso.png}
+\covercaption{Some explanation}
+\title{The Title of Your Thesis}
+\subtitle{And Perhaps a Subtitle}
+\author{Some Author, Another Author}
+\thesis{Master's thesis in Some Programme}
+\department{Department of Applied Mechanics}
+\division{Division of Solid Mechanics}
+\YYYYNN{2010:37}
+\writtenyear{2010}
 
-% mysubtitle, cover* and divisionnameB may be uncommented if nonexistant.
-\newcommand{\mytitle}{Stability of High Speed Train under Aero\-dynamic Excitations}
-%\newcommand{\mysubtitle}{Some subtitle}
-\newcommand{\writtenmonth}{April}
-\newcommand{\writtenyear}{2009}
-\newcommand{\authors}{Erik Bjerklund\\Mikael \"Ohman}
-\newcommand{\authorsc}{Erik Bjerklund, Mikael \"Ohman} % again with comma
-\newcommand{\YYYYNN}{2009:03}
-\newcommand{\ISSN}{1652-8557}
-\newcommand{\covercaption}{Train leaving a tunnel and is hit by a strong side wind.}
-
-\newcommand{\departmentname}{Applied Mechanics}
-\newcommand{\divisionnameA}{Dynamics}
-\newcommand{\divisionnameB}{Fluid Mechanics}
-\newcommand{\nameofprinters}{Chalmers Reproservice}
-\newcommand{\nameofprogramme}{Solid and Fluid Mechanics}
-\newcommand{\keywords}{Moving mesh, Wind loads, Coupling, Vibration dynamics, CFD, High speed train, Comfort, Stability}
-% This is just to keep the swedish letters at one place in case there are problems with encoding
-\newcommand{\city}{G\"oteborg} 
-\newcommand{\country}{Sweden} 
-\newcommand{\university}{Chalmers University of Technology}
-\newcommand{\thesis}{Master's Thesis}
-\newcommand{\telephone}{+ 46 (0)31-772 1000}
-\newcommand{\postcode}{SE-412 96}
-% End of input.
-
-% Use section number first in numbering
-\numberwithin{equation}{section}
-\numberwithin{figure}{section}
-\numberwithin{table}{section}
-
-
-
-% Set up headers to match styleguide
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
-\fancyhead{}
-\fancyfoot{}
-\fancyfoot[C]{\footnotesize \includegraphics[height=2.5mm]{figures/CHALMERS_black.pdf}, \textit{\departmentname}, \thesis\ \YYYYNN}
-\fancyfoot[RO,LE]{\thepage}
-
-% To use code use \lstinputlisting[langauge=matlab,style=mystyle]{somematlabfile.m}
-% Here is a suitable style for code.
-\lstdefinestyle{mystyle}{showstringspaces=false, basicstyle=\scriptsize\ttfamily,
-        frame=shadowbox, breaklines=true, numbers=left, commentstyle=\color{gray},
-        keywordstyle=\color{blue}\textbf, stringstyle=\color{red}}
-
-% Metadata ion the PDF file (makes it searchable)
-\hypersetup{pdfauthor={\authorsc},pdftitle={\mytitle},pdfsubject={\thesis},pdfkeywords={\keywords}}
+\myabstract{Some short summary asdkasdmkasd asdf sdf fdkfas fd askfm sd fkmasdfm sdkf skmdfksmdfka skd fkasmdf}
+\keywords{Some stuff, More stuff, Stuff}
 
 % The following part is automatically generated, go to document start
+
 \begin{document}
+
 \maketitle
+
+\newpage
+%\phantomsection\addcontentsline{toc}{section}{Sammanfattning}\begin{abstract}\input{SwedishAdstract}\end{abstract}
+% or a blank box
+\mbox{}
+
+% Real contents of report starts here
+% Splitting it up to several files help when working together.
+% Floatbarriers prevent figures from beeing placed into the next chapter.
+\input{Introduction}\FloatBarrier
+\input{Theory}\FloatBarrier
+% \input{Method}\FloatBarrier
+% \input{Results}\FloatBarrier
+% \input{Conclusions}
+% \input{Recommendations}
+
+% And the bilbiography saved as mybib.bib
+\bibliography{mybib}{}
+\bibliographystyle{plain}
+
+% Appendices
+
 
 \end{document}
 
