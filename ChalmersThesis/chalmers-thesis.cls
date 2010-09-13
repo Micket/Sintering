@@ -1,14 +1,16 @@
 % Thesis class template for Chalmers University of Technology.
 % This is an inofficial class made by Mikael Öhman <mikael.ohman@chalmers.se>
 % This document is released under public domain
+% Some words are translated to swedish if babel langauge is set, otherwise default to English
 
 \NeedsTeXFormat{LaTeX2e}
 
 \ProvidesClass{chalmers-thesis}[2010/09/09 CHALMERS Thesis class]
 
-\DeclareOption{masters}{\OptionNotUsed}
-\DeclareOption{licenciate}{\OptionNotUsed}
-\DeclareOption{doctorate}{\OptionNotUsed}
+\DeclareOption{bachelor}{\message{bachelor! lol}}%\@bachelortrue}
+%\DeclareOption{masters}{\@masterstrue}
+%\DeclareOption{licenciate}{\@licenciatetrue}
+%\DeclareOption{doctorate}{\@doctoratetrue}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 
@@ -17,13 +19,18 @@
 
 \ProcessOptions\relax
 
-\LoadClass[a4paper,12pt,twosided]{article}
+\LoadClass[a4paper,12pt]{article}
 
 \RequirePackage{tikz}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
-
 \RequirePackage{graphicx}
+%\RequirePackage{xcolor}
+
+\definecolor{phd_thesis_blue}{rgb}{0.4, 0.4, 0.8}
+\definecolor{chalmers_blue}{rgb}{0, 0, 0.4}
+\definecolor{chalmers_grey}{rgb}{0.8, 0.8, 0.8}
+
 
 % Setting up the marginals a bit larger
 %\setlength{\oddsidemargin}{0mm}
@@ -46,17 +53,18 @@
 %\numberwithin{figure}{section}
 %\numberwithin{table}{section}
 
-\newcommand{\coverfigure}[1]{\gdef\@coverfigure{#1}}
-\newcommand{\covercaption}[1]{\gdef\@covercaption{#1}}
+%\renewcommand{\author}[1]{\gdef\@author{#1}}
 %\newcommand{\title}[1]{\gdef\@title{#1}}
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
-\renewcommand{\author}[1]{\gdef\@author{#1}}
 \newcommand{\myabstract}[1]{\gdef\@myabstract{#1}}
 \newcommand{\keywords}[1]{\gdef\@keywords{#1}}
+\newcommand{\coverfigure}[1]{\gdef\@coverfigure{#1}}
+\newcommand{\covercaption}[1]{\gdef\@covercaption{#1}}
 
 \newcommand{\writtenyear}[1]{\gdef\@writtenyear{#1}}
 \newcommand{\YYYYNN}[1]{\gdef\@YYYYNN{#1}}
 \newcommand{\ISSN}[1]{\gdef\@ISSN{#1}}
+\newcommand{\ISBN}[1]{\gdef\@ISBN{#1}}
 \newcommand{\printers}[1]{\gdef\@printers{#1}}
 
 \newcommand{\telephone}[1]{\gdef\@telephone{#1}}
@@ -68,14 +76,26 @@
 \newcommand{\division}[1]{\gdef\@division{#1}}
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
 
-% Some default settings for Chalmers
+% Some default settings for Chalmers or at least the department of solid mechanics.
 \postcode{SE-412 96}
 \city{G\"oteborg}
-\country{Sweden}
-\university{Chalmers University of Technology}
-\ISSN{1652-8557}
+%\iflanguage{swedish}{\country{Sverige}}{\country{Sweden}}
+\country{\iflanguage{swedish}{Sverige}{Sweden}}
+%\university{\iflanguage{swedish}{Chalmers Tekniska Högskola}{Chalmers University of Technology}}
+\university{Chalmers University of Technology} % expandafter just won't work, MakeUppercase is annoying.
 \printers{Chalmers Reproservice}
 \telephone{+ 46 (0)31-772 1000}
+%\if@bachelor
+  \ISSN{1654-4676} % Bachelor
+%\fi
+\ISSN{1652-8557} % Masters
+\ISSN{1652-8565} % Lic.
+\ISSN{0346-718X} % PhD
+
+\newif\if@restonecol
+\newif\if@titlepage
+\@titlepagefalse
+
 
 % Introducing some new lengths for the front page
 \newlength{\headerheight}
@@ -85,6 +105,8 @@
 
 
 \AtBeginDocument{
+{
+ \renewcommand{\and}{, }
  \hypersetup{
   breaklinks,
   pdfcreator    = \LaTeX{},
@@ -101,6 +123,7 @@
   filecolor     = black
  }
 }
+}
 
 \renewcommand{\maketitle}{%
  \newpage\pagestyle{empty}
@@ -108,51 +131,57 @@
   \node[yshift=-\headerheight] at (current page.north west)
    {\begin{tikzpicture}[remember picture, overlay]
      % First draw the grid and then the Logo and avancez logo.
-     \clip[draw] (0,\headerheight) -- +(\paperwidth,0) -- (\paperwidth,0) -- (0.725\paperwidth,0)
-                 .. controls (0.703\paperwidth,0) and (0.703\paperwidth,\headeroffset) ..
-                 (0.68\paperwidth,\headeroffset) -- (0,\headeroffset) -- cycle;
-     \draw[step=5mm,black] (0,0) grid (\paperwidth,6.4cm);
+     \draw[black] (0,\headerheight) -- +(\paperwidth,0) -- (\paperwidth,0) -- (0.75\paperwidth,0)
+                 .. controls (0.725\paperwidth,0) and (0.725\paperwidth,\headeroffset) ..
+                 (0.70\paperwidth,\headeroffset) -- (0,\headeroffset) -- cycle; % (0.5\paperwidth,\headeroffset) to[out=0,in=180] (0.6\paperwidth,0cm);
+     %\draw[step=5mm,black] (0,0) grid (\paperwidth,6.4cm);
+     %\fill[fill=phd_thesis_blue] (0,0) rectangle (\paperwidth,6.4cm);
      \definecolor{logo_color}{gray}{0}
      \node[anchor=west,xshift=0.1\paperwidth,yshift=0.511\headerheight]{\resizebox{0.63\paperwidth}{!}{\input{figures/CHALMERS.pgf}}}; % 13.2cm
-     \node[anchor=west,xshift=0.745\paperwidth,yshift=0.516\headerheight]{\includegraphics[width=0.171\paperwidth]{figures/Avancez_bg.pdf}}; % 3.6cm
+     \node[anchor=west,xshift=0.745\paperwidth,yshift=0.516\headerheight]{\includegraphics[width=0.171\paperwidth]{% 3.6cm
+        %figures/Avancez_bg.pdf%
+        %figures/Avancez_clean_white.pdf%
+        %figures/Avancez_clean_gold.pdf%
+        %figures/Avancez_clean_invert.pdf%
+        figures/Avancez_clean_black.pdf%
+     }};
    \end{tikzpicture}};
  \end{tikzpicture}
  \ \vfill
  \begin{center}
-  \includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{\@coverfigure}
+  \@ifundefined{@coverfigure}{}{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{\@coverfigure}}
  \end{center}
  {\huge\noindent\@title\par} % title, 21
- {\large\noindent\@subtitle\par} % subtitle, 16
+ \@ifundefined{@subtitle}{}{{\large\noindent\@subtitle\par}} % subtitle, 16
  {\normalsize\noindent\textit{\@thesis}\par} % 14
  \vskip 5mm
- {\Large\noindent \uppercase\expandafter{\@author}\par}% 18
+ {\renewcommand{\and}{\\}\Large\noindent \MakeUppercase{\@author}\par}% 18
  \vskip 6mm
  {\small\noindent\@department\\
-  \textit{\@division}\\
-  \uppercase\expandafter{\@university}\\
+  \@ifundefined{@division}{}{\textit{\@division}\\}
+  \MakeUppercase{\@university}\\
   \@city, \@country\ \@writtenyear\\
-  \@thesis \@YYYYNN\par} % TODO
+  \@ifundefined{@YYYYNN}{}{\@thesis\ \@YYYYNN}\par} % TODO if YYYYNN? Also, thesis in ...
 
  % Second page, blank
  \newpage
  \mbox{}
 
- % Third page, more info
+ % Third page
  \newpage\thispagestyle{empty}
  \begin{center}
-  {\uppercase\expandafter{\@thesis}\ \@YYYYNN\par} % WRONG
+  \@ifundefined{@YYYYNN}{}{{\MakeUppercase{\@thesis}\ \@YYYYNN\par}} % Only if YYYYNN is defined TODO:'thesis in'
   \vspace*{\stretch{1}}%\vskip 40mm
   {\Large \@title\par}
   \vskip 5mm
-  %\makeatletter\@ifundefined{subtitle}{}{{\mysubtitle\par}}\makeatother
-  {\@subtitle\par}
+  \@ifundefined{@subtitle}{}{{\@subtitle\par}}
   \vskip 5mm
   {\@thesis\par} % (if applicable) (if applicable)
-  {\uppercase\expandafter{\@author}\par} % Wrong?
+  {\renewcommand{\and}{, }\MakeUppercase{\@author}\par}
   \vspace*{\stretch{3}}%\vfill
   {\@department\par}
-  {\textit{\@division}\par}
-  {\uppercase\expandafter{\@university}\par}
+  \@ifundefined{@division}{}{{\textit{\@division}\par}}
+  {\MakeUppercase{\@university}\par}
   \vskip 2mm
   {\@city, \@country\ \@writtenyear\par}
  \end{center}
@@ -160,41 +189,42 @@
  % Fourth page
  \newpage
  {\noindent \@title\\
-  \@subtitle
-  {\uppercase\expandafter{\@author}}\par} % TODO
+  \@ifundefined{@subtitle}{}{\@subtitle\\}
+  \renewcommand{\and}{\\}\MakeUppercase{\@author}
+  %\@ifundefined{\@ISBN}{\\ISBN \@ISBN\\}{}
+  \par}
  \vskip 10mm
- {\noindent \copyright {\uppercase\expandafter{\@author}}, \@writtenyear\par} % TODO
+ {\noindent \copyright {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@writtenyear\par}
  \vspace*{\stretch{1}} %\vskip 20mm
- {\noindent \@thesis\ \@YYYYNN\\ % TODO
+ {\noindent \@ifundefined{@YYYYNN}{@YYYYNN}{}{\@thesis\ \@YYYYNN\\} % TODO: 'thesis in'
   ISSN \@ISSN\\
   \@department\\
-  \@division\\
+  \@ifundefined{@division}{}{\@division\\}
   \@university\\
   \@postcode\ \@city\\
   \@country\\
-  Telephone: \@telephone\par}
+  \iflanguage{swedish}{Telefon}{Telephone}: \@telephone\par}
  \vspace*{\stretch{3}}
- %\makeatletter\@ifundefined{covercaption}{}{{\noindent Cover:\\\covercaption\par}\vskip 5mm}\makeatother
- {\noindent Cover:\\ \@covercaption\par} % TODO
+ \@ifundefined{@covercaption}{}{{\noindent \iflanguage{swedish}{Omslag}{Cover}:\\ \@covercaption\par}} % Another translation here
  \vskip 5mm
  {\noindent \@printers
   %\@department
   \\ \@city, \@country\ \@writtenyear\par}
 
  % Fifth page
- \newpage%\pagestyle{justpage} % TODO
+ \newpage%\pagestyle{justpage} % TODO page style!
  \setcounter{page}{1}
  \pagenumbering{Roman}
  {\noindent \@title\\
   %\makeatletter\@ifundefined{mysubtitle}{}{\mysubtitle\\}\makeatother
-  \@subtitle\\
+  \@ifundefined{@subtitle}{}{\@subtitle\\}
   \@thesis\\ % (if applicable) % Thesis in programmename
-  {\uppercase\expandafter{\@author}}\\
+  {\renewcommand{\and}{\\}\MakeUppercase{\@author}}\\
   \@department\\
-  \@division\\
+  \@ifundefined{@division}{}{\@division\\}
   \@university\par}
  \phantomsection\addcontentsline{toc}{section}{Abstract}\begin{abstract}\@myabstract\end{abstract}
- \noindent Keywords: \@keywords
+ \noindent \iflanguage{swedish}{Nyckelord}{Keywords}: \@keywords
 
 }
 

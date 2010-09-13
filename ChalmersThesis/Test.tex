@@ -1,27 +1,31 @@
 % USE PDFLATEX WITH THIS DOCUMENT. If you wish to use ordinary latex (why?) then convert the figures in figures/ to eps.
-\documentclass[a4paper,12pt,twoside]{chalmers-thesis}
+\documentclass[a4paper,12pt,bachelor]{chalmers-thesis}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+
 
 \coverfigure{figures/COVER_93_iso.png}
 \covercaption{Some explanation}
 \title{The Title of Your Thesis}
 \subtitle{And Perhaps a Subtitle}
-\author{Some Author, Another Author}
+\author{Some Author\and Other Author}
 \thesis{Master's thesis in Some Programme}
+%\thesisin{Master's thesis in Some Programme}
 \department{Department of Applied Mechanics}
-\division{Division of Solid Mechanics}
+%\division{Division of Solid Mechanics}
 \YYYYNN{2010:37}
+%\ISBN{123-21332-13423-123} % Only PhD thesis gets ISBN!
 \writtenyear{2010}
 
-\myabstract{Some short summary asdkasdmkasd asdf sdf fdkfas fd askfm sd fkmasdfm sdkf skmdfksmdfka skd fkasmdf}
+\myabstract{Some  short summary asdkasdmkasd asdf sdf fdkfas fd askfm sd fkmasdfm sdkf skmdfksmdfka skd fkasmdf}
 \keywords{Some stuff, More stuff, Stuff}
 
 % The following part is automatically generated, go to document start
 
 \begin{document}
-
 \maketitle
+
+%\makeatletter\@ifundefined{}{Hej}{Svejs}\makeatother
 
 \newpage
 %\phantomsection\addcontentsline{toc}{section}{Sammanfattning}\begin{abstract}\input{SwedishAdstract}\end{abstract}
@@ -31,16 +35,16 @@
 % Real contents of report starts here
 % Splitting it up to several files help when working together.
 % Floatbarriers prevent figures from beeing placed into the next chapter.
-\input{Introduction}\FloatBarrier
-\input{Theory}\FloatBarrier
+\input{Introduction}%\FloatBarrier
+%\input{Theory}\FloatBarrier
 % \input{Method}\FloatBarrier
 % \input{Results}\FloatBarrier
 % \input{Conclusions}
 % \input{Recommendations}
 
 % And the bilbiography saved as mybib.bib
-\bibliography{mybib}{}
-\bibliographystyle{plain}
+%\bibliography{mybib}{}
+%\bibliographystyle{plain}
 
 % Appendices
 

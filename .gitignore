@@ -2,6 +2,7 @@
 *.pdf
 *.synctex.gz
 *.aux
+*.toc
 *.blg
 *.log
 *.out
