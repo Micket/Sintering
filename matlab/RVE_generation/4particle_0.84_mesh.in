@@ -1,0 +1,1135 @@
+4particle_0.84_mesh.out
+Simply 2D RVE with surface tension
+StokesFlow nsteps 1 lstype 3 smtype 7 nmodules 1 deltaT 0.050000 nodalupdatescheme 1 rtolv 1.000000e+00
+vtk tstep_all domain_all primvars 2 4 5 cellvars 1 46
+domain 2dIncompFlow
+OutputManager tstep_all dofman_all element_all
+ndofman 757 nelem 366 ncrosssect 1 nmat 2 nbc 1 nic 0 nltf 1
+node    1 coords 2 -6.7984378813e-01  0.0000000000e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node    2 coords 2  6.7984378813e-01  0.0000000000e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node    3 coords 2  0.0000000000e+00  6.7984378813e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node    4 coords 2  0.0000000000e+00 -6.7984378813e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node    5 coords 2 -1.0000000006e+00 -1.0000000005e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node    6 coords 2 -7.3692612886e-01 -1.0000000003e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node    7 coords 2 -5.5219697793e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node    8 coords 2 -4.2639712144e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node    9 coords 2 -3.1001822154e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   10 coords 2 -1.9183596541e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   11 coords 2 -6.8162451201e-02 -1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   12 coords 2  4.9957679306e-02 -1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   13 coords 2  1.7746989055e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   14 coords 2  3.0217562345e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   15 coords 2  4.3173641771e-01 -1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   16 coords 2  5.6134699961e-01 -1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   17 coords 2  7.4489319002e-01 -1.0000000003e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   18 coords 2 -1.0000000003e+00 -7.4570455798e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   19 coords 2 -8.2078098605e-01 -8.2950580337e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   20 coords 2 -6.1818999617e-01 -8.6062804912e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   21 coords 2 -4.5702403794e-01 -8.7496757481e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   22 coords 2 -3.0587180534e-01 -8.7556512245e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   23 coords 2 -1.5870786961e-01 -8.6949312573e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   24 coords 2 -2.0283938881e-02 -8.4512699621e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   25 coords 2  9.9307252198e-02 -8.6673243494e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   26 coords 2  2.2475666246e-01 -8.5724824862e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   27 coords 2  3.5230979854e-01 -8.6549893406e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   28 coords 2  4.8950826398e-01 -8.6182475884e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   29 coords 2  6.4405006783e-01 -8.4210567583e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   30 coords 2  1.0000000001e+00 -1.0000000005e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   31 coords 2 -7.3667668752e-01 -6.9770056753e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   32 coords 2 -6.0335948733e-01 -7.2551662938e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   33 coords 2 -4.8164787510e-01 -7.5058025688e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   34 coords 2 -3.5472397278e-01 -7.5095029213e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   35 coords 2 -2.2842012445e-01 -7.4114152794e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   36 coords 2 -1.0544245520e-01 -7.2772793137e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   37 coords 2  1.1686437460e-01 -7.2861926754e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   38 coords 2  2.5669315226e-01 -7.2291221187e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   39 coords 2  3.9414640287e-01 -7.3797228316e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   40 coords 2  4.5198669807e-01 -6.1627592174e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   41 coords 2  5.4257926823e-01 -7.2434646582e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   42 coords 2  8.3067666462e-01 -8.0799621354e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   43 coords 2 -1.0000000002e+00 -5.6860980459e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   44 coords 2 -8.5693030803e-01 -6.1499687243e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   45 coords 2 -6.7328264644e-01 -5.6649682595e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   46 coords 2 -5.4954631274e-01 -6.0312950053e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   47 coords 2 -4.1872436598e-01 -6.2203374863e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   48 coords 2 -2.8925198684e-01 -6.0964253969e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   49 coords 2 -1.6275849409e-01 -5.9492514773e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   50 coords 2 -4.8105463615e-02 -5.5683322457e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   51 coords 2  4.8504177855e-02 -5.5597781629e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   52 coords 2  1.7528798774e-01 -5.8790573488e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   53 coords 2  3.1760530446e-01 -5.9403166691e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   54 coords 2  4.2768776263e-01 -4.8585455101e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   55 coords 2  5.7675480260e-01 -5.7269151331e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   56 coords 2  6.9775755671e-01 -6.7668054962e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   57 coords 2  8.5514760206e-01 -6.0980141761e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   58 coords 2  1.0000000003e+00 -7.1969340477e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   59 coords 2 -1.0000000002e+00 -4.5134397902e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   60 coords 2 -8.7888067670e-01 -4.5323369342e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   61 coords 2 -7.6798814587e-01 -4.9740120789e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   62 coords 2 -6.1755451885e-01 -4.4311983138e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   63 coords 2 -4.9766161710e-01 -4.9249190344e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   64 coords 2 -3.6698451617e-01 -4.8411426369e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   65 coords 2 -2.3794918178e-01 -4.6501290935e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   66 coords 2 -1.1466186188e-01 -4.3548571311e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   67 coords 2  1.1685641470e-01 -4.3205862276e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   68 coords 2  2.6328381823e-01 -4.6283794617e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   69 coords 2  4.8915669277e-01 -3.7262530348e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   70 coords 2  5.9801053413e-01 -4.4923490925e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   71 coords 2  7.2790495377e-01 -5.2254209027e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   72 coords 2  8.7006972307e-01 -4.5749253816e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   73 coords 2  1.0000000002e+00 -5.2516490872e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   74 coords 2 -1.0000000002e+00 -3.3854084684e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   75 coords 2 -8.6473779709e-01 -3.1493858881e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   76 coords 2 -7.3748714927e-01 -3.7111839048e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   77 coords 2 -5.9992311152e-01 -3.0624066354e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   78 coords 2 -4.7553543639e-01 -3.6910890582e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   79 coords 2 -3.3722268811e-01 -3.4623534041e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   80 coords 2 -2.0309378928e-01 -3.1630380341e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   81 coords 2  2.0373461886e-01 -3.1555756829e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   82 coords 2  3.4579464548e-01 -3.5188685394e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   83 coords 2  4.5717139727e-01 -2.4778698118e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   84 coords 2  6.1460111236e-01 -3.0571486060e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   85 coords 2  7.4036168042e-01 -3.8590445941e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   86 coords 2  8.7401911786e-01 -3.0959467491e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   87 coords 2  1.0000000002e+00 -3.7440755277e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   88 coords 2 -1.0000000001e+00 -2.2524697053e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node   89 coords 2 -8.6146809850e-01 -1.7897119200e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   90 coords 2 -7.2899222049e-01 -2.4039943269e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   91 coords 2 -5.8275948520e-01 -1.7520970254e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   92 coords 2 -4.5420472596e-01 -2.4338018605e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   93 coords 2 -3.1077922199e-01 -2.0786697981e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   94 coords 2  3.0981444203e-01 -2.0870745285e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   95 coords 2  4.3037227902e-01 -1.1794316558e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   96 coords 2  5.8266653170e-01 -1.7983793995e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   97 coords 2  7.4424969550e-01 -2.4488191724e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   98 coords 2  8.7307500897e-01 -1.6213635726e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node   99 coords 2  1.0000000002e+00 -2.1964535648e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  100 coords 2 -1.0000000001e+00 -1.0980641354e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  101 coords 2 -8.4110438498e-01 -5.1161658720e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  102 coords 2 -7.1318262487e-01 -1.1604175209e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  103 coords 2 -5.5540427905e-01 -4.8772033514e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  104 coords 2 -4.3180421371e-01 -1.1702007407e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  105 coords 2  5.5445600812e-01 -4.9215821563e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  106 coords 2  7.0853548591e-01 -1.2587512219e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  107 coords 2  8.2537203487e-01 -4.4454020653e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  108 coords 2  1.0000000001e+00 -6.1995332999e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  109 coords 2 -1.0000000002e+00 -1.2785236599e-03 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  110 coords 2 -8.8247614920e-01  6.6047082955e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  111 coords 2 -7.6767056965e-01  9.8110221482e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  112 coords 2 -5.4578099263e-01  5.3329470340e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  113 coords 2  5.1850283995e-01  6.6908104997e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  114 coords 2  7.6340852873e-01  1.0708648404e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  115 coords 2  8.9726581100e-01  4.8155975577e-02 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  116 coords 2  1.0000000002e+00  1.0538202717e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  117 coords 2 -1.0000000002e+00  1.2472050343e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  118 coords 2 -8.7016726318e-01  2.0880113389e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  119 coords 2 -6.5240911117e-01  1.5287437239e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  120 coords 2 -5.3888573733e-01  2.0680178060e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  121 coords 2 -4.2022628106e-01  1.2457870938e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  122 coords 2 -2.9779600689e-01  2.1935311838e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  123 coords 2  3.7201155022e-01  1.5849509487e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  124 coords 2  5.0497717958e-01  2.1683689607e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  125 coords 2  6.2811735962e-01  1.5233085290e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  126 coords 2  8.6645630359e-01  1.9584005896e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  127 coords 2  1.0000000001e+00  2.5262202131e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  128 coords 2 -1.0000000002e+00  2.4229499623e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  129 coords 2 -7.4956491303e-01  2.5571026619e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  130 coords 2 -6.2628382779e-01  3.1160678770e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  131 coords 2 -4.9535634869e-01  3.6454311852e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  132 coords 2 -4.2059269353e-01  2.6148048946e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  133 coords 2 -3.3888965905e-01  3.6821385054e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  134 coords 2 -1.9837135771e-01  3.2184697894e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  135 coords 2  2.4668011483e-01  2.6855680307e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  136 coords 2  3.9808073357e-01  3.1196145847e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  137 coords 2  5.7047269677e-01  3.3904325872e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  138 coords 2  7.1597472285e-01  2.5659619259e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  139 coords 2  8.5797165556e-01  3.2992935514e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  140 coords 2  1.0000000001e+00  3.9463421002e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  141 coords 2 -1.0000000002e+00  3.5254814772e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  142 coords 2 -8.6830425844e-01  3.5039390306e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  143 coords 2 -7.3504655134e-01  4.0347653247e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  144 coords 2 -5.9090335357e-01  4.5538101749e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  145 coords 2 -4.2623108711e-01  4.8446882361e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  146 coords 2 -2.5882523607e-01  4.6801512926e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  147 coords 2 -1.1468930742e-01  4.3544267107e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  148 coords 2  1.4065240864e-01  3.9665787788e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  149 coords 2  2.9172161405e-01  4.2123414735e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  150 coords 2  4.5009015609e-01  4.4615106395e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  151 coords 2  5.9642434072e-01  4.9151651596e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  152 coords 2  7.1756652892e-01  3.9068988883e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  153 coords 2  8.6594412665e-01  4.6728427695e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  154 coords 2  1.0000000002e+00  5.3961321790e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  155 coords 2 -1.0000000001e+00  4.6164837182e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  156 coords 2 -8.5998981288e-01  4.8822645178e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  157 coords 2 -7.1417454408e-01  5.3777238727e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  158 coords 2 -5.6407281532e-01  5.8039955793e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  159 coords 2 -4.4159281641e-01  6.1784488515e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  160 coords 2 -3.1369303418e-01  5.9588062493e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  161 coords 2 -1.7442081300e-01  5.8663485648e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  162 coords 2 -4.7543327831e-02  5.5804266240e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  163 coords 2  5.7894818745e-02  5.3638612327e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  164 coords 2  2.0281984003e-01  5.4902901683e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  165 coords 2  3.5101011135e-01  5.6661371849e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  166 coords 2  5.0071092108e-01  5.9238850464e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  167 coords 2  7.3198649414e-01  5.2379785403e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  168 coords 2 -1.0000000002e+00  5.8212961928e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  169 coords 2 -8.3748308719e-01  6.3690916672e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  170 coords 2 -6.7497099468e-01  6.8867508887e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  171 coords 2 -5.2423441352e-01  7.3262399052e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  172 coords 2 -3.8198009046e-01  7.4215685315e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  173 coords 2 -2.4861186155e-01  7.2606859746e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  174 coords 2 -1.1600859529e-01  7.1916912636e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  175 coords 2  1.3105110857e-01  6.9030366320e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  176 coords 2  2.6403940426e-01  7.0107490105e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  177 coords 2  3.9775066000e-01  7.1568572087e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  178 coords 2  5.3124417737e-01  7.2774543865e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  179 coords 2  6.6581106244e-01  6.5719442853e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  180 coords 2  8.1012468880e-01  8.0139338465e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  181 coords 2  8.4490421004e-01  6.2283731738e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  182 coords 2 -1.0000000003e+00  7.5557166935e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  183 coords 2 -8.0813129817e-01  8.1680960708e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  184 coords 2 -6.2135913658e-01  8.4735026772e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  185 coords 2 -4.6534403982e-01  8.6753150912e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  186 coords 2 -3.1990471479e-01  8.6660482830e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  187 coords 2 -1.8263249609e-01  8.6017529670e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  188 coords 2 -4.9407082103e-02  8.5027244303e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  189 coords 2  7.0667890345e-02  8.3832323306e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  190 coords 2  1.9735203986e-01  8.4638353915e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  191 coords 2  3.3057858182e-01  8.5345430005e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  192 coords 2  4.7228691165e-01  8.6137528967e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  193 coords 2  6.3346417461e-01  8.3638033657e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 0  0  0
+node  194 coords 2  7.5272126064e-01  1.0000000003e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  195 coords 2  1.0000000003e+00  7.3200091522e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  196 coords 2 -1.0000000005e+00  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  197 coords 2 -7.5002382115e-01  1.0000000003e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  198 coords 2 -5.7396385024e-01  1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  199 coords 2 -4.5609430103e-01  1.0000000002e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  200 coords 2 -3.4612936690e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  201 coords 2 -2.2804341998e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  202 coords 2 -1.0841205614e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  203 coords 2  8.9453376612e-03  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  204 coords 2  1.2232653828e-01  1.0000000000e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  205 coords 2  2.3651355024e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  206 coords 2  3.4791478811e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  207 coords 2  4.5673533321e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  208 coords 2  5.7596750734e-01  1.0000000001e+00 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  209 coords 2  1.0000000001e+00  9.9999999984e-01 ndofs 3 DofIDMask 3 7   8  11 bc 3 1  1  0
+node  210 coords 2 -7.6047408656e-01 -2.5580829360e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  211 coords 2 -6.9651320650e-01 -5.8020876044e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  212 coords 2 -6.1762403359e-01 -2.4386016757e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  213 coords 2 -7.2375717889e-01  4.9055110741e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  214 coords 2 -6.1281239038e-01  2.6664735170e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  215 coords 2 -6.6612644965e-01  7.6437186193e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  216 coords 2  6.1714989812e-01 -2.4607910781e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  217 coords 2  6.9418963702e-01 -6.2937561093e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  218 coords 2  7.5260791150e-01 -2.2227010326e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  219 coords 2  5.9917331404e-01  3.3454052498e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  220 coords 2  7.2162615843e-01  5.3543242022e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  221 coords 2  6.5398057387e-01  7.6165426448e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  222 coords 2 -2.3771663915e-02  6.1894322526e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  223 coords 2  2.8947409373e-02  6.0811495570e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  224 coords 2 -5.8004297643e-02  6.9950645725e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  225 coords 2  6.5525554286e-02  6.8507372567e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  226 coords 2 -2.4703541051e-02  7.6505811558e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  227 coords 2  3.5333945172e-02  7.5908351059e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  228 coords 2 -1.0141969441e-02 -7.6248539217e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  229 coords 2 -5.2721227598e-02 -7.0378585975e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  230 coords 2  5.8432187301e-02 -7.0423152784e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  231 coords 2 -2.4052731807e-02 -6.1833850635e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  232 coords 2  2.4252088928e-02 -6.1791080221e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  233 coords 2 -8.6846306470e-01 -1.0000000004e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  234 coords 2 -1.0000000004e+00 -8.7285227926e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  235 coords 2 -9.1039049330e-01 -9.1475290196e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  236 coords 2 -6.4456155339e-01 -1.0000000003e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  237 coords 2 -7.7885355745e-01 -9.1475290186e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  238 coords 2 -6.7755806251e-01 -9.3031402474e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  239 coords 2 -4.8929704969e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  240 coords 2 -5.8519348705e-01 -9.3031402467e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  241 coords 2 -5.0461050794e-01 -9.3748378751e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  242 coords 2 -3.6820767149e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  243 coords 2 -4.4171057969e-01 -9.3748378749e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  244 coords 2 -3.6613446339e-01 -9.3778256131e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  245 coords 2 -2.5092709348e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  246 coords 2 -3.0794501344e-01 -9.3778256132e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  247 coords 2 -1.2999920831e-01 -1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  248 coords 2 -2.4885388538e-01 -9.3778256131e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  249 coords 2 -1.7527191751e-01 -9.3474656295e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  250 coords 2 -9.1023859478e-03 -1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  251 coords 2 -1.1343516040e-01 -9.3474656292e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  252 coords 2 -4.4223195041e-02 -9.2256349816e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  253 coords 2  1.1371378493e-01 -1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  254 coords 2  1.4836870212e-02 -9.2256349817e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  255 coords 2  7.4632465752e-02 -9.3336621754e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  256 coords 2  2.3982275700e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  257 coords 2  1.3838857137e-01 -9.3336621755e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  258 coords 2  2.0111327650e-01 -9.2862412439e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  259 coords 2  3.6695602058e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  260 coords 2  2.6346614296e-01 -9.2862412439e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  261 coords 2  3.2724271100e-01 -9.3274946711e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  262 coords 2  4.9654170866e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  263 coords 2  3.9202310813e-01 -9.3274946711e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  264 coords 2  4.6062234084e-01 -9.3091237949e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  265 coords 2  6.5312009482e-01 -1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  266 coords 2  5.2542763180e-01 -9.3091237951e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  267 coords 2  6.0269853372e-01 -9.2105283801e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  268 coords 2  6.9447162893e-01 -9.2105283807e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  269 coords 2  8.7244659507e-01 -1.0000000004e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  270 coords 2  7.8778492732e-01 -9.0399810692e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  271 coords 2 -9.1039049317e-01 -7.8760518068e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  272 coords 2 -1.0000000003e+00 -6.5715718128e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  273 coords 2 -9.2846515417e-01 -6.8035071520e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  274 coords 2 -7.1948549111e-01 -8.4506692625e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  275 coords 2 -7.7872883678e-01 -7.6360318545e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  276 coords 2 -8.3885564704e-01 -7.2225133790e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  277 coords 2 -5.3760701706e-01 -8.6779781197e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  278 coords 2 -6.7743334185e-01 -7.7916430833e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  279 coords 2 -6.1077474175e-01 -7.9307233925e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  280 coords 2 -5.4991893564e-01 -8.0560415300e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  281 coords 2 -3.8144792164e-01 -8.7526634863e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  282 coords 2 -4.6933595652e-01 -8.1277391584e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  283 coords 2 -4.0587400536e-01 -8.1295893347e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  284 coords 2 -2.3228983748e-01 -8.7252912409e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  285 coords 2 -3.3029788906e-01 -8.1325770729e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  286 coords 2 -2.6714596490e-01 -8.0835332519e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  287 coords 2 -8.9495904245e-02 -8.5731006097e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  288 coords 2 -1.9356399703e-01 -8.0531732683e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  289 coords 2 -1.3207516240e-01 -7.9861052855e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  290 coords 2  3.9511656658e-02 -8.5592971558e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  291 coords 2 -6.2863197039e-02 -7.8642746379e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  292 coords 2  4.8290217861e-02 -7.8687313188e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  293 coords 2  1.6203195733e-01 -8.6199034178e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  294 coords 2  1.0808581340e-01 -7.9767585124e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  295 coords 2  2.8853323050e-01 -8.6137359134e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  296 coords 2  1.7081051853e-01 -7.9293375808e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  297 coords 2  2.4072490736e-01 -7.9008023025e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  298 coords 2  4.2090903126e-01 -8.6366184645e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  299 coords 2  3.0450147540e-01 -7.9420557297e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  300 coords 2  3.7322810071e-01 -8.0173560861e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  301 coords 2  5.6677916591e-01 -8.5196521734e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  302 coords 2  4.4182733343e-01 -7.9989852100e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  303 coords 2  5.1604376610e-01 -7.9308561233e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  304 coords 2  5.9331466803e-01 -7.8322607083e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  305 coords 2  7.3736336622e-01 -8.2505094469e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  306 coords 2  6.7090381227e-01 -7.5939311273e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  307 coords 2  9.1533833237e-01 -9.0399810703e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  308 coords 2  1.0000000002e+00 -8.5984670265e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  309 coords 2 -6.7001808743e-01 -7.1160859845e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  310 coords 2 -7.9680349778e-01 -6.5634871998e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  311 coords 2 -7.0497966698e-01 -6.3209869674e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  312 coords 2 -5.4250368122e-01 -7.3804844313e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  313 coords 2 -6.3832106689e-01 -6.4600672766e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  314 coords 2 -5.7645290004e-01 -6.6432306495e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  315 coords 2 -4.1818592394e-01 -7.5076527450e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  316 coords 2 -5.1559709392e-01 -6.7685487870e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  317 coords 2 -4.5018612054e-01 -6.8630700276e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  318 coords 2 -2.9157204861e-01 -7.4604591003e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  319 coords 2 -3.8672416938e-01 -6.8649202038e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  320 coords 2 -3.2198797981e-01 -6.8029641591e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  321 coords 2 -1.6693128982e-01 -7.3443472965e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  322 coords 2 -2.5883605565e-01 -6.7539203381e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  323 coords 2 -1.9558930927e-01 -6.6803333784e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  324 coords 2 -1.3410047464e-01 -6.6132653955e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  325 coords 2 -7.6773959405e-02 -6.4228057797e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  326 coords 2  1.8677876343e-01 -7.2576573971e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  327 coords 2  8.2684276229e-02 -6.4229854192e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  328 coords 2  1.4607618117e-01 -6.5826250121e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  329 coords 2  3.2541977756e-01 -7.3044224752e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  330 coords 2  2.1599057000e-01 -6.5540897337e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  331 coords 2  2.8714922836e-01 -6.5847193939e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  332 coords 2  4.2306655047e-01 -6.7712410245e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  333 coords 2  4.6836283555e-01 -7.3115937449e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  334 coords 2  3.5587585366e-01 -6.6600197504e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  335 coords 2  4.9728298315e-01 -6.7031119378e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  336 coords 2  3.8479600126e-01 -6.0515379432e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  337 coords 2  4.3983723035e-01 -5.5106523637e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  338 coords 2  5.1437075034e-01 -5.9448371752e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  339 coords 2  5.5966703541e-01 -6.4851898957e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  340 coords 2  6.2016841247e-01 -7.0051350772e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  341 coords 2  7.6421711066e-01 -7.4233838158e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  342 coords 2  8.4291213334e-01 -7.0889881557e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  343 coords 2  9.1533833247e-01 -7.6384480915e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  344 coords 2 -9.2846515412e-01 -5.9180333851e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  345 coords 2 -1.0000000002e+00 -5.0997689180e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  346 coords 2 -9.3944033846e-01 -5.1092174900e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  347 coords 2 -7.6510647724e-01 -5.9074684919e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  348 coords 2 -8.6790549237e-01 -5.3411528293e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  349 coords 2 -8.1245922695e-01 -5.5619904016e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  350 coords 2 -6.1141447959e-01 -5.8481316324e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  351 coords 2 -7.2063539616e-01 -5.3194901692e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  352 coords 2 -6.4541858265e-01 -5.0480832867e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  353 coords 2 -4.8413533936e-01 -6.1258162458e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  354 coords 2 -5.8355041580e-01 -5.2312466596e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  355 coords 2 -5.2360396492e-01 -5.4781070199e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  356 coords 2 -3.5398817641e-01 -6.1583814416e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  357 coords 2 -4.5819299154e-01 -5.5726282604e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  358 coords 2 -3.9285444107e-01 -5.5307400616e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  359 coords 2 -2.2600524047e-01 -6.0228384371e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  360 coords 2 -3.2811825150e-01 -5.4687840169e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  361 coords 2 -2.6360058431e-01 -5.3732772452e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  362 coords 2 -1.0543197885e-01 -5.7587918615e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  363 coords 2 -2.0035383794e-01 -5.2996902854e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  364 coords 2 -1.3871017799e-01 -5.1520543042e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  365 coords 2 -8.1383662750e-02 -4.9615946884e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  366 coords 2  1.1189608280e-01 -5.7194177558e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  367 coords 2  8.2680296279e-02 -4.9401821952e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  368 coords 2  2.4644664610e-01 -5.9096870089e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  369 coords 2  1.4607220122e-01 -5.0998217882e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  370 coords 2  2.1928590298e-01 -5.2537184053e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  371 coords 2  3.7264653354e-01 -5.3994310896e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  372 coords 2  2.9044456134e-01 -5.2843480654e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  373 coords 2  5.0222128262e-01 -5.2927303216e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  374 coords 2  3.4548579043e-01 -4.7434624859e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  375 coords 2  4.5842222770e-01 -4.2923992725e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  376 coords 2  5.1284914838e-01 -4.6754473013e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  377 coords 2  3.8674120406e-01 -4.1887070247e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  378 coords 2  6.3725617965e-01 -6.2468603147e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  379 coords 2  5.8738266837e-01 -5.1096321128e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  380 coords 2  6.5232987819e-01 -5.4761680179e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  381 coords 2  7.7645257938e-01 -6.4324098361e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  382 coords 2  7.1283125524e-01 -5.9961131994e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  383 coords 2  9.2757380119e-01 -6.6474741119e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  384 coords 2  7.9152627791e-01 -5.6617175394e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  385 coords 2  8.6260866257e-01 -5.3364697788e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  386 coords 2  9.2757380112e-01 -5.6748316316e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  387 coords 2  1.0000000003e+00 -6.2242915674e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  388 coords 2 -9.3944033845e-01 -4.5228883622e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  389 coords 2 -1.0000000002e+00 -3.9494241293e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  390 coords 2 -8.2343441129e-01 -4.7531745066e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  391 coords 2 -9.3944033843e-01 -3.9588727013e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  392 coords 2 -8.7180923690e-01 -3.8408614111e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  393 coords 2 -8.0818391299e-01 -4.1217604195e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  394 coords 2 -6.9277133236e-01 -4.7026051964e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  395 coords 2 -7.5273764757e-01 -4.3425979919e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  396 coords 2 -5.5760806798e-01 -4.6780586741e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  397 coords 2 -6.7752083406e-01 -4.0711911093e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  398 coords 2 -6.0873881518e-01 -3.7468024746e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  399 coords 2 -5.4654497762e-01 -4.0611436860e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  400 coords 2 -4.3232306664e-01 -4.8830308357e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  401 coords 2 -4.8659852674e-01 -4.3080040463e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  402 coords 2 -3.0246684897e-01 -4.7456358652e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  403 coords 2 -4.2125997628e-01 -4.2661158476e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  404 coords 2 -3.5210360214e-01 -4.1517480205e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  405 coords 2 -1.7630552183e-01 -4.5024931123e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  406 coords 2 -2.8758593494e-01 -4.0562412488e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  407 coords 2 -2.2052148553e-01 -3.9065835638e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  408 coords 2 -1.5887782558e-01 -3.7589475826e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  409 coords 2  1.9007011646e-01 -4.4744828447e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  410 coords 2  1.6029551678e-01 -3.7380809553e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  411 coords 2  2.3350921855e-01 -3.8919775723e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  412 coords 2  3.0453923185e-01 -4.0736240006e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  413 coords 2  5.4358361345e-01 -4.1093010636e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  414 coords 2  4.1747566912e-01 -3.6225607871e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  415 coords 2  4.7316404502e-01 -3.1020614233e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  416 coords 2  5.5187890256e-01 -3.3917008204e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  417 coords 2  6.6295774395e-01 -4.8588849976e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  418 coords 2  6.0630582325e-01 -3.7747488493e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  419 coords 2  6.6918610728e-01 -4.1756968433e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  420 coords 2  7.9898733842e-01 -4.9001731421e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  421 coords 2  7.3413331710e-01 -4.5422327484e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  422 coords 2  9.3503486163e-01 -4.9132872344e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  423 coords 2  8.0521570175e-01 -4.2169849879e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  424 coords 2  8.7204442047e-01 -3.8354360653e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  425 coords 2  9.3503486163e-01 -4.1595004547e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  426 coords 2  1.0000000002e+00 -4.4978623074e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  427 coords 2 -9.3236889863e-01 -3.2673971783e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  428 coords 2 -1.0000000002e+00 -2.8189390869e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  429 coords 2 -8.0111247318e-01 -3.4302848964e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  430 coords 2 -9.3236889862e-01 -2.7009277967e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  431 coords 2 -8.6310294780e-01 -2.4695489040e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  432 coords 2 -7.9686500879e-01 -2.7766901075e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  433 coords 2 -6.6870513039e-01 -3.3867952701e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  434 coords 2 -7.3323968488e-01 -3.0575891158e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  435 coords 2 -5.3772927395e-01 -3.3767478468e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  436 coords 2 -6.6445766600e-01 -2.7332004812e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  437 coords 2 -5.9134129836e-01 -2.4072518304e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  438 coords 2 -5.2706391874e-01 -2.7481042479e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  439 coords 2 -4.0637906225e-01 -3.5767212312e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  440 coords 2 -4.6487008117e-01 -3.0624454593e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  441 coords 2 -2.7015823869e-01 -3.3126957191e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  442 coords 2 -3.9571370703e-01 -2.9480776323e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  443 coords 2 -3.2400095505e-01 -2.7705116011e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  444 coords 2 -2.5693650563e-01 -2.6208539161e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  445 coords 2  2.7476463217e-01 -3.3372221112e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  446 coords 2  2.5677453044e-01 -2.6213251057e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  447 coords 2  4.0148302138e-01 -2.9983691756e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  448 coords 2  3.2780454375e-01 -2.8029715339e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  449 coords 2  5.3588625482e-01 -2.7675092089e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  450 coords 2  3.8349291965e-01 -2.2824721702e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  451 coords 2  4.4377183815e-01 -1.8286507338e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  452 coords 2  5.1991896449e-01 -2.1381246057e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  453 coords 2  6.7748139639e-01 -3.4580966001e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  454 coords 2  5.9863382203e-01 -2.4277640028e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  455 coords 2  6.7942540393e-01 -2.7529838892e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  456 coords 2  8.0719039914e-01 -3.4774956716e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  457 coords 2  7.4230568796e-01 -3.1539318833e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  458 coords 2  9.3700955902e-01 -3.4200111384e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  459 coords 2  8.0913440668e-01 -2.7723829607e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  460 coords 2  8.7354706342e-01 -2.3586551609e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  461 coords 2  9.3700955902e-01 -2.6462001570e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  462 coords 2  1.0000000002e+00 -2.9702645463e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  463 coords 2 -9.3073404932e-01 -2.0210908127e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  464 coords 2 -1.0000000001e+00 -1.6752669204e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  465 coords 2 -7.9523015949e-01 -2.0968531234e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  466 coords 2 -9.3073404930e-01 -1.4438880277e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  467 coords 2 -8.5128624174e-01 -1.1506642536e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  468 coords 2 -7.8732536168e-01 -1.4750647205e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  469 coords 2 -6.5587585284e-01 -2.0780456762e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  470 coords 2 -7.2108742268e-01 -1.7822059239e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  471 coords 2 -5.1848210558e-01 -2.0929494429e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  472 coords 2 -6.4797105504e-01 -1.4562572732e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  473 coords 2 -5.6908188213e-01 -1.1199086803e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  474 coords 2 -5.0728184946e-01 -1.4611488831e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  475 coords 2 -3.8249197398e-01 -2.2562358293e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  476 coords 2 -4.4300446984e-01 -1.8020013006e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  477 coords 2 -3.7129171785e-01 -1.6244352694e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  478 coords 2  3.7009336052e-01 -1.6332530921e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  479 coords 2  5.0651940536e-01 -1.4889055276e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  480 coords 2  4.9241414357e-01 -8.3579493571e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  481 coords 2  6.6345811360e-01 -2.1235992859e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  482 coords 2  5.6856126991e-01 -1.1452688076e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  483 coords 2  6.4560100881e-01 -1.5285653107e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  484 coords 2  8.0866235224e-01 -2.0350913725e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  485 coords 2  7.2639259071e-01 -1.8537851971e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  486 coords 2  9.3653750458e-01 -1.9089085687e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  487 coords 2  7.9080524744e-01 -1.4400573972e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  488 coords 2  8.4922352192e-01 -1.0329518896e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  489 coords 2  9.3653750454e-01 -1.1206584513e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  490 coords 2  1.0000000001e+00 -1.4082034474e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  491 coords 2 -9.2055219254e-01 -8.0484036130e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  492 coords 2 -1.0000000001e+00 -5.5542468600e-02 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  493 coords 2 -7.7714350493e-01 -8.3601705404e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  494 coords 2 -9.2055219257e-01 -2.6220091190e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  495 coords 2 -8.6179026709e-01  7.4427121175e-03 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  496 coords 2 -8.0438747732e-01  2.3474281381e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  497 coords 2 -6.3429345196e-01 -8.2406892801e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  498 coords 2 -4.9360424638e-01 -8.2896053792e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  499 coords 2  6.3149574702e-01 -8.7545471874e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  500 coords 2  7.6695376039e-01 -8.5164571419e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  501 coords 2  9.1268601749e-01 -5.3224676826e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  502 coords 2  7.9439028180e-01  3.1316231696e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  503 coords 2  8.6131892293e-01  1.8509774622e-03 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  504 coords 2  9.4863290555e-01 -6.9196787109e-03 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  505 coords 2  1.0000000002e+00  2.1693347084e-02 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  506 coords 2 -9.4123807468e-01  3.2384279647e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  507 coords 2 -1.0000000002e+00  6.1720989886e-02 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  508 coords 2 -8.2507335942e-01  8.2078652218e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  509 coords 2 -9.4123807470e-01  9.5383793193e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  510 coords 2 -8.7632170619e-01  1.3742410842e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  511 coords 2 -8.1891891641e-01  1.5345567769e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  512 coords 2 -7.1003984041e-01  1.2549229693e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  513 coords 2 -7.5861774134e-01  1.7691024383e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  514 coords 2 -5.9909505190e-01  1.0310192136e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  515 coords 2 -5.4233336498e-01  1.3006562547e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  516 coords 2 -4.8300363684e-01  8.8954089860e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  517 coords 2  4.4525719508e-01  1.1270159993e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  518 coords 2  5.1174000976e-01  1.4187250053e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  519 coords 2  5.7331009978e-01  1.0961947895e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  520 coords 2  8.3033716986e-01  7.7621229811e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  521 coords 2  6.9576294418e-01  1.2970866847e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  522 coords 2  8.1493241616e-01  1.5146327150e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  523 coords 2  7.3969162579e-01  1.8184133832e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  524 coords 2  9.4863290561e-01  7.6769001372e-02 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  525 coords 2  8.8186105729e-01  1.2199801727e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  526 coords 2  9.3322815191e-01  1.5061104307e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  527 coords 2  1.0000000002e+00  1.7900202424e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  528 coords 2 -9.3508363169e-01  1.6676081866e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  529 coords 2 -1.0000000002e+00  1.8350774983e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  530 coords 2 -9.3508363167e-01  2.2554806506e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  531 coords 2 -8.0986608810e-01  2.3225570004e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  532 coords 2 -8.6923576081e-01  2.7959751847e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  533 coords 2 -5.9564742425e-01  1.7983807649e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  534 coords 2 -7.0098701210e-01  2.0429231929e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  535 coords 2 -6.3934646948e-01  2.3224058004e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  536 coords 2 -4.7955600919e-01  1.6569024499e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  537 coords 2 -5.8258478256e-01  2.5920428415e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  538 coords 2 -5.1712104301e-01  2.8567244956e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  539 coords 2 -4.7973921543e-01  2.3414113503e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  540 coords 2 -3.5901114397e-01  1.7196591388e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  541 coords 2 -4.2040948729e-01  1.9302959942e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  542 coords 2 -3.5919435021e-01  2.4041680392e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  543 coords 2 -3.1834283297e-01  2.9378348446e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  544 coords 2 -2.4808368230e-01  2.7060004866e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  545 coords 2  4.3849436490e-01  1.8766599547e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  546 coords 2  3.0934583252e-01  2.1352594897e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  547 coords 2  3.8504614189e-01  2.3522827667e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  548 coords 2  5.6654726960e-01  1.8458387448e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  549 coords 2  4.5152895657e-01  2.6439917727e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  550 coords 2  5.3772493817e-01  2.7794007739e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  551 coords 2  5.9929502820e-01  2.4568705581e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  552 coords 2  6.7204604123e-01  2.0446352274e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  553 coords 2  9.3322815187e-01  2.2423104014e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  554 coords 2  7.9121551322e-01  2.2621812578e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  555 coords 2  8.6221397957e-01  2.6288470705e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  556 coords 2  9.2898582785e-01  2.9127568822e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  557 coords 2  1.0000000001e+00  3.2362811566e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  558 coords 2 -1.0000000002e+00  2.9742157198e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  559 coords 2 -9.3415212930e-01  2.9634444964e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  560 coords 2 -6.8792437041e-01  2.8365852694e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  561 coords 2 -8.0893458573e-01  3.0305208462e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  562 coords 2 -7.4230573219e-01  3.2959339933e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  563 coords 2 -5.6082008824e-01  3.3807495311e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  564 coords 2 -6.8066518957e-01  3.5754166009e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  565 coords 2 -6.0859359068e-01  3.8349390259e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  566 coords 2 -4.5797452111e-01  3.1301180399e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  567 coords 2 -4.1712300387e-01  3.6637848453e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  568 coords 2 -5.4312985113e-01  4.0996206801e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  569 coords 2 -4.6079371790e-01  4.2450597106e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  570 coords 2 -3.7974117629e-01  3.1484717000e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  571 coords 2 -2.6863050838e-01  3.4503041474e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  572 coords 2 -3.8256037308e-01  4.2634133708e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  573 coords 2 -2.9885744756e-01  4.1811448990e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  574 coords 2 -2.2859829689e-01  3.9493105410e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  575 coords 2 -1.5653033256e-01  3.7864482501e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  576 coords 2  3.2238042420e-01  2.9025913077e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  577 coords 2  1.9366626173e-01  3.3260734047e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  578 coords 2  2.6920086444e-01  3.4489547521e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  579 coords 2  4.8427671517e-01  3.2550235860e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  580 coords 2  3.4490117381e-01  3.6659780291e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  581 coords 2  4.2408544483e-01  3.7905626121e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  582 coords 2  6.4322370981e-01  2.9781972565e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  583 coords 2  5.1028142643e-01  3.9259716133e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  584 coords 2  5.8344851875e-01  4.1527988734e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  585 coords 2  6.4401961285e-01  3.6486657378e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  586 coords 2  7.8697318920e-01  2.9326277386e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  587 coords 2  7.1677062589e-01  3.2364304071e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  588 coords 2  9.2898582785e-01  3.6228178258e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  589 coords 2  7.8776909224e-01  3.6030962199e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  590 coords 2  8.6195789110e-01  3.9860681604e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  591 coords 2  9.3297206340e-01  4.3095924349e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  592 coords 2  1.0000000001e+00  4.6712371396e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  593 coords 2 -9.3415212930e-01  3.5147102539e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  594 coords 2 -1.0000000001e+00  4.0709825977e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  595 coords 2 -8.0167540489e-01  3.7693521776e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  596 coords 2 -9.3415212929e-01  4.0602113744e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  597 coords 2 -8.6414703566e-01  4.1931017742e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  598 coords 2 -6.6297495246e-01  4.2942877498e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  599 coords 2 -7.9751818211e-01  4.4585149212e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  600 coords 2 -7.2461054771e-01  4.7062445987e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  601 coords 2 -5.0856722034e-01  4.6992492055e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  602 coords 2 -6.5253894883e-01  4.9657670238e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  603 coords 2 -5.7748808445e-01  5.1789028771e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  604 coords 2 -3.4252816159e-01  4.7624197643e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  605 coords 2 -4.9515195121e-01  5.3243419077e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  606 coords 2 -4.3391195176e-01  5.5115685438e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  607 coords 2 -3.6996206064e-01  5.4017472427e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  608 coords 2 -1.8675727174e-01  4.5172890017e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  609 coords 2 -2.8625913513e-01  5.3194787709e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  610 coords 2 -2.1662302454e-01  5.2732499287e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  611 coords 2 -1.4455506021e-01  5.1103876377e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  612 coords 2 -8.1116317623e-02  4.9674266674e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  613 coords 2  2.1618701135e-01  4.0894601261e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  614 coords 2  9.9273613692e-02  4.6652200058e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  615 coords 2  1.7173612433e-01  4.7284344735e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  616 coords 2  3.7090588507e-01  4.3369260565e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  617 coords 2  2.4727072704e-01  4.8513158209e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  618 coords 2  3.2136586270e-01  4.9392393292e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  619 coords 2  5.2325724841e-01  4.6883378995e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  620 coords 2  4.0055013372e-01  5.0638239122e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  621 coords 2  4.7540053859e-01  5.1926978429e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  622 coords 2  6.5699543482e-01  4.4110320239e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  623 coords 2  5.4856763090e-01  5.4195251030e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  624 coords 2  6.6420541743e-01  5.0765718500e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  625 coords 2  6.3111770158e-01  5.7435547225e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  626 coords 2  7.9175532779e-01  4.2898708289e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  627 coords 2  7.2477651153e-01  4.5724387143e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  628 coords 2  9.3297206340e-01  5.0344874742e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  629 coords 2  7.9896531039e-01  4.9554106549e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  630 coords 2  8.5542416834e-01  5.4506079717e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  631 coords 2  9.2245210510e-01  5.8122526764e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  632 coords 2  1.0000000002e+00  6.3580706656e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  633 coords 2 -9.2999490651e-01  4.7493741180e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  634 coords 2 -1.0000000002e+00  5.2188899555e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  635 coords 2 -7.8708217848e-01  5.1299941952e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  636 coords 2 -9.2999490653e-01  5.3517803553e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  637 coords 2 -8.4873645004e-01  5.6256780925e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  638 coords 2 -6.3912367970e-01  5.5908597260e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  639 coords 2 -7.7582881564e-01  5.8734077699e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  640 coords 2 -6.9457276938e-01  6.1322373807e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  641 coords 2 -5.0283281586e-01  5.9912222154e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  642 coords 2 -6.1952190500e-01  6.3453732340e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  643 coords 2 -5.4415361442e-01  6.5651177423e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  644 coords 2 -3.7764292530e-01  6.0686275504e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  645 coords 2 -4.8291361497e-01  6.7523443784e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  646 coords 2 -4.1178645343e-01  6.8000086915e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  647 coords 2 -2.4405692359e-01  5.9125774070e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  648 coords 2 -3.4783656232e-01  6.6901873904e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  649 coords 2 -2.8115244787e-01  6.6097461119e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  650 coords 2 -1.1098207041e-01  5.7233875944e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  651 coords 2 -2.1151633727e-01  6.5635172697e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  652 coords 2 -1.4521470414e-01  6.5290199142e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  653 coords 2 -8.1775961559e-02  6.3860589438e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  654 coords 2  1.3035732939e-01  5.4270757005e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  655 coords 2  9.4472963658e-02  6.1334489324e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  656 coords 2  2.7691497569e-01  5.5782136766e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  657 coords 2  1.6693547430e-01  6.1966634002e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  658 coords 2  2.3342962214e-01  6.2505195894e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  659 coords 2  4.2586051621e-01  5.7950111156e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  660 coords 2  3.0752475780e-01  6.3384430977e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  661 coords 2  3.7438038567e-01  6.4114971968e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  662 coords 2  4.4923079054e-01  6.5403711275e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  663 coords 2  5.1597754923e-01  6.6006697164e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  664 coords 2  5.8326099176e-01  6.2479146659e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  665 coords 2  6.9889877829e-01  5.9049614128e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  666 coords 2  7.8844535209e-01  5.7331758571e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  667 coords 2 -9.1874154369e-01  6.0951939300e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  668 coords 2 -1.0000000002e+00  6.6885064432e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  669 coords 2 -7.5622704094e-01  6.6279212779e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  670 coords 2 -9.1874154374e-01  6.9624041804e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  671 coords 2 -8.2280719268e-01  7.2685938690e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  672 coords 2 -5.9960270410e-01  7.1064953969e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  673 coords 2 -7.4155114643e-01  7.5274234798e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  674 coords 2 -6.4816506563e-01  7.6801267829e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  675 coords 2 -4.5310725199e-01  7.3739042184e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  676 coords 2 -5.7279677505e-01  7.8998712912e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  677 coords 2 -4.9478922667e-01  8.0007774982e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  678 coords 2 -3.1529597601e-01  7.3411272531e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  679 coords 2 -4.2366206514e-01  8.0484418114e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  680 coords 2 -3.5094240262e-01  8.0438084073e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  681 coords 2 -1.8231022842e-01  7.2261886191e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  682 coords 2 -2.8425828817e-01  7.9633671288e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  683 coords 2 -2.1562217882e-01  7.9312194708e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  684 coords 2 -1.4932054569e-01  7.8967221153e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  685 coords 2 -8.2707838694e-02  7.8472078470e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  686 coords 2  1.9754525641e-01  6.9568928213e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  687 coords 2  1.0085949946e-01  7.6431344813e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  688 coords 2  1.6420157421e-01  7.6834360118e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  689 coords 2  3.3089503213e-01  7.0838031096e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  690 coords 2  2.3069572206e-01  7.7372922010e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  691 coords 2  2.9730899304e-01  7.7726460055e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  692 coords 2  4.6449741868e-01  7.2171557976e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  693 coords 2  3.6416462091e-01  7.8457001046e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  694 coords 2  4.3501878582e-01  7.8853050527e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  695 coords 2  5.9852761991e-01  6.9246993359e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  696 coords 2  5.0176554451e-01  7.9456036416e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  697 coords 2  5.8235417599e-01  7.8206288761e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  698 coords 2  7.3796787562e-01  7.2929390659e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  699 coords 2  7.5535763624e-01  6.4001587296e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  700 coords 2  6.4963761852e-01  7.4678738255e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  701 coords 2  8.2751444942e-01  7.1211535102e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  702 coords 2  7.2179443170e-01  8.1888686061e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  703 coords 2  7.8142297472e-01  9.0069669246e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  704 coords 2  9.0506234454e-01  7.6669714994e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  705 coords 2  9.0506234445e-01  9.0069669225e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  706 coords 2  9.2245210516e-01  6.7741911630e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  707 coords 2 -9.0406564923e-01  7.8619063822e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  708 coords 2 -1.0000000004e+00  8.7778583471e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  709 coords 2 -7.1474521738e-01  8.3207993740e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  710 coords 2 -9.0406564936e-01  9.0840480358e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  711 coords 2 -7.7907755966e-01  9.0840480370e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  712 coords 2 -5.4335158820e-01  8.5744088842e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  713 coords 2 -6.8569147887e-01  9.2367513401e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  714 coords 2 -5.9766149341e-01  9.2367513395e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  715 coords 2 -3.9262437730e-01  8.6706816871e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  716 coords 2 -5.1965394503e-01  9.3376575466e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  717 coords 2 -4.6071917042e-01  9.3376575464e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  718 coords 2 -4.0573670336e-01  9.3376575463e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  719 coords 2 -2.5126860544e-01  8.6339006250e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  720 coords 2 -3.3301704084e-01  9.3330241422e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  721 coords 2 -2.7397406738e-01  9.3330241422e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  722 coords 2 -1.1601978910e-01  8.5522386986e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  723 coords 2 -2.0533795804e-01  9.3008764842e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  724 coords 2 -1.4552227611e-01  9.3008764840e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  725 coords 2  1.0630404121e-02  8.4429783804e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  726 coords 2 -7.8909569120e-02  9.2513622157e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  727 coords 2 -2.0230872221e-02  9.2513622154e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  728 coords 2  1.3400996510e-01  8.4235338610e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  729 coords 2  3.9806614003e-02  9.1916161656e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  730 coords 2  9.6497214311e-02  9.1916161655e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  731 coords 2  2.6396531084e-01  8.4991891960e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  732 coords 2  1.5983928907e-01  9.2319176959e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  733 coords 2  2.1693279505e-01  9.2319176961e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  734 coords 2  4.0143274673e-01  8.5741479486e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  735 coords 2  2.8354606603e-01  9.2672715006e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  736 coords 2  3.3924668496e-01  9.2672715007e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  737 coords 2  3.9365695751e-01  9.2672715009e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  738 coords 2  5.5287554313e-01  8.4887781312e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  739 coords 2  4.6451112243e-01  9.3068764490e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  740 coords 2  5.2412720950e-01  9.3068764491e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  741 coords 2  6.9309271762e-01  9.1819016841e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  742 coords 2  6.0471584097e-01  9.1819016835e-01 ndofs 2 DofIDMask 2 7  8 bc 2 0  0
+node  743 coords 2  6.6434438399e-01  1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  744 coords 2  8.7636063037e-01  1.0000000000e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  745 coords 2  1.0000000002e+00  8.6600045753e-01 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  746 coords 2 -8.7501191085e-01  1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  747 coords 2 -6.6199383570e-01  1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  748 coords 2 -5.1502907563e-01  1.0000000002e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  749 coords 2 -4.0111183396e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  750 coords 2 -2.8708639344e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  751 coords 2 -1.6822773806e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  752 coords 2 -4.9733359238e-02  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  753 coords 2  6.5635937970e-02  1.0000000000e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  754 coords 2  1.7942004426e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  755 coords 2  2.9221416917e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  756 coords 2  4.0232506066e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+node  757 coords 2  5.1635142028e-01  1.0000000001e+00 ndofs 2 DofIDMask 2 7  8 bc 2 1  1
+Q2Q1TrStokes    1 nodes 6 196 183 197 710 711 746 crossSect 1 mat 2
+Q2Q1TrStokes    2 nodes 6 182 183 196 707 710 708 crossSect 1 mat 2
+Q2Q1TrStokes    3 nodes 6 184 197 183 713 711 709 crossSect 1 mat 2
+Q2Q1TrStokes    4 nodes 6 190 204 189 732 730 728 crossSect 1 mat 2
+Q2Q1TrStokes    5 nodes 6 175 189   3 687 227 225 crossSect 1 mat 1
+Q2Q1TrStokes    6 nodes 6 175 164 176 657 658 686 crossSect 1 mat 2
+Q2Q1TrStokes    7 nodes 6 176 190 175 690 688 686 crossSect 1 mat 2
+Q2Q1TrStokes    8 nodes 6 175 190 189 688 728 687 crossSect 1 mat 2
+Q2Q1TrStokes    9 nodes 6 194 208 193 743 742 741 crossSect 1 mat 2
+Q2Q1TrStokes   10 nodes 6 193 208 192 742 740 738 crossSect 1 mat 2
+Q2Q1TrStokes   11 nodes 6 149 148 135 613 577 578 crossSect 1 mat 1
+Q2Q1TrStokes   12 nodes 6 149 164 148 617 615 613 crossSect 1 mat 1
+Q2Q1TrStokes   13 nodes 6 183 182 169 707 670 671 crossSect 1 mat 2
+Q2Q1TrStokes   14 nodes 6 185 199 198 717 748 716 crossSect 1 mat 2
+Q2Q1TrStokes   15 nodes 6 198 184 185 714 712 716 crossSect 1 mat 2
+Q2Q1TrStokes   16 nodes 6 197 184 198 713 714 747 crossSect 1 mat 2
+Q2Q1TrStokes   17 nodes 6   3 189 188 227 725 226 crossSect 1 mat 1
+Q2Q1TrStokes   18 nodes 6 174 162   3 653 222 224 crossSect 1 mat 1
+Q2Q1TrStokes   19 nodes 6   3 188 174 226 685 224 crossSect 1 mat 1
+Q2Q1TrStokes   20 nodes 6 108 116 115 505 524 504 crossSect 1 mat 1
+Q2Q1TrStokes   21 nodes 6  99 108  98 490 489 486 crossSect 1 mat 2
+Q2Q1TrStokes   22 nodes 6  97  86  98 459 460 484 crossSect 1 mat 2
+Q2Q1TrStokes   23 nodes 6  98  86  99 460 461 486 crossSect 1 mat 2
+Q2Q1TrStokes   24 nodes 6  96  95  83 479 451 452 crossSect 1 mat 1
+Q2Q1TrStokes   25 nodes 6  83  95  94 451 478 450 crossSect 1 mat 1
+Q2Q1TrStokes   26 nodes 6  60  59  43 388 345 346 crossSect 1 mat 2
+Q2Q1TrStokes   27 nodes 6  60  43  44 346 344 348 crossSect 1 mat 2
+Q2Q1TrStokes   28 nodes 6  44  43  18 344 272 273 crossSect 1 mat 2
+Q2Q1TrStokes   29 nodes 6 111 119 129 512 534 513 crossSect 1 mat 2
+Q2Q1TrStokes   30 nodes 6 111 101   1 496 210 213 crossSect 1 mat 1
+Q2Q1TrStokes   31 nodes 6   1 119 111 215 512 213 crossSect 1 mat 1
+Q2Q1TrStokes   32 nodes 6 102 101  89 493 467 468 crossSect 1 mat 1
+Q2Q1TrStokes   33 nodes 6  89  90 102 465 470 468 crossSect 1 mat 2
+Q2Q1TrStokes   34 nodes 6   1 101 102 210 493 211 crossSect 1 mat 1
+Q2Q1TrStokes   35 nodes 6  75  90  89 432 465 431 crossSect 1 mat 2
+Q2Q1TrStokes   36 nodes 6  89  88  75 463 430 431 crossSect 1 mat 2
+Q2Q1TrStokes   37 nodes 6 100  88  89 464 463 466 crossSect 1 mat 2
+Q2Q1TrStokes   38 nodes 6 100 101 109 491 494 492 crossSect 1 mat 1
+Q2Q1TrStokes   39 nodes 6  89 101 100 467 491 466 crossSect 1 mat 1
+Q2Q1TrStokes   40 nodes 6 112 119   1 514 215 214 crossSect 1 mat 1
+Q2Q1TrStokes   41 nodes 6 192 208 207 740 757 739 crossSect 1 mat 2
+Q2Q1TrStokes   42 nodes 6 165 149 150 618 616 620 crossSect 1 mat 2
+Q2Q1TrStokes   43 nodes 6 164 149 165 617 618 656 crossSect 1 mat 2
+Q2Q1TrStokes   44 nodes 6 176 164 165 658 656 660 crossSect 1 mat 2
+Q2Q1TrStokes   45 nodes 6 165 177 176 661 689 660 crossSect 1 mat 2
+Q2Q1TrStokes   46 nodes 6 166 165 150 659 620 621 crossSect 1 mat 2
+Q2Q1TrStokes   47 nodes 6 177 165 166 661 659 662 crossSect 1 mat 2
+Q2Q1TrStokes   48 nodes 6 202 188 203 726 727 752 crossSect 1 mat 1
+Q2Q1TrStokes   49 nodes 6 189 204 203 730 753 729 crossSect 1 mat 1
+Q2Q1TrStokes   50 nodes 6 203 188 189 727 725 729 crossSect 1 mat 1
+Q2Q1TrStokes   51 nodes 6 176 177 191 689 693 691 crossSect 1 mat 2
+Q2Q1TrStokes   52 nodes 6 191 190 176 731 690 691 crossSect 1 mat 2
+Q2Q1TrStokes   53 nodes 6 191 177 192 693 694 734 crossSect 1 mat 2
+Q2Q1TrStokes   54 nodes 6 191 207 206 737 756 736 crossSect 1 mat 2
+Q2Q1TrStokes   55 nodes 6 192 207 191 739 737 734 crossSect 1 mat 2
+Q2Q1TrStokes   56 nodes 6 204 190 205 732 733 754 crossSect 1 mat 2
+Q2Q1TrStokes   57 nodes 6 205 191 206 735 736 755 crossSect 1 mat 2
+Q2Q1TrStokes   58 nodes 6 190 191 205 731 735 733 crossSect 1 mat 2
+Q2Q1TrStokes   59 nodes 6 164 175 163 657 655 654 crossSect 1 mat 1
+Q2Q1TrStokes   60 nodes 6 148 164 163 615 654 614 crossSect 1 mat 1
+Q2Q1TrStokes   61 nodes 6 163 175   3 655 225 223 crossSect 1 mat 1
+Q2Q1TrStokes   62 nodes 6 194 193 180 741 702 703 crossSect 1 mat 2
+Q2Q1TrStokes   63 nodes 6 180 209 194 705 744 703 crossSect 1 mat 2
+Q2Q1TrStokes   64 nodes 6 153 181 167 630 666 629 crossSect 1 mat 2
+Q2Q1TrStokes   65 nodes 6 153 154 181 628 631 630 crossSect 1 mat 2
+Q2Q1TrStokes   66 nodes 6 167 152 153 627 626 629 crossSect 1 mat 2
+Q2Q1TrStokes   67 nodes 6 150 149 136 616 580 581 crossSect 1 mat 2
+Q2Q1TrStokes   68 nodes 6 136 149 135 580 578 576 crossSect 1 mat 1
+Q2Q1TrStokes   69 nodes 6 135 123 136 546 547 576 crossSect 1 mat 1
+Q2Q1TrStokes   70 nodes 6 136 123 124 547 545 549 crossSect 1 mat 1
+Q2Q1TrStokes   71 nodes 6 150 136 137 581 579 583 crossSect 1 mat 2
+Q2Q1TrStokes   72 nodes 6 137 136 124 579 549 550 crossSect 1 mat 2
+Q2Q1TrStokes   73 nodes 6 138 152 137 587 585 582 crossSect 1 mat 2
+Q2Q1TrStokes   74 nodes 6 114 138 125 523 552 521 crossSect 1 mat 2
+Q2Q1TrStokes   75 nodes 6 138 137 125 582 551 552 crossSect 1 mat 2
+Q2Q1TrStokes   76 nodes 6 125 137 124 551 550 548 crossSect 1 mat 2
+Q2Q1TrStokes   77 nodes 6 120 112 121 515 516 536 crossSect 1 mat 1
+Q2Q1TrStokes   78 nodes 6 119 112 120 514 515 533 crossSect 1 mat 1
+Q2Q1TrStokes   79 nodes 6 186 201 200 721 750 720 crossSect 1 mat 2
+Q2Q1TrStokes   80 nodes 6 200 199 185 749 717 718 crossSect 1 mat 2
+Q2Q1TrStokes   81 nodes 6 185 186 200 715 720 718 crossSect 1 mat 2
+Q2Q1TrStokes   82 nodes 6 185 184 171 712 676 677 crossSect 1 mat 2
+Q2Q1TrStokes   83 nodes 6 162 174 161 653 652 650 crossSect 1 mat 1
+Q2Q1TrStokes   84 nodes 6 187 174 188 684 685 722 crossSect 1 mat 1
+Q2Q1TrStokes   85 nodes 6 187 201 186 723 721 719 crossSect 1 mat 2
+Q2Q1TrStokes   86 nodes 6 202 201 187 751 723 724 crossSect 1 mat 2
+Q2Q1TrStokes   87 nodes 6 187 188 202 722 726 724 crossSect 1 mat 1
+Q2Q1TrStokes   88 nodes 6  99  86  87 461 458 462 crossSect 1 mat 2
+Q2Q1TrStokes   89 nodes 6  72  73  87 422 426 425 crossSect 1 mat 2
+Q2Q1TrStokes   90 nodes 6  87  86  72 458 424 425 crossSect 1 mat 2
+Q2Q1TrStokes   91 nodes 6  85  86  97 456 459 457 crossSect 1 mat 2
+Q2Q1TrStokes   92 nodes 6  72  86  85 424 456 423 crossSect 1 mat 2
+Q2Q1TrStokes   93 nodes 6 108 115 107 504 503 501 crossSect 1 mat 1
+Q2Q1TrStokes   94 nodes 6 107  98 108 488 489 501 crossSect 1 mat 1
+Q2Q1TrStokes   95 nodes 6 107 115 114 503 520 502 crossSect 1 mat 1
+Q2Q1TrStokes   96 nodes 6  84  96  83 454 452 449 crossSect 1 mat 2
+Q2Q1TrStokes   97 nodes 6  70  85  84 419 453 418 crossSect 1 mat 2
+Q2Q1TrStokes   98 nodes 6  97  96  84 481 454 455 crossSect 1 mat 2
+Q2Q1TrStokes   99 nodes 6  84  85  97 453 457 455 crossSect 1 mat 2
+Q2Q1TrStokes  100 nodes 6 168 169 182 667 670 668 crossSect 1 mat 2
+Q2Q1TrStokes  101 nodes 6 118 111 129 511 513 531 crossSect 1 mat 2
+Q2Q1TrStokes  102 nodes 6 156 168 155 636 634 633 crossSect 1 mat 2
+Q2Q1TrStokes  103 nodes 6 169 168 156 667 636 637 crossSect 1 mat 2
+Q2Q1TrStokes  104 nodes 6  19  44  18 276 273 271 crossSect 1 mat 2
+Q2Q1TrStokes  105 nodes 6  19   6  20 237 238 274 crossSect 1 mat 2
+Q2Q1TrStokes  106 nodes 6  19  18   5 271 234 235 crossSect 1 mat 2
+Q2Q1TrStokes  107 nodes 6   5   6  19 233 237 235 crossSect 1 mat 2
+Q2Q1TrStokes  108 nodes 6   1 102 103 211 497 212 crossSect 1 mat 1
+Q2Q1TrStokes  109 nodes 6  76  75  60 429 392 393 crossSect 1 mat 2
+Q2Q1TrStokes  110 nodes 6  90  75  76 432 429 434 crossSect 1 mat 2
+Q2Q1TrStokes  111 nodes 6  74  75  88 427 430 428 crossSect 1 mat 2
+Q2Q1TrStokes  112 nodes 6  74  59  60 389 388 391 crossSect 1 mat 2
+Q2Q1TrStokes  113 nodes 6  60  75  74 392 427 391 crossSect 1 mat 2
+Q2Q1TrStokes  114 nodes 6  22  23  35 284 288 286 crossSect 1 mat 2
+Q2Q1TrStokes  115 nodes 6  20   6   7 238 236 240 crossSect 1 mat 2
+Q2Q1TrStokes  116 nodes 6   7  21  20 241 277 240 crossSect 1 mat 2
+Q2Q1TrStokes  117 nodes 6  93 104  92 477 476 475 crossSect 1 mat 1
+Q2Q1TrStokes  118 nodes 6 146 133 134 573 571 574 crossSect 1 mat 1
+Q2Q1TrStokes  119 nodes 6 133 122 134 543 544 571 crossSect 1 mat 1
+Q2Q1TrStokes  120 nodes 6 167 181 179 666 699 665 crossSect 1 mat 2
+Q2Q1TrStokes  121 nodes 6 181 180 179 701 698 699 crossSect 1 mat 2
+Q2Q1TrStokes  122 nodes 6 179 180 193 698 702 700 crossSect 1 mat 2
+Q2Q1TrStokes  123 nodes 6 181 154 195 631 632 706 crossSect 1 mat 2
+Q2Q1TrStokes  124 nodes 6 195 180 181 704 701 706 crossSect 1 mat 2
+Q2Q1TrStokes  125 nodes 6 209 180 195 705 704 745 crossSect 1 mat 2
+Q2Q1TrStokes  126 nodes 6 154 153 140 628 591 592 crossSect 1 mat 2
+Q2Q1TrStokes  127 nodes 6 139 152 138 589 587 586 crossSect 1 mat 2
+Q2Q1TrStokes  128 nodes 6 139 153 152 590 626 589 crossSect 1 mat 2
+Q2Q1TrStokes  129 nodes 6 127 140 139 557 588 556 crossSect 1 mat 2
+Q2Q1TrStokes  130 nodes 6 139 140 153 588 591 590 crossSect 1 mat 2
+Q2Q1TrStokes  131 nodes 6 151 166 150 623 621 619 crossSect 1 mat 2
+Q2Q1TrStokes  132 nodes 6 150 137 151 583 584 619 crossSect 1 mat 2
+Q2Q1TrStokes  133 nodes 6 167 179 151 665 625 624 crossSect 1 mat 2
+Q2Q1TrStokes  134 nodes 6 151 179 166 625 664 623 crossSect 1 mat 2
+Q2Q1TrStokes  135 nodes 6 151 152 167 622 627 624 crossSect 1 mat 2
+Q2Q1TrStokes  136 nodes 6 151 137 152 584 585 622 crossSect 1 mat 2
+Q2Q1TrStokes  137 nodes 6  95  96 105 479 482 480 crossSect 1 mat 1
+Q2Q1TrStokes  138 nodes 6 121 122 132 540 542 541 crossSect 1 mat 1
+Q2Q1TrStokes  139 nodes 6 132 120 121 539 536 541 crossSect 1 mat 1
+Q2Q1TrStokes  140 nodes 6 132 122 133 542 543 570 crossSect 1 mat 1
+Q2Q1TrStokes  141 nodes 6 170 171 184 672 676 674 crossSect 1 mat 2
+Q2Q1TrStokes  142 nodes 6 170 184 183 674 709 673 crossSect 1 mat 2
+Q2Q1TrStokes  143 nodes 6 183 169 170 671 669 673 crossSect 1 mat 2
+Q2Q1TrStokes  144 nodes 6 158 171 170 643 672 642 crossSect 1 mat 2
+Q2Q1TrStokes  145 nodes 6 145 133 146 572 573 604 crossSect 1 mat 2
+Q2Q1TrStokes  146 nodes 6 172 186 185 680 715 679 crossSect 1 mat 2
+Q2Q1TrStokes  147 nodes 6 185 171 172 677 675 679 crossSect 1 mat 2
+Q2Q1TrStokes  148 nodes 6  72  85  71 423 421 420 crossSect 1 mat 2
+Q2Q1TrStokes  149 nodes 6  71  85  70 421 419 417 crossSect 1 mat 2
+Q2Q1TrStokes  150 nodes 6  83  94  82 450 448 447 crossSect 1 mat 1
+Q2Q1TrStokes  151 nodes 6  82  94  81 448 446 445 crossSect 1 mat 1
+Q2Q1TrStokes  152 nodes 6  17  29  16 268 267 265 crossSect 1 mat 2
+Q2Q1TrStokes  153 nodes 6  42  29  17 305 268 270 crossSect 1 mat 2
+Q2Q1TrStokes  154 nodes 6  42  30  58 307 308 343 crossSect 1 mat 2
+Q2Q1TrStokes  155 nodes 6  42  17  30 270 269 307 crossSect 1 mat 2
+Q2Q1TrStokes  156 nodes 6  69  84  83 416 449 415 crossSect 1 mat 2
+Q2Q1TrStokes  157 nodes 6  70  84  69 418 416 413 crossSect 1 mat 2
+Q2Q1TrStokes  158 nodes 6  69  54  70 375 376 413 crossSect 1 mat 2
+Q2Q1TrStokes  159 nodes 6  83  82  69 447 414 415 crossSect 1 mat 2
+Q2Q1TrStokes  160 nodes 6  69  82  54 414 377 375 crossSect 1 mat 2
+Q2Q1TrStokes  161 nodes 6   4  50  36 231 325 229 crossSect 1 mat 1
+Q2Q1TrStokes  162 nodes 6  35  23  36 288 289 321 crossSect 1 mat 2
+Q2Q1TrStokes  163 nodes 6 117 118 128 528 530 529 crossSect 1 mat 2
+Q2Q1TrStokes  164 nodes 6 142 118 129 532 531 561 crossSect 1 mat 2
+Q2Q1TrStokes  165 nodes 6 142 129 143 561 562 595 crossSect 1 mat 2
+Q2Q1TrStokes  166 nodes 6 141 128 142 558 559 593 crossSect 1 mat 2
+Q2Q1TrStokes  167 nodes 6 142 128 118 559 530 532 crossSect 1 mat 2
+Q2Q1TrStokes  168 nodes 6 143 156 142 599 597 595 crossSect 1 mat 2
+Q2Q1TrStokes  169 nodes 6 155 141 142 594 593 596 crossSect 1 mat 2
+Q2Q1TrStokes  170 nodes 6 142 156 155 597 633 596 crossSect 1 mat 2
+Q2Q1TrStokes  171 nodes 6 110 118 117 510 528 509 crossSect 1 mat 2
+Q2Q1TrStokes  172 nodes 6 111 118 110 511 510 508 crossSect 1 mat 2
+Q2Q1TrStokes  173 nodes 6 110 117 109 509 507 506 crossSect 1 mat 1
+Q2Q1TrStokes  174 nodes 6 109 101 110 494 495 506 crossSect 1 mat 1
+Q2Q1TrStokes  175 nodes 6 101 111 110 496 508 495 crossSect 1 mat 1
+Q2Q1TrStokes  176 nodes 6  10  22   9 248 246 245 crossSect 1 mat 2
+Q2Q1TrStokes  177 nodes 6  23  22  10 284 248 249 crossSect 1 mat 2
+Q2Q1TrStokes  178 nodes 6  12  25  24 255 290 254 crossSect 1 mat 1
+Q2Q1TrStokes  179 nodes 6  24  36  23 291 289 287 crossSect 1 mat 1
+Q2Q1TrStokes  180 nodes 6   4  36  24 229 291 228 crossSect 1 mat 1
+Q2Q1TrStokes  181 nodes 6  21   7   8 241 239 243 crossSect 1 mat 2
+Q2Q1TrStokes  182 nodes 6   9  22   8 246 244 242 crossSect 1 mat 2
+Q2Q1TrStokes  183 nodes 6   8  22  21 244 281 243 crossSect 1 mat 2
+Q2Q1TrStokes  184 nodes 6  31  19  20 275 274 278 crossSect 1 mat 2
+Q2Q1TrStokes  185 nodes 6  44  19  31 276 275 310 crossSect 1 mat 2
+Q2Q1TrStokes  186 nodes 6  31  45  44 311 347 310 crossSect 1 mat 2
+Q2Q1TrStokes  187 nodes 6  20  21  33 277 282 280 crossSect 1 mat 2
+Q2Q1TrStokes  188 nodes 6  60  44  61 348 349 390 crossSect 1 mat 2
+Q2Q1TrStokes  189 nodes 6  44  45  61 347 351 349 crossSect 1 mat 2
+Q2Q1TrStokes  190 nodes 6  61  76  60 395 393 390 crossSect 1 mat 2
+Q2Q1TrStokes  191 nodes 6  61  62  76 394 397 395 crossSect 1 mat 2
+Q2Q1TrStokes  192 nodes 6  45  62  61 352 394 351 crossSect 1 mat 2
+Q2Q1TrStokes  193 nodes 6  66  80  65 408 407 405 crossSect 1 mat 1
+Q2Q1TrStokes  194 nodes 6 104 103  91 498 473 474 crossSect 1 mat 1
+Q2Q1TrStokes  195 nodes 6  91  92 104 471 476 474 crossSect 1 mat 1
+Q2Q1TrStokes  196 nodes 6  91 103 102 473 497 472 crossSect 1 mat 1
+Q2Q1TrStokes  197 nodes 6  91 102  90 472 470 469 crossSect 1 mat 2
+Q2Q1TrStokes  198 nodes 6 146 134 147 574 575 608 crossSect 1 mat 1
+Q2Q1TrStokes  199 nodes 6 147 161 146 611 610 608 crossSect 1 mat 1
+Q2Q1TrStokes  200 nodes 6 162 161 147 650 611 612 crossSect 1 mat 1
+Q2Q1TrStokes  201 nodes 6 178 179 193 695 700 697 crossSect 1 mat 2
+Q2Q1TrStokes  202 nodes 6 166 179 178 664 695 663 crossSect 1 mat 2
+Q2Q1TrStokes  203 nodes 6 177 166 178 662 663 692 crossSect 1 mat 2
+Q2Q1TrStokes  204 nodes 6 192 177 178 694 692 696 crossSect 1 mat 2
+Q2Q1TrStokes  205 nodes 6 178 193 192 697 738 696 crossSect 1 mat 2
+Q2Q1TrStokes  206 nodes 6 126 138 114 554 523 522 crossSect 1 mat 2
+Q2Q1TrStokes  207 nodes 6 126 139 138 555 586 554 crossSect 1 mat 2
+Q2Q1TrStokes  208 nodes 6 127 139 126 556 555 553 crossSect 1 mat 2
+Q2Q1TrStokes  209 nodes 6 114 115 126 520 525 522 crossSect 1 mat 2
+Q2Q1TrStokes  210 nodes 6 126 116 127 526 527 553 crossSect 1 mat 2
+Q2Q1TrStokes  211 nodes 6 126 115 116 525 524 526 crossSect 1 mat 2
+Q2Q1TrStokes  212 nodes 6 124 123 113 545 517 518 crossSect 1 mat 1
+Q2Q1TrStokes  213 nodes 6 113 125 124 519 548 518 crossSect 1 mat 1
+Q2Q1TrStokes  214 nodes 6 106 105  96 499 482 483 crossSect 1 mat 1
+Q2Q1TrStokes  215 nodes 6 106  96  97 483 481 485 crossSect 1 mat 2
+Q2Q1TrStokes  216 nodes 6  97  98 106 484 487 485 crossSect 1 mat 2
+Q2Q1TrStokes  217 nodes 6  98 107 106 488 500 487 crossSect 1 mat 1
+Q2Q1TrStokes  218 nodes 6 158 170 157 642 640 638 crossSect 1 mat 2
+Q2Q1TrStokes  219 nodes 6 157 170 169 640 669 639 crossSect 1 mat 2
+Q2Q1TrStokes  220 nodes 6 157 156 143 635 599 600 crossSect 1 mat 2
+Q2Q1TrStokes  221 nodes 6 169 156 157 637 635 639 crossSect 1 mat 2
+Q2Q1TrStokes  222 nodes 6 131 132 133 566 570 567 crossSect 1 mat 2
+Q2Q1TrStokes  223 nodes 6 133 145 131 572 569 567 crossSect 1 mat 2
+Q2Q1TrStokes  224 nodes 6 120 132 131 539 566 538 crossSect 1 mat 2
+Q2Q1TrStokes  225 nodes 6 173 161 174 651 652 681 crossSect 1 mat 2
+Q2Q1TrStokes  226 nodes 6 174 187 173 684 683 681 crossSect 1 mat 2
+Q2Q1TrStokes  227 nodes 6 173 187 186 683 719 682 crossSect 1 mat 2
+Q2Q1TrStokes  228 nodes 6 186 172 173 680 678 682 crossSect 1 mat 2
+Q2Q1TrStokes  229 nodes 6  54  82  68 377 412 374 crossSect 1 mat 2
+Q2Q1TrStokes  230 nodes 6  81  67  68 410 409 411 crossSect 1 mat 1
+Q2Q1TrStokes  231 nodes 6  68  82  81 412 445 411 crossSect 1 mat 1
+Q2Q1TrStokes  232 nodes 6  29  42  56 305 341 306 crossSect 1 mat 2
+Q2Q1TrStokes  233 nodes 6  29  56  41 306 340 304 crossSect 1 mat 2
+Q2Q1TrStokes  234 nodes 6  49  36  50 324 325 362 crossSect 1 mat 1
+Q2Q1TrStokes  235 nodes 6  49  65  48 363 361 359 crossSect 1 mat 2
+Q2Q1TrStokes  236 nodes 6  49  48  35 359 322 323 crossSect 1 mat 2
+Q2Q1TrStokes  237 nodes 6  35  36  49 321 324 323 crossSect 1 mat 2
+Q2Q1TrStokes  238 nodes 6  49  50  66 362 365 364 crossSect 1 mat 1
+Q2Q1TrStokes  239 nodes 6  66  65  49 405 363 364 crossSect 1 mat 1
+Q2Q1TrStokes  240 nodes 6  13  25  12 257 255 253 crossSect 1 mat 1
+Q2Q1TrStokes  241 nodes 6  27  14  15 261 259 263 crossSect 1 mat 2
+Q2Q1TrStokes  242 nodes 6  12  24  11 254 252 250 crossSect 1 mat 1
+Q2Q1TrStokes  243 nodes 6  11  24  23 252 287 251 crossSect 1 mat 1
+Q2Q1TrStokes  244 nodes 6  23  10  11 249 247 251 crossSect 1 mat 2
+Q2Q1TrStokes  245 nodes 6  45  31  32 311 309 313 crossSect 1 mat 2
+Q2Q1TrStokes  246 nodes 6  32  31  20 309 278 279 crossSect 1 mat 2
+Q2Q1TrStokes  247 nodes 6  20  33  32 280 312 279 crossSect 1 mat 2
+Q2Q1TrStokes  248 nodes 6  35  48  34 322 320 318 crossSect 1 mat 2
+Q2Q1TrStokes  249 nodes 6  34  22  35 285 286 318 crossSect 1 mat 2
+Q2Q1TrStokes  250 nodes 6  21  22  34 281 285 283 crossSect 1 mat 2
+Q2Q1TrStokes  251 nodes 6  34  33  21 315 282 283 crossSect 1 mat 2
+Q2Q1TrStokes  252 nodes 6  92  91  77 471 437 438 crossSect 1 mat 2
+Q2Q1TrStokes  253 nodes 6  77  91  90 437 469 436 crossSect 1 mat 2
+Q2Q1TrStokes  254 nodes 6  90  76  77 434 433 436 crossSect 1 mat 2
+Q2Q1TrStokes  255 nodes 6  76  62  77 397 398 433 crossSect 1 mat 2
+Q2Q1TrStokes  256 nodes 6  48  65  64 361 402 360 crossSect 1 mat 2
+Q2Q1TrStokes  257 nodes 6 105 106   2 499 217 216 crossSect 1 mat 1
+Q2Q1TrStokes  258 nodes 6 114 125   2 521 221 220 crossSect 1 mat 1
+Q2Q1TrStokes  259 nodes 6   2 107 114 218 502 220 crossSect 1 mat 1
+Q2Q1TrStokes  260 nodes 6   2 106 107 217 500 218 crossSect 1 mat 1
+Q2Q1TrStokes  261 nodes 6 125 113   2 519 219 221 crossSect 1 mat 1
+Q2Q1TrStokes  262 nodes 6 120 131 130 538 563 537 crossSect 1 mat 2
+Q2Q1TrStokes  263 nodes 6 129 119 130 534 535 560 crossSect 1 mat 2
+Q2Q1TrStokes  264 nodes 6 119 120 130 533 537 535 crossSect 1 mat 2
+Q2Q1TrStokes  265 nodes 6 143 129 130 562 560 564 crossSect 1 mat 2
+Q2Q1TrStokes  266 nodes 6 144 157 143 602 600 598 crossSect 1 mat 2
+Q2Q1TrStokes  267 nodes 6 158 157 144 638 602 603 crossSect 1 mat 2
+Q2Q1TrStokes  268 nodes 6 143 130 144 564 565 598 crossSect 1 mat 2
+Q2Q1TrStokes  269 nodes 6 144 130 131 565 563 568 crossSect 1 mat 2
+Q2Q1TrStokes  270 nodes 6 144 145 158 601 605 603 crossSect 1 mat 2
+Q2Q1TrStokes  271 nodes 6 144 131 145 568 569 601 crossSect 1 mat 2
+Q2Q1TrStokes  272 nodes 6 146 161 160 610 647 609 crossSect 1 mat 2
+Q2Q1TrStokes  273 nodes 6 161 173 160 651 649 647 crossSect 1 mat 2
+Q2Q1TrStokes  274 nodes 6 160 173 172 649 678 648 crossSect 1 mat 2
+Q2Q1TrStokes  275 nodes 6 160 145 146 607 604 609 crossSect 1 mat 2
+Q2Q1TrStokes  276 nodes 6  53  40  54 336 337 371 crossSect 1 mat 2
+Q2Q1TrStokes  277 nodes 6  54  68  53 374 372 371 crossSect 1 mat 2
+Q2Q1TrStokes  278 nodes 6  70  54  55 376 373 379 crossSect 1 mat 2
+Q2Q1TrStokes  279 nodes 6  54  40  55 337 338 373 crossSect 1 mat 2
+Q2Q1TrStokes  280 nodes 6  55  71  70 380 417 379 crossSect 1 mat 2
+Q2Q1TrStokes  281 nodes 6  55  56  71 378 382 380 crossSect 1 mat 2
+Q2Q1TrStokes  282 nodes 6  40  41  55 335 339 338 crossSect 1 mat 2
+Q2Q1TrStokes  283 nodes 6  55  41  56 339 340 378 crossSect 1 mat 2
+Q2Q1TrStokes  284 nodes 6  57  42  58 342 343 383 crossSect 1 mat 2
+Q2Q1TrStokes  285 nodes 6  57  56  42 381 341 342 crossSect 1 mat 2
+Q2Q1TrStokes  286 nodes 6  71  56  57 382 381 384 crossSect 1 mat 2
+Q2Q1TrStokes  287 nodes 6  72  71  57 420 384 385 crossSect 1 mat 2
+Q2Q1TrStokes  288 nodes 6  58  73  57 387 386 383 crossSect 1 mat 2
+Q2Q1TrStokes  289 nodes 6  57  73  72 386 422 385 crossSect 1 mat 2
+Q2Q1TrStokes  290 nodes 6  15  16  28 262 266 264 crossSect 1 mat 2
+Q2Q1TrStokes  291 nodes 6  28  27  15 298 263 264 crossSect 1 mat 2
+Q2Q1TrStokes  292 nodes 6  28  16  29 266 267 301 crossSect 1 mat 2
+Q2Q1TrStokes  293 nodes 6  29  41  28 304 303 301 crossSect 1 mat 2
+Q2Q1TrStokes  294 nodes 6  45  32  46 313 314 350 crossSect 1 mat 2
+Q2Q1TrStokes  295 nodes 6  63  62  46 396 354 355 crossSect 1 mat 2
+Q2Q1TrStokes  296 nodes 6  46  62  45 354 352 350 crossSect 1 mat 2
+Q2Q1TrStokes  297 nodes 6  46  32  33 314 312 316 crossSect 1 mat 2
+Q2Q1TrStokes  298 nodes 6  92  77  78 438 435 440 crossSect 1 mat 2
+Q2Q1TrStokes  299 nodes 6  63  64  78 400 403 401 crossSect 1 mat 2
+Q2Q1TrStokes  300 nodes 6  78  62  63 399 396 401 crossSect 1 mat 2
+Q2Q1TrStokes  301 nodes 6  78  77  62 435 398 399 crossSect 1 mat 2
+Q2Q1TrStokes  302 nodes 6  79  65  80 406 407 441 crossSect 1 mat 1
+Q2Q1TrStokes  303 nodes 6  79  64  65 404 402 406 crossSect 1 mat 2
+Q2Q1TrStokes  304 nodes 6  79  78  64 439 403 404 crossSect 1 mat 2
+Q2Q1TrStokes  305 nodes 6  79  80  93 441 444 443 crossSect 1 mat 1
+Q2Q1TrStokes  306 nodes 6  93  92  79 475 442 443 crossSect 1 mat 1
+Q2Q1TrStokes  307 nodes 6  92  78  79 440 439 442 crossSect 1 mat 1
+Q2Q1TrStokes  308 nodes 6 159 160 172 644 648 646 crossSect 1 mat 2
+Q2Q1TrStokes  309 nodes 6 159 171 158 645 643 641 crossSect 1 mat 2
+Q2Q1TrStokes  310 nodes 6 159 172 171 646 675 645 crossSect 1 mat 2
+Q2Q1TrStokes  311 nodes 6 158 145 159 605 606 641 crossSect 1 mat 2
+Q2Q1TrStokes  312 nodes 6 145 160 159 607 644 606 crossSect 1 mat 2
+Q2Q1TrStokes  313 nodes 6  47  46  33 353 316 317 crossSect 1 mat 2
+Q2Q1TrStokes  314 nodes 6  47  34  48 319 320 356 crossSect 1 mat 2
+Q2Q1TrStokes  315 nodes 6  33  34  47 315 319 317 crossSect 1 mat 2
+Q2Q1TrStokes  316 nodes 6  48  64  47 360 358 356 crossSect 1 mat 2
+Q2Q1TrStokes  317 nodes 6  47  64  63 358 400 357 crossSect 1 mat 2
+Q2Q1TrStokes  318 nodes 6  63  46  47 355 353 357 crossSect 1 mat 2
+Q2Q1TrStokes  319 nodes 6  39  38  27 329 299 300 crossSect 1 mat 2
+Q2Q1TrStokes  320 nodes 6  39  41  40 333 335 332 crossSect 1 mat 2
+Q2Q1TrStokes  321 nodes 6  40  53  39 336 334 332 crossSect 1 mat 2
+Q2Q1TrStokes  322 nodes 6  53  38  39 331 329 334 crossSect 1 mat 2
+Q2Q1TrStokes  323 nodes 6  39  28  41 302 303 333 crossSect 1 mat 2
+Q2Q1TrStokes  324 nodes 6  27  28  39 298 302 300 crossSect 1 mat 2
+Q2Q1TrStokes  325 nodes 6  27  38  26 299 297 295 crossSect 1 mat 2
+Q2Q1TrStokes  326 nodes 6  25  13  26 257 258 293 crossSect 1 mat 2
+Q2Q1TrStokes  327 nodes 6  26  13  14 258 256 260 crossSect 1 mat 2
+Q2Q1TrStokes  328 nodes 6  14  27  26 261 295 260 crossSect 1 mat 2
+Q2Q1TrStokes  329 nodes 6   4  24  37 228 292 230 crossSect 1 mat 1
+Q2Q1TrStokes  330 nodes 6  37  24  25 292 290 294 crossSect 1 mat 1
+Q2Q1TrStokes  331 nodes 6  25  26  37 293 296 294 crossSect 1 mat 2
+Q2Q1TrStokes  332 nodes 6  37  26  38 296 297 326 crossSect 1 mat 2
+Q2Q1TrStokes  333 nodes 6  52  68  67 370 409 369 crossSect 1 mat 1
+Q2Q1TrStokes  334 nodes 6  52  53  68 368 372 370 crossSect 1 mat 2
+Q2Q1TrStokes  335 nodes 6  52  38  53 330 331 368 crossSect 1 mat 2
+Q2Q1TrStokes  336 nodes 6  52  37  38 328 326 330 crossSect 1 mat 2
+Q2Q1TrStokes  337 nodes 6  51  52  67 366 369 367 crossSect 1 mat 1
+Q2Q1TrStokes  338 nodes 6   4  37  51 230 327 232 crossSect 1 mat 1
+Q2Q1TrStokes  339 nodes 6  37  52  51 328 366 327 crossSect 1 mat 1
+SurfaceTension2DQ2 340 nodes 3   1 103 212 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 341 nodes 3   1 112 214 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 342 nodes 3   2 105 216 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 343 nodes 3   2 113 219 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 344 nodes 3   3 162 222 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 345 nodes 3   3 163 223 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 346 nodes 3   4  50 231 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 347 nodes 3   4  51 232 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 348 nodes 3  50  66 365 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 349 nodes 3  51  67 367 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 350 nodes 3  66  80 408 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 351 nodes 3  67  81 410 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 352 nodes 3  80  93 444 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 353 nodes 3  81  94 446 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 354 nodes 3  93 104 477 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 355 nodes 3  94  95 478 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 356 nodes 3  95 105 480 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 357 nodes 3 103 104 498 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 358 nodes 3 112 121 516 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 359 nodes 3 113 123 517 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 360 nodes 3 121 122 540 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 361 nodes 3 122 134 544 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 362 nodes 3 123 135 546 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 363 nodes 3 134 147 575 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 364 nodes 3 135 148 577 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 365 nodes 3 147 162 612 crossSect 1 mat 1 gamma_s 2.00000e-01
+SurfaceTension2DQ2 366 nodes 3 148 163 614 crossSect 1 mat 1 gamma_s 2.00000e-01
+emptycs 1
+NewtonianFluid 1 d 1.0 mu 1.0
+NewtonianFluid 2 d 1.0 mu 10.0
+PrescribedGradient 1 loadTimeFunction 1 ccord 2 0.0 0.0 gradient 2 2 {0.000000e+00 0.000000e+00; 0.000000e+00 0.000000e+00}
+ConstantFunction 1 f(t) 1.0

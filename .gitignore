@@ -13,4 +13,4 @@
 *.backup
 *.mat
 *.zip
-
+*.sw*

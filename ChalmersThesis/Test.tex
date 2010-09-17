@@ -1,12 +1,12 @@
 % USE PDFLATEX WITH THIS DOCUMENT. If you wish to use ordinary latex (why?) then convert the figures in figures/ to eps.
-\documentclass[a4paper,12pt,bachelor]{chalmers-thesis}
+\documentclass{chalmers-thesis}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
-
+\usepackage{amsmath}
 
 \coverfigure{figures/COVER_93_iso.png}
 \covercaption{Some explanation}
-\title{The Title of Your Thesis}
+\title{The Title of Your Thesis which might be very long.}
 \subtitle{And Perhaps a Subtitle}
 \author{Some Author\and Other Author}
 \thesis{Master's thesis in Some Programme}
@@ -21,6 +21,15 @@
 \keywords{Some stuff, More stuff, Stuff}
 
 % The following part is automatically generated, go to document start
+\newcounter{paper}
+\setcounter{paper}{0}
+\renewcommand{\thepaper}{\Alph{paper}}
+\newcommand{\paper}[2]{WTF!}
+%\newcommand\section{\@startsection {section}{1}{\z@}%
+%                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+%                                   {2.3ex \@plus.2ex}%
+%                                   {\normalfont\Large\bfseries}}
+%\addcontents{lop}{entry} % Writes list of papers as *.lop
 
 \begin{document}
 \maketitle
@@ -32,11 +41,19 @@
 % or a blank box
 \mbox{}
 
+%\listofpapers
+
+\paper{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{cite1}
+%\
+
+%\paper[B]{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{cite2}
+
 % Real contents of report starts here
 % Splitting it up to several files help when working together.
 % Floatbarriers prevent figures from beeing placed into the next chapter.
 \input{Introduction}%\FloatBarrier
-%\input{Theory}\FloatBarrier
+
+% \input{Theory}\FloatBarrier
 % \input{Method}\FloatBarrier
 % \input{Results}\FloatBarrier
 % \input{Conclusions}

@@ -7,7 +7,7 @@
 
 \ProvidesClass{chalmers-thesis}[2010/09/09 CHALMERS Thesis class]
 
-\DeclareOption{bachelor}{\message{bachelor! lol}}%\@bachelortrue}
+%\DeclareOption{bachelor}{\@bachelortrue}
 %\DeclareOption{masters}{\@masterstrue}
 %\DeclareOption{licenciate}{\@licenciatetrue}
 %\DeclareOption{doctorate}{\@doctoratetrue}
@@ -153,7 +153,7 @@
  \end{center}
  {\huge\noindent\@title\par} % title, 21
  \@ifundefined{@subtitle}{}{{\large\noindent\@subtitle\par}} % subtitle, 16
- {\normalsize\noindent\textit{\@thesis}\par} % 14
+ {\normalsize\noindent\textit{\@thesis}\par} % 14 thesis in programmename (only bachelor and master's)
  \vskip 5mm
  {\renewcommand{\and}{\\}\Large\noindent \MakeUppercase{\@author}\par}% 18
  \vskip 6mm
@@ -218,7 +218,7 @@
  {\noindent \@title\\
   %\makeatletter\@ifundefined{mysubtitle}{}{\mysubtitle\\}\makeatother
   \@ifundefined{@subtitle}{}{\@subtitle\\}
-  \@thesis\\ % (if applicable) % Thesis in programmename
+  \@thesis\\ % (if applicable) thesis in programmename
   {\renewcommand{\and}{\\}\MakeUppercase{\@author}}\\
   \@department\\
   \@ifundefined{@division}{}{\@division\\}

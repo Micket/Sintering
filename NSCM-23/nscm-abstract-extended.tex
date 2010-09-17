@@ -1,0 +1,81 @@
+\documentclass{nordic}
+\usepackage[utf8]{inputenc} % In case one needs to specify character encoding
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+
+\newcommand{\NSCM}{23}
+\newcommand{\submissionyear}{2010}
+\newcommand{\submissiondate}{September 20th 2010}
+\newcommand{\submissionpage}{http://congress.cimne.upc.es/nscm-\NSCM/frontal}
+
+\header{
+  \NSCM rd Nordic Seminar on Computational Mechanics\\
+  NSCM-\NSCM\\
+  A. Eriksson and G. Tibert (Eds)\\
+  \copyright KTH, Stockholm, \submissionyear
+}
+
+\title{Multiscale Modeling of Sintering of Hard Metals}
+
+\author{Mikael Öhman$^*$, Kenneth Runesson and Fredrik Larsson}
+
+\heading{Mikael Öhman, Kenneth Runesson and Fredrik Larsson}
+
+\address{%
+Department of Applied Mechanics\\
+Chalmers University of Technology\\
+Gothenburg, Sweden\\
+e-mail: \url{mikael.ohman@chalmers.se}, web page: \url{http://www.chalmers.se/am/EN/}
+}
+
+\keywords{Sintering, Sintering stress, Surface tension, Homogenization, FE$^2$}
+
+\abstract{%
+In this contribution, we discuss the multiscale modeling of sintering of hard metal, which is composed of hard particles (WC) with a melted binder (Co).
+The sintering phenomenon on the can be explained mesoscale by the effect of surface tension on the melted binder, and
+the homogenized effect of the surface tension is the so called sintering stress.
+From the macroscopic perspective, the specimen (green body) shrinks due to this volumetric sintering stress. In the case of inhomogeneous
+initial density in the green body, this procedure can result in unwanted deformations.
+
+%Basis:
+%Sintering, sintering stress, inhomogeneous shrinkage
+
+Finite elements and computational homogenization have been applied to a Representative Volume Element (RVE) of the mesoscale.
+The melted binder is modeled as a Stokes flow, with surface tension potential energy on the free surface. Hard inclusions are modeled by applying a high viscosity.
+%This is coupled to the macroscopic stress and strain and the mesoscale  is solved for every time step in every integration point.
+Different choices of boundary conditions are available on the RVE for the prolongation.
+The advantage of this kind of approach is that it can capture the complex behavior of sintering with simple material models with measurable parameters.
+%For the macro scale
+%Method:
+%Multi scale (FE$^2$, Homogenization)
+%Macro scale: deformation.
+%Micro scale: Stokes flow, surface tension.
+
+%Examples, 
+Numerical examples are evaluated for a 2D, fully coupled, FE$^2$ problem as a proof of concept.
+Taylor-Hood elements for the linear Stokes flow, and quadratic edge elements for the surface tension, are employed for the mesoscale.
+Dirichlet boundary conditions are used for the prolongation of the macroscopic strain rate.
+Linear triangular elements with one integration point are used on the macroscopic scale.
+This is shown for both with and without hard inclusions and a viscous melt subjected to surface tension.
+The examples show how an inhomogeneous initial density will cause the macroscopic body to
+undergo deformation
+%shear
+during the sintering process.
+On the mesoscale, particles are merged, driven by the surface tension on the free pore surface.
+
+}
+
+\begin{document}
+\maketitle
+
+\section{INTRODUCTION}
+
+\section{THEORY}
+
+\section{PRELIMINARY RESULTS}
+
+
+
+\end{document}
+
