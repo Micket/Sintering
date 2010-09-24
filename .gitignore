@@ -9,7 +9,7 @@
 *.ps
 *.bbl
 *.toc
-*.tex~
+*~
 *.backup
 *.mat
 *.zip

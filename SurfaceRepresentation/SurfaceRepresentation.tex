@@ -1,0 +1,135 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{amsmath,amsfonts,mathtools}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\newcommand*\uv[1]{\underline{#1}}
+\newcommand*\um[1]{\underline{\underline{#1}}}
+\DeclareMathOperator*{\sign}{sign}
+
+\begin{document}
+
+\section{Summary of surface representation methods}
+
+\subsection{Volume fraction}
+Storing a grid of volume fractions. This method has to many problems relevant to this work and should not be considered.
+\begin{itemize}
+\item + Volume fraction conveniently given.
+\item + Easily extendable to multiple phases (i.e. $>$2).
+\item - No good way to calculate kurvature, and is, if calculated, very rough.
+\item - Large information loss (front needs to be reconstructed each iteration).
+\end{itemize}
+
+\subsection{Polygons}
+\begin{itemize}
+\item + Curvature can be approximated quite well.
+\item - Converting to level set can be done, but not in a elegant or fast way. Curvature is lost.
+\item - Merging and seperating surfaces is difficult. 
+\end{itemize}
+
+\subsection{Level set methods}
+Signed, scalar valued distance function $\phi$ over the domain.
+Used in XFEM to describe a moving boundary.
+Since $F$ is not known, the flow $\uv{u}\cdot\uv{n}$ is used. It is the same as $F$ only at the 0-level.
+If only the boundary is updated the level set becomes increasingly distorted, and to keep it consistent one need to 
+fix at regular intervals, likely to be each time step.
+
+One way to do this is to construct polygons from the level set and reinitialize the whole domain from that.
+Doing so causes the levelset to lose much information on it's second derivative, i.e. curvature is no good.
+Reinitialization also slightly suffers from loss of mass and movement of the 0-level.
+
+Another way is to construct $F_{ext}$ from the known value around the 0-level.
+
+And another method is to solve \eqref{eq:phi_iter} until convergence. If many iterations are needed until convergence, the 0-level well move, causing another source of error as well as loss of mass. This problem can be reduced by adding 
+
+All methods are described in Level Set Methods and Fast Marching Methods by J.A. Sethian, which recommends the use of $F_{ext}$ which preserves the signed distance, keeps the 0-level and thus also preserves mass.
+
+\begin{align}
+    0 &= \phi_t + F\norm{\Delta\phi}\\
+    \phi_t &= \sign[\phi](1-\norm{\Delta\phi}) \label{eq:phi_iter}\\
+    \kappa &= \Delta \cdot \frac{\Delta\phi}{\norm{\Delta\phi}}\\
+    f_{in} &= \begin{cases}
+        1-\frac{\phi_{out}^2}{(\phi_{in,1}-\phi_{out})(\phi_{in,2}-\phi_{out})} & \text{if 2 nodes inside}\\
+          \frac{\phi_{in}^2}{(\phi_{out,1}-\phi_{in})(\phi_{out,2}-\phi_{in})}  & \text{if 2 nodes outside}
+        \end{cases}
+\end{align}
+
+\begin{itemize}
+\item + Curvature is easily calculated, but badly approximated unless the initialized levelset is very precise (which can be done).
+\item + Excellent at handling joining and seperation of free surfaces.
+\item + Easily calculate volume fractions.
+\item + Easy to handle multiple phases for exactly $2^n$. 
+\item - Problematic to handle 3 or more phases.
+\item - $F$ is unknown; approximated at the 0-level but require further work for the rest of the domain.
+\item - Calculating a level set (even with it's simple, scalar, valued function) is computationally expensive and difficult.
+        This is a non-problem if the data if the level set structure if reinitialization is not performed.
+\item - Level sets can reach a state where it the signed distance is not consistent, as there is redundant information.
+\end{itemize}
+
+\subsection{Isogeometric / NURBS / B-splines}
+Similar to polygons, but addresses its issues with neglected curvature.
+
+\begin{align}
+    \uv{r}_B[\xi] &= \sum_{i=1}^n N_i[\xi]\uv{p}_i\\
+    \kappa &= \frac{\norm{\uv{r}'[\xi] \times \uv{r}''[\xi]}}{\norm{\uv{r}'[\xi]}^3}
+\end{align}
+and in 3D
+\begin{align}
+   \uv{r}_B[\xi,\eta] &= \sum_{i=1}^n \sum_{j=1}^m N_i[\xi] M_i[\eta] \uv{p}_{i,j}\\
+\end{align}
+
+where $r$ is the parameterized curve.
+
+\begin{itemize}
+\item + Positional, Tangential and curvature continuity.
+\item + Curvature should be fairly easy and very accutare.
+\item + Should be fairly easy to reinitialize to construct from a level set.
+\item - Control points must be structured. This makes it more or less impossible to construct a RVE of grains.At most, two simply shaped grains. In fact, even 
+		 The surface needs to be unwrapped/mapped on top of a $\xi-\eta$-domain
+\item - Extremely difficult to calculate a signed distance function.
+\item - Extremely difficult to handle contact/intersection/seperation of a nurb surface.
+        Either this or the previous item is a problem.
+\end{itemize}
+
+\section{Potential solution for sintering}
+The best solution for sintering is the level set method.
+
+Under the assumptions that the free surface connection between binder and and main material a good structure for topology is needed. 
+Two approaches are can be applied, the more common approach (A) would be to use 2 level sets, each independently describing the surface of each material, the other (B) would be to have one level set to describe the vacuum and another to seperate surfaces between the materials.
+
+\subsection{Set operations on multiple level sets}
+There is a need for simple operations when working on multiple level sets.
+Some operations are trivial, such as union or intersection of a domain with a subdomain, but for all operations where edges are removed, reinitialization is required.
+
+We have two level sets $\phi_1$ and $\phi_2$ with corresponding domains $\omega_1$ and $\omega_2$.
+Under the condition that the boundary or $\omega_1$ and $\omega_2$ never cross we have that
+\begin{align}
+	\omega_3 &= \omega_1 \cup \omega_2\\
+	         &\Longrightarrow\\
+	\phi_3   &= \max[\phi_1,\phi_2]
+\end{align}
+\begin{align}
+	\omega_3 &= \omega_1 \cap \omega_2\\
+	         &\Longrightarrow\\
+	\phi_3   &= \min[\phi_1,\phi_2]
+\end{align}
+and the edge preserving exclusive disjunction can be applied for arbitrary domains
+\begin{align}
+	\omega_3 &= \omega_1 \oplus \omega_2\\
+	         &\Longrightarrow\\
+	\phi_3   &= -\max[\abs{\phi_1},\abs{\phi_2}]\sign[\phi_1 \phi_2]
+\end{align}
+
+\subsection{Details on method A}
+
+\subsection{Details on method B}
+
+\section{Software of interest}
+\begin{itemize}
+\item CGAL - Powerfull library for geometric operations. Only simple meshing operations.
+\end{itemize}
+
+\end{document}

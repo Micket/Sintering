@@ -1,0 +1,40 @@
+\newcommand{\cddot}{\cdot\cdot}
+\newcommand{\ootimes}{\overline{\otimes}}
+\newcommand{\uotimes}{\underline{\otimes}}
+\renewcommand{\to}[1]{\text{\boldmath $#1$}} % First order tensor. Bold, cursive
+%\newcommand{\ts}[1]{\text{\boldmath $\mathrm{#1}$}} % Second order tensor. Bold, straigt
+\newcommand{\ts}[1]{\text{\boldmath $#1$}} % Second order tensor. Bold, straigt
+\newcommand{\td}[1]{\text{\boldmath $\mathcal{#1}$}} % Third order tensor. Bold, caligraphy
+\newcommand{\tf}[1]{\text{\boldmath $\mathsf{#1}$}} % Fourth order tensor. Bold, sans-serif
+\newcommand{\uv}[1]{\underline{#1}} % Vectors
+\newcommand{\um}[1]{\underline{#1}} % Matrices (even if they are the same, keep them seperate if you ever wish to change it.
+\newcommand{\intd}[1]{\mathrm{d}#1} % Integration elements, e.g. int_0^1 x^2 \intd x, or \intd x = J \intd\xi
+\newcommand{\pderiv}[2]{\frac{\partial#1}{\partial#2}} % Partial derivatives, \ts K = \pderiv{\to x}{\to y}
+\newcommand{\dderiv}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}} % Total derivatives ^
+\newcommand{\Tran}{\mathrm{T}} % For major transpose, \ts A^\Tran
+\newcommand{\tran}{\mathrm{t}} % For minor transpose, \tf A^\tran
+\newcommand{\defeq}{\overset{\mathrm{def}}{=}} % For definitions X \defeq Y + 1
+\newcommand{\dev}{\mathrm{dev}} % Deviatoric part
+\newcommand{\vol}{\mathrm{vol}} % Volumetric part
+\newcommand{\sym}{\mathrm{sym}} % Symmetric part
+\newcommand{\skw}{\mathrm{skw}} % Skew part
+\newcommand{\sph}{\mathrm{sph}} % Spherical part
+\newcommand{\trial}{\mathrm{tr}} % Trial value
+\newcommand{\el}{\mathrm{e}} % Elastic
+\newcommand{\pl}{\mathrm{p}} % Plastic
+\newcommand{\eff}{\mathrm{e}} % Effective value
+\newcommand{\alg}{\mathrm{a}} % Algorithmic value
+\newcommand{\mean}{\mathrm{m}} % Mean value
+\newcommand{\red}{\mathrm{red}} % Reduced value
+\newcommand{\nextts}[1]{\:\fourIdx{n}{}{}{}{#1}} % Next timestep.
+\newcommand{\oldts}[1]{\:\fourIdx{n-1}{}{}{}{#1}} % Old timestep.
+% For typing out second order base indicies conveniently
+\newcommand{\be}[1]{\to{e}_{#1}}
+\newcommand{\bee}[2]{\to{e}_{#1}\otimes\to{e}_{#2}}
+\newcommand{\beee}[3]{\to{e}_{#1}\otimes\to{e}_{#2}\otimes\to{e}_{#3}}
+\newcommand{\beeee}[4]{\to{e}_{#1}\otimes\to{e}_{#2}\otimes\to{e}_{#3}\otimes\to{e}_{#4}}
+\DeclareMathOperator{\diff}{d} % Differentiation, typically d or D
+\DeclareMathOperator{\tr}{tr} % Trace
+\newcommand{\norm}[1]{\left\lVert{#1}\right\rVert} % Norm of a tensor or vector \norm{A}
+\newcommand{\abs}[1]{\left\lvert{#1}\right\rvert} % Absolute value of a scalar \abs{x}
+\newcommand{\mcc}[1]{\left\langle{#1}\right\rangle} % McCauley bracket, <a> = a*H[a]

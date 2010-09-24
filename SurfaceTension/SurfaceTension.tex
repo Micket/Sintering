@@ -14,7 +14,8 @@
 \newcommand{\uv}[1]{\mathds{#1}}
 \newcommand{\um}[1]{\mathds{#1}}
 \newcommand{\intd}[1]{\mathrm{d}#1}
-\newcommand{\pderiv}[2]{\frac{\partial#1}{\partial#2}}
+%\newcommand{\pderiv}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderiv}[2]{\partial_{#2} #1}
 \newcommand{\dderiv}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
 \newcommand{\norm}[1]{\left\lVert{#1}\right\rVert}
 \newcommand{\T}{\mathrm{T}}
@@ -124,10 +125,12 @@ and its tangent
 \end{align}
 
 The load vector becomes
-\begin{gather}
- \uv F = -\gamma t \int_{-1}^{1} {\um N}'^\T\cdot \to e_s \intd\xi\\
- \um K = \gamma t \int_{-1}^{1} {\um N}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N}' J^{-1} \intd\xi
-\end{gather}
+\begin{align}
+ \uv F &= -\gamma t \int_{-1}^{1} {\um N}'^\T\cdot \to e_s \intd\xi\\
+       &= -\gamma t \int_{-1}^{1} \dderiv{{\um N}^\T}{s}\cdot \to e_s J \intd\xi \\
+ \um K &= \gamma t \int_{-1}^{1} {\um N}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N}' J^{-1} \intd\xi\\
+       &=  \gamma t \int_{-1}^{1} \dderiv{\um N^\T}{s}\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot\dderiv{\um N}{s} J \intd\xi
+\end{align}
 and the boundary term
 \begin{gather}
  \uv F = \sign[\xi]\gamma t {\um N}^\T\cdot\to e_s\\
