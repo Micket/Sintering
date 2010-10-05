@@ -19,6 +19,10 @@ nelem = 0;
 r = 0.82; % radius of the embedded, stiff particle
 
 nodes = [];
+boundary = zeros(size(p2,1),1);
+boundary(edges2(edges_free,:)) = 1;
+boundary(bc_nodes2) = 1;
+
 for i = 1:size(p2,1)
     if i <= size(p,1)
         dofidmask = [7,8,11];
@@ -32,9 +36,15 @@ for i = 1:size(p2,1)
     %if nodes_top2(i);    BC(1) = 3; end
     %if nodes_bottom2(i); BC(2) = 4; end
     if bc_nodes2(i); BC(1:2) = 1; end
+
+    bflag = '';
+    if boundary(i)
+        bflag = 'boundary';
+    end
+
     nodes = [nodes,...
-            sprintf('node %4d coords 2 %17.10e %17.10e ndofs %d DofIDMask %d %s bc %d %s\n',...
-            i,p2(i,:),size(dofidmask,2),size(dofidmask,2),num2str(dofidmask),size(BC,2),num2str(BC))];
+            sprintf('node %4d coords 2 %17.10e %17.10e ndofs %d DofIDMask %d %s bc %d %s %s\n',...
+            i,p2(i,:),size(dofidmask,2),size(dofidmask,2),num2str(dofidmask),size(BC,2),num2str(BC),bflag)];
 end
 
 q2q1trstokes = '';
@@ -71,6 +81,8 @@ material = sprintf(['NewtonianFluid 1 d 1.0 mu 1.0\n'...
 grad = [0,0;0,0];
 dt = 0.05;
 rtolv = 1;
+nsteps = 100;
+nus = 2;
 
 boundarycondition = sprintf('PrescribedGradient 1 loadTimeFunction 1 ccord 2 0.0 0.0 gradient 2 2 {%e %e; %e %e}\n',grad');
 
@@ -79,12 +91,12 @@ loadtimefunc = sprintf('ConstantFunction 1 f(t) 1.0\n');
 
 header = sprintf([...
     '%s.out\n%s\n'...
-    'StokesFlow nsteps 1 lstype 3 smtype 7 nmodules 1 deltaT %f nodalupdatescheme 1 rtolv %e\n',...
+    'StokesFlow nsteps %d lstype 3 smtype 7 nmodules 1 deltaT %f nodalupdatescheme %d rtolv %e\n',...
     'vtk tstep_all domain_all primvars 2 4 5 cellvars 1 46\n',...
     'domain 2dIncompFlow\n',...
     'OutputManager tstep_all dofman_all element_all\n',...
     'ndofman %d nelem %d ncrosssect 1 nmat 2 nbc %d nic 0 nltf 1\n'],...
-    fname, explanation, dt, rtolv, ndofman, nelem, 1);
+    fname, explanation, nsteps, dt, nus, rtolv, ndofman, nelem, 1);
  
 fid = fopen([fname,'.in'],'w+');
 

@@ -1,0 +1,40 @@
+\begin{tikzpicture}[>=latex,scale=2]
+  \def\mlength{0.6};
+  % Fill
+  \begin{scope}[red]
+  	\clip (0,0.5) 
+  		to[out=-150,in=-70] (-2,1)
+  		to[out=90,in=180] (-1,2) 
+  		to[out=80,in=150] (0,2.5)
+  		to[out=-80,in=80] (0,0.5);
+  	\fill[fill=blue!20] (-2,0) rectangle +(5,5);
+  \end{scope}
+  \begin{scope}
+  	\clip (0,0.5) to[out=80,in=-80] (0,2.5) .. controls +(  20:2.7) and +(-20:2.7) .. (0,0.5);
+  	\fill[fill=red!20] (-1,0) rectangle +(5,5);
+  \end{scope}
+  
+  % Lines
+  \draw[thick] (0,0.5) 
+  		to[out=-150,in=-70] (-2,1)
+  		to[out=90,in=180] (-1,2) 
+  		to[out=80,in=150] (0,2.5) coordinate[midway] (GammaF1) 
+  		.. controls +(20:2.7) and +(-20:2.7) .. (0,0.5) coordinate[near start] (GammaF2) -- cycle;
+  \draw[dashed,black!80] (0,0.5) to [out=80,in=-80] (0,2.5) coordinate[midway] (GammaC);
+  
+  % Arrows
+  \draw[->,red]  (0,0.5) -- +(180- 20:\mlength);
+  \draw[->,blue] (0,0.5) -- +(180-150:\mlength);
+  \draw[->,blue] (-2,1)  -- +(180- 70:\mlength) node[left,black] {$\text{\boldmath$m$}_\alpha^+$};
+  \draw[->,blue] (-2,1)  -- +(180+ 90:\mlength) node[left,black] {$\text{\boldmath$m$}_\alpha^-$};
+  \draw[->,blue] (-1,2)  -- +(180+180:\mlength);
+  \draw[->,blue] (-1,2)  -- +(180+ 80:\mlength);
+  \draw[->,blue] (0,2.5) -- +(180+150:\mlength);
+  \draw[->,red]  (0,2.5) -- +(180+ 20:\mlength);
+  
+  % Annotations
+  \draw[|->|] (0.1,0.25) to[out=-150,in=-10] (-1,0.05) node[left] {$s$};
+  \draw[<-] (GammaC)  -- +( 0.4,0)   node[right] {$\Gamma^c$};
+  \draw[<-] (GammaF1) -- +(-0.1,0.3) node[above] {$\Gamma_{\beta}^f$};
+  \draw[<-] (GammaF2) -- +( 0.3,0.2) node[right] {$\Gamma_{\beta+1}^f$};
+\end{tikzpicture}

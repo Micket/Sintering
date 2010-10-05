@@ -1,0 +1,206 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,graphicx,float,fancyhdr,caption,a4wide,listings}
+\headheight=14.5pt
+\pagestyle{fancy}
+\fancyhead[r]{\today}
+\fancyhead[l]{Mikael Öhman}
+\newcommand{\ootimes}{\overline{\otimes}}
+\newcommand{\uotimes}{\underline{\otimes}}
+\newcommand{\tf}[1]{\text{\boldmath $\sf #1$}}
+\newcommand{\ts}[1]{\text{\boldmath $#1$}}
+\newcommand{\tv}[1]{\text{\boldmath $\sf #1$}}
+\newcommand{\bi}[1]{\text{\boldmath $#1$}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\defeq}{\stackrel{\rm def}{=}}
+\newcommand{\dev}{{\rm dev}}
+\newcommand{\vol}{{\rm vol}}
+\newcommand{\sym}{{\rm sym}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\rmd}{{\rm d}}
+\newcommand{\rme}{{\rm e}}
+\newcommand{\ATS}{\tf{E}_{\rm a}}
+\DeclareMathOperator*{\Heaviside}{H}
+
+\begin{document}
+\section{Full form of epsilon}
+Simplifying (7.37) and (7.39)
+\begin{align}
+ \ts\epsilon^\rme &= \ts\epsilon^{\rm e,tr} - \mu \ts\nu[\ts\sigma[\ts\epsilon^\rme]] \\
+ \mu &= \frac{\Delta t}{t_\star} \eta[\Phi[\ts\sigma[\ts\epsilon^\rme]]]
+\end{align}
+with 
+\begin{align}
+ \Phi &= \sigma_\rme - \sigma_y\\
+ \eta &= \left(\frac{\langle\Phi\rangle}{\sigma_c}\right)^{n}
+\end{align}
+and we obtain
+\begin{align}
+ \ts\epsilon^\rme &= \ts\epsilon^{\rm e,tr} - \mu \frac32 \frac{\ts\sigma_\dev}{\sigma_\rme}\\
+\end{align}
+
+We can now express the residual
+\begin{align}
+ \ts R_{\ts\epsilon}[\ts\epsilon^\rme,\mu] &= \ts\epsilon^\rme - \ts\epsilon^{\rm e,tr} + \mu \frac32 \frac{\ts\sigma_\dev}{\sigma_\rme}\\
+ R_{\mu}[\ts\epsilon^\rme,\mu] &= \eta - \frac{t_\star}{\Delta t}\mu
+\end{align}
+as a function of the state 
+\begin{align}
+ \underline{X} = \begin{bmatrix}\ts\epsilon^\rme \\ \mu \end{bmatrix}
+\end{align}
+and the jacobian $\underline{J} = \pderiv{\underline{R}}{\underline{X}}$
+\begin{align}
+ \underline{J} = \begin{bmatrix} \tf J_{\ts\epsilon^\rme\ts\epsilon^\rme} & \ts J_{\ts\epsilon^\rme\mu} \\
+                                 \ts J_{\mu\ts\epsilon^\rme}                 & J_{\mu\mu}\end{bmatrix}
+\end{align}
+where 
+% Jee
+\begin{align}
+\nonumber \tf J_{\ts\epsilon^\rme\ts\epsilon^\rme} &= \pderiv{\ts R_{\ts\epsilon}}{\ts\epsilon^\rme} \\
+\nonumber &= \tf I + \mu \frac32 \pderiv{}{\ts\epsilon^\rme}\left[\frac{\ts\sigma_\dev}{\sigma_\rme}\right]\\
+          &= \tf I + \frac{3 G \mu}{\sigma_\rme}(\tf I_\dev -\frac32\frac{\ts\sigma_\dev\otimes\ts\sigma_\dev}{\sigma_\rme^2})
+\end{align}
+% Jue
+\begin{align}
+\nonumber \ts J_{\mu\ts\epsilon^\rme} &= \pderiv{\ts R_{\mu}}{\ts\epsilon^\rme} \\
+\nonumber &= \frac{n}{\sigma_c} \left(\frac{\langle\Phi\rangle}{\sigma_c}\right)^{n-1} \pderiv{\langle\Phi\rangle}{\ts\epsilon^\rme}\\
+\nonumber &= \Heaviside[\Phi]\frac{n}{\sigma_c} \left(\frac{\langle\Phi\rangle}{\sigma_c}\right)^{n-1} \pderiv{\sigma_\rme}{\ts\epsilon^{\rm e}}\\
+ 		  &= \Heaviside[\Phi]\frac{3 G n}{\sigma_c\sigma_\rme} \left(\frac{\langle\Phi\rangle}{\sigma_c}\right)^{n-1} \ts\sigma_\dev 		  
+\end{align}
+% Jeu
+\begin{align}
+\nonumber \ts J_{\ts\epsilon^\rme\mu} &= \pderiv{\ts R_{\ts\epsilon^\rme}}{\mu} \\
+ &= -\frac32\frac{\ts\sigma_\dev}{\sigma_\rme}
+\end{align}
+%Juu
+\begin{align}
+\nonumber \ts J_{\mu\mu} &= \pderiv{R_\mu}{\mu}\\
+ &= \frac{t_\star}{\Delta t}
+\end{align}
+
+\section{ATS tensor}
+
+\begin{align}
+ \ATS &= \ATS^\rme - \frac{1}{h_{\rm a}}\ATS^\rme\colon\ts\nu\otimes\ts\nu\colon\ATS^\rme\\
+ h_{\rm a} &= \ts \nu \colon \ATS^\rme \colon \ts \nu + \left(\dderiv{\eta}{\Phi}\right)^{-1} \frac{t_\star}{\Delta t}\\
+ \ATS^\rme &= ((\tf E_\rme)^{-1}+\mu\tf N)^{-1} = \\
+ \tf N &= \frac{\partial^2\Phi}{\partial\ts\sigma\otimes\partial\ts\sigma}\\
+       &= \pderiv{}{\ts\sigma} \left(\pderiv{\sigma_\rme}{\ts\sigma}\right)\\
+       &= \pderiv{}{\ts\sigma} \left(\frac{\ts\sigma_\dev}{\sigma_\rme}\right)\\
+       &= \pderiv{\ts\sigma_\dev}{\ts\sigma} \frac{1}{\sigma_\rme} + \ts\sigma_\dev\otimes\pderiv{\sigma_\rme^{-1}}{\ts\sigma}
+\end{align}
+and so on...
+
+A simpler expression can be found for von mises effective stress
+\begin{align}
+ \tf E_a &= \tf E^\rme - 2 G b \tf Q - \frac{9G^2}{h_{\rm a} \sigma_\rme^2}\ts\sigma_\dev\otimes\ts\sigma_\dev\\
+ 		 &= \tf E^\rme - 2 G b \tf Q - \frac{4G^2}{h_{\rm a} (\epsilon^\rme_\rme)^2}\ts\epsilon^\rme_\dev \otimes \ts\epsilon^\rme_\dev\\
+ b &= \frac{1}{\frac{\sigma_\rme}{3G\mu}+1}\\
+   &= \frac{1}{\frac{\epsilon_\rme^\rme}{\mu}+1}\\
+ \tf Q &= \tf I_\dev - \frac{3}{2\sigma_\rme^2}\ts\sigma_\dev\otimes\ts\sigma_\dev\\
+ 	   &= \tf I_\dev - \frac{2}{3(\epsilon_\rme^\rme)^2}\ts\epsilon_\dev\otimes\ts\epsilon_\dev\\
+ h_a &= 3 G + \left(\dderiv{\eta}{\Phi}\right)^{-1}\frac{t_\star}{\Delta t}
+\end{align}
+For Norton material we obtain
+\begin{align}
+	h_{\rm a} &= 3 G + \frac{\sigma_c t_\star}{\Delta t}\left(\frac{\sigma_c}{\Phi}\right)^{n-1}
+\end{align}
+and for Bingham
+\begin{align}
+	h_{\rm a} &= 3 G + \frac{\sigma t_\star}{\Delta t}
+\end{align}
+
+\section{Reduced internal variables}
+
+Another way is to use the effective elastic strain
+\begin{align}
+	\epsilon_\rme^\rme &= \sqrt{\frac23}\abs{\ts\epsilon^\rme_\dev}
+\end{align}
+where the stress can be calculated
+\begin{align}
+ \sigma_\rme = \sqrt{\frac32}\abs{\ts\sigma_\dev} = \sqrt{\frac32}\abs{2 G\ts\epsilon^\rme_\dev} = 3G\epsilon_\rme^\rme
+\end{align}
+which leads to
+\begin{align}
+\nonumber \ts\epsilon^\rme &= \ts\epsilon^{\rm e,tr}-\frac{\mu}{\epsilon_\rme^\rme}\ts\epsilon_\dev^\rme\\
+\nonumber & \Longrightarrow\\
+\nonumber \ts\epsilon^\rme_\dev &= \ts\epsilon^{\rm e,tr}_\dev-\frac{\mu}{\epsilon_\rme^\rme}\ts\epsilon_\dev^\rme\\
+\nonumber & \Longrightarrow\\
+ \left(1+\frac{\mu}{\epsilon_\rme^\rme}\right)\ts\epsilon^\rme_\dev &= \ts\epsilon^{\rm e,tr}_\dev
+\end{align}
+and taking the effective value we obtain
+\begin{align}
+	\epsilon_\rme^\rme + \mu &= \epsilon_\rme^{\rm e,tr}\\
+	\mu &= \frac{\Delta t}{t_\star} \eta
+\end{align}
+\begin{align}
+	R_\epsilon &= \epsilon_\rme^\rme -\epsilon_\rme^{\rm e,tr} +\mu\\
+	R_\mu &= \eta - \frac{t_\star}{\Delta t}\mu\\
+    \underline{J} &= \begin{bmatrix}1 & 1 \\ J_{\eta\epsilon} & -t_\star/\Delta t\end{bmatrix}\\
+    J_{\eta\epsilon} &= \pderiv{\eta}{\epsilon_\rme^\rme} \label{eq:Jue}\\
+    \underline{J}^{-1} &= \begin{bmatrix}...\end{bmatrix}
+\end{align}
+For Norton materials we obtain
+\begin{align}
+    \pderiv{\eta}{\epsilon_\rme^\rme} = \frac{3 G n}{\sigma_c} \left(\frac{\langle\Phi\rangle}{\sigma_c}\right)^{n-1}
+\end{align}
+
+And even further, we can also reduce $\mu$ completely;
+\begin{align}
+	R &= \epsilon_\rme^\rme -\epsilon^{\rm e,tr}_\rme + \frac{\Delta t}{t_\star}\eta\\
+	J &= 1 + \frac{\Delta t}{t_\star}J_{\eta\epsilon}
+\end{align}
+
+The full elastic strain tensor can be calculated by scaling 
+\begin{align}
+	\ts\epsilon_\dev^\rme &= \frac{\epsilon_\rme^\rme}{\epsilon_\rme^\rme+\mu} \ts\epsilon^{\rm e,tr}_\dev
+\end{align}
+
+Under the condition $n=1$ we get 
+\begin{align}
+	0 &= \epsilon_\rme^\rme - \epsilon_\rme^{\rm e,tr} + \frac{\Delta t}{t_\star} \frac{\langle 3 G \epsilon_\rme^\rme - \sigma_y \rangle}{\sigma_c}\\
+\nonumber &\Longrightarrow\\
+	\epsilon_\rme^\rme &= \frac{\sigma_y\Delta t + \epsilon_\rme^{\rm e,tr}\sigma_c t_\star}{\Delta t + \sigma_c t_\star}
+\end{align}
+and $\mu$, $\ts\epsilon_\dev^\rme$ can be calculated like before.
+
+\subsection{ATS in the plastic region}
+We have $R[\epsilon_\rme^\rme\{\ts\epsilon\},\ts\epsilon] = 0$, and linearizing this we obtain
+\begin{align}
+	%\rmd \epsilon_\rme^\rme &= \pderiv{\epsilon_\rme^\rme}{\ts\epsilon^\rme}\colon\rmd\ts\epsilon^\rme = 
+	%	\frac23\frac{\ts\epsilon_\dev^\rme}{\epsilon_\rme^\rme}\colon\rmd\ts\epsilon^\rme \\
+	\rmd R &= J \rmd\epsilon_\rme^\rme + \pderiv{R}{\ts\epsilon}\bigg|_{\epsilon_\rme^\rme}\colon\rmd\ts\epsilon = 0\\	
+	\pderiv{R}{\ts\epsilon}\bigg|_{\epsilon_\rme^\rme} &= -\pderiv{\epsilon_\rme^{\rme,\rm tr}}{\ts\epsilon} = 
+		-\pderiv{\epsilon_\rme^{\rme,\rm tr}}{\ts\epsilon_\dev^{\rme,\rm tr}}\colon\pderiv{\ts\epsilon_\dev^{\rme,\rm tr}}{\ts\epsilon} = 
+		-\frac23\frac{\ts\epsilon_\dev^{\rme,\rm tr}}{\epsilon_e^{\rme,\rm tr}}
+\end{align}
+which gives
+\begin{align}
+	\rmd\epsilon_\rme^\rme &= 
+		J^{-1}\frac23\frac{\ts\epsilon_\dev^{\rme,\rm tr}}{\epsilon_e^{\rme,\rm tr}}\colon\rmd\ts\epsilon
+\end{align}
+
+and we can obtain the relation
+\begin{align}
+	\rmd\ts\epsilon^\rme &= \rmd\ts\epsilon_\dev^\rme + \rmd\ts\epsilon_\vol \\
+	\rmd\ts\epsilon_\vol &= (\ts I\otimes\ts I)\colon\rmd\ts\epsilon\\
+	\rmd\ts\epsilon_\dev^\rme &= \pderiv{\ts\epsilon_\dev^\rme}{\epsilon_\rme^\rme}\bigg|_{\ts\epsilon}\rmd\epsilon_\rme^\rme 
+		+ \pderiv{\ts\epsilon_\dev^\rme}{\ts\epsilon}\bigg|_{\epsilon_\rme^\rme}\colon\rmd\ts\epsilon \\
+		&= \left(\pderiv{\ts\epsilon_\dev^\rme}{\epsilon_\rme^\rme}\bigg|_{\ts\epsilon}\otimes J^{-1}\frac23\frac{\ts\epsilon_\dev^{\rme,\rm tr}}{\epsilon_e^{\rme,\rm tr}}
+		+ \pderiv{\ts\epsilon_\dev^\rme}{\ts\epsilon}\bigg|_{\epsilon_\rme^\rme}\right)\colon\rmd\ts\epsilon\\
+	\pderiv{\ts\epsilon_\dev^\rme}{\epsilon_\rme^\rme}\bigg|_{\ts\epsilon} &= \frac{\mu-\mu'\epsilon_\rme^\rme}{(\epsilon_\rme^\rme+\mu)^2}\ts\epsilon_\dev^{\rme,\rm tr}\\
+	\pderiv{\ts\epsilon_\dev^\rme}{\ts\epsilon}\bigg|_{\epsilon_\rme^\rme} &= \frac{\epsilon_\rme^\rme}{\epsilon_\rme^\rme + \mu} \tf I_\dev
+\end{align}
+with $\mu' = \frac{\Delta t}{t_\star}\pderiv{\eta}{\epsilon_\rme^\rme}$ which was shown earlier. 
+
+Finally the ATS tensor as
+\begin{align}
+	\pderiv{\ts\epsilon^\rme}{\ts\epsilon} &= J^{-1} \frac23\frac{\mu-\mu'\epsilon_\rme^\rme}{\epsilon_\rme^{\rme,\rm tr}(\epsilon_\rme^\rme+\mu)^2}
+		\ts\epsilon_\dev^{\rme,\rm tr}\otimes\ts\epsilon_\dev^{\rme,\rm tr} + 
+		\frac{\epsilon_\rme^\rme}{\epsilon_\rme^\rme+\mu} \tf I_\dev + \ts I\otimes\ts I\\
+	\ATS &= \tf E^\rme\colon\pderiv{\ts\epsilon^\rme}{\ts\epsilon}
+\end{align}
+\end{document}

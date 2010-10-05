@@ -1,0 +1,96 @@
+% This file has been created by Matfig2PGF v0.3.9
+\begin{pgfpicture}
+  % Axes
+  \begin{pgfscope}
+    \definecolor{matfig2pgf_color}{rgb}{1,1,1}\pgfsetfillcolor{matfig2pgf_color}
+    \pgfpathrectangle{\pgfpoint{2.16087cm}{1.05833cm}}{\pgfpoint{13.5425cm}{6.7944cm}}
+    \pgfusepath{fill}
+  \end{pgfscope}
+  % X tick marks
+  \begin{pgfscope}
+    \pgfsetlinewidth{0.5pt}
+    \definecolor{matfig2pgf_linecolor}{rgb}{0.000,0.000,0.000}
+    \pgfsetstrokecolor{matfig2pgf_linecolor}
+    \foreach \x in {3.51512,4.86938,6.22363,7.57788,8.93214,10.2864,11.6406,12.9949,14.3491}
+    {
+      \pgfpathmoveto{\pgfpoint{\x cm}{1.05833cm}}\pgfpathlineto{\pgfpoint{\x cm}{1.12628cm}}
+      \pgfpathmoveto{\pgfpoint{\x cm}{7.85274cm}}\pgfpathlineto{\pgfpoint{\x cm}{7.78479cm}}
+    }
+    \pgfusepath{stroke}
+  \end{pgfscope}
+  % Y tick marks
+  \begin{pgfscope}
+    \pgfsetlinewidth{0.5pt}
+    \definecolor{matfig2pgf_linecolor}{rgb}{0.000,0.000,0.000}
+    \pgfsetstrokecolor{matfig2pgf_linecolor}
+    \foreach \y in {2.41721,3.7761,5.13498,6.49386}
+    {
+      \pgfpathmoveto{\pgfpoint{2.16087cm}{\y cm}}\pgfpathlineto{\pgfpoint{2.2963cm}{\y cm}}
+      \pgfpathmoveto{\pgfpoint{15.7034cm}{\y cm}}\pgfpathlineto{\pgfpoint{15.568cm}{\y cm}}
+    }
+    \pgfusepath{stroke}
+  \end{pgfscope}
+  % Outer axes line
+  \begin{pgfscope}
+    \pgfsetlinewidth{0.5pt}
+    \pgfpathrectangle{\pgfpoint{2.16087cm}{1.05833cm}}{\pgfpoint{13.5425cm}{6.7944cm}}
+    \pgfusepath{stroke}
+  \end{pgfscope}
+  % Tick labels
+  \begin{pgfscope}
+    \definecolor{matfig2pgf_fillcolor}{rgb}{0.000,0.000,0.000}
+    \pgfsetfillcolor{matfig2pgf_fillcolor}
+    \pgftext[x=2.16087cm,y=0.958333cm,top]{$0$}
+    \pgftext[x=3.51512cm,y=0.958333cm,top]{$0.02$}
+    \pgftext[x=4.86938cm,y=0.958333cm,top]{$0.04$}
+    \pgftext[x=6.22363cm,y=0.958333cm,top]{$0.06$}
+    \pgftext[x=7.57788cm,y=0.958333cm,top]{$0.08$}
+    \pgftext[x=8.93214cm,y=0.958333cm,top]{$0.1$}
+    \pgftext[x=10.2864cm,y=0.958333cm,top]{$0.12$}
+    \pgftext[x=11.6406cm,y=0.958333cm,top]{$0.14$}
+    \pgftext[x=12.9949cm,y=0.958333cm,top]{$0.16$}
+    \pgftext[x=14.3491cm,y=0.958333cm,top]{$0.18$}
+    \pgftext[x=15.7034cm,y=0.958333cm,top]{$0.2$}
+  \end{pgfscope}
+  \begin{pgfscope}
+    \definecolor{matfig2pgf_fillcolor}{rgb}{0.000,0.000,0.000}
+    \pgfsetfillcolor{matfig2pgf_fillcolor}
+    \pgftext[x=2.06087cm,y=1.05833cm,right]{$0$}
+    \pgftext[x=2.06087cm,y=2.41721cm,right]{$2$}
+    \pgftext[x=2.06087cm,y=3.7761cm,right]{$4$}
+    \pgftext[x=2.06087cm,y=5.13498cm,right]{$6$}
+    \pgftext[x=2.06087cm,y=6.49386cm,right]{$8$}
+    \pgftext[x=2.06087cm,y=7.85274cm,right]{$10$}
+   \pgftext[x=2.06087cm,y=7.95274cm,bottom,right]{$\times 10^{8}$}
+  \end{pgfscope}
+  % Line
+  \makeatletter\ifpgf@draftmode\makeatother\else
+  \begin{pgfscope}
+    \pgfpathrectangle{\pgfpoint{2.16087cm}{1.05833cm}}{\pgfpoint{13.5425cm}{6.7944cm}}
+    \pgfusepath{clip}
+    % Draw line part (line itself)
+    \begin{pgfscope}
+      \pgfsetlinewidth{0.50pt}
+      \definecolor{matfig2pgf_linecolor}{rgb}{0.000,0.000,1.000}
+      \pgfsetstrokecolor{matfig2pgf_linecolor}
+      \pgfsetdash{}{0pt}
+      \pgfsetroundjoin
+      \pgfplothandlerlineto
+\pgfplotstreamstart
+\foreach \x/\y in {2.161/1.058,2.364/2.627,15.703/6.903}
+{
+\pgfplotstreampoint{\pgfpoint{\x cm}{\y cm}}
+}
+\pgfplotstreamend
+      \pgfusepath{stroke}
+    \end{pgfscope}
+  \end{pgfscope}
+  \fi
+    \definecolor{matfig2pgf_fillcolor}{rgb}{0.000,0.000,0.000}
+    \pgfsetfillcolor{matfig2pgf_fillcolor}
+    \pgftext[top,x=8.89696cm,y=0.301444cm,rotate=0]{$F_{12}$}
+    \definecolor{matfig2pgf_fillcolor}{rgb}{0.000,0.000,0.000}
+    \pgfsetfillcolor{matfig2pgf_fillcolor}
+    \pgftext[bottom,x=1.51013cm,y=4.42033cm,rotate=90]{$\sigma_{12}$}
+  \makeatletter\ifpgf@draftmode\makeatother\pgftext[x=8.31104cm,y=4.06748cm]{\Huge{DRAFT}}\fi
+\end{pgfpicture}

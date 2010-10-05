@@ -1,0 +1,63 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,graphicx,float,fancyhdr,caption,a4wide,listings}
+\usepackage[usenames,dvips]{color}
+\headheight=14.5pt
+\pagestyle{fancy}
+\newcommand{\ootimes}{\overline{\otimes}}
+\newcommand{\uotimes}{\underline{\otimes}}
+\newcommand{\tf}[1]{\text{\boldmath $\sf #1$}}
+\newcommand{\ts}[1]{\text{\boldmath $#1$}}
+\newcommand{\tv}[1]{\text{\boldmath $\sf #1$}}
+\newcommand{\bi}[1]{\text{\boldmath $#1$}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\defeq}{\stackrel{\rm def}{=}}
+\newcommand{\dev}{{\rm dev}}
+\newcommand{\vol}{{\rm vol}}
+\newcommand{\sym}{{\rm sym}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\rmd}{{\rm d}}
+\newcommand{\rme}{{\rm e}}
+\newcommand{\ATS}{\tf{E}_{\rm a}}
+\DeclareMathOperator*{\Heaviside}{H}
+\newcommand{\uv}{\underline}
+\newcommand{\rmT}{{\rm T}}
+
+\begin{document}
+Equilibrium equations on FE-format
+\begin{align}
+	\int_\Omega \uv{\sigma}[\uv{u}]^\rmT\cdot\uv{\epsilon}[\uv{N}]\rmd\Omega = 
+		\int_\Omega\uv{f}^\rmT\cdot\uv{N} \rmd\Omega + 
+		\int_\Gamma\uv{t}[\bar u]^\rmT\cdot\uv{N}\rmd\Gamma, \quad \forall \uv{N}
+\end{align}
+where $\uv{u}$ is a vector of nodal displacements, $\uv{N}$ are basis functions and $\uv{t}[\bar u]$ is the traction arising from the prescribed boundary displacement $\bar u$ on $\Gamma_N$.
+
+Residual format in the absence of body force
+\begin{align}
+	\uv{R} = \int_\Omega \uv{\sigma}[\uv{u}]^\rmT\cdot\uv{\epsilon}[\uv{N}]\rmd\Omega - 
+		\int_{\Gamma_N} \uv{t}[\bar u]^\rmT\cdot\uv{N}\rmd\Gamma
+\end{align}
+
+Prescribe $\bar u[t]$ as a function in time. Equilibrium must be maintained, hence, $\uv{R}[\uv u[t],\bar u[t]] = \uv 0$ for all times.
+
+\begin{align}
+	\uv{J} = \frac{\uv{R}[{}^n\uv u]}{\Delta\uv u} = 
+		\int_\Omega \left(\dderiv{(\Delta\uv\sigma)}{(\Delta\uv\epsilon)}\cdot\dderiv{(\Delta\uv\epsilon)}{(\Delta\uv u)}\right)^\rmT\cdot\uv B \rmd\Omega = 
+		\int_\Omega \uv B^\rmT \cdot \uv E_{\rm a} \cdot \uv B \rmd\Omega
+\end{align}
+
+\begin{align}
+	\delta\uv u = -\uv J^{-1} \cdot \uv R\\
+	\Delta\uv u^{(k+1)} = \Delta\uv u^{(k)} + \delta\uv u
+\end{align}
+
+-----------------------------------------------------
+
+Multiple phases, $\uv u_S$ and $\uv u_L$ as separated FE-problems, connected with
+\begin{align}
+	(\uv u_S - \uv u_L) \cdot \uv n = 0, \quad \text{on $\Gamma_{SL}$}
+\end{align}
+\end{document}

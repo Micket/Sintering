@@ -1,0 +1,307 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,graphicx,float,fancyhdr,a4wide,listings,siunitx,tikz,pgfplots,parskip}
+%\usepackage[dvipsnames]{xcolor}
+\newlength\figureheight
+\newlength\figurewidth
+\setlength\figureheight{4cm}
+\lstdefinestyle{mystyle}{
+	showstringspaces=false,
+	basicstyle=\scriptsize\ttfamily,
+	frame=shadowbox,
+	breaklines=true,
+	numbers=left,
+	commentstyle=\color{blue},
+	keywordstyle=\color{blue}\textbf,
+	stringstyle=\color{red}}
+\headheight=14.5pt
+\pagestyle{fancy}
+\fancyhead[L]{Material model}
+\fancyhead[C]{\today}
+\fancyhead[R]{Mikael Öhman}
+
+\newcommand{\ootimes}{\overline{\otimes}}
+\newcommand{\uotimes}{\underline{\otimes}}
+\newcommand{\tf}[1]{\text{\boldmath $\sf #1$}}
+\newcommand{\ts}[1]{\text{\boldmath $#1$}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\uv}[1]{\text{\boldmath $#1$}}
+\newcommand{\um}[1]{\text{\boldmath $#1$}}
+%\newcommand{\uv}[1]{\underline{#1}}
+%\newcommand{\um}[1]{\underline{\underline{#1}}}
+\newcommand{\dev}{{\rm dev}}
+\newcommand{\vol}{{\rm vol}}
+\newcommand{\sym}{{\rm sym}}
+\newcommand{\iso}{{\rm iso}}
+\newcommand{\trial}{{\rm trial}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\rmd}{{\rm d}}
+\newcommand{\rme}{{\rm e}}
+\newcommand{\rmm}{{\rm m}}
+\newcommand{\rmp}{{\rm p}}
+\newcommand{\rmT}{{\rm T}}
+\newcommand{\rmH}{{\rm H}}
+\newcommand{\rmt}{{\rm t}}
+\newcommand{\old}{{}^{\rm n}}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+
+\begin{document}
+Internal variables; $\ts F^\rmp$, $\rho'$, $k$ with the choice of free energy as
+\begin{align*}
+	\Psi &= \Psi_{\rm solid}[\bar{\ts C},k,\theta] + \Psi_{\rm pore}[\rho',\theta]\\
+	\Psi_{\rm solid} &= \Psi_{\rm solid}^\rme[\bar{\bar{\ts C}}] + \Psi_{\rm solid}^\rmp[k,\theta]\\
+	\Psi_{\rm solid}^\rme &=  \frac14 G \ln[\bar{\bar{\ts C}}^{\rm iso}] + \frac12 K_b\ln[\bar{\bar J}] \text{\quad Wrong!}\\
+	&\text{or a St. Venant-Kirchhoff material instead}\\
+	\Psi_{\rm solid}^\rme &=  G \bar{\ts E}_\dev\colon\bar{\ts E}_\dev + \frac12 K_b \bar{\bar{E}}_\vol^2\\
+	\Psi_{\rm solid}^\rmp &= \frac12 H k^2\\
+	\Psi_{\rm pore} &= 3\left(\frac{3}{4\pi}\right)^{-\frac13} \frac{\gamma}{L_{\rm solid}\rho_t}(\rho')^{-\frac23}(1-\rho')^{\frac23}
+\end{align*}
+For brevity, let $\tau = \left(\frac{\tau_y}{\tau_y+K}\right)^2$.
+The chosen yield surface is
+\begin{align*}
+	\Phi &=\frac{1}{3G} \left(a_1 \tau\left(\bar{M}_\rme\right)^2 + a_2\left(\hat{\bar M}_\rmm\right)^2 - (\bar\tau_y)^2\right)\\
+	\Phi^\rmd &=\frac{1}{3G} \left(a_1 \left(\frac{\bar\tau_y^\rmd}{\bar\tau_y^\rmd+K}\bar{M}_\rme\right)^2 + a_2\left(\hat{\bar M}_\rmm\right)^2 - (\bar\tau_y^\rmd)^2\right)\\
+	a_1 &= 1+(c_1-1)(1-\rho')^{n_1}\\
+	a_2 &= c_2(1-\rho')^{n_2}
+\end{align*}
+and the temperature dependent parameters
+\begin{align*}
+	\bar\tau_y[\theta] &= \tau_y^\rmd \exp\left[\frac{\gamma_\rmT}{\theta}\left(1-\frac{\theta}{\theta_\rmT}\right)\right]\\
+	H[\theta] &= H^\rmd \exp\left[\frac{\gamma_\rmH}{\theta}\left(1-\frac{\theta}{\theta_\rmH}\right)\right]\\
+	t_\star[\theta] &= t_\star^\rmd \exp\left[\frac{\gamma_\rmt}{\theta}\left(1-\frac{\theta}{\theta_\rmt}\right)\right]
+\end{align*}
+with the definitions 
+\begin{align*}
+	K &= -H k\\
+	\hat{\bar M}_\rmm &= \bar M_\rmm - \frac{\rho_0'}{\rho'}\sigma_s \\
+	&= \bar M_\rmm - \underbrace{\frac23\left(\frac{3}{4\pi}\right)^{-\frac13} \frac{\gamma}{L_{\rm solid}}}_{B}\underbrace{\frac{\rho_0'}{(1-\rho')^{\frac13}\rho'^{\frac23}}}_{q}
+\end{align*}
+
+For the chosen yield surface we get
+\begin{align*}
+	\pderiv{\Phi}{\bar M_\rme} &= \frac{2 a_1\tau}{3G}\bar M_\rme\\
+	\pderiv{\Phi}{\hat{\bar M}_\rmm} &= \frac{2 a_2}{3G}\hat{\bar M}_\rmm 
+\end{align*}
+
+Introducing $d = $ \# of dimensions
+\begin{align*}
+	\hat{\bar{\ts\nu}} &= \pderiv{\Phi}{\hat{\bar{\ts M}}} = 
+		\frac{3}{2\bar M_\rme}\pderiv{\Phi}{\bar M_\rme}\bar{\ts M}_\dev+\frac1d\pderiv{\Phi}{\hat{\bar M}_\rmm} \ts\delta\\
+			&= \frac{a_1\tau}{G}\bar{\ts M}_\dev+\frac1d\pderiv{\Phi}{\hat{\bar M}_\rmm} \ts\delta\\
+	\bar{\bar{\ts S}}_2 &= 2\pderiv{\Psi}{\bar{\bar{\ts C}}}\\
+	\bar{\ts S}_2 &= f^2 \bar{\bar{\ts S}}_2\\
+	\ts S_2 &= (\ts F^\rmp)^{-1}\cdot\bar{\ts S}_2\cdot(\ts F^\rmp)^{-\rmT}\\\
+	\bar{\ts M} &= \bar{\ts C}\cdot\bar{\ts S_2} = G \ln[\bar{\ts C}^\iso]+K_b(\ln[\bar J]-d\ln[f])\ts\delta\\
+	&\text{or for St.Venant}\\
+	\bar{\ts S}_2 &= 2G \bar{\ts E}_\dev + K_b(\bar E_\vol -d \alpha(\theta-\theta_0))\ts\delta\\
+	\bar{\ts C} &= (\ts F^\rmp)^{-\rmT}\cdot\ts C\cdot(\ts F^\rmp)^{-1}\\
+	\ts A^{\rm iso} &= \det[\ts A]^{-\frac1d}\ts A
+\end{align*}
+
+%Equations
+%\begin{align*}
+%	\ts R_F &= \ts F_\rmp - \exp[\Delta\gamma\ts\nu]\cdot\old\ts F_\rmp&= 0\\
+%	R_k &= k - \old k - \Delta\gamma \pderiv{\Phi}{\bar M_\rme} &= 0\\
+%	R_\rho &= \ln[\rho']-\ln[\old\rho']+\Delta\gamma\pderiv{\Phi}{\hat{\bar M}_\rmm} &= 0\\
+%	R_\gamma &= t^\star \Delta\gamma - \Delta t \eta &= 0
+	%\ts F_\rmp^{-1} -{}^n\ts F_\rmp^{-1} + \Delta\gamma {}^n\ts F_\rmp^{-1} \ts\nu = 0
+%\end{align*}
+
+%For the elastic part we can obtain the effective and mean value of the Mandel stress as
+%\begin{align*}
+%	\bar{\ts M}_\dev &= G\ln[\bar{\ts C}^\iso]\\
+%	\bar{M}_\rme &= \sqrt{\frac32}G\abs{\ln[\bar{\ts C}^\iso]}\\
+%	\bar{M}_\rmm &= K_b(\ln[\bar J]-d\ln[f])
+%\end{align*}
+
+Introducing  either $\bar{\ts\epsilon} =\frac12\ln[\bar{\ts C}]$ or $\bar{\ts\epsilon} = \bar{\ts E} = \frac12(\bar{\ts C} - \ts I)$ (depending on the choice of free energy) we obtain
+\begin{align*}
+	\bar{\ts M}_\dev &= 2G\bar{\ts\epsilon}_\dev\\
+	\bar M_\rme &= 3G\bar{\epsilon}_\rme\\
+	\bar M_\rmm &= K_b\bar{\bar{\epsilon}}_\vol = K_b(\bar\epsilon_\vol - d \ln[f])\\
+	\bar{\ts\epsilon} &= \bar{\ts\epsilon}^\trial - \Delta\gamma\hat{\bar{\ts\nu}}\\
+	\bar{\epsilon}_\vol &= \bar{\epsilon}^\trial_\vol - 
+		 \Delta\gamma\pderiv{\Phi}{\hat{\bar M}_\rmm}\\
+	\bar{\ts\epsilon}_\dev &= \bar{\ts\epsilon}^\trial_\dev - 
+		\Delta\gamma\frac{1}{\bar{\epsilon}_\rme}\pderiv{\Phi}{\bar{M}_\rme}\bar{\ts\epsilon}_\dev\\
+	\bar{\ts\epsilon}_\dev &= \left(1+\Delta\gamma\frac{1}{\bar{\epsilon}_\rme}\pderiv{\Phi}{\bar{M}_\rme}\right)^{-1}\bar{\ts\epsilon}^\trial_\dev\\
+	\bar{\epsilon}_\rme &= \left(1+\Delta\gamma\frac{1}{\bar{\epsilon}_\rme}\pderiv{\Phi}{\bar{M}_\rme}\right)^{-1}\bar{\epsilon}^\trial_\rme
+\end{align*}
+
+We can now express the residual in terms of the scalar unknowns
+\begin{align*}
+	R_k &= k - \old k + \Delta\gamma \pderiv{\Phi}{\bar M_\rme} &= 0\\
+	R_\rho &= \ln[\rho']-\ln[\old\rho']+\Delta\gamma\pderiv{\Phi}{\hat{\bar M}_\rmm} &= 0\\
+	R_\gamma &= t^\star \Delta\gamma - \Delta t \eta &= 0\\
+	R_\rme &= \bar\epsilon_\rme - \bar \epsilon_\rme^\trial + \Delta\gamma \pderiv{\Phi}{\bar M_\rme}&= 0\\
+	R_\rmm &= \bar\epsilon_\vol - \bar \epsilon_\vol^\trial + \Delta\gamma \pderiv{\Phi}{\hat{\bar M}_\rmm}&= 0
+\end{align*}
+where the variables would be $\underline{X} = [k, \rho', \Delta\gamma, \bar \epsilon_\rme, \bar\epsilon_\vol]$
+
+\begin{align*}
+	J_{kk} &= 1 + 2\Delta\gamma a_1\frac{\bar M_\rme}{3G}\pderiv{\tau}{k}\\ % Done
+	J_{k\rho} &= 2\Delta\gamma a_1' \frac{\bar M_\rme}{3G} \tau\\ % Done
+	J_{k\gamma} &= \pderiv{\Phi}{\bar M_\rme}\\
+	J_{ke} &= 2\Delta\gamma a_1\tau\\
+	J_{km} &= 0
+\end{align*}
+
+\begin{align*}
+	J_{\rho k} &= 0\\
+	J_{\rho \rho} &= \frac{1}{\rho'} + \frac{2\Delta\gamma}{3G}\pderiv{}{\rho'}(a_2\hat{\bar M}_\rmm)\\ % TODO
+	J_{\rho \gamma} &= \pderiv{\Phi}{\hat{\bar M}_\rmm}\\
+	J_{\rho e} &= 0\\
+	J_{\rho m} &= \Delta\gamma \frac{2a_2 K_b}{3G}
+\end{align*}
+
+\begin{align*}
+	J_{\gamma k} &= \Delta t \frac{\eta'}{(\Phi^\rmd)^2}(\Phi^\rmd \pderiv{\Phi}{k}-\Phi\pderiv{\Phi^\rmd}{k})\\
+	J_{\gamma \rho} &= \Delta t \frac{\eta'}{(\Phi^\rmd)^2}(\Phi^\rmd \pderiv{\Phi}{\rho'}-\Phi\pderiv{\Phi^\rmd}{\rho'})\\
+	J_{\gamma \gamma} &= t_\star\\
+	J_{\gamma e} &= \Delta t \frac{\eta'}{3G(\Phi^\rmd)^2}(\Phi^\rmd \pderiv{\Phi}{\bar M_\rme}-\Phi\pderiv{\Phi^\rmd}{\bar M_\rme})\\
+	J_{\gamma m} &= \Delta t \frac{\eta'}{K_b(\Phi^\rmd)^2}(\Phi^\rmd \pderiv{\Phi}{\bar M_\rmm}-\Phi\pderiv{\Phi^\rmd}{\bar M_\rmm})
+\end{align*}
+
+\begin{align*}
+	J_{e k} &= 2\Delta\gamma a_1 \frac{\bar M_\rme}{3G} \pderiv{\tau}{k}\\
+	J_{e \rho} &= 2\Delta\gamma \pderiv{a_1}{\rho} \frac{\bar M_\rme}{3G}\tau\\
+	J_{e \gamma} &= \pderiv{\Phi}{\bar M_\rme}\\
+	J_{e e} &= 1 + 2\Delta\gamma a_1\tau\\
+	J_{e m} &= 0
+\end{align*}
+
+\begin{align*}
+	J_{m k} &= 0\\
+	J_{m \rho} &= \frac{2 \Delta\gamma}{3G}(a_2' \hat{\bar M}_\rmm - a_2 B q')\\
+	J_{m \gamma} &= \pderiv{\Phi}{\hat{\bar M}_\rmm}\\
+	J_{m e} &= 0\\
+	J_{m m} &= 1 + 2\Delta\gamma a_2 \frac{K_b}{3G}
+\end{align*}
+
+\section{ATS tensor}
+\subsection{Elastic part for St. Venant}
+Simply the elasticity tensor as in small deformations;
+\begin{align*}
+	\tf L_2^\rme &= 2 G \tf I_\dev + K_b \ts I\otimes \ts I
+\end{align*}
+
+\subsection{Elastic part logarithmic strain}
+Some useful derivatives, from the toolbox (A.6)
+\begin{align*}
+	\bar{\ts C} =&\ \lambda_i^2 \ts N_i \otimes \ts N_i = \lambda_i^2\ts m_i\\
+	\pderiv{\lambda_i^2}{\bar{\ts C}} =&\ \ts N_i \otimes \ts N_i = \ts m_i\\
+	\pderiv{\ts m_i}{\bar{\ts C}} =&\ \frac{\lambda_i^2}{d_i}\big(\tf I^\sym - \ts I\otimes\ts I +
+		\frac{I_3}{\lambda_i^2}\left(\pderiv{\bar{\ts C}^{-1}}{\bar{\ts C}}+\bar{\ts C}^{-1}\otimes\bar{\ts C}^{-1}\right) +\ts I\otimes\ts m_i + \ts m_i\otimes\ts I \\
+		& - \frac{I_3}{\lambda_i^4}(\bar{\ts C}^{-1}\otimes\ts m_i+\ts m_i\otimes \bar{\ts C}^{-1})+2\left(\frac{I_3}{\lambda_i^6}-1\right)\ts m_i\otimes\ts m_i\big)\\
+	d_i =&\ 2 \lambda_i^4 - I_1 \lambda_i^2 +  I_3 \lambda_i^{-2}
+\end{align*}
+and we can now calculate
+\begin{align*}
+	\pderiv{\ln[\bar{\ts C}]}{\bar{\ts C}} &= 2\left(\frac{1}{\lambda_i}\ts m_i\otimes \ts m_i + \ln[\lambda_i]\pderiv{\ts m_i}{\bar{\ts C}}\right)
+\end{align*}
+
+and another occurring derivative is
+\begin{align*}
+	\pderiv{\ln[\bar J]}{\bar{\ts C}} &= \frac{1}{\bar J}\pderiv{\bar J}{\bar{\ts C}} = \frac{1}{2\bar J^2}\pderiv{\det[\bar{\ts C}]}{\bar{\ts C}} = 
+		\frac{1}{2\bar J^{3/2}}\bar{\ts C}^{-1}\\
+\end{align*}
+
+For the elastic part we now obtain
+\begin{align*}
+	\bar{\ts S}_2 =&\ G(\bar{\ts C}^{-1}\cdot\ln[\bar{\ts C}]- \frac1d\ln[\bar J]\bar{\ts C}^{-1}) + \bar{\ts C}^{-1} K_b(\ln[\bar J]-d\ln[f])\\
+	\tf L_2^\rme = \pderiv{\bar{\ts S}_2}{\bar{\ts C}} 
+		=&\ G\left((\bar{\ts C}^{-1}\ootimes\ts I)\colon\pderiv{\ln[\bar{\ts C}]}{\bar{\ts C}} + (\ln[\bar{\ts C}]\ootimes\ts I)\colon\pderiv{\bar{\ts C}^{-1}}{\bar{\ts C}}\right)\\
+		&+ K_b\pderiv{\bar{\ts C}^{-1}}{\bar{\ts C}}\ln[\bar J] + \left(K_b -\frac G d\right)\frac{1}{2\bar J^{3/2}}\bar{\ts C}^{-1}\otimes\bar{\ts C}^{-1}
+\end{align*} 
+
+\subsection{Plastic part}
+From paper C, equation (58) and (66)
+\begin{align*}
+	\rmd[\ts S_2] =&\ \frac12((\ts F^\rmp)^{-1}\ootimes(\ts F^\rmp)^{-1})\colon \tf L_2^\rme \colon \rmd[\bar{\ts C}] \\
+	&+ ((\old\ts F^\rmp)^{-1}\ootimes((\ts F^\rmp)^{-1}\cdot \bar{\ts S}_2)+((\ts F^\rmp)^{-1}\cdot \bar{\ts S_2})\ootimes (\old \ts F^\rmp)^{-1})\colon\rmd[\bar{\ts A}^{-1}]\\
+	\rmd[\bar{\ts C}] =&\ (J^{-1})_{11} \colon ((\ts F^\rmp)^{-\rmT}\ootimes(\ts F^\rmp)^{-\rmT})\colon \rmd[\ts C]\\
+	\rmd[\bar{\ts A}^{-1}] =&\ (J^{-1})_{21} \colon ((\ts F^\rmp)^{-\rmT}\ootimes(\ts F^\rmp)^{-\rmT})\colon \rmd[\ts C]
+\end{align*}
+which gives
+\begin{align*}
+	\tf L_{2a} =&\ ((\ts F^\rmp)^{-1}\ootimes(\ts F^\rmp)^{-1})\colon \tf L_2^\rme \colon (J^{-1})_{11} \colon ((\ts F^\rmp)^{-\rmT}\ootimes(\ts F^\rmp)^{-\rmT}) \\
+	&+ 2((\old\ts F^\rmp)^{-1}\ootimes((\ts F^\rmp)^{-1}\cdot \bar{\ts S}_2)+((\ts F^\rmp)^{-1}\cdot \bar{\ts S_2})\ootimes (\old \ts F^\rmp)^{-1})\colon(J^{-1})_{21} \colon ((\ts F^\rmp)^{-\rmT}\ootimes(\ts F^\rmp)^{-\rmT})
+\end{align*}
+
+We need to formulate an expression for $\rmd[\bar{\ts C}]$ from the effective values.
+
+The trial values are independent off $\epsilon_\rme^\rme$, and can be written as
+\begin{align*}
+	\bar{\epsilon}_\vol^\trial &= \epsilon_\vol - \frac1d\ln[\det[\old\ts F^\rmp]]\\
+\end{align*}
+but $\bar{\epsilon}_\rme^\trial$ cannot be written in terms of $\epsilon_\vol$ and $\epsilon_\rme$.
+
+Linearizing $R[\underline X\{\ts C\},\ts C] = 0$
+%Linearizing $R[\underline X\{\ts\epsilon\},\ts\epsilon] = 0$
+\begin{align*}
+	\rmd\underline R &= \underline J\cdot\rmd\underline X + \pderiv{\underline R}{\ts C}\bigg|_{\underline X}\colon\rmd\ts C = 0\\
+	%\rmd\ts\epsilon &= \frac12\pderiv{\ln[\ts C]}{\ts C}\colon\rmd\ts C\\
+	\pderiv{\bar{\epsilon}_\vol^\trial}{\ts C} &= \pderiv{\bar{\epsilon}_\vol^\trial}{\ts \epsilon}\colon\pderiv{\ts\epsilon}{\ts C} 
+		= \pderiv{\bar{\epsilon}_\vol^\trial}{\ts \epsilon}\colon\pderiv{\ts\epsilon}{\ts C}\\
+	\pderiv{\bar{\epsilon}_\rme^\trial}{\ts C} &= 
+		\pderiv{\bar{\epsilon}_\rme^\trial}{\bar{\ts\epsilon}^\trial}\colon
+		\pderiv{\bar{\ts\epsilon}^\trial}{\bar{\ts C}^\trial}\colon
+		\pderiv{\bar{\ts C}^\trial}{\ts C}\\
+	\pderiv{\bar{\epsilon}_\vol^\trial}{\ts \epsilon} &= \ts I\\
+	\pderiv{\bar{\ts C}^\trial}{\ts C} &= (\old\ts F^\rmp)^{-\rmT}\ootimes(\old\ts F^\rmp)^{-\rmT}
+\end{align*}
+where 
+\begin{align*}
+	\pderiv{\underline R}{\ts C}\bigg|_{\underline X} &= \pderiv{}{\ts C}\begin{pmatrix}0\\0\\0\\ 
+		\bar\epsilon_\rme^\trial\\
+		\bar\epsilon_\vol^\trial\\
+		\end{pmatrix}
+\end{align*}
+
+which leads to 
+
+\begin{align*}
+	\rmd\underline X &= \underbrace{\underline J^{-1}\cdot\pderiv{\underline R}{\ts C}\bigg|_{\underline X}}_{\underline{\ts D}}\colon\rmd\ts C\\
+	\rmd k &= \ts D_k \colon\rmd\ts C\\
+	\rmd\rho' &= \ts D_{\rho'} \colon\rmd\ts C\\
+	\rmd\Delta\gamma &= \ts D_\gamma \colon\rmd\ts C\\
+	\rmd\bar{\epsilon}_\rme &= \ts D_\rme \colon\rmd\ts C\\
+	\rmd\bar{\epsilon}_\vol &= \ts D_\rmm \colon\rmd\ts C
+\end{align*}
+
+\begin{align*}
+	\rmd\bar{\ts\epsilon} &= \rmd\bar{\ts\epsilon}_\dev + \rmd\bar{\ts\epsilon}_\vol\\
+	\rmd\bar{\ts\epsilon}_\dev &= \pderiv{\bar{\ts\epsilon}_\dev}{\underline X}\bigg|_{\ts\epsilon}\cdot\rmd\underline X
+		+ \pderiv{\bar{\ts\epsilon}_\dev}{\ts\epsilon}\bigg|_{\underline X}\colon\rmd\ts\epsilon \\
+		&= \pderiv{\bar{\ts\epsilon}_\dev}{k}\rmd k +
+		\pderiv{\bar{\ts\epsilon}_\dev}{\Delta\gamma}\rmd\Delta\gamma +
+		\pderiv{\bar{\ts\epsilon}_\dev}{\ts\epsilon_\dev}\bigg|_{\underline X}\colon\rmd\ts\epsilon_\dev\\
+		&= 2 a_1 (1+2 a_1 \tau\Delta\gamma)^{-2}\ts\epsilon_\dev^\trial (\tau\rmd\Delta\gamma + \tau'\Delta\gamma\rmd k) + 
+		(1+2 a_1 \tau\Delta\gamma)^{-1}\rmd\bar{\ts\epsilon}_\dev^\trial\\
+		&= 2 a_1 (1+2 a_1 \tau\Delta\gamma)^{-2}\ts\epsilon_\dev^\trial\otimes(\tau\ts D_\gamma + \tau'\Delta\gamma\ts D_k)\colon\rmd\ts C + 
+		(1+2 a_1 \tau\Delta\gamma)^{-1}\rmd\bar{\ts\epsilon}_\dev^\trial\\
+	\rmd\bar{\ts\epsilon}_\dev^\trial &= \frac12\pderiv{\ln[\bar{\ts C}^{\trial,\iso}]}{\bar{\ts C}^{\trial,\iso}}\colon
+		\pderiv{\bar{\ts C}^{\trial,\iso}}{\bar{\ts C}^\trial}\colon
+		\pderiv{\bar{\ts C}^\trial}{\ts C}\colon\rmd\ts C\\
+	\rmd\bar{\ts\epsilon}_\vol &= \ts I\rmd\bar{\epsilon}_\vol = \ts I\otimes \ts D_\rmm \colon \rmd\ts C
+\end{align*}
+which gives us
+\begin{align*}
+	\pderiv{\bar{\ts\epsilon}}{\ts C} =& 2 a_1 (1+2 a_1 \tau\Delta\gamma)^{-2}\ts\epsilon_\dev^\trial\otimes(\tau\ts D_\gamma + \tau'\Delta\gamma\ts D_k) \\
+		&+(1+2 a_1 \tau\Delta\gamma)^{-1}\frac12\pderiv{\ln[\bar{\ts C}^{\trial,\iso}]}{\bar{\ts C}^{\trial,\iso}}\colon
+		\pderiv{\bar{\ts C}^{\trial,\iso}}{\bar{\ts C}^\trial}\colon
+		\pderiv{\bar{\ts C}^\trial}{\ts C} \\
+		&+ \ts I\otimes \ts D_\rmm
+\end{align*}
+
+\begin{align*}
+	\rmd\bar{\ts C} &= \underbrace{\left(\pderiv{\bar{\ts\epsilon}}{\bar{\ts C}}\right)^{-1}
+		\colon\pderiv{\bar{\ts\epsilon}}{\ts C}}_{\pderiv{\bar{\ts C}}{\ts C}}\colon\rmd\ts C\\
+	\pderiv{\bar{\ts\epsilon}}{\bar{\ts C}} &= \frac12\pderiv{\ln[\bar{\ts C}]}{\bar{\ts C}}
+\end{align*}
+
+What about $\rmd\ts A^{-1}$?
+
+\end{document}

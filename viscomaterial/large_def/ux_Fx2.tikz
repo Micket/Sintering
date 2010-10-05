@@ -1,0 +1,26 @@
+% This file was created by matlab2tikz v0.0.4.
+
+\begin{tikzpicture}
+
+% Axis at [0.13 0.11 0.78 0.81]
+\begin{axis}[
+axis on top,
+scale only axis,
+width=\figurewidth,
+height=\figureheight,
+xmin=0, xmax=0.0672759,
+ymin=-0, ymax=3075.18,
+xlabel={$u_x\ \text{[mm]}$},
+ylabel={$F_x\ \text{[N]}$}
+]
+
+\addplot [
+color=blue,
+solid
+]coordinates{
+ (0,-0) (0.001,45.7102) (0.002,91.4204) (0.003,137.131) (0.0045,205.696) (0.00675,308.544) (0.010125,462.815) (0.0151875,694.223) (0.0227812,1041.33) (0.0341719,1562) (0.0512578,2343) (0.0640723,2928.75) (0.0672759,3075.18)
+};
+
+\end{axis}
+
+\end{tikzpicture}
