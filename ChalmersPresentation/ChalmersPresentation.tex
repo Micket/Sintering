@@ -3,6 +3,12 @@
 \usepackage[swedish,english]{babel}
 \usepackage{amsmath,amssymb,mathtools,beamerthemesplit,mycommands}
 
+% s/\\pgfpoint{\([^}]*\)}{\([^}]*\)}/(\1,\2)/g
+% s/\\pgfpathmoveto{\([^}]*\)}/\1/g
+% s/\\pgfcurveto{\([^}]*\)}{\([^}]*\)}{\([^}]*\)}/ .. controls \1 and \2 .. \3/g
+% s/\\pgfpathlineto{\([^}]*\)}/ -- \1/g
+% s/\\pgfpathclose/ -- cycle/g
+
 %%%%%%%%%%%%%%%%% Defining the theme %%%%%%%%%%%%%%%%%%%
 \mode<presentation>
 \definecolor{chalmersblue}{rgb}{0,0.2,0.53}
