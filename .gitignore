@@ -1,4 +1,6 @@
 *.dvi
+*.nav
+*.snm
 *.pdf
 *.synctex.gz
 *.aux
