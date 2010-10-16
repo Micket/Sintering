@@ -1,186 +1,290 @@
 % Written by Mikael Öhman <mikael.ohman@chalmers.se>
 % Released under public domain. 
 % Use with beamer for LaTeX:
-%  \usepackage{beamerthemesplit}
 %  \usetheme{chalmers}
 
+%  \usepackage{beamerthemesplit}
 \mode<presentation>
 
-% Chalmers default colors (+ black)
-\definecolor{chalmersblue}{rgb}{0,0.2,0.53}
-\definecolor{chalmersgrey}{rgb}{0.8,0.8,0.8}
+\def\beamer@fancy@titlepagelogo{}
+\DeclareOptionBeamer{titlepagelogo}{\def\beamer@fancy@titlepagelogo{#1}}
+
+\ProcessOptionsBeamer
+
+\newlength{\headerheight}
+\newlength{\footerheight}
+\newlength{\titlepageheight}
+\setlength{\headerheight}{0.04\paperheight}
+\setlength{\footerheight}{0.04\paperheight}
+\setlength{\titlepageheight}{0.4\paperheight}
+
+
 
 % Chalmers recommended fonts for presentations; Times New Roman for titles, Arial/Verdana for rest.
 % But, it looks very bad.
 %\setbeamerfont{frametitle}{family=\rmfamily}
-
-% Set the color theme
+% Chalmers default colors (+ black and white)
+\definecolor{chalmersblue}{rgb}{0,0.2,0.53}
+\definecolor{chalmersgrey}{rgb}{0.8,0.8,0.8}
+% Not sure what to do with the colortheme.. pretty much ignoring it.
 \setbeamercolor{palette primary}{fg=white,bg=chalmersblue}
 \setbeamercolor{palette secondary}{fg=white,bg=black}
-%\setbeamercolor*{normal text}{fg=black,bg=white}
-%\setbeamercolor*{example text}{fg=chalmersblue} % Where is this?
+% %\setbeamercolor*{normal text}{fg=black,bg=white}
+% %\setbeamercolor*{example text}{fg=chalmersblue} % Where is this?
 \setbeamercolor*{structure}{fg=white, bg=chalmersblue}
 \setbeamercolor*{head}{parent=palette secondary}
 \setbeamercolor*{foot}{parent=palette primary}
 \setbeamercolor*{title page header}{fg=white}
 
+% Items in a cool grey;
+\setbeamercolor{itemize item}{fg=chalmersgrey}
+
 % Worth considering;
 %\beamertemplateshadingbackground{chalmersgrey}{white}
 
-
+% Turning off navigation symbols
 \usenavigationsymbolstemplate{}
+
+\setbeamertemplate{items}[circle]
 
 %\setbeamersize{text margin left=1em,text margin right=1em}
 
-% Spacing is up to the writer to decide.
-%\setlength{\intextsep}{5pt}
-%\setlength{\abovecaptionskip}{3pt}
-%\setlength{\belowcaptionskip}{0pt}
-%\setlength{\abovedisplayskip}{3pt}
-%\setlength{\belowdisplayskip}{3pt}
-%\setlength{\itemsep}{0pt}
-
-
-\setbeamercolor*{title page}{bg=red}
-% 
-% \def\beamer@fancy@titlepagelogo{}
-% \DeclareOptionBeamer{titlepagelogo}{\def\beamer@fancy@titlepagelogo{#1}}
-
-%\DeclareOptionBeamer{alternativetitlepage}[true]{\PassOptionsToPackage{alternativetitlepage=#1}{beamerinnerthemefancy}}
+% Spacing is up to the writer to decide. These are set a bit tighter than default.
+% \setlength{\intextsep}{5pt}
+% \setlength{\abovecaptionskip}{3pt}
+% \setlength{\belowcaptionskip}{0pt}
+% \setlength{\abovedisplayskip}{3pt}
+% \setlength{\belowdisplayskip}{3pt}
+% \setlength{\itemsep}{0pt}
 
 \defbeamertemplate*{title page}{chalmers}[1][]
 {
  \begin{tikzpicture}[remember picture, overlay]
   \coordinate (A) at (current page.north west);
-  \shade[bottom color=chalmersblue,top color=chalmersblue!80] (A) rectangle +(\paperwidth,-0.4\paperheight);
-  \fill[black] (A) rectangle +(\paperwidth,-0.05\paperheight);
-  \node[below right] at (A) {\resizebox{!}{0.2cm}{\chalmerslogo}};
-  \draw (A) ++(0.6\paperwidth, -0.28\paperheight) node[center] {
-\begin{beamercolorbox}[wd=0.6\paperwidth,center,#1]{title page header}
-      \usebeamerfont{title}\inserttitle\par%
-      \ifx\insertsubtitle\@empty%
-      \else%
-        \vskip0.25em%
-        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-      \fi%
-      \vspace{.125\paperheight}%
-    \end{beamercolorbox}};
-  % Draw pretty flower left of the title;
- \end{tikzpicture}
- \vskip 0.4\paperheight
+  \shade[bottom color=chalmersblue!70,top color=chalmersblue!100] (A) rectangle +(\paperwidth,-\titlepageheight);
+  \draw (A) ++(0\paperwidth, -\titlepageheight-0.05\paperheight) node[above right] {\resizebox{!}{\titlepageheight}{\input{ranka2.pgf}}};
+  \fill[black] (A) rectangle +(\paperwidth,-\headerheight);
+  \draw (A) ++(0,-0.5\headerheight) node[right] {\chalmerslogo{white}{0.5\headerheight}};
+  \draw (A) ++(0.6\paperwidth, -0.7\titlepageheight) node {
+    \begin{beamercolorbox}[wd=0.6\paperwidth,center,#1]{title page header}
+    \usebeamerfont{title}\inserttitle\par%
+    \ifx\insertsubtitle\@empty%
+    \else%
+      \vskip0.25em%
+      {\usebeamerfont{subtitle}\insertsubtitle\par}%
+    \fi%
+    \vspace{.125\paperheight}%
+    \end{beamercolorbox}
+  };
 
-%\begin{tikzpicture}[remember,overlay]
-% \node at (current page.north west) { \begin{tikzpicture}[remember picture, overlay]\draw (0,0) -- (-1,1) -- (1,1) -- (1,-1) -- (-1,-1);\end{tikzpicture} };
-% %\draw (0,0) -- (1,1) -- (-1,-1) -- (-1,1);
-%\end{tikzpicture}
-
-%   {
-%     \parskip0pt\offinterlineskip%
-%     \hbox{\hskip-\Gm@lmargin\hbox{\vbox{%
-%     \@tempdima=\textwidth\textwidth=\paperwidth\hsize=\textwidth\def\\{,}\vbox{}\vskip-1.5ex%
-%     % Title.
-%     \begin{beamercolorbox}[wd=\paperwidth,ht=.4\paperheight,center,#1]{title page header}
-%       \usebeamerfont{title}\inserttitle\par%
-%       \ifx\insertsubtitle\@empty%
-%       \else%
-%         \vskip0.25em%
-%         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-%       \fi%
-%       \vspace{.125\paperheight}%
-%     \end{beamercolorbox}%
-%     \vbox{}\vskip-\beamer@fancy@lineup%
-%     \vbox{}\vskip-\beamer@fancy@linemid%
-%     % First line.
-%     \hbox{%
-%     \begin{beamercolorbox}[wd=.2\paperwidth,ht=\beamer@fancy@lineup,dp=0pt]{}%
-%     \end{beamercolorbox}%
-%     \begin{beamercolorbox}[wd=.8\paperwidth,ht=\beamer@fancy@lineup,dp=0pt]{lineup}%
-%     \end{beamercolorbox}%
-%     }%
-%     \vbox{}\vskip0ex%
-%     % Second line.
-%     \hbox{%
-%     \begin{beamercolorbox}[wd=.1\paperwidth,ht=\beamer@fancy@linemid,dp=0pt]{}%
-%     \end{beamercolorbox}%
-%     \begin{beamercolorbox}[wd=.9\paperwidth,ht=\beamer@fancy@linemid,dp=0pt]{linemid}%
-%     \end{beamercolorbox}%
-%     }%
-%     % Third line.
-%     \hbox{%
-%     \begin{beamercolorbox}[wd=.5\paperwidth,ht=\beamer@fancy@linebottom,dp=0pt]{}%
-%     \end{beamercolorbox}%
-%     \begin{beamercolorbox}[wd=.5\paperwidth,ht=\beamer@fancy@linebottom,dp=0pt]{linebottom}%
-%     \end{beamercolorbox}%
-%     }%
-%     \vskip0pt%
-%     }}%
-%     \hskip-\Gm@rmargin%
-%   }}%
-%   \hfil%
+  \end{tikzpicture}
+  \vskip 0.4\paperheight
 
   \begin{columns}
-      \ifx\beamer@fancy@titlepagelogo\@empty%
-          \column{\textwidth}
-      \else
-          \column{.5\textwidth}
-%               % Logo.
-%               \begin{centering}
-%                   \vbox{}\vfill
-%                   \includegraphics[height=.4\paperheight]{\beamer@fancy@titlepagelogo}
-%                   \vfill
-%               \end{centering}
-          \column{.5\textwidth}
-       \fi
-          % Authors, institute and date
-          \vskip1em\par
-          \begin{beamercolorbox}[sep=8pt,center,#1]{author}
-            \usebeamerfont{author}\insertauthor
-          \end{beamercolorbox}
-          \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
-            \usebeamerfont{institute}\insertinstitute
-          \end{beamercolorbox}
-          \begin{beamercolorbox}[sep=8pt,center,#1]{date}
-            \usebeamerfont{date}\insertdate
-          \end{beamercolorbox}\vskip0.5em
-          {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+    \ifx\beamer@fancy@titlepagelogo\@empty%
+      \column{\textwidth}
+    \else
+      \column{.5\textwidth}
+      % Logo.
+      \begin{centering}
+        \vbox{}\vfill
+        \includegraphics[height=.4\paperheight]{\beamer@fancy@titlepagelogo}
+        %\includegraphics[height=.4\paperheight]{Avancez_black.pdf}
+        \vfill
+      \end{centering}
+      \column{.5\textwidth}
+    \fi
+    % Authors, institute and date
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+    \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+    \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+    \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    %{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
   \end{columns}
 }
 
-% And the layout
 \defbeamertemplate*{footline}{chalmers theme}{
- \leavevmode\hbox{%
- \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.25ex,dp=1ex,left]{foot}
-  \usebeamerfont{foot}\hspace*{2ex}\insertsectionhead\ -\ \insertsubsectionhead%\ -\ \insertsubsubsectionhead% This one you may want to comment
- \end{beamercolorbox}%
- \begin{beamercolorbox}[wd=0.25\paperwidth,ht=2.25ex,dp=1ex,left]{foot}
-  \usebeamerfont{foot}\hspace*{2ex}\insertshortauthor%
- \end{beamercolorbox}%
- \begin{beamercolorbox}[wd=0.25\paperwidth,ht=2.25ex,dp=1ex,right]{foot}
-  \usebeamerfont{foot}%
-  \insertshortdate\hspace*{2ex}\insertframenumber/\inserttotalframenumber\hspace*{2ex}%
- \end{beamercolorbox}}
+ \begin{tikzpicture}
+  \fill[chalmersgrey] (0,0) rectangle (\paperwidth,\footerheight);
+  % Section hierarchy
+  \node[right] at (0,0.5\footerheight) {\usebeamerfont{foot}\insertsectionhead\ ---\ \insertsubsubsectionhead};
+  % Authors
+  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor};
+  % frame/total frames
+  \node[left] at (\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertframenumber/\inserttotalframenumber};
+ \end{tikzpicture}
 }
 
-\defbeamertemplate*{headline}{chalmers theme}{
- \leavevmode%
- \hbox{%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.5ex,left]{head}%
-   \vspace{-.5ex}\hspace{2ex}%
-   %\includegraphics[height=2ex]{figures/Logo.pdf}% If you can't get tikz to work.
-   \definecolor{logo_color}{gray}{1}
-   \resizebox{!}{2ex}{\chalmerslogo}%
-  \end{beamercolorbox}%
- }%\vskip{0pt}
+\defbeamertemplate*{headline}{chalmers theme}{%
+ \begin{tikzpicture}
+  \fill[black] (0,0) rectangle (\paperwidth,\headerheight);
+  % CHALMERS logo
+  \node[right] at (0.3em,0.5\headerheight) {\chalmerslogo{white}{0.5\headerheight}};
+ \end{tikzpicture}
 }
+
+% \defbeamertemplate*{frametitle}{chalmers theme}{
+%   \nointerlineskip%
+%   \hbox{\leavevmode%
+%   %\hskip-\Gm@lmargin%
+%   \begin{tikzpicture}
+%     \fill[chalmersblue] (0,0) rectangle (\paperwidth,\frametitleheight);
+%     \node[right] at (0,0.5\frametitleheight) {f\insertframetitle};
+%   \end{tikzpicture}}%
+%   \hskip-\Gm@rmargin%
+% }
+
+% \setbeamertemplate{frametitle}
+% {
+% 	\hspace*{-0.035\paperwidth} \vbox{\insertframetitle}\par
+% 	\hspace*{-0.045\paperwidth}\pgfuseshading{frametitlebarhshad}
+% }
+
+\AtBeginDocument{\pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{color(0pt)=(bg);color(4pt)=(black!50!bg)}}
+
+\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\paperheight}{color(0pt)=(frametitle.bg);color(\paperwidth)=(frametitle right.bg)}
+
+% \defbeamertemplate*{frametitle}{shadow theme}
+% {%
+%   \nointerlineskip%
+%   \hbox{\leavevmode
+%     \hskip-\Gm@lmargin\hbox{%
+%       \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\paperwidth}%
+%           \vbox{}\vskip-.75ex%
+%           \leftskip0.3cm%
+%           \rightskip0.3cm plus1fil\leavevmode
+%           \insertframetitle%
+%           \ifx\insertframesubtitle\@empty%
+%             \strut\par%
+%           \else
+%             \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
+%           \fi%
+%           \nointerlineskip
+%           \vbox{}%
+%           \end{minipage}}%
+%       \beamer@tempdim=\ht\beamer@tempbox%
+%       \advance\beamer@tempdim by 2pt%
+%       \begin{tikzpicture}
+%        \fill[chalmersblue] (0,0) rectangle (\paperwidth,\beamer@tempdim);
+%       \end{tikzpicture}
+%       \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{0.78cm}
+%         \usebeamercolor{frametitle right}
+%         \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
+%         \pgfusepath{clip}
+%         \pgftext[left,base]{\pgfuseshading{beamer@frametitleshade}}
+%       \end{pgfpicture}
+%       \hskip-\paperwidth%
+%       \box\beamer@tempbox%
+%     }%
+%     \hskip-\Gm@rmargin%
+%   }%
+% }
+
+\defbeamertemplate*{frametitle}{shadow theme}
+{%
+  \nointerlineskip%
+  \hbox{\leavevmode
+    %\advance\beamer@leftmargin by -12bp%
+    %\advance\beamer@rightmargin by -12bp%
+    %\beamer@tempdim=\textwidth%
+    %\advance\beamer@tempdim by \beamer@leftmargin%
+    %\advance\beamer@tempdim by \beamer@rightmargin%
+    \hskip-\Gm@lmargin%
+    \hbox{%
+      \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\paperwidth}%
+          \vbox{}\vskip-.75ex%
+          \leftskip0.3cm%
+          \rightskip0.3cm plus1fil\leavevmode
+          \insertframetitle%
+          \ifx\insertframesubtitle\@empty%
+            \strut\par%
+          \else
+            \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
+          \fi%
+          \nointerlineskip
+          \vbox{}%
+        \end{minipage}}% Stores a temporary box
+      \beamer@tempdim=\ht\beamer@tempbox% % Height of box
+      \advance\beamer@tempdim by 2pt%
+      \begin{tikzpicture}
+       \fill[chalmersblue] (0,0) rectangle (\paperwidth,\beamer@tempdim);
+       %\node[right] at (0,0.5\beamer@tempdim) { \insertframetitle\  };
+      \end{tikzpicture}
+      \hskip-\paperwidth%
+      \box\beamer@tempbox% 
+    }%
+    \hskip-\Gm@rmargin%
+  }%
+}
+
+
+%  \defbeamertemplate*{frametitle}{decolines theme}[1][left]
+%  {
+%  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+%  \@tempdima=\textwidth%
+%  \advance\@tempdima by\beamer@leftmargin%
+%  \advance\@tempdima by\beamer@rightmargin%
+%  \vbox{}\vskip-.5\beamer@leftmargin%
+%  \begin{beamercolorbox}[sep=\beamer@leftmargin,#1,wd=\the\@tempdima]{}
+%  \usebeamerfont{frametitle}\usebeamercolor[bg]{framesubtitle}%
+%  \vbox{}\vskip0ex%
+%  \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+%  \strut\insertframetitle\strut\par%
+%  {%
+%  \ifx\insertframesubtitle\@empty%
+%  \else%
+%  {\usebeamerfont{framesubtitle}\usebeamercolor[bg]{framesubtitle}\insertframesubtitle\strut\par}%
+%  \fi
+%  }%
+%  \vskip-1ex%
+%  \if@tempswa\else\vskip-\beamer@leftmargin\fi
+%  \end{beamercolorbox}%
+%  \def\beamer@decolines@truetext{true}%
+%  \ifx\beamer@decolines@titleline\beamer@decolines@truetext%
+%  \vskip-.5\beamer@leftmargin%
+%  \begin{beamercolorbox}[wd=\textwidth,ht=.1ex,dp=0ex]{linemid}%
+%  \end{beamercolorbox}%
+%  \fi
+%  }
+
+% Footer using beamercolorboxes
+% \defbeamertemplate*{footline}{chalmers theme}{
+%  \hbox{%
+%  \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.25ex,dp=1ex,left]{foot}
+%   \usebeamerfont{foot}\hspace*{2ex}\insertsectionhead\ -\ \insertsubsectionhead%\ -\ \insertsubsubsectionhead% This one you may want to comment
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[wd=0.25\paperwidth,ht=2.25ex,dp=1ex,left]{foot}
+%   \usebeamerfont{foot}\hspace*{2ex}\insertshortauthor%
+%  \end{beamercolorbox}%
+%  \begin{beamercolorbox}[wd=0.25\paperwidth,ht=2.25ex,dp=1ex,right]{foot}
+%   \usebeamerfont{foot}%
+%   %\insertshortdate%
+%   \hspace*{2ex}\insertframenumber/\inserttotalframenumber\hspace*{2ex}%
+%  \end{beamercolorbox}}
+% }
+% Header using beamercolorboxes
+% \defbeamertemplate*{headline}{chalmers theme}{
+%  \hbox{%
+%   \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.5ex,left]{head}%
+%    \vspace{-.5ex}\hspace{2ex}%
+%    \chalmerslogo{white}{2ex}%
+%   \end{beamercolorbox}%
+%  }
+% }
 
 % CHALMERS logo below. Note! It is trademarked!
-%\newcommand{\chalmerslogo}{\input{CHALMERS.pgf}}
-%\newcommand{\chalmerslogo}{\input{CHALMERS.tikz}}
-\newcommand{\chalmerslogo}{
-\begin{tikzpicture}[scale=0.5,fill=white]% This is 11.994 in width, 1.341 in height
+%\newcommand{\chalmerslogo}{\input{CHALMERS.tikz}} % Seperate file? More convenient here.
+\newcommand{\chalmerslogo}[2]{
+\resizebox{!}{#2}{
+\begin{tikzpicture}[fill=#1]% This is 11.994 in width, 1.341 in height
 % C
-\fill
- (1.481,0.488)
+\fill (1.481,0.488)
  .. controls (1.385,0.138) and (1.046,0.027) .. (0.742,0.027)
  .. controls (0.304,0.027) and (0,0.256) .. (0,0.687)
  .. controls (0,1.152) and (0.37,1.34) .. (0.76,1.34)
@@ -193,113 +297,50 @@
  -- cycle;
 
 % H
-\fill
- (1.616,1.302)
- -- (1.925,1.302)
- -- (1.925,0.827)
- -- (2.656,0.827)
- -- (2.656,1.302)
- -- (2.965,1.302)
- -- (2.965,0.069)
- -- (2.656,0.069)
- -- (2.656,0.598)
- -- (1.925,0.598)
- -- (1.925,0.069)
- -- (1.616,0.069)
+\fill (1.616,1.302) -- (1.925,1.302) -- (1.925,0.827) -- (2.656,0.827) -- (2.656,1.302) -- (2.965,1.302)
+ -- (2.965,0.069) -- (2.656,0.069) -- (2.656,0.598) -- (1.925,0.598) -- (1.925,0.069) -- (1.616,0.069)
  -- cycle;
 
 %A
-\fill
- (3.707,1.302)
- -- (4.041,1.302)
- -- (4.637,0.069)
- -- (4.291,0.069)
- -- (4.168,0.338)
- -- (3.568,0.338)
- -- (3.449,0.069)
- -- (3.112,0.069)
- -- (3.707,1.302)
- -- cycle
+\fill (3.707,1.302) -- (4.041,1.302) -- (4.637,0.069) -- (4.291,0.069) -- (4.168,0.338) -- (3.568,0.338)
+ -- (3.449,0.069) -- (3.112,0.069) -- (3.707,1.302) -- cycle
  (3.903,0.923)
  .. controls (3.889,0.955) and (3.876,0.985) .. (3.871,1.021)
  .. controls (3.866,0.986) and (3.851,0.954) .. (3.837,0.922)
- -- (3.668,0.556)
- -- (4.066,0.556)
- -- cycle;
+ -- (3.668,0.556) -- (4.066,0.556) -- cycle;
 
 % L
-\fill
- (4.796,1.302)
- -- (5.105,1.302)
- -- (5.105,0.296)
- -- (5.728,0.296)
- -- (5.728,0.069)
- -- (4.796,0.069)
- -- cycle;
+\fill (4.796,1.302) -- (5.105,1.302) -- (5.105,0.296) -- (5.728,0.296) -- (5.728,0.069) -- (4.796,0.069) -- cycle;
 
 % M
-\fill
- (5.914,1.302)
- -- (6.359,1.302)
- -- (6.687,0.532)
+\fill (5.914,1.302) -- (6.359,1.302) -- (6.687,0.532)
  .. controls (6.721,0.451) and (6.73,0.418) .. (6.743,0.364)
  .. controls (6.756,0.418) and (6.767,0.451) .. (6.8,0.532)
- -- (7.122,1.302)
- -- (7.564,1.302)
- -- (7.564,0.069)
- -- (7.272,0.069)
- -- (7.272,0.937)
+ -- (7.122,1.302) -- (7.564,1.302) -- (7.564,0.069) -- (7.272,0.069) -- (7.272,0.937)
  .. controls (7.272,0.984) and (7.279,1.01) .. (7.285,1.047)
  .. controls (7.272,1.01) and (7.263,0.984) .. (7.243,0.937)
- -- (6.881,0.069)
- -- (6.6,0.069)
- -- (6.231,0.937)
+ -- (6.881,0.069) -- (6.6,0.069) -- (6.231,0.937)
  .. controls (6.211,0.984) and (6.205,1.01) .. (6.195,1.047)
  .. controls (6.198,1.01) and (6.205,0.984) .. (6.205,0.937)
- -- (6.205,0.069)
- -- (5.914,0.069)
- -- cycle;
+ -- (6.205,0.069) -- (5.914,0.069) -- cycle;
 
 % E
-\fill
- (7.85,1.302)
- -- (8.999,1.302)
- -- (8.999,1.080)
- -- (8.159,1.080)
- -- (8.159,0.802)
- -- (8.899,0.802)
- -- (8.899,0.584)
- -- (8.159,0.584)
- -- (8.159,0.289)
- -- (9.034,0.289)
- -- (9.034,0.069)
- -- (7.850,0.069)
- -- cycle;
+\fill (7.85,1.302) -- (8.999,1.302) -- (8.999,1.080) -- (8.159,1.080) -- (8.159,0.802) -- (8.899,0.802)
+ -- (8.899,0.584) -- (8.159,0.584) -- (8.159,0.289) -- (9.034,0.289) -- (9.034,0.069) -- (7.850,0.069) -- cycle;
 
 % R
-\fill
- (9.266,1.301)
- -- (10.128,1.301)
+\fill (9.266,1.301) -- (10.128,1.301)
  .. controls (10.219,1.301) and (10.566,1.290) .. (10.566,0.933)
  .. controls (10.566,0.720) and (10.439,0.612) .. (10.246,0.583)
- -- (10.620,0.068)
- -- (10.265,0.068)
- -- ( 9.927,0.564)
- -- ( 9.575,0.564)
- -- ( 9.575,0.068)
- -- ( 9.266,0.068)
- -- ( 9.266,1.301)
- -- cycle
- (9.576,0.782)
- -- (10.068,0.782)
+ -- (10.620,0.068) -- (10.265,0.068) -- ( 9.927,0.564) -- ( 9.575,0.564) -- ( 9.575,0.068)
+ -- ( 9.266,0.068) -- ( 9.266,1.301) -- cycle
+ (9.576,0.782) -- (10.068,0.782)
  .. controls (10.134,0.782) and (10.253,0.791) .. (10.253,0.929)
  .. controls (10.253,1.064) and (10.164,1.085) .. (10.054,1.085)
- -- (9.576,1.085)
- -- cycle;
+ -- (9.576,1.085) -- cycle;
 
 % S
-\fill
- (10.956,0.445)
+\fill (10.956,0.445)
  .. controls (11.028,0.297) and (11.205,0.255) .. (11.373,0.258)
  .. controls (11.448,0.259) and (11.684,0.276) .. (11.681,0.426)
  .. controls (11.680,0.515) and (11.593,0.534) .. (11.527,0.545)
@@ -318,5 +359,4 @@
  -- cycle;
 \end{tikzpicture}
 }
-
-
+}
