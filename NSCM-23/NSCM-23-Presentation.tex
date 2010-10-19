@@ -2,24 +2,28 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{tikz}
+\usepackage{amsmath,amssymb,mathtools}
 \usepackage{tensortyping}
-\usepackage{amsmath}
 %\usepackage{movie15}
 \usepackage{multimedia}
+%\usepackage[]{biblatex}
+
 \usepackage{pgfplots}
 \usepgfplotslibrary{patchplots}
 \usepgfplotslibrary{groupplots}
-\pgfplotsset{compat=1.3}% do not forget this!
+\pgfplotsset{compat=1.3}
 
-\usetheme[titlepagelogo=Avancez_black.pdf]{chalmers}
+\newcommand{\roughcite}[1]{\textit{#1}}
+
+\usetheme[titlepagelogo=Avancez_black.pdf,titleflower]{chalmers}
 
 % Some some front page information
 \title{Multiscale Modeling of Sintering of Hard Metal}
 %\subtitle{And something more}
 \author{Mikael Öhman}
 \institute{Chalmers University of Technology}
-
-\mode<presentation>
+% Bibliography
+%\bibliography{references_extended}
 
 \begin{document}
 
@@ -38,7 +42,6 @@
  \item Surface tension
  \item Multiscale modeling
  \item OOFEM: Object Oriented Finite Element Method
- \item Numerical results
  \item Future work
 \end{itemize}
 \end{frame}
@@ -50,9 +53,14 @@
   \item Complicated macroscopic constitutive models
   \begin{itemize}
     \item Many parameters, impossible to measure
+    \item Needs experimental calibration
   \end{itemize}
   \item Computational power increasing
  \end{itemize}
+
+ \roughcite{Mähler, Ekh \& Runesson (1999)}
+
+ \roughcite{Svoboda \& Reidel  (1996)}
 \end{frame}
 
 \subsection{Sintering}
@@ -74,7 +82,7 @@
   \item Compaction due to surface tension
  \end{enumerate}
 \begin{center}
- \includegraphics[width=0.7\textwidth]{figures/fig081.jpeg}
+ \includegraphics[width=0.6\textwidth]{figures/fig081.jpeg}
 \end{center}
 \end{frame}
 
@@ -138,20 +146,37 @@
 \begin{frame}
  \frametitle{Modeling of surface tension}
  Traction from curvature of free surfaces
- \begin{align}
-  \to t &= 2\kappa\gamma \to n
- \end{align}
-and in weak form
-\begin{align}
+ \begin{gather}
+  \to t = 2\kappa\gamma \to n
+\shortintertext{and in weak form}
  \gamma\int_\Omega 2 \kappa \to w\cdot \to n\intd A = \gamma\int_{\partial\Omega} \to w\cdot\to m\intd S - \gamma\int_\Omega \to \nabla_s \cdot \to w \intd A
  \label{eq:curvature}
-\end{align}
+\end{gather}
  \alert{Geometry dependent!}
  Possible to compute a tangent for higher order approximation
  \begin{align}
   \um K &= \pderiv{\uv F}{\uv x}
  \end{align}
- Difficult/Costly to express load in backwards Euler due to topological changes of merging surfaces
+ Difficult/Costly to express load in backwards Euler due to topological changes of merging surfaces.\\
+ \roughcite{Steinmann \& Javili (2008--)}, \roughcite{Perić \& Coworkers (2006)}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Numerical results}
+\begin{center}
+\movie[height=6cm,width=6cm,poster]{}{RVE_Fixed_Boundaries.avi}
+
+\movie[externalviewer]{RVE with fixed boundaries}{RVE_Fixed_Boundaries.avi}
+\end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Numerical results}
+\begin{center}
+\movie[height=6cm,width=6cm,poster]{}{RVE_Sheared_Boundaries.avi}
+
+\movie[externalviewer]{RVE with sheared boundaries}{RVE_Sheared_Boundaries.mpeg}
+\end{center}
 \end{frame}
 
 \subsection{Multiscale modeling}
@@ -162,7 +187,6 @@ and in weak form
 Typical normal homogenization and prolongation;
  \begin{itemize}
   \item Dirichlet boundary condition
-  \item (Periodic boundary conditions)
  \end{itemize}
 
  Macro scale
@@ -175,6 +199,8 @@ Typical normal homogenization and prolongation;
   \item Compressible up to a certain point
  \end{itemize}
 
+ \roughcite{Geers \& Coworkers (2001--)}, \roughcite{Fish \& Coworkers (1995--)}, \roughcite{Miehe \& Coworkers (2002--)}
+
 \column{0.49\textwidth}
 
 \begin{center}
@@ -183,6 +209,16 @@ Typical normal homogenization and prolongation;
  \includegraphics[width=0.9\textwidth]{figures/Sintering_5x5_114.png}
 \end{center}
 \end{columns}
+\end{frame}
+
+\subsubsection{Results}
+\begin{frame}
+ \frametitle{Numerical results}
+\begin{center}
+\movie[height=6cm,width=9.7cm,poster]{}{Sintering_5x5.avi}
+
+\movie[externalviewer]{Multiscale sintering}{Sintering_5x5.mpeg}
+\end{center}
 \end{frame}
 
 \section{Implementation}
@@ -196,7 +232,7 @@ Typical normal homogenization and prolongation;
   \item Some difficulties fitting into the design of OOFEM
  \end{enumerate}
 
-\onslide<2-> Some things for free
+\onslide<2-> Some positive notes
  \begin{enumerate}
   \item<2-> Parallel computations: Already designed for message passage paradigm.
   \item<2-> Nonlinear solvers
@@ -207,46 +243,15 @@ Typical normal homogenization and prolongation;
   \end{itemize}
   \item<2-> Exporting data
   \item<2-> Adaptivity
-  \item<2-> $\dots$
+  \item<2-> Cooperation, \url{http://www.oofem.org/}
  \end{enumerate}
 
 \end{frame}
 
-\subsection{Results}
-\begin{frame}
- \frametitle{Numerical results}
-\begin{center}
-\movie[height=6cm,width=6cm,poster]{}{RVE_Fixed_Boundaries.mpeg}
-
-\movie[externalviewer]{RVE with fixed boundaries}{RVE_Fixed_Boundaries.mpeg}
-%\movie[height=6cm,width=6cm,poster]{RVE with sheared boundaries}{RVE_Sheared_Boundaries.mpeg}
-%\movie[height=6cm,width=6cm,poster]{Multiscale sintering}{Sintering_5x5.mpeg}
-\end{center}
-\end{frame}
-
-\begin{frame}
- \frametitle{Numerical results}
-\begin{center}
-\movie[height=6cm,width=6cm,poster]{}{RVE_Sheared_Boundaries.mpeg}
-
-\movie[externalviewer]{RVE with sheared boundaries}{RVE_Sheared_Boundaries.mpeg}
-\end{center}
-\end{frame}
-
-\begin{frame}
- \frametitle{Numerical results}
-\begin{center}
-\movie[height=6cm,width=9.7cm,poster]{}{Sintering_5x5.mpeg}
-
-\movie[externalviewer]{Multiscale sintering}{Sintering_5x5.mpeg}
-\end{center}
-\end{frame}
-
-
 \section{Future}
 \begin{frame}
  \frametitle{Future work}
-
+ Requirements for realistic microstructures
  \begin{enumerate}
   \item Remeshing
   \begin{itemize}
@@ -255,11 +260,21 @@ Typical normal homogenization and prolongation;
    \item Vanishing pores
   \end{itemize}
   \item 3D
-  \item Weakly periodic boundary conditions (Dirichlet and Neumann as special cases)
-  \item Calibration against macroscopic experiments.
+ \end{enumerate}
+ Other work
+ \begin{enumerate}
+  \item Weakly periodic boundary conditions (Neumann boundary condition as special case)
+  \item Comparison against macroscopic experiments.
  \end{enumerate}
 
 \end{frame}
+
+% \section{End of presentation}
+% \begin{frame}
+%  \frametitle{Thank you!}
+%  \nocite{*}
+%  \printbibliography{}
+% \end{frame}
 
 
 \end{document}
