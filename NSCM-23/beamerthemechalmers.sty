@@ -126,7 +126,8 @@
     % Authors, institute and date
     \vskip1em\par
     \begin{beamercolorbox}[sep=8pt,center,#1]{author}
-	\usebeamerfont{author}\insertauthor
+	\usebeamerfont{author}%\insertauthor
+    Mikael Öhman\\ Kenneth Runesson\\ Fredrik Larsson
     \end{beamercolorbox}
     \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
     \usebeamerfont{institute}\insertinstitute
@@ -144,7 +145,8 @@
   % Section hierarchy
   \node[right] at (0,0.5\footerheight) {\usebeamerfont{foot}\insertsectionhead\ ---\ \insertsubsectionhead};
   % Authors
-  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor};
+  %\node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor};
+  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor\ et al. NSCM23, Nov. 22--23, 2010};
   % frame/total frames
   \node[left] at (\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertframenumber/\inserttotalframenumber};
  \end{tikzpicture}
