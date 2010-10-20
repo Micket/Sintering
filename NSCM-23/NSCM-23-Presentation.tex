@@ -13,7 +13,7 @@
 \usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=1.3}
 
-\newcommand{\roughcite}[1]{\textit{#1}}
+\newcommand{\roughcite}[1]{\textsc{#1}}
 
 \usetheme[titlepagelogo=Avancez_gold.pdf,notitleflower]{chalmers}
 
@@ -132,7 +132,7 @@
 
  \begin{itemize}
   \item Incompressible nonlinear Stokes flow problem
-  \item Finite element
+  \item Subscale FE-approximation
   \begin{itemize}
     \item Taylor-Hood element (quadratic $\to v$, linear $p$)
     \item Surface tension element
@@ -209,7 +209,7 @@
  b_\square(\delta p,\ts v^\macroscale(\bar{\ts d}) + \ts v^\subscale) &= 0 && \forall \delta p\in \mathds P_\square.
  \end{align*}
 
- $l_\square(\delta \ts v^\subscale)$: loading by ``sintering stresses'' = surface tension tractions on $\Gamma_\square^{\text{pore}}$
+ $l_\square(\delta \ts v^\subscale)$: loading by surface tension tractions on $\Gamma_\square^{\text{pore}}$
  \end{itemize}
 
 
@@ -244,7 +244,7 @@
 \begin{center}
 \movie[height=6cm,width=6cm,poster]{}{RVE_Fixed_Boundaries.avi}
 
-\movie[externalviewer]{RVE with fixed boundaries --- macroscopically isochoric deformation}{RVE_Fixed_Boundaries.avi}
+\movie[externalviewer]{RVE with fixed boundaries --- macroscopically rigid}{RVE_Fixed_Boundaries.avi}
 \end{center}
 \end{frame}
 
@@ -253,7 +253,7 @@
 \begin{center}
 \movie[height=6cm,width=6cm,poster]{}{RVE_Sheared_Boundaries.avi}
 
-\movie[externalviewer]{RVE with sheared boundaries -- macroscopically rigid}{RVE_Sheared_Boundaries.mpeg}
+\movie[externalviewer]{RVE with sheared boundaries -- macroscopically isochoric deformation}{RVE_Sheared_Boundaries.mpeg}
 \end{center}
 \end{frame}
 
@@ -274,7 +274,7 @@
    \item Updated Lagrangian formulation
    %\item Nonlinear
   %\end{itemize}
-  \item Compressible up to a certain point
+  \item \alert{Present limitation:} Pores can not vanish completely (no remeshing)
  \end{itemize}
 
 \column{0.49\textwidth}
@@ -310,7 +310,7 @@
 
 \onslide<2-> Some positive notes
  \begin{enumerate}
-  \item<2-> Parallel computations: Already designed for message passage paradigm.
+  \item<2-> Parallel computations: Already designed for message passage paradigm
   \item<2-> Nonlinear solvers
   \begin{itemize}
    \item<2-> Several linear solvers
@@ -327,6 +327,11 @@
 \section{Conclusions --- Future}
 \begin{frame}
  \frametitle{Conclusions --- Future work}
+ \begin{itemize}
+  \item Captures the most important properties of sintering with only two material parameters
+  \item Clean, modular, implementation in OOFEM. Easy to extend
+ \end{itemize}
+
  Requirements for realistic microstructures
  \begin{enumerate}
   \item Remeshing
