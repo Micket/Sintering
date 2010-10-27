@@ -6,7 +6,12 @@
 \usetheme[]{chalmers}
 \usepackage{amsmath}
 
-% bullet=circle
+
+% s/\\pgfqpoint{\([^}]*\)}{\([^}]*\)}/(\1,\2)/g
+% s/\\pgfpathmoveto{\([^}]*\)}/\1/g
+% s/\\pgfpathcurveto{\([^}]*\)}{\([^}]*\)}{\([^}]*\)}/ .. controls \1 and \2 .. \3/g
+% s/\\pgfpathlineto{\([^}]*\)}/ -- \1/g
+% s/\\pgfpathclose/ -- cycle/g
 
 %\usefonttheme{professionalfonts}
 %\usefonttheme{structurebold}
@@ -14,7 +19,7 @@
 % Some some front page information
 \title{Some long title about stuff}
 \subtitle{And something more}
-\author{Some Author}
+\author{Some Author \and Another Author}
 \institute{Chalmers University of Technology}
 
 

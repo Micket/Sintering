@@ -29,6 +29,7 @@
 % Chalmers default colors (+ black and white)
 \definecolor{chalmersblue}{rgb}{0,0.2,0.53}
 \definecolor{chalmersgrey}{rgb}{0.8,0.8,0.8}
+\definecolor{chalmerssilver}{rgb}{0.8,0.8,0.8}
 
 \setbeamercolor{palette primary}{fg=white,bg=chalmersblue}
 \setbeamercolor{palette secondary}{fg=white,bg=black}
@@ -46,7 +47,7 @@
 %\setbeamercolor*{alert text}{fg=chalmersblue}
 
 % Items round and grey;
-%\setbeamercolor*{enumerate}{fg=chalmersblue} % Just won't do anything-
+%\setbeamercolor*{enumerate item}{fg=chalmersblue} % Just won't do anything-
 %\setbeamercolor*{itemize item}{fg=chalmersgrey}
 \setbeamertemplate{items}[circle]
 
@@ -125,7 +126,8 @@
     % Authors, institute and date
     \vskip1em\par
     \begin{beamercolorbox}[sep=8pt,center,#1]{author}
-	\usebeamerfont{author}\insertauthor
+	\usebeamerfont{author}%\insertauthor
+    Mikael Öhman\\ Kenneth Runesson\\ Fredrik Larsson
     \end{beamercolorbox}
     \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
     \usebeamerfont{institute}\insertinstitute
@@ -141,9 +143,12 @@
  \begin{tikzpicture}
   \fill[chalmersgrey] (0,0) rectangle (\paperwidth,\footerheight);
   % Section hierarchy
-  \node[right] at (0,0.5\footerheight) {\usebeamerfont{foot}\insertsectionhead\ ---\ \insertsubsectionhead};
+  \node[right] at (0,0.5\footerheight) {\usebeamerfont{foot}\insertsectionhead\ 
+    \ifx\insertsubsectionhead\@empty\else---\ \insertsubsectionhead\fi%
+    \ifx\insertsubsubsectionhead\@empty\else---\ \insertsubsubsectionhead\fi};
   % Authors
-  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor};
+  %\node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor};
+  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor\ et al. NSCM23, Nov. 22--23, 2010};
   % frame/total frames
   \node[left] at (\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertframenumber/\inserttotalframenumber};
  \end{tikzpicture}
