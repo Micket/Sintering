@@ -2,7 +2,7 @@
 close all
 bbox = [-1,-1;1,1];
 x = 1;
-h = 0.13;
+h = 0.5;
 radius = 1.2;
 a0 = sqrt(radius^2-x^2);
 fixed_nodes = [ ...
@@ -16,7 +16,7 @@ fixed_nodes = [ ...
 
 xx = [-2*x,-x,-x+a0,-x/2,0,x/2,x-a0,x,2*x]; % Same for yy
 b = 1;
-c = 2;
+c = 1;
 hh =[c,c,c,1,1,1,c,c,c;...
      c,c,c,1,1,1,c,c,c;...
      c,c,c,1,b,1,c,c,c;...

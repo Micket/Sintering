@@ -5,7 +5,7 @@
 \usepackage{a4wide}
 \usepackage{hyperref}
 \usepackage{tikz}
-\usepackage{parskip}
+%\usepackage{parskip}
 
 \renewcommand{\to}[1]{\text{\boldmath $#1$}} % Bold, cursive
 \newcommand{\ts}[1]{\text{\boldmath $\mathrm{#1}$}} % Bold, straigt
@@ -102,7 +102,7 @@ and for the tangent the following derivations are also usefull
 
 Plugging \eqref{eq:intdA_2d} and \eqref{eq:nabla_s_2d} into the integral in \eqref{eq:curvature}
 \begin{align}
- \int_\Omega\to \nabla_s\cdot\to w\intd A &= t \int_{-1}^{1} \to w'\cdot \to e_s \intd\xi\\
+ \int_\Omega\to \nabla_s\cdot\to w\intd A &= t \int_{-1}^{1} \to w'\cdot \to e_s \intd\xi = \left( t \int_{-1}^1 \dderiv{\to w}{s} \cdot \to e_s\intd s\right)\\
 \end{align}
 and its tangent
 \begin{align}
@@ -204,7 +204,8 @@ Plugging this into \eqref{eq:curvature} to obtain
 	  J_\xi^{-2} \ts I :(\to r'\otimes \to v') +
 	  J_\theta^{-2} \begin{bmatrix}1&0\\0&0\end{bmatrix}:(\to r \otimes \to v)
   \right) J_\xi J_\theta \intd \theta \intd \xi\\
-=&2\pi\int_{-1}^{1}\left( \to v' \cdot \to e_s r + \to v \cdot \begin{bmatrix}1\\0\end{bmatrix} J_\xi \right) \intd \xi
+=&2\pi\int_{-1}^{1}\left( \to v' \cdot \to e_s r + \to v \cdot \begin{bmatrix}1\\0\end{bmatrix} J_\xi \right) \intd \xi\\
+=&2\pi\int_{-1}^{1}\left( \dderiv{\to v}{s} \cdot \to e_s r + \to v \cdot \begin{bmatrix}1\\0\end{bmatrix} \right) \intd s
 \end{align}
 and its tangent
 \begin{align}

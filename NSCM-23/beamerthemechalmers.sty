@@ -6,10 +6,7 @@
 \mode<presentation>
 
 % Option to place a figure in the title page. Supply the filename.
-\def\beamer@fancy@titlepagelogo{}
-\DeclareOptionBeamer{titlepagelogo}{\def\beamer@fancy@titlepagelogo{#1}}
-
-\DeclareOptionBeamer{notitleflower}[true]{\def\beamer@fancy@notitleflower{#1}}
+\DeclareOptionBeamer{titleflower}[true]{\def\beamer@titleflower{#1}}
 
 \ProcessOptionsBeamer
 
@@ -21,6 +18,22 @@
 \setlength{\headerheight}{0.04\paperheight}
 \setlength{\footerheight}{0.04\paperheight}
 \setlength{\titlepageheight}{0.4\paperheight}
+
+% New command for manually inserting the footer. Default is the authors.
+\newcommand{\footer}[1]{\def\insertfooter{#1}}
+\footer{\insertshortauthor}
+
+% New command for inserting a logo on the title page. Default is no logo.
+\newcommand{\titlepagelogo}[1]{\def\inserttitlepagelogo{#1}}
+\titlepagelogo{}
+
+% Convenience, just set the filename
+\newcommand{\titlepagelogofile}[1]{\def\inserttitlepagelogofile{#1}}
+\titlepagelogofile{}
+
+% Convenience, just set the filename
+\newcommand{\titlepageextra}[1]{\def\inserttitlepageextra{#1}}
+\titlepageextra{}
 
 % Chalmers recommended fonts for presentations; Times New Roman for titles, Arial/Verdana for rest.
 % But, it looks very bad.
@@ -73,8 +86,20 @@
       \node[right, white,overlay] at (0,-0.5\headerheight) {\chalmerslogo{white}{0.5\headerheight}};
       \shade[bottom color=chalmersblue!60,top color=chalmersblue!100] (0,-\headerheight) rectangle (\paperwidth,-\titlepageheight);
       % Conditionally draw the 'flower'
-      \def\beamer@decolines@truetext{true}%
-      \ifx\beamer@fancy@notitleflower\beamer@decolines@truetext%
+      \def\beamer@truetext{true}%
+      \ifx\beamer@titleflower\beamer@truetext%
+        \node[above right] at (0,-1.15\titlepageheight) {\chalmersflower{white}{\titlepageheight}{70}};
+        \node at (0.6\paperwidth, -0.7\titlepageheight) {
+          \begin{beamercolorbox}[wd=0.6\paperwidth,center,#1]{title page header}
+            \usebeamerfont{title}\inserttitle\par%
+            \ifx\insertsubtitle\@empty\else%
+              \vskip0.25em%
+              {\usebeamerfont{subtitle}\insertsubtitle\par}%
+            \fi%
+            \vspace{.125\paperheight}%
+          \end{beamercolorbox}
+        };
+      \else%
         \node at (0.5\paperwidth, -0.7\titlepageheight) {
         \begin{beamercolorbox}[wd=0.8\paperwidth,center,#1]{title page header}
           \usebeamerfont{title}\inserttitle\par%
@@ -86,19 +111,6 @@
         \vspace{.125\paperheight}%
         \end{beamercolorbox}
         };
-      \else%
-        \node[above right] at (0,-1.15\titlepageheight) {\chalmersflower{white}{\titlepageheight}{70}};
-		\node at (0.6\paperwidth, -0.7\titlepageheight) {
-		  \begin{beamercolorbox}[wd=0.6\paperwidth,center,#1]{title page header}
-			\usebeamerfont{title}\inserttitle\par%
-			\ifx\insertsubtitle\@empty%
-			\else%
-			  \vskip0.25em%
-			  {\usebeamerfont{subtitle}\insertsubtitle\par}%
-			\fi%
-		  \vspace{.125\paperheight}%
-        \end{beamercolorbox}
-		};
       \fi
 
     \end{tikzpicture}
@@ -107,18 +119,17 @@
   \vskip 0.4\paperheight
 
   \begin{columns}
-    \ifx\beamer@fancy@titlepagelogo\@empty%
+    \ifx\inserttitlepagelogofile\@empty\else
+      \titlepagelogo{\includegraphics[keepaspectratio,height=.5\textheight,width=0.5\textwidth]{\inserttitlepagelogofile}}
+    \fi
+    \ifx\inserttitlepagelogo\@empty%
       \column{\textwidth}
     \else
       \column{.5\textwidth}
       % Logo.
       \begin{centering}
         \vbox{}\vfill
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% IF YOU NEED TO MODIFY THE TITLE PAGE GRAPHIC, DO IT HERE! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        \includegraphics[keepaspectratio,height=.5\textheight,width=0.5\textwidth]{\beamer@fancy@titlepagelogo}
-        %\includegraphics[height=.4\paperheight]{Avancez_black.pdf}
+        \inserttitlepagelogo
         \vfill
       \end{centering}
       \column{.5\textwidth}
@@ -126,14 +137,15 @@
     % Authors, institute and date
     \vskip1em\par
     \begin{beamercolorbox}[sep=8pt,center,#1]{author}
-	\usebeamerfont{author}%\insertauthor
-    Mikael Öhman\\ Kenneth Runesson\\ Fredrik Larsson
+	\usebeamerfont{author}{\def\beamer@andtitle{\\}\insertauthor} % Forces linebreaks
     \end{beamercolorbox}
     \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
     \usebeamerfont{institute}\insertinstitute
     \end{beamercolorbox}
     \begin{beamercolorbox}[sep=8pt,center,#1]{date}
-    \usebeamerfont{date}\insertdate
+    \usebeamerfont{date}
+    \ifx\inserttitlepageextra\@empty\else\inserttitlepageextra\\\fi
+    \insertdate
     \end{beamercolorbox}\vskip0.5em
     %{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
   \end{columns}
@@ -146,9 +158,8 @@
   \node[right] at (0,0.5\footerheight) {\usebeamerfont{foot}\insertsectionhead\ 
     \ifx\insertsubsectionhead\@empty\else---\ \insertsubsectionhead\fi%
     \ifx\insertsubsubsectionhead\@empty\else---\ \insertsubsubsectionhead\fi};
-  % Authors
-  %\node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor};
-  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertshortauthor\ et al. NSCM23, Nov. 22--23, 2010};
+  % Right side footer.
+  \node[right] at (0.5\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertfooter};
   % frame/total frames
   \node[left] at (\paperwidth,0.5\footerheight) {\usebeamerfont{foot}\insertframenumber/\inserttotalframenumber};
  \end{tikzpicture}
@@ -161,23 +172,6 @@
   \node[right,white] at (0,0.5\headerheight+0.1mm) {\chalmerslogo{white}{0.5\headerheight}};
  \end{tikzpicture}\vskip -0.1mm
 }
-
-% \defbeamertemplate*{frametitle}{chalmers theme}{
-%   \nointerlineskip%
-%   \hbox{\leavevmode%
-%   %\hskip-\Gm@lmargin%
-%   \begin{tikzpicture}
-%     \fill[chalmersblue] (0,0) rectangle (\paperwidth,\frametitleheight);
-%     \node[right] at (0,0.5\frametitleheight) {f\insertframetitle};
-%   \end{tikzpicture}}%
-%   \hskip-\Gm@rmargin%
-% }
-
-% \setbeamertemplate{frametitle}
-% {
-% 	\hspace*{-0.035\paperwidth} \vbox{\insertframetitle}\par
-% 	\hspace*{-0.045\paperwidth}\pgfuseshading{frametitlebarhshad}
-% }
 
 \defbeamertemplate*{frametitle}{shadow theme}
 {%
@@ -220,61 +214,6 @@
     \hskip-\Gm@rmargin%
   }%
 }
-
-
-%  \defbeamertemplate*{frametitle}{decolines theme}[1][left]
-%  {
-%  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
-%  \@tempdima=\textwidth%
-%  \advance\@tempdima by\beamer@leftmargin%
-%  \advance\@tempdima by\beamer@rightmargin%
-%  \vbox{}\vskip-.5\beamer@leftmargin%
-%  \begin{beamercolorbox}[sep=\beamer@leftmargin,#1,wd=\the\@tempdima]{}
-%  \usebeamerfont{frametitle}\usebeamercolor[bg]{framesubtitle}%
-%  \vbox{}\vskip0ex%
-%  \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
-%  \strut\insertframetitle\strut\par%
-%  {%
-%  \ifx\insertframesubtitle\@empty%
-%  \else%
-%  {\usebeamerfont{framesubtitle}\usebeamercolor[bg]{framesubtitle}\insertframesubtitle\strut\par}%
-%  \fi
-%  }%
-%  \vskip-1ex%
-%  \if@tempswa\else\vskip-\beamer@leftmargin\fi
-%  \end{beamercolorbox}%
-%  \def\beamer@decolines@truetext{true}%
-%  \ifx\beamer@decolines@titleline\beamer@decolines@truetext%
-%  \vskip-.5\beamer@leftmargin%
-%  \begin{beamercolorbox}[wd=\textwidth,ht=.1ex,dp=0ex]{linemid}%
-%  \end{beamercolorbox}%
-%  \fi
-%  }
-
-% Footer using beamercolorboxes
-% \defbeamertemplate*{footline}{chalmers theme}{
-%  \hbox{%
-%  \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.25ex,dp=1ex,left]{foot}
-%   \usebeamerfont{foot}\hspace*{2ex}\insertsectionhead\ -\ \insertsubsectionhead%\ -\ \insertsubsubsectionhead% This one you may want to comment
-%  \end{beamercolorbox}%
-%  \begin{beamercolorbox}[wd=0.25\paperwidth,ht=2.25ex,dp=1ex,left]{foot}
-%   \usebeamerfont{foot}\hspace*{2ex}\insertshortauthor%
-%  \end{beamercolorbox}%
-%  \begin{beamercolorbox}[wd=0.25\paperwidth,ht=2.25ex,dp=1ex,right]{foot}
-%   \usebeamerfont{foot}%
-%   %\insertshortdate%
-%   \hspace*{2ex}\insertframenumber/\inserttotalframenumber\hspace*{2ex}%
-%  \end{beamercolorbox}}
-% }
-% Header using beamercolorboxes
-% \defbeamertemplate*{headline}{chalmers theme}{
-%  \hbox{%
-%   \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.5ex,left]{head}%
-%    \vspace{-.5ex}\hspace{2ex}%
-%    \chalmerslogo{white}{2ex}%
-%   \end{beamercolorbox}%
-%  }
-% }
 
 % CHALMERS logo below. Note! It is trademarked!
 %\newcommand{\chalmerslogo}{\input{CHALMERS.tikz}} % Seperate file? More convenient here.

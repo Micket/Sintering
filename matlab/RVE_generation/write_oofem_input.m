@@ -2,11 +2,11 @@ clear all
 close all
 
 % 0.84, 0.88, 0.92, 0.95
-fname = '4particle_0.84_mesh';
+%fname = '4particle_0.84_mesh';
 %fname = '4particle_0.88_mesh';
 %fname = '4particle_0.92_mesh';
 %fname = '4particle_0.95_mesh';
-%fname = '4particle_coarse_mesh';
+fname = '4particle_coarse_mesh';
 %fname = '4particle_super_coarse_mesh';
 q1_to_q2
 close all
