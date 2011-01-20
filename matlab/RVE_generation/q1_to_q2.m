@@ -73,6 +73,11 @@ bc_nodes = nodes_left | nodes_right | nodes_top | nodes_bottom;
 p2 = [p;new_p];
 t2 = [t,te+size(p,1)];
 
+new_p_left   = new_p(:,1) < min(new_p(:,1))+1e-5;
+new_p_right  = new_p(:,1) > max(new_p(:,1))-1e-5;
+new_p_bottom = new_p(:,2) < min(new_p(:,2))+1e-5;
+new_p_top    = new_p(:,2) > max(new_p(:,2))-1e-5;
+
 nodes_left2   = p2(:,1) < min(p2(:,1))+1e-5;
 nodes_right2  = p2(:,1) > max(p2(:,1))-1e-5;
 nodes_bottom2 = p2(:,2) < min(p2(:,2))+1e-5;
@@ -95,27 +100,47 @@ end
 x = ne(nodes_free,:); x = x(x>0);
 edges_free = find(sparse(x,ones(size(x)),ones(size(x)))>1);
 
-x = ne(nodes_left,:); x = x(x>0);
-edges_left = find(sparse(x,ones(size(x)),ones(size(x)))>1);
+edges_left = find(new_p_left);
+%x = ne(nodes_left,:); x = x(x>0);
+%edges_left = find(sparse(x,ones(size(x)),ones(size(x)))>1);
 
-x = ne(nodes_right,:); x = x(x>0);
-edges_right = find(sparse(x,ones(size(x)),ones(size(x)))>1);
+edges_right = find(new_p_right);
+%x = ne(nodes_right,:); x = x(x>0);
+%edges_right = find(sparse(x,ones(size(x)),ones(size(x)))>1);
 
-x = ne(nodes_top,:); x = x(x>0);
-edges_top = find(sparse(x,ones(size(x)),ones(size(x)))>1);
+edges_top = find(new_p_top);
+%x = ne(nodes_top,:); x = x(x>0);
+%edges_top = find(sparse(x,ones(size(x)),ones(size(x)))>1);
 
-x = ne(nodes_bottom,:); x = x(x>0);
-edges_bottom = find(sparse(x,ones(size(x)),ones(size(x)))>1);
+edges_bottom = find(new_p_bottom);
+%x = ne(nodes_bottom,:); x = x(x>0);
+%edges_bottom = find(sparse(x,ones(size(x)),ones(size(x)))>1);
 %
 
+h = 0.01;
+d = d_4particle_rve(new_p, 1.0, 1.05);
+ix = edges_free; % New nodes have same numbering as edges.
+nix = length(ix);
+gradd = zeros(nix,2);
+for ii=1:2
+    a = zeros(1,2);
+    a(ii) = h;
+    d1x = d_4particle_rve(new_p(ix,:) + ones(nix,1)*a, 1.0, 1.05);
+    gradd(:,ii)=(d1x-d(ix,:))/h;
+end
+new_p(ix,:) = new_p(ix,:) - d(ix)*ones(1,2).*gradd;
+
+p2 = [p; new_p]; % Hack, I don't want to bother to rewrite this..
+
+%return;
 % Plot those bastards
 hold on
-for i = 1:size(edges,1)
-    %plot(p(edges(i,:),1),p(edges(i,:),2),'-k.')
-    %plot(p2(edges2(i,[1,3,2]),1),p2(edges2(i,[1,3,2]),2),'-k.')
-end
+%for i = 1:size(edges,1)
+%    plot(p(edges(i,:),1),p(edges(i,:),2),'-k.')
+%    plot(p2(edges2(i,[1,3,2]),1),p2(edges2(i,[1,3,2]),2),'-k.')
+%end
 
-plot(new_p(:,1),new_p(:,2),'x')
+%plot(new_p(:,1),new_p(:,2),'x')
 
 plot(p2(nodes_left2,1),p2(nodes_left2,2),'bo')
 plot(p2(nodes_right2,1),p2(nodes_right2,2),'bo')
@@ -126,16 +151,16 @@ for i = 1:length(edges_free)
     plot(p(edges(edges_free(i),:),1),p(edges(edges_free(i),:),2),'r');
 end
 for i = 1:length(edges_left)
-    plot(p(edges(edges_left(i),:),1),p(edges(edges_left(i),:),2),'b');
+    plot(p(edges(edges_left(i),:),1),p(edges(edges_left(i),:),2),'b','linewidth',2);
 end
 for i = 1:length(edges_right)
-    plot(p(edges(edges_right(i),:),1),p(edges(edges_right(i),:),2),'b');
+    plot(p(edges(edges_right(i),:),1),p(edges(edges_right(i),:),2),'b','linewidth',2);
 end
 for i = 1:length(edges_top)
-    plot(p(edges(edges_top(i),:),1),p(edges(edges_top(i),:),2),'r');
+    plot(p(edges(edges_top(i),:),1),p(edges(edges_top(i),:),2),'r','linewidth',2);
 end
 for i = 1:length(edges_bottom)
-    plot(p(edges(edges_bottom(i),:),1),p(edges(edges_bottom(i),:),2),'r');
+    plot(p(edges(edges_bottom(i),:),1),p(edges(edges_bottom(i),:),2),'r','linewidth',2);
 end
 
 %for i = 1:size(t2,1)

@@ -2,8 +2,8 @@
 close all
 bbox = [-1,-1;1,1];
 x = 1;
-h = 0.5;
-radius = 1.2;
+h = 0.05;
+radius = 1.05;
 a0 = sqrt(radius^2-x^2);
 fixed_nodes = [ ...
                 -x+a0,0;...
