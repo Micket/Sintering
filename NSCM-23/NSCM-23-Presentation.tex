@@ -15,16 +15,20 @@
 
 \newcommand{\roughcite}[1]{\textsc{#1}}
 
-\usetheme[titlepagelogo=Avancez_gold.pdf,notitleflower]{chalmers}
-
-% Some some front page information
+\usetheme[titleflower=false]{chalmers}
 \title{Multiscale Modeling of Sintering of Hardmetal}
-%\subtitle{And something more}
-\author{Mikael Öhman}
+\author[Mikael Öhman et al.]{Mikael Öhman \and Kenneth Runesson \and Fredrik Larsson}
 \institute{Dept. of Applied Mechanics\\ Chalmers University of Technology}
+<<<<<<< HEAD
+\titlepageextra{NSCM23, KTH, Stockholm}
+\date{October 21--22 2010}
+\footer{\insertshortauthor\ NSCM23}
+\titlepagelogofile{Avancez_gold}
+=======
 \date{NSCM23, KTH, Stockholm, October 21--22 2010}
 % Bibliography
 %\bibliography{references_extended}
+>>>>>>> d4c9be190e9be35b120103b5b0e6ef0cc026d1e4
 
 \begin{document}
 
@@ -150,6 +154,7 @@
 
 \begin{figure}[hbpt]
  \centering
+% Code to actually plot it.
 %  \begin{tikzpicture}
 %   \begin{groupplot}[
 %     group style={group size=3 by 1},
@@ -297,7 +302,7 @@
 \begin{frame}
  \frametitle{Numerical results}
 \begin{center}
-\movie[height=6cm,width=9.7cm,poster]{}{Sintering_5x5.avi}
+\movie[height=6cm,width=9.7cm,poster]{\includegraphics[width=0.9\textwidth]{figures/Sintering_5x5_000.png}}{Sintering_5x5.avi}
 
 \movie[externalviewer]{Multiscale sintering}{Sintering_5x5.mpeg}
 \end{center}
