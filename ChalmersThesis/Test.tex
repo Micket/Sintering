@@ -1,12 +1,15 @@
 % USE PDFLATEX WITH THIS DOCUMENT. If you wish to use ordinary latex (why?) then convert the figures in figures/ to eps.
-\documentclass{chalmers-thesis}
-\usepackage[english]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
+\documentclass[masters]{chalmers-thesis}
+\usepackage[utf8]{inputenc} % File encoding, you should try to stick to utf8.
 
-\coverfigure{figures/COVER_93_iso.png}
+\usepackage{amsmath,mathtools} % All your math related needs
+\usepackage{microtype} % Magically improves typesetting
+\usepackage{biblatex} % Modern package for bibliographies.
+\usepackage{listings} % For source code.
+
+\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/COVER_93_iso.png}}
 \covercaption{Some explanation}
-\title{The Title of Your Thesis which might be very long.}
+\title{The Title of Your Thesis which might be very long}
 \subtitle{And Perhaps a Subtitle}
 \author{Some Author\and Other Author}
 \thesis{Master's thesis in Some Programme}
@@ -20,51 +23,66 @@
 \myabstract{Some  short summary asdkasdmkasd asdf sdf fdkfas fd askfm sd fkmasdfm sdkf skmdfksmdfka skd fkasmdf}
 \keywords{Some stuff, More stuff, Stuff}
 
+%\bibliography{mybib}
+
 % The following part is automatically generated, go to document start
 \newcounter{paper}
 \setcounter{paper}{0}
-\renewcommand{\thepaper}{\Alph{paper}}
-\newcommand{\paper}[2]{WTF!}
+%\renewcommand{\thepaper}{\Alph{paper}}
+\newcommand{\paper}[2]{
+ \stepcounter{paper}
+ \addcontentsline{paper}{toc}{WTF}
+ \thispagestyle{empty}
+ \begin{flushright}
+  {\huge\textbf{Paper \Alph{paper}}}
+ \end{flushright}
+ \vskip 4em
+ {\noindent\Large\textbf{#1}\par}
+ \vskip 2em
+ \begin{center}
+ \begin{minipage}{0.8\textwidth}
+   {\noindent\large#2\par}
+ \end{minipage}
+ \end{center}
+ \newpage
+}
 %\newcommand\section{\@startsection {section}{1}{\z@}%
 %                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
 %                                   {2.3ex \@plus.2ex}%
 %                                   {\normalfont\Large\bfseries}}
-%\addcontents{lop}{entry} % Writes list of papers as *.lop
+%% Writes list of papers as *.lop
 
 \begin{document}
+\selectlanguage{english}
 \maketitle
 
-%\makeatletter\@ifundefined{}{Hej}{Svejs}\makeatother
-
 \newpage
+\tableofcontents
 %\phantomsection\addcontentsline{toc}{section}{Sammanfattning}\begin{abstract}\input{SwedishAdstract}\end{abstract}
 % or a blank box
-\mbox{}
+%\mbox{}
 
 %\listofpapers
-
-\paper{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{cite1}
+\newpage
+\paper{A stude of multiple crack interaction at rolling contact fatigue of rails}{A fricking long citation}
 %\
-
-%\paper[B]{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{cite2}
+\paper{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{cite2}
 
 % Real contents of report starts here
 % Splitting it up to several files help when working together.
 % Floatbarriers prevent figures from beeing placed into the next chapter.
 \input{Introduction}%\FloatBarrier
 
-% \input{Theory}\FloatBarrier
-% \input{Method}\FloatBarrier
-% \input{Results}\FloatBarrier
-% \input{Conclusions}
-% \input{Recommendations}
+%\subfile{Theory}\FloatBarrier
+%\subfile{Method}\FloatBarrier
+%\subfile{Results}\FloatBarrier
+%\subfile{Conclusions}
+%\subfile{Recommendations}
 
-% And the bilbiography saved as mybib.bib
-%\bibliography{mybib}{}
-%\bibliographystyle{plain}
+%\printbibliography
 
 % Appendices
-
+%\subfile{Appendix}
 
 \end{document}
 
