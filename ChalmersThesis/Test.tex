@@ -1,88 +1,69 @@
-% USE PDFLATEX WITH THIS DOCUMENT. If you wish to use ordinary latex (why?) then convert the figures in figures/ to eps.
-\documentclass[masters]{chalmers-thesis}
+\documentclass[masters,b5paper,nocover]{chalmers-thesis}
 \usepackage[utf8]{inputenc} % File encoding, you should try to stick to utf8.
-
+\usepackage{csquotes}
 \usepackage{amsmath,mathtools} % All your math related needs
 \usepackage{microtype} % Magically improves typesetting
 \usepackage{biblatex} % Modern package for bibliographies.
 \usepackage{listings} % For source code.
+\usepackage{blindtext}
 
-\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/COVER_93_iso.png}}
-\covercaption{Some explanation}
 \title{The Title of Your Thesis which might be very long}
 \subtitle{And Perhaps a Subtitle}
 \author{Some Author\and Other Author}
 \thesis{Master's thesis in Some Programme}
 %\thesisin{Master's thesis in Some Programme}
 \department{Department of Applied Mechanics}
-%\division{Division of Solid Mechanics}
+\division{Division of Solid Mechanics}
 \YYYYNN{2010:37}
-%\ISBN{123-21332-13423-123} % Only PhD thesis gets ISBN!
-\writtenyear{2010}
+\ISBN{123-21332-13423-123} % Only PhD thesis gets ISBN!
+\copyrightyear{2010}
 
-\myabstract{Some  short summary asdkasdmkasd asdf sdf fdkfas fd askfm sd fkmasdfm sdkf skmdfksmdfka skd fkasmdf}
+% You should scale the figure according to textwidth and or paperheight.
+\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/COVER_93_iso.png}}
+\covercaption{Some explanation}
+
+\firstabstract{\blindtext}
+%\secondabstract{language}{\blindtext}
 \keywords{Some stuff, More stuff, Stuff}
 
-%\bibliography{mybib}
+%\preface{\blindtext}
+%\acknowledgement{\textit{Thanks to someone.}}
+%\summary{\blindtext}
 
-% The following part is automatically generated, go to document start
-\newcounter{paper}
-\setcounter{paper}{0}
-%\renewcommand{\thepaper}{\Alph{paper}}
-\newcommand{\paper}[2]{
- \stepcounter{paper}
- \addcontentsline{paper}{toc}{WTF}
- \thispagestyle{empty}
- \begin{flushright}
-  {\huge\textbf{Paper \Alph{paper}}}
- \end{flushright}
- \vskip 4em
- {\noindent\Large\textbf{#1}\par}
- \vskip 2em
- \begin{center}
- \begin{minipage}{0.8\textwidth}
-   {\noindent\large#2\par}
- \end{minipage}
- \end{center}
- \newpage
-}
-%\newcommand\section{\@startsection {section}{1}{\z@}%
-%                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
-%                                   {2.3ex \@plus.2ex}%
-%                                   {\normalfont\Large\bfseries}}
-%% Writes list of papers as *.lop
+\paperwork{\blindtext}
+
+\bibliography{mybib}
+
 
 \begin{document}
-\selectlanguage{english}
+
 \maketitle
 
-\newpage
-\tableofcontents
-%\phantomsection\addcontentsline{toc}{section}{Sammanfattning}\begin{abstract}\input{SwedishAdstract}\end{abstract}
+%\phantomsection\addcontentsline{toc}{section}{Sammanfattning}
+%\selectlanguage{swedish}
+%\begin{abstract}Blabla swedish abstract\end{abstract}
 % or a blank box
-%\mbox{}
-
-%\listofpapers
-\newpage
-\paper{A stude of multiple crack interaction at rolling contact fatigue of rails}{A fricking long citation}
-%\
-\paper{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{cite2}
-
+\part{Introduction}
 % Real contents of report starts here
 % Splitting it up to several files help when working together.
 % Floatbarriers prevent figures from beeing placed into the next chapter.
 \input{Introduction}%\FloatBarrier
+\nocite{*}
 
+%\input{Theory}
 %\subfile{Theory}\FloatBarrier
 %\subfile{Method}\FloatBarrier
 %\subfile{Results}\FloatBarrier
 %\subfile{Conclusions}
 %\subfile{Recommendations}
 
-%\printbibliography
+\printbibliography
 
-% Appendices
-%\subfile{Appendix}
+\part{Appended Papers}
+
+\paper{A stude of multiple crack interaction at rolling contact fatigue of rails}{\blindtext}
+
+\paper{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{\blindtext}
 
 \end{document}
 

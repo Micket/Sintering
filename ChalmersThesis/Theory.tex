@@ -18,14 +18,14 @@ where $x$ is in the longitudinal direction, $\eta$ is perpendicular $x$ and the 
 
 \begin{figure}[htpb!]
 \centering
-\begin{tikzpicture}
-  \begin{axis}[xlabel=$x$,ylabel=$y$]
-   \addplot[color=blue,mark=*] plot coordinates { (0,2) (2,3) (3,1) };
-   \addlegendentry{Case 1}
-   \addplot[color=red,mark=x] plot coordinates { (0,0) (1,1) (2,1) (3,2) };
-   \addlegendentry{Case 2}
-  \end{axis}
- \end{tikzpicture}
+%\begin{tikzpicture}
+%  \begin{axis}[xlabel=$x$,ylabel=$y$]
+%   \addplot[color=blue,mark=*] plot coordinates { (0,2) (2,3) (3,1) };
+%   \addlegendentry{Case 1}
+%   \addplot[color=red,mark=x] plot coordinates { (0,0) (1,1) (2,1) (3,2) };
+%   \addlegendentry{Case 2}
+%  \end{axis}
+% \end{tikzpicture}
  \caption{A tikz plot!}
  \label{fig:tikz_plot}
 \end{figure}
@@ -52,8 +52,8 @@ where the $r$ is an interpolating function of the geometry of a standardized S10
  \centering
  \caption{Explanation of variables for calculating the creep.}
  \begin{tabular}{c | l}
-  $\uv{x}$       & Translation vector of wheelset.\\
-  $\uv{\varphi}$ & Rotation vector of wheelset.\\
+%  $\uv{x}$       & Translation vector of wheelset.\\
+%  $\uv{\varphi}$ & Rotation vector of wheelset.\\
   $r_0$		 & Wheel radius at nominal contact point.\\
   $r$            & Wheel radius at current contact point.\\
   $w_0$		 & Lateral distance from COG to nominal contact point.\\
@@ -101,6 +101,7 @@ The effect from the rotation of the wheel is also neglected, as this angle will 
 
 The rest of the material parameters were set to $E_w = E_r = 200$ GPa and $\nu_w = \nu_r = 0.3$.
 
+\end{document}
 \subsubsection{Wheel Forces from Creep}
 The creep forces are calculated with Kalker's linear theory \cite{railvehicledynamics_eandersson}.
 The coefficients for the creep, $\uv{C} = \uv{C}[\frac{a}{b}]$, are interpolated from a set of data taken from table 8-2 in \cite{railvehicledynamics_eandersson}.

@@ -1,91 +1,85 @@
 % Thesis class template for Chalmers University of Technology.
-% This is an inofficial class made by Mikael Öhman <mikael.ohman@chalmers.se>
-% This document is released under public domain
+% Written by Mikael Öhman <mikael.ohman@chalmers.se>
+% This document is released under public domain, but the chalmers logo is trademarked.
 % Some words are translated to swedish if babel langauge is set, otherwise default to English
 
 \NeedsTeXFormat{LaTeX2e}
 
-\ProvidesClass{chalmers-thesis}[2010/09/09 CHALMERS Thesis class]
-
-%\LoadClass[12pt]{scrartcl}
-\LoadClass[a4paper,12pt]{article}
+\ProvidesClass{chalmers-thesis}[2011/01/26 CHALMERS Thesis class]
 
 \newif\if@bachelor
 \newif\if@masters
-\newif\if@licenciate
+\newif\if@licentiate
 \newif\if@doctorate
+\newif\if@cover
 
 \@bachelorfalse
 \@mastersfalse
-\@licenciatefalse
+\@licentiatefalse
 \@doctoratefalse
+\@covertrue
 
 %% Options of actamont class
 \DeclareOption{bachelor}{\global\@bachelortrue
-  \global\@mastersfalse\global\@licenciatefalse\global\@doctoratefalse}
+  \global\@mastersfalse\global\@licentiatefalse\global\@doctoratefalse}
 \DeclareOption{masters}{\global\@masterstrue
-  \global\@bachelorfalse\global\@licenciatefalse\global\@doctoratefalse}
-\DeclareOption{licenciate}{\global\@licenciatetrue
+  \global\@bachelorfalse\global\@licentiatefalse\global\@doctoratefalse}
+\DeclareOption{licentiate}{\global\@licentiatetrue
   \global\@bachelorfalse\global\@mastersfalse\global\@doctoratefalse}
 \DeclareOption{doctorate}{\global\@doctoratetrue
-  \global\@bachelorfalse\global\@masterstrue\global\@licenciatefalse}
+  \global\@bachelorfalse\global\@masterstrue\global\@licentiatefalse}
+\DeclareOption{nocover}{\global\@coverfalse}
 
-%\DeclareOption{bachelor}{\def\@bachelortrue{}}
-%\DeclareOption{masters}{\def\@masterstrue{}}
-%\DeclareOption{licenciate}{\def\@licenciatetrue{}}
-%\DeclareOption{doctorate}{\def\@doctoratetrue{}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
 
-%\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-%\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-
-% execute default options
-\ExecuteOptions{masters}
 \ProcessOptions
 
+\LoadClass{report}
+
 \RequirePackage{tikz}
+\RequirePackage[font=small,format=plain,textfont=it,up]{caption}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
 \RequirePackage{graphicx}
+\RequirePackage{biblatex}
 \RequirePackage[swedish,english]{babel}
 
-\usepackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
+\RequirePackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
 
-%\RequirePackage{xcolor}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+%\setlength{\headheight}{0pt}
+%\setlength{\headsep}{0pt}
+
+\defbibheading{bibliography}[\refname]{\section*{#1}\markboth{#1}{#1}} % Sets the heading for the bibliography
 
 \definecolor{phd_thesis_blue}{rgb}{0.4, 0.4, 0.8}
 \definecolor{chalmers_blue}{rgb}{0, 0, 0.4}
 \definecolor{chalmers_grey}{rgb}{0.8, 0.8, 0.8}
 
-% Setting up the marginals a bit larger
-%\setlength{\oddsidemargin}{0mm}
-%\setlength{\textheight}{730pt} % default 609pt, ~710 if you dont use a4wide
-%\setlength{\headsep}{0pt} % default 25pt, since we have no headers in this document
-%\setlength{\headheight}{0pt} % 12 pt
-%\setlength{\voffset}{-0.4in} % default 0
-
-%\setlength{\textwidth}{160mm}
-%\setlength{\intextsep}{12pt} % This is what you meant to set to 12pt, not textfloatsep
-%\setlength{\abovedisplayskip}{6pt}
-%\setlength{\belowdisplayskip}{6pt}
-%\setlength{\parindent}{5mm}
-%\setlength{\abovecaptionskip}{6pt}
-%\setlength{\belowcaptionskip}{0pt} % Actual skip = \textfloatsep + \belowcaptionskip
-%\setlength{\itemsep}{0pt}
+\setlength{\intextsep}{12pt} % This is what you meant to set to 12pt, not textfloatsep
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\parindent}{5mm}
+\setlength{\abovecaptionskip}{6pt}
+\setlength{\belowcaptionskip}{0pt} % Actual skip = \textfloatsep + \belowcaptionskip
+\setlength{\itemsep}{0pt}
 
 % How to nunmber different objects
 %\numberwithin{equation}{section}
 %\numberwithin{figure}{section}
 %\numberwithin{table}{section}
 
-%\renewcommand{\author}[1]{\gdef\@author{#1}}
-%\renewcommand{\title}[1]{\gdef\@title{#1}}
+\renewcommand{\author}[1]{\gdef\@author{#1}}
+\renewcommand{\title}[1]{\gdef\@title{#1}}
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
-\newcommand{\myabstract}[1]{\gdef\@myabstract{#1}}
+\newcommand{\firstabstract}[1]{\gdef\@firstabstract{#1}}
+\newcommand{\secondabstract}[1]{\gdef\@secondabstract{#1}}
 \newcommand{\keywords}[1]{\gdef\@keywords{#1}}
 \newcommand{\coverfigure}[1]{\gdef\@coverfigure{#1}}
 \newcommand{\covercaption}[1]{\gdef\@covercaption{#1}}
 
-\newcommand{\writtenyear}[1]{\gdef\@writtenyear{#1}}
+\newcommand{\copyrightyear}[1]{\gdef\@copyrightyear{#1}}
 \newcommand{\YYYYNN}[1]{\gdef\@YYYYNN{#1}}
 \newcommand{\ISSN}[1]{\gdef\@ISSN{#1}}
 \newcommand{\ISBN}[1]{\gdef\@ISBN{#1}}
@@ -98,7 +92,12 @@
 \newcommand{\university}[1]{\gdef\@university{#1}}
 \newcommand{\department}[1]{\gdef\@department{#1}}
 \newcommand{\division}[1]{\gdef\@division{#1}}
+
+\newcommand{\paperwork}[1]{\gdef\@paperwork{#1}}
+
 \newcommand{\thesis}[1]{\gdef\@thesis{#1}}
+
+\newcommand{\papernumber}{\Alph} % Determines the numbering of papers.
 
 % Some default settings for Chalmers or at least the department of solid mechanics.
 \postcode{SE-412 96}
@@ -108,65 +107,110 @@
 \university{Chalmers University of Technology} % expandafter just won't work, MakeUppercase is annoying.
 \printers{Chalmers Reproservice}
 \telephone{+ 46 (0)31-772 1000}
+
+% Thesis specific settings
 \if@bachelor
-  \ISSN{1654-4676} % Bachelor
+  \ISSN{1654-4676}
   \def\titlepage@edge{draw}
   \def\titlepage@chalmerscolor{black}
-  \def\titlepage@bg{white}
+  \def\titlepage@bg{}
   \def\titlepage@logotype{Avancez_clean_invert}
 \fi
 \if@masters
-  \ISSN{1652-8557} % Masters
+  \ISSN{1652-8557}
   \def\titlepage@edge{draw}
   \def\titlepage@chalmerscolor{black}
-  \def\titlepage@bg{step=5mm}
+  \def\titlepage@bg{\draw[step=5mm,black] (0,0) grid (\paperwidth,0.25\paperheight);}
   \def\titlepage@logotype{Avancez_clean_white}
 \fi
-\if@licenciate
-  \ISSN{1652-8565} % Lic.
+\if@licentiate
+  \ISSN{1652-8565}
   \def\titlepage@edge{}
   \def\titlepage@chalmerscolor{white}
-  \def\titlepage@bg{fill=chalmers_grey}
+  \def\titlepage@bg{\fill[chalmers_grey] (0,0) rectangle (\paperwidth,0.25\paperheight);}
   \def\titlepage@logotype{Avancez_clean_black}
 \fi
 \if@doctorate
-  \ISSN{0346-718X} % PhD
+  \ISSN{0346-718X}
   \def\titlepage@edge{}
   \def\titlepage@chalmerscolor{white}
-  \def\titlepage@bg{fill=chalmers_blue}
+  \def\titlepage@bg{\fill[chalmers_blue] (0,0) rectangle (\paperwidth,0.25\paperheight);}
   \def\titlepage@logotype{Avancez_clean_gold}
 \fi
+
+% Commands for the thesis table.
+\newcounter{paper}
+\setcounter{paper}{0}
+
+\newcommand{\toppapercolumn}[1]{ \begin{minipage}[t]{0.2\textwidth} \large \textbf{Paper #1}\end{minipage} }
+\newcommand{\topreferencecolumn}[1]{ \begin{minipage}[c]{0.7\textwidth} #1 \end{minipage} }
+
+% Main command, works similarly as \section.
+\newcommand{\paper}[2]{
+ \stepcounter{paper}
+ \addtocontents{lop}{%
+  \protect\noindent
+  \protect\toppapercolumn{\papernumber{paper}}
+  \protect\topreferencecolumn{#2}
+  \protect\\[1em]
+
+ }
+ \thispagestyle{empty}
+ \begin{flushright}
+  {\huge\textbf{Paper \Alph{paper}}}
+ \end{flushright}
+ \vskip 4em
+ {\noindent\Large\textbf{#1}\par}
+ \vskip 2em
+ \begin{center}
+ \begin{minipage}{0.8\textwidth}
+   {\noindent\large#2\par}
+ \end{minipage}
+ \end{center}
+ \newpage
+}
+
+\newcommand{\tableofpapers}{
+\addcontentsline{toc}{chapter}{Thesis}
+\begin{center}\Large \textsc{Thesis}\end{center}
+
+\noindent This thesis consists of an extended summary and the following appended papers:
+\vskip 1em
+\@starttoc{lop}
+\vskip 1em
+
+\noindent \@paperwork
+}
 
 % Introducing some new lengths for the front page
 \newlength{\headerheight}
 \newlength{\headeroffset}
-\setlength{\headerheight}{0.215\paperheight}%~6.4cm
-\setlength{\headeroffset}{0.125\headerheight}%~0.8cm
+\setlength{\headerheight}{0.215\paperheight}%~6.4cm in a4
+\setlength{\headeroffset}{0.125\headerheight}%~0.8cm in a4
 
 % Document metadata
+%\hyperref{pdftitle=\@title}}\act
+\hypersetup{ colorlinks = true }
 \AtBeginDocument{
-{
- \renewcommand{\and}{, }
- \hypersetup{
-  breaklinks,
-  pdfcreator    = \LaTeX{},
-  pdfproducer   = \LaTeX{},
-  bookmarksopen = true,
-  pdfauthor     = \@author,
-  pdftitle      = \@title,
-  pdfsubject    = \@thesis,
-  pdfkeywords   = \@keywords,
-  %colorlinks    = true,
-  urlcolor      = black,
-  citecolor     = black,
-  linkcolor     = black,
-  filecolor     = black
- }
+\renewcommand{\and}{, }
+\hypersetup{%
+  breaklinks,%
+  pdfcreator    = \LaTeX{},%
+  pdfproducer   = \LaTeX{},%
+  bookmarksopen = true,%
+  pdfauthor     = \@author,%
+  pdftitle      = \@title,%
+  pdfsubject    = \@thesis,%
+  pdfkeywords   = \@keywords,%
+  urlcolor      = black,%
+  citecolor     = black,%
+  linkcolor     = black,%
+  filecolor     = black,%
 }
 }
 
-\renewcommand{\maketitle}{%
- \newpage\pagestyle{empty}
+\newcommand{\makecoverpage}{
+ \pagestyle{empty}
  \begin{tikzpicture}[remember picture,overlay]
   \node[yshift=-\headerheight] at (current page.north west)
    {\begin{tikzpicture}[remember picture, overlay]
@@ -174,8 +218,10 @@
      \clip[\titlepage@edge] (0,\headerheight) -- +(\paperwidth,0) -- (\paperwidth,0) -- (0.75\paperwidth,0)
                  .. controls (0.725\paperwidth,0) and (0.725\paperwidth,\headeroffset) ..
                  (0.70\paperwidth,\headeroffset) -- (0,\headeroffset) -- cycle; % (0.5\paperwidth,\headeroffset) to[out=0,in=180] (0.6\paperwidth,0cm);
+     \titlepage@bg
+     %\draw[step=5mm,black] (0,0) rectangle (\paperwidth,0.25\paperheight);
      %\draw[\titlepage@bg](0,0) rectangle (\paperwidth,6.4cm);
-     \draw[step=5mm,black] (0,0) grid (\paperwidth,6.4cm);
+     %\draw[step=5mm,black] (0,0) grid (\paperwidth,6.4cm);
      %\fill[fill=chalmers_grey] (0,0) rectangle (\paperwidth,6.4cm);
      \node[anchor=west,xshift=0.1\paperwidth,yshift=0.511\headerheight]{\chalmerslogo{\titlepage@chalmerscolor}{0.63\paperwidth}}; % 13.2cm for A4 paper
      \node[anchor=west,xshift=0.745\paperwidth,yshift=0.516\headerheight]{\includegraphics[width=0.171\paperwidth]{% 3.6cm
@@ -196,13 +242,18 @@
  {\small\noindent\@department\\
   \@ifundefined{@division}{}{\textit{\@division}\\}
   \MakeUppercase{\@university}\\
-  \@city, \@country\ \@writtenyear\\
+  \@city, \@country\ \@copyrightyear\\
   \@ifundefined{@YYYYNN}{}{\@thesis\ \@YYYYNN}\par} % TODO if YYYYNN? Also, thesis in ...
 
  % Second page, blank
  \newpage
  \mbox{}
+}
 
+\renewcommand{\maketitle}{%
+ \if@cover
+  \makecoverpage
+ \fi
  % Third page, another title page
  \newpage\thispagestyle{empty}
  \begin{center}
@@ -219,7 +270,7 @@
   \@ifundefined{@division}{}{{\textit{\@division}\par}}
   {\MakeUppercase{\@university}\par}
   \vskip 2mm
-  {\@city, \@country\ \@writtenyear\par}
+  {\@city, \@country\ \@copyrightyear\par}
  \end{center}
 
  % Fourth page, printing information
@@ -230,7 +281,7 @@
   %\@ifundefined{\@ISBN}{\\ISBN \@ISBN\\}{}
   \par}
  \vskip 10mm
- {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@writtenyear\par}
+ {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@copyrightyear\par}
  \vspace*{\stretch{1}} %\vskip 20mm
  {\noindent \@ifundefined{@YYYYNN}{@YYYYNN}{}{\@thesis\ \@YYYYNN\\} % TODO: 'thesis in'
   ISSN \@ISSN\\
@@ -245,12 +296,12 @@
  \vskip 5mm
  {\noindent \@printers
   %\@department
-  \\ \@city, \@country\ \@writtenyear\par}
+  \\ \@city, \@country\ \@copyrightyear\par}
 
  % Fifth page, first abstract
  \newpage%\pagestyle{justpage} % TODO page style!
  \setcounter{page}{1}
- \pagenumbering{Roman}
+ \pagenumbering{roman}
  {\noindent \@title\\
   %\makeatletter\@ifundefined{mysubtitle}{}{\mysubtitle\\}\makeatother
   \@ifundefined{@subtitle}{}{\@subtitle\\}
@@ -259,14 +310,31 @@
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
   \@university\par}
- \phantomsection\addcontentsline{toc}{section}{Abstract}\begin{abstract}\@myabstract\end{abstract}
+ \phantomsection\addcontentsline{toc}{section}{Abstract}
+ \begin{center}\Large\textsc{Abstract}\end{center} \@firstabstract
+ \\[1em]
  \noindent \iflanguage{swedish}{Nyckelord}{Keywords}: \@keywords
 
+ % Empty or second abstract
+ %\@ifundefined{\@secondabstract}{\mbox{}}{\begin{otherlanguage}{\@secondarylanguage}\begin{center}\Large\textsc{Abstract}\end{center} \@secondabstract \end{otherlanguage}}
+
+ % Preface/Förord ?
+ %\@ifundefined{\@preface}{}{\newpage\begin{center}\Large\textsc{Preface}\end{center} \@preface }
+
+ %\@ifundefined{\@summary}{}{\newpage\begin{center}\Large\textsc{Summary}\end{center} \@summary }
+
  \newpage
+ \tableofpapers
+
+ \newpage
+ \tableofcontents
+
+ \newpage
+ \pagenumbering{arabic}
  \pagestyle{fancy}
 }
 
-% CHALMERS logo below. Note! It is trademarked!
+% CHALMERS logo below. Note that tt is trademarked!
 \newcommand{\chalmerslogo}[2]{
 \resizebox{#2}{!}{
 \begin{tikzpicture}[fill=#1] % This is 11.994 in width, 1.341 in height
