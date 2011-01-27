@@ -11,12 +11,14 @@
 \newif\if@masters
 \newif\if@licentiate
 \newif\if@doctorate
+\newif\if@bachelorormasters
 \newif\if@cover
 
 \@bachelorfalse
 \@mastersfalse
 \@licentiatefalse
 \@doctoratefalse
+\@bachelorormastersfalse
 \@covertrue
 
 %% Options of actamont class
@@ -34,43 +36,45 @@
 
 \ProcessOptions
 
-\LoadClass{report}
+\LoadClass[twoside]{report}
 
 \RequirePackage{tikz}
-\RequirePackage[font=small,format=plain,textfont=it,up]{caption}
+%\RequirePackage[font=small,format=plain,textfont=it,up]{caption}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
 \RequirePackage{graphicx}
 \RequirePackage{biblatex}
+\RequirePackage{amsmath}
 \RequirePackage[swedish,english]{babel}
 
 \RequirePackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
 
 \fancyhead{}
 \renewcommand{\headrulewidth}{0pt}
-%\setlength{\headheight}{0pt}
-%\setlength{\headsep}{0pt}
 
-\defbibheading{bibliography}[\refname]{\section*{#1}\markboth{#1}{#1}} % Sets the heading for the bibliography
+\defbibheading{bibliography}[\refname]{\section*{#1}} % Sets the heading for the bibliography
 
 % The standard colors
 \definecolor{chalmers_blue}{rgb}{0, 0, 0.4}
 \definecolor{chalmers_grey}{rgb}{0.8, 0.8, 0.8}
 
 % Adjustments of floats and equations.
-\setlength{\intextsep}{12pt} % This is what you meant to set to 12pt, not textfloatsep
+%\setlength{\intextsep}{12pt} % This is what you meant to set to 12pt, not textfloatsep
 %\setlength{\abovedisplayskip}{6pt}
 %\setlength{\belowdisplayskip}{6pt}
-\setlength{\parindent}{5mm}
-\setlength{\abovecaptionskip}{6pt}
-\setlength{\belowcaptionskip}{0pt} % Actual skip = \textfloatsep + \belowcaptionskip
-\setlength{\itemsep}{0pt}
+%\setlength{\parindent}{5mm}
+%\setlength{\abovecaptionskip}{6pt}
+%\setlength{\belowcaptionskip}{0pt} % Actual skip = \textfloatsep + \belowcaptionskip
+%\setlength{\itemsep}{0pt}
 
 % How to nunmber different objects
-%\numberwithin{equation}{section}
-%\numberwithin{figure}{section}
-%\numberwithin{table}{section}
+\AtBeginDocument{
+ \numberwithin{equation}{section}
+ \numberwithin{figure}{section}
+ \numberwithin{table}{section}
+}
 
+% Definitions used
 \renewcommand{\author}[1]{\gdef\@author{#1}}
 \renewcommand{\title}[1]{\gdef\@title{#1}}
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
@@ -78,67 +82,109 @@
 \newcommand{\secondabstract}[2]{\gdef\@secondarylanguage{#1}\gdef\@secondabstract{#2}}
 \newcommand{\keywords}[1]{\gdef\@keywords{#1}}
 \newcommand{\preface}[1]{\gdef\@preface{#1}}
+\newcommand{\acknowledgements}[1]{\gdef\@acknowledgements{#1}}
+\newcommand{\dedication}[1]{\gdef\@dedication{#1}}
 
 \newcommand{\coverfigure}[1]{\gdef\@coverfigure{#1}}
 \newcommand{\covercaption}[1]{\gdef\@covercaption{#1}}
 
 \newcommand{\copyrightyear}[1]{\gdef\@copyrightyear{#1}}
-\newcommand{\reportno}[1]{\gdef\@YYYYNN{#1}}
+\newcommand{\reportno}[1]{\gdef\@reportno{#1}}
 \newcommand{\ISSN}[1]{\gdef\@ISSN{#1}}
 \newcommand{\ISBN}[1]{\gdef\@ISBN{#1}}
 \newcommand{\printers}[1]{\gdef\@printers{#1}}
 
 \newcommand{\telephone}[1]{\gdef\@telephone{#1}}
 \newcommand{\postcode}[1]{\gdef\@postcode{#1}}
-\newcommand{\city}[1]{\gdef\@city{#1}}
-\newcommand{\country}[1]{\gdef\@country{#1}}
-\newcommand{\university}[1]{\gdef\@university{#1}}
+%\newcommand{\city}[1]{\gdef\@city{#1}}
+%\newcommand{\country}[1]{\gdef\@country{#1}}
+%\newcommand{\university}[1]{\gdef\@university{#1}}
 \newcommand{\department}[1]{\gdef\@department{#1}}
 \newcommand{\division}[1]{\gdef\@division{#1}}
-
+\newcommand{\thesisin}[1]{\gdef\@thesisin{#1}}
 \newcommand{\paperwork}[1]{\gdef\@paperwork{#1}}
 
-\newcommand{\thesis}[1]{\gdef\@thesis{#1}}
+\newcommand{\opponent}[1]{\gdef\@opponent{#1}}
+\newcommand{\oppositiondate}[1]{\gdef\@oppositiondate{#1}}
+
+%\newcommand{\thesis}[1]{\gdef\@thesis{#1}}
 
 \newcommand{\papernumber}{\Alph} % Determines the numbering of papers.
 
 % Some default settings for Chalmers or at least the department of solid mechanics.
 \postcode{SE-412 96}
-\city{G\"oteborg}
-\country{\iflanguage{swedish}{Sverige}{Sweden}}
-\university{\iflanguage{swedish}{Chalmers Tekniska Högskola}{Chalmers University of Technology}}
-\university{Chalmers University of Technology} % expandafter just won't work, MakeUppercase is annoying.
 \printers{Chalmers Reproservice}
-\telephone{+ 46 (0)31-772 1000}
+\telephone{+46 (0)31-772 1000}
+
+% More translations for babel.
+\addto\captionsswedish{%
+  \def\countryname{Sverige}%
+  \def\cityname{G\"oteborg}%
+  \def\telephonename{Telefon}%
+  \def\universityname{Chalmers Tekniska H\"ogskola}%
+  \def\covername{Omslag}%
+  \def\acknowledgementsname{Tacks\"agelse}%
+  \def\keywordsname{Nyckelord}%
+%
+  \def\masterthesisname{Examensarbete}%
+  \def\bachelorthesisname{Kandidatarbete}%
+  \def\licentiatethesisname{Licentiatavhandling}%
+  \def\licentiatethesisname{Doktorsavhandling}%
+%
+  \def\inname{i}%
+  }
+
+\addto\captionsenglish{%
+  \def\countryname{Sweden}%
+  \def\cityname{G\"oteborg}%
+  \def\telephonename{Telephone}%
+  \def\universityname{Chalmers University of Technology}%
+  \def\covername{Cover}%
+  \def\acknowledgementsname{Acknowledgements}%
+  \def\keywordsname{Keywords}%
+%
+  \def\masterthesisname{Master's thesis}%
+  \def\bachelorthesisname{Bachelor thesis}%
+  \def\licentiatethesisname{Thesis for the degree of Licentiate of Engineering}%
+  \def\doctoratethesisname{Thesis for the degree of Doctor of Philosophy}%
+%
+  \def\inname{in}%
+  }
 
 % Thesis specific settings
 \if@bachelor
+  \global\@bachelorormasterstrue
   \ISSN{1654-4676}
   \def\titlepage@edge{draw}
   \def\titlepage@chalmerscolor{black}
   \def\titlepage@bg{}
-  \def\titlepage@logotype{Avancez_clean_invert}
+  \def\titlepage@logotype{Avancez_invert}
+  \def\thesisname{\bachelorthesisname}
 \fi
 \if@masters
+  \global\@bachelorormasterstrue
   \ISSN{1652-8557}
   \def\titlepage@edge{draw}
   \def\titlepage@chalmerscolor{black}
   \def\titlepage@bg{\draw[step=5mm,black] (0,0) grid (\paperwidth,0.25\paperheight);}
-  \def\titlepage@logotype{Avancez_clean_white}
+  \def\titlepage@logotype{Avancez_white}
+  \def\thesisname{\masterthesisname}
 \fi
 \if@licentiate
   \ISSN{1652-8565}
   \def\titlepage@edge{}
   \def\titlepage@chalmerscolor{white}
   \def\titlepage@bg{\fill[chalmers_grey] (0,0) rectangle (\paperwidth,0.25\paperheight);}
-  \def\titlepage@logotype{Avancez_clean_black}
+  \def\titlepage@logotype{Avancez_black}
+  \def\thesisname{\licentiatethesisname}
 \fi
 \if@doctorate
   \ISSN{0346-718X}
   \def\titlepage@edge{}
   \def\titlepage@chalmerscolor{white}
   \def\titlepage@bg{\fill[chalmers_blue] (0,0) rectangle (\paperwidth,0.25\paperheight);}
-  \def\titlepage@logotype{Avancez_clean_gold}
+  \def\titlepage@logotype{Avancez_gold}
+  \def\thesisname{\doctoratethesisname}
 \fi
 
 % Commands for the thesis table.
@@ -159,12 +205,13 @@
 
  }
  \thispagestyle{empty}
+ \vspace*{0em}
  \begin{flushright}
   {\huge\textbf{Paper \Alph{paper}}}
  \end{flushright}
- \vskip 4em
+ \vspace*{5em}
  {\noindent\Large\textbf{#1}\par}
- \vskip 2em
+ \vspace*{2em}
  \begin{center}
  \begin{minipage}{0.8\textwidth}
    {\noindent\large#2\par}
@@ -173,6 +220,8 @@
  \newpage
 }
 
+% Reads the *.lop file which is automatically generated by \paper
+% Works similarly as \tableofcontents
 \newcommand{\tableofpapers}{
 \addcontentsline{toc}{chapter}{Thesis}
 \begin{center}\Large \textsc{Thesis}\end{center}
@@ -192,24 +241,24 @@
 \setlength{\headeroffset}{0.125\headerheight}%~0.8cm in a4
 
 % Document metadata
-%\hyperref{pdftitle=\@title}}\act
 \hypersetup{ colorlinks = true }
 \AtBeginDocument{
-\renewcommand{\and}{, }
-\hypersetup{%
-  breaklinks,%
-  pdfcreator    = \LaTeX{},%
-  pdfproducer   = \LaTeX{},%
-  bookmarksopen = true,%
-  pdfauthor     = \@author,%
-  pdftitle      = \@title,%
-  pdfsubject    = \@thesis,%
-  pdfkeywords   = \@keywords,%
-  urlcolor      = black,%
-  citecolor     = black,%
-  linkcolor     = black,%
-  filecolor     = black,%
-}
+ {\renewcommand{\and}{, }
+  \hypersetup{%
+   breaklinks,%
+   pdfcreator    = \LaTeX{},%
+   pdfproducer   = \LaTeX{},%
+   bookmarksopen = true,%
+   pdfauthor     = \@author,%
+   pdftitle      = \@title,%
+   pdfsubject    = \thesisname,%
+   pdfkeywords   = \@keywords,%
+   urlcolor      = black,%
+   citecolor     = black,%
+   linkcolor     = black,%
+   filecolor     = black,%
+  }
+ }
 }
 
 \newcommand{\makecoverpage}{
@@ -217,15 +266,10 @@
  \begin{tikzpicture}[remember picture,overlay]
   \node[yshift=-\headerheight] at (current page.north west)
    {\begin{tikzpicture}[remember picture, overlay]
-     % First draw the grid and then the Logo and avancez logo.
      \clip[\titlepage@edge] (0,\headerheight) -- +(\paperwidth,0) -- (\paperwidth,0) -- (0.75\paperwidth,0)
                  .. controls (0.725\paperwidth,0) and (0.725\paperwidth,\headeroffset) ..
                  (0.70\paperwidth,\headeroffset) -- (0,\headeroffset) -- cycle; % (0.5\paperwidth,\headeroffset) to[out=0,in=180] (0.6\paperwidth,0cm);
      \titlepage@bg
-     %\draw[step=5mm,black] (0,0) rectangle (\paperwidth,0.25\paperheight);
-     %\draw[\titlepage@bg](0,0) rectangle (\paperwidth,6.4cm);
-     %\draw[step=5mm,black] (0,0) grid (\paperwidth,6.4cm);
-     %\fill[fill=chalmers_grey] (0,0) rectangle (\paperwidth,6.4cm);
      \node[anchor=west,xshift=0.1\paperwidth,yshift=0.511\headerheight]{\chalmerslogo{\titlepage@chalmerscolor}{0.63\paperwidth}}; % 13.2cm for A4 paper
      \node[anchor=west,xshift=0.745\paperwidth,yshift=0.516\headerheight]{\includegraphics[width=0.171\paperwidth]{% 3.6cm
         figures/\titlepage@logotype
@@ -238,45 +282,45 @@
  \end{center}
  {\huge\noindent\@title\par} % title, 21
  \@ifundefined{@subtitle}{}{{\large\noindent\@subtitle\par}} % subtitle, 16
- {\normalsize\noindent\textit{\@thesis}\par} % 14 thesis in programmename (only bachelor and master's)
+ {\normalsize\noindent\textit{\@thesis\ \inname\ \@thesisin}\par} % 14 thesis in programmename (only bachelor and master's)
  \vskip 1em
  {\renewcommand{\and}{\\}\Large\noindent \MakeUppercase{\@author}\par}% 18
  \vskip 1em
  {\small\noindent\@department\\
   \@ifundefined{@division}{}{\textit{\@division}\\}
-  \MakeUppercase{\@university}\\
-  \@city, \@country\ \@copyrightyear\\
-  \@ifundefined{@YYYYNN}{}{\@thesis\ \@YYYYNN}\par} % TODO if YYYYNN? Also, thesis in ...
+  \MakeUppercase{\universityname}\\
+  \cityname, \countryname\ \@copyrightyear
+  \new@bachelorormasters
+    \\ \thesisname\ \@reportno \fi
+  \par}
 
  % Second page, blank
  \newpage
  \mbox{}
 }
 
-\renewcommand{\maketitle}{%
- \if@cover
-  \makecoverpage
- \fi
- % Third page, another title page
+\newcommand{\maketitlepage}{
  \newpage\thispagestyle{empty}
  \begin{center}
-  \@ifundefined{@YYYYNN}{}{{\MakeUppercase{\@thesis}\ \@YYYYNN\par}} % Only if YYYYNN is defined TODO:'thesis in'
+  {\MakeUppercase{\@thesis\ \inname\ \@thesisin}\ \@reportno\par} %  TODO:'thesis in'
   \vspace*{\stretch{1}}%\vskip 40mm
   {\Large \@title\par}
-  \vskip 5mm
+  \vskip 1em
   \@ifundefined{@subtitle}{}{{\@subtitle\par}}
-  \vskip 5mm
+  \vskip 1em
   {\@thesis\par} % (if applicable) (if applicable)
   {\renewcommand{\and}{, }\MakeUppercase{\@author}\par}
   \vspace*{\stretch{3}}%\vfill
   {\@department\par}
   \@ifundefined{@division}{}{{\textit{\@division}\par}}
-  {\MakeUppercase{\@university}\par}
+  {\MakeUppercase{\universityname}\par}
   \vskip 2mm
-  {\@city, \@country\ \@copyrightyear\par}
+  {\cityname, \countryname\ \@copyrightyear\par}
  \end{center}
+}
 
- % Fourth page, printing information
+\newcommand{\makeprintinfopage}{
+ % Printing information
  \newpage
  {\noindent \@title\\
   \@ifundefined{@subtitle}{}{\@subtitle\\}
@@ -286,66 +330,115 @@
  \vskip 10mm
  {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@copyrightyear\par}
  \vspace*{\stretch{1}} %\vskip 20mm
- {\noindent \@ifundefined{@YYYYNN}{@YYYYNN}{}{\@thesis\ \@YYYYNN\\} % TODO: 'thesis in'
+ {\noindent \@thesis\ \@reportno\\ % TODO: 'thesis in'
   ISSN \@ISSN\\
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
-  \@university\\
-  \@postcode\ \@city\\
-  \@country\\
-  \iflanguage{swedish}{Telefon}{Telephone}: \@telephone\par}
+  \universityname\\
+  \@postcode\ \cityname\\
+  \countryname\\
+  \telephonename: \@telephone\par}
  \vspace*{\stretch{3}}
- \@ifundefined{@covercaption}{}{{\noindent \iflanguage{swedish}{Omslag}{Cover}:\\ \@covercaption\par}} % Another translation here
+ %\@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}} % Another translation here
  \vskip 5mm
  {\noindent \@printers
   %\@department
-  \\ \@city, \@country\ \@copyrightyear\par}
+  \\ \cityname, \countryname\ \@copyrightyear\par}
+}
 
- % Fifth page, first abstract
+\newcommand{\makeabstractpage}{
  \newpage
- %\pagestyle{justpage} % TODO page style!
  \setcounter{page}{1}
  \pagenumbering{roman}
  {\noindent \@title\\
-  %\makeatletter\@ifundefined{mysubtitle}{}{\mysubtitle\\}\makeatother
   \@ifundefined{@subtitle}{}{\@subtitle\\}
-  \@thesis\\ % (if applicable) thesis in programmename
-  {\renewcommand{\and}{\\}\MakeUppercase{\@author}}\\
+  \thesisname\ \inname \@thesisin\\
+   {\renewcommand{\and}{\\}\MakeUppercase{\@author}}\\
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
-  \@university\par}
- \phantomsection\addcontentsline{toc}{chapter}{Abstract}
+  \universityname\par}
+ \phantomsection\addcontentsline{toc}{chapter}{\abstractname}
  \begin{center}\Large\textsc{\abstractname}\end{center} \@firstabstract
  \\[1em]
  \noindent \iflanguage{swedish}{Nyckelord}{Keywords}: \@keywords
+}
+
+\renewcommand{\maketitle}{%
+ \if@cover
+  \makecoverpage
+ \fi
+
+ \maketitlepage
+
+ \makeprintinfopage
+
+ \makeabstractpage\pagestyle{plain}
 
  % Empty or second abstract
- %\@ifundefined{\@secondabstract}{\mbox{}}{\begin{otherlanguage}{swedish}\begin{center}\Large\textsc{\abstractname}\end{center} \@secondabstract \end{otherlanguage}}
  \@ifundefined{@secondabstract}{
   \newpage\mbox{}}{
   \newpage\begin{otherlanguage}{swedish}\begin{center}\Large\textsc{\abstractname}\end{center} \@secondabstract \end{otherlanguage}}
 
- \@ifundefined{@acknowledgement}{}{
+ \@ifundefined{@dedication}{}{
+  \cleardoublepage
   \vspace*{0.2\textheight}
-  \begin{center}Acknowledgements\end{center}
-  \@acknowledgement
+  \begin{center}\@dedication\end{center}
  }
 
- % Preface/Förord ?
- \def\prefacename{\iflanguage{swedish}{F\"orord}{Preface}}
- \@ifundefined{@preface}{}{\newpage\begin{center}\Large\textsc{\prefacename}\end{center}\@preface }
+ % Preface and acknowledgements
+ \cleardoublepage
+ \@ifundefined{@preface}{}{
+  \phantomsection\addcontentsline{toc}{chapter}{\prefacename}
+  \begin{center}\Large\textsc{\prefacename}\end{center} \@preface
+ }
+ \@ifundefined{@acknowledgements}{}{
+  \phantomsection\addcontentsline{toc}{chapter}{\acknowledgementsname}
+  \begin{center}\Large\textsc{\acknowledgementsname}\end{center} \@acknowledgements
+ }
 
- %\@ifundefined{@summary}{}{\newpage\begin{center}\Large\textsc{Summary}\end{center} \@summary }
-
- \newpage
+ \cleardoublepage
  \tableofpapers
 
- \newpage
+ \cleardoublepage
  \tableofcontents
 
  \newpage
  \pagenumbering{arabic}
  \pagestyle{fancy}
+}
+
+\newcommand{\makethesisdefence}{
+ \thispagestyle{empty}
+ \begin{center}
+  {\chalmerslogo{black}{0.4\textwidth}\par}
+  \vspace{0.1\textheight}
+  {\Large\textbf{\@title} \par}
+  \vspace{1em}
+  {\large \@subtitle \par}
+  \vspace{2em}
+  {\renewcommand{\and}{\\}\large \textsc{\@author}\par}
+  \vspace{\stretch{1}}
+  {Thesis submitted for the degree of
+   \if@doctorate
+    Doctor of Philosophy
+   \else
+    Licentiate of Engineering
+   \fi in \@thesisin\ at the \@department, \universityname, \cityname, \countryname\par}
+  \vspace{\stretch{1}}
+  {To be defended in public, \@oppositiondate \par}
+  \vspace{\stretch{1}}
+  {Faculty opponent\\ \@opponent \par}
+  \vspace{\stretch{1}}
+  {\@department\\
+   \universityname\\
+   \@postcode\ \cityname, \countryname\\
+   \telephonename\ \@telephone\par}
+   \vspace{\stretch{1}}
+   \includegraphics[width=0.3\textwidth]{figures/Avancez_black}
+ \end{center}
+
+ \makeabstractpage\thispagestyle{empty}
+ \newpage
 }
 
 % CHALMERS logo below. Note that tt is trademarked!

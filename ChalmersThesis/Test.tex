@@ -1,26 +1,36 @@
-\documentclass[masters,b5paper,nocover]{chalmers-thesis}
+\documentclass[doctorate,a4paper]{chalmers-thesis}
 \usepackage[utf8]{inputenc} % File encoding, you should try to stick to utf8.
-\usepackage{csquotes}
-\usepackage{amsmath,mathtools} % All your math related needs
+
+\usepackage{csquotes} % For biblatex
 \usepackage{microtype} % Magically improves typesetting
 \usepackage{biblatex} % Modern package for bibliographies.
+\usepackage{mathtools} % All your math related needs
+\usepackage{subfiles} % Split up the contents, see Introduction.tex
 \usepackage{listings} % For source code.
+%\usepackage{customcommands} % Put your custom commands in a file ``customcommands.sty'' and load it like this.
 
-\usepackage{blindtext}
+\usepackage{blindtext} % Package used to put in placeholder text. Remove it.
 
 \title{The Title of Your Thesis which might be very long}
 \subtitle{And Perhaps a Subtitle}
 \author{Some Author\and Other Author}
-\thesis{Master's thesis in Some Programme}
-%\thesisin{Master's thesis in Some Programme}
+\thesisin{Solid and Structural Mechanics}
 \department{Department of Applied Mechanics}
 \division{Division of Solid Mechanics}
 \reportno{2010:37}
-\ISBN{123-21332-13423-123} % Only PhD thesis gets ISBN!
+\ISBN{123-21332-13423-123}
 \copyrightyear{2010}
 
+\opponent{
+Dr. Alban\\
+Department of Pop\\
+University of Somewhere\\
+Nigeria
+}
+\oppositiondate{10.00 am, 30\textsuperscript{th} May, 2011 in HA2 Hörsalsvägen 4, Göteborg}
+
 % You should scale the figure according to textwidth and or paperheight.
-\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/COVER_93_iso.png}}
+\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/cover.png}}
 \covercaption{Some explanation}
 
 \firstabstract{\blindtext}
@@ -28,37 +38,30 @@
 \keywords{Some stuff, More stuff, Stuff}
 
 \preface{\blindtext}
-%\acknowledgement{\textit{Thanks to someone.}}
-%\summary{\blindtext}
-
+\acknowledgements{\blindtext}
+\dedication{\textit{to my dear mother.}}
 \paperwork{\blindtext}
 
 \bibliography{mybib}
 
 \begin{document}
 \maketitle
+%\makethesisdefence
 
-\part{Introduction}
-% Real contents of report starts here
-% Splitting it up to several files help when working together.
-% Floatbarriers prevent figures from beeing placed into the next chapter.
-\input{Introduction}%\FloatBarrier
-\nocite{*}
+\part{Extended Summary}
 
-%\input{Theory}
-%\subfile{Theory}\FloatBarrier
-%\subfile{Method}\FloatBarrier
-%\subfile{Results}\FloatBarrier
-%\subfile{Conclusions}
-%\subfile{Recommendations}
+\subfile{Introduction}
 
+\nocite{*} % Causes everything in bibliography to be printed
 \printbibliography
 
-\part{Appended Papers}
+\part{Appended Papers A--B}
 
 \paper{A stude of multiple crack interaction at rolling contact fatigue of rails}{\blindtext}
+%\includepdf[pages=-]{papera.pdf}
 
 \paper{Assessment of acceleration modeling for fluid-filled porous media subjected to dynamic loading}{\blindtext}
+%\includepdf[pages=-]{paperb.pdf}
 
 \end{document}
 
