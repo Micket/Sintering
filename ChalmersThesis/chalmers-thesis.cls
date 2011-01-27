@@ -53,13 +53,14 @@
 
 \defbibheading{bibliography}[\refname]{\section*{#1}\markboth{#1}{#1}} % Sets the heading for the bibliography
 
-\definecolor{phd_thesis_blue}{rgb}{0.4, 0.4, 0.8}
+% The standard colors
 \definecolor{chalmers_blue}{rgb}{0, 0, 0.4}
 \definecolor{chalmers_grey}{rgb}{0.8, 0.8, 0.8}
 
+% Adjustments of floats and equations.
 \setlength{\intextsep}{12pt} % This is what you meant to set to 12pt, not textfloatsep
-\setlength{\abovedisplayskip}{6pt}
-\setlength{\belowdisplayskip}{6pt}
+%\setlength{\abovedisplayskip}{6pt}
+%\setlength{\belowdisplayskip}{6pt}
 \setlength{\parindent}{5mm}
 \setlength{\abovecaptionskip}{6pt}
 \setlength{\belowcaptionskip}{0pt} % Actual skip = \textfloatsep + \belowcaptionskip
@@ -74,13 +75,15 @@
 \renewcommand{\title}[1]{\gdef\@title{#1}}
 \newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
 \newcommand{\firstabstract}[1]{\gdef\@firstabstract{#1}}
-\newcommand{\secondabstract}[1]{\gdef\@secondabstract{#1}}
+\newcommand{\secondabstract}[2]{\gdef\@secondarylanguage{#1}\gdef\@secondabstract{#2}}
 \newcommand{\keywords}[1]{\gdef\@keywords{#1}}
+\newcommand{\preface}[1]{\gdef\@preface{#1}}
+
 \newcommand{\coverfigure}[1]{\gdef\@coverfigure{#1}}
 \newcommand{\covercaption}[1]{\gdef\@covercaption{#1}}
 
 \newcommand{\copyrightyear}[1]{\gdef\@copyrightyear{#1}}
-\newcommand{\YYYYNN}[1]{\gdef\@YYYYNN{#1}}
+\newcommand{\reportno}[1]{\gdef\@YYYYNN{#1}}
 \newcommand{\ISSN}[1]{\gdef\@ISSN{#1}}
 \newcommand{\ISBN}[1]{\gdef\@ISBN{#1}}
 \newcommand{\printers}[1]{\gdef\@printers{#1}}
@@ -299,7 +302,8 @@
   \\ \@city, \@country\ \@copyrightyear\par}
 
  % Fifth page, first abstract
- \newpage%\pagestyle{justpage} % TODO page style!
+ \newpage
+ %\pagestyle{justpage} % TODO page style!
  \setcounter{page}{1}
  \pagenumbering{roman}
  {\noindent \@title\\
@@ -310,18 +314,28 @@
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
   \@university\par}
- \phantomsection\addcontentsline{toc}{section}{Abstract}
- \begin{center}\Large\textsc{Abstract}\end{center} \@firstabstract
+ \phantomsection\addcontentsline{toc}{chapter}{Abstract}
+ \begin{center}\Large\textsc{\abstractname}\end{center} \@firstabstract
  \\[1em]
  \noindent \iflanguage{swedish}{Nyckelord}{Keywords}: \@keywords
 
  % Empty or second abstract
- %\@ifundefined{\@secondabstract}{\mbox{}}{\begin{otherlanguage}{\@secondarylanguage}\begin{center}\Large\textsc{Abstract}\end{center} \@secondabstract \end{otherlanguage}}
+ %\@ifundefined{\@secondabstract}{\mbox{}}{\begin{otherlanguage}{swedish}\begin{center}\Large\textsc{\abstractname}\end{center} \@secondabstract \end{otherlanguage}}
+ \@ifundefined{@secondabstract}{
+  \newpage\mbox{}}{
+  \newpage\begin{otherlanguage}{swedish}\begin{center}\Large\textsc{\abstractname}\end{center} \@secondabstract \end{otherlanguage}}
+
+ \@ifundefined{@acknowledgement}{}{
+  \vspace*{0.2\textheight}
+  \begin{center}Acknowledgements\end{center}
+  \@acknowledgement
+ }
 
  % Preface/Förord ?
- %\@ifundefined{\@preface}{}{\newpage\begin{center}\Large\textsc{Preface}\end{center} \@preface }
+ \def\prefacename{\iflanguage{swedish}{F\"orord}{Preface}}
+ \@ifundefined{@preface}{}{\newpage\begin{center}\Large\textsc{\prefacename}\end{center}\@preface }
 
- %\@ifundefined{\@summary}{}{\newpage\begin{center}\Large\textsc{Summary}\end{center} \@summary }
+ %\@ifundefined{@summary}{}{\newpage\begin{center}\Large\textsc{Summary}\end{center} \@summary }
 
  \newpage
  \tableofpapers

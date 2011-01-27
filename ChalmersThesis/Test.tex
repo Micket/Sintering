@@ -5,6 +5,7 @@
 \usepackage{microtype} % Magically improves typesetting
 \usepackage{biblatex} % Modern package for bibliographies.
 \usepackage{listings} % For source code.
+
 \usepackage{blindtext}
 
 \title{The Title of Your Thesis which might be very long}
@@ -14,7 +15,7 @@
 %\thesisin{Master's thesis in Some Programme}
 \department{Department of Applied Mechanics}
 \division{Division of Solid Mechanics}
-\YYYYNN{2010:37}
+\reportno{2010:37}
 \ISBN{123-21332-13423-123} % Only PhD thesis gets ISBN!
 \copyrightyear{2010}
 
@@ -23,10 +24,10 @@
 \covercaption{Some explanation}
 
 \firstabstract{\blindtext}
-%\secondabstract{language}{\blindtext}
+\secondabstract{swedish}{\blindtext}
 \keywords{Some stuff, More stuff, Stuff}
 
-%\preface{\blindtext}
+\preface{\blindtext}
 %\acknowledgement{\textit{Thanks to someone.}}
 %\summary{\blindtext}
 
@@ -34,15 +35,9 @@
 
 \bibliography{mybib}
 
-
 \begin{document}
-
 \maketitle
 
-%\phantomsection\addcontentsline{toc}{section}{Sammanfattning}
-%\selectlanguage{swedish}
-%\begin{abstract}Blabla swedish abstract\end{abstract}
-% or a blank box
 \part{Introduction}
 % Real contents of report starts here
 % Splitting it up to several files help when working together.
