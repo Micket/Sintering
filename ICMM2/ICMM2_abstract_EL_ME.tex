@@ -1,0 +1,109 @@
+% =================================================================================================
+% documentstyle
+\documentclass[11pt,a4paper]{article}
+
+% userpackages
+\usepackage{times}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+
+% set-up
+\pagestyle{empty}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm}
+
+% =================================================================================================
+
+\begin{document}
+\begin{center}
+
+% Title of the abstract
+\textbf{\Large Multiscale modeling of the mechanical behaviour of pearlitic steel}
+\\[5mm]
+
+% Full names of all authors
+\textrm{\large Erik Lindfeldt${}_{}^{1}$, Magnus Ekh${}_{}^{1}$}
+\\[5mm]
+
+% Affiliations and addresses
+\textrm{${}_{}^{1}$Department of Applied Mechanics\\
+Chalmers University of Technology, Gothenburg, Sweden\\
+e-mail: \url{erik.lindfeldt@chalmers.se}}
+\\[5mm]
+\end{center}
+
+% =================================================================================================
+
+Pearlitic steel consists of cementite lamellae embedded in a ferritic matrix. These lamellae are
+arranged in colonies within which the cementite orientation is (ideally) constant. In this
+contribution a representative microscale model that captures the behaviour of the cementite and the
+ferrite but also the interaction between these phases is proposed. In the microscale model the
+ferrite is modelled by using crystal plasticity \cite{Ekh} while the cementite is modelled as
+elastic.
+
+The homogenised response from the micromodel is passed via the mesoscopic model, using a multiscale
+modeling approach, to the macroscale model which represents the structural level. The mesoscale
+model consists of nodules, with different crystallographic orientations of the ferrite, within which
+different colonies reside.
+
+Different types of prolongation conditions on the micromodel from the mesoscale deformation gradient
+are discussed and and their results are compared. Furthermore, the number of directions of the
+cementite lamellae and the number of crystallographic directions of the ferrite needed to obtain a
+representative mesoscale behavior is investigated. 
+
+Finally, numerical results for different orientation distributions of the
+cementite lamellae that give different degree of anisoptropy of the pearlite are given and compared
+with experimental results in a qualitative fashion. 
+
+% =================================================================================================
+
+\begin{thebibliography}{99}
+
+% article style 
+% -----------------------------------------------
+% \bibitem{art}
+% Firstauthor, A. B., ..., 
+% Article title,
+% Full journal name,
+% Volume number, 
+% First page number, 
+% Year.
+
+\bibitem{Ekh}
+Ekh, M.  et al.,
+A model framework for anisotropic damage coupled to crystal (visco)plasticity,
+International Journal of Plasticity,
+20,
+2143,
+2004
+%
+\bibitem{perlit}
+Elwazri, A.M. et al.,
+The effect of microstructural characteristics of pearlite on the mechanical properties of
+hypereutectoid steel,
+Materials Science and Engineering: A
+404,
+91,
+2005
+
+% conference proceedings
+% -----------------------------------------------
+% \bibitem{cp}
+% Firstauthor, A. B., ..., 
+% Contribution title,
+% Proceedings name, 
+% Editor names, 
+% Volume number,
+% First page number, 
+% Year.
+
+% book
+% -----------------------------------------------
+% \bibitem{book}
+% Firstauthor, A. B., ..., 
+% Book title,
+% Publisher name, 
+% Year.
+
+\end{thebibliography}
+\end{document}
+% =================================================================================================

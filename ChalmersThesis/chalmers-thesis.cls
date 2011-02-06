@@ -241,7 +241,14 @@
 \setlength{\headeroffset}{0.125\headerheight}%~0.8cm in a4
 
 % Document metadata
-\hypersetup{ colorlinks = true }
+\hypersetup{
+  colorlinks = true,
+  urlcolor   = black,%
+  citecolor  = black,%
+  linkcolor  = black,%
+  filecolor  = black,%
+}
+
 \AtBeginDocument{
  {\renewcommand{\and}{, }
   \hypersetup{%
@@ -253,10 +260,6 @@
    pdftitle      = \@title,%
    pdfsubject    = \thesisname,%
    pdfkeywords   = \@keywords,%
-   urlcolor      = black,%
-   citecolor     = black,%
-   linkcolor     = black,%
-   filecolor     = black,%
   }
  }
 }
@@ -302,13 +305,13 @@
 \newcommand{\maketitlepage}{
  \newpage\thispagestyle{empty}
  \begin{center}
-  {\MakeUppercase{\@thesis\ \inname\ \@thesisin}\ \@reportno\par} %  TODO:'thesis in'
-  \vspace*{\stretch{1}}%\vskip 40mm
+  {\MakeUppercase{\thesisname\ \inname\ \@thesisin}\ \@reportno\par} %  TODO:'thesis in'
+  \vspace*{\stretch{1}}
   {\Large \@title\par}
   \vskip 1em
   \@ifundefined{@subtitle}{}{{\@subtitle\par}}
   \vskip 1em
-  {\@thesis\par} % (if applicable) (if applicable)
+  {\thesisname\par}
   {\renewcommand{\and}{, }\MakeUppercase{\@author}\par}
   \vspace*{\stretch{3}}%\vfill
   {\@department\par}
@@ -325,12 +328,12 @@
  {\noindent \@title\\
   \@ifundefined{@subtitle}{}{\@subtitle\\}
   \renewcommand{\and}{\\}\MakeUppercase{\@author}
-  %\@ifundefined{\@ISBN}{\\ISBN \@ISBN\\}{}
+  \@ifundefined{\@ISBN}{}{\\ISBN \@ISBN\\}
   \par}
  \vskip 10mm
  {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@copyrightyear\par}
- \vspace*{\stretch{1}} %\vskip 20mm
- {\noindent \@thesis\ \@reportno\\ % TODO: 'thesis in'
+ \vspace*{\stretch{1}}
+ {\noindent \thesisname\ \inname \@thesisin\ \@reportno\\ % TODO: This is inconsistent!
   ISSN \@ISSN\\
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
@@ -339,10 +342,10 @@
   \countryname\\
   \telephonename: \@telephone\par}
  \vspace*{\stretch{3}}
- %\@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}} % Another translation here
+ \@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}}
  \vskip 5mm
  {\noindent \@printers
-  %\@department
+  \@department
   \\ \cityname, \countryname\ \@copyrightyear\par}
 }
 
@@ -365,7 +368,7 @@
 
 \renewcommand{\maketitle}{%
  \if@cover
-  \makecoverpage
+  %\makecoverpage
  \fi
 
  \maketitlepage
@@ -407,6 +410,7 @@
  \pagestyle{fancy}
 }
 
+% Page + abstract for defence of thesis.
 \newcommand{\makethesisdefence}{
  \thispagestyle{empty}
  \begin{center}
