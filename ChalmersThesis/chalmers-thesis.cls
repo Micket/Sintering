@@ -43,9 +43,23 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
 \RequirePackage{graphicx}
+\RequirePackage{csquotes}
 \RequirePackage{biblatex}
 \RequirePackage{amsmath}
 \RequirePackage[english]{babel}
+
+% \RequirePackage{titlesec}
+% \renewcommand{\thechapter}{\Roman{chapter}}
+% \titleformat{\chapter}[display]
+% {\bfseries\Large}
+% {\filleft\MakeUppercase{\chaptertitlename} \Huge\thechapter}
+% {4ex}
+% {\titlerule
+% \vspace{2ex}%
+% \filright}
+% [\vspace{2ex}%
+% \titlerule]
+
 
 \RequirePackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
 

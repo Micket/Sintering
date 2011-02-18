@@ -1,13 +1,9 @@
 % This is an example on how to use the chalmers-thesis document class for a master's thesis.
-% Document should be compiled with pdflatex
+% Document should be compiled with pdflatex or lualatex
 
 \documentclass[masters,a4paper]{chalmers-thesis}
 \usepackage[utf8x]{inputenc} % File encoding, you should try to stick to utf8 or utf8x
-\usepackage{microtype} % Magically improves typesetting for pdflatex
-
-% Required for the template
-\usepackage{csquotes} % For biblatex
-\usepackage{biblatex} % Modern package for bibliographies.
+%\usepackage{microtype} % Magically improves typesetting for pdflatex
 \usepackage{subfiles} % Split up the contents, see Introduction.tex
 
 % Other optional packages.
@@ -45,7 +41,7 @@
 \maketitle
 
 \subfile{Introduction}
-
+$LXL$
 %\subfile{Theory}
 
 %\subfile{Method}
