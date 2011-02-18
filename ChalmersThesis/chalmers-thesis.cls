@@ -45,7 +45,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{biblatex}
 \RequirePackage{amsmath}
-\RequirePackage[swedish,english]{babel}
+\RequirePackage[english]{babel}
 
 \RequirePackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
 
@@ -74,42 +74,38 @@
  \numberwithin{table}{section}
 }
 
-% Definitions used
+% User preamble commands
 \renewcommand{\author}[1]{\gdef\@author{#1}}
 \renewcommand{\title}[1]{\gdef\@title{#1}}
-\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
-\newcommand{\firstabstract}[1]{\gdef\@firstabstract{#1}}
-\newcommand{\secondabstract}[2]{\gdef\@secondarylanguage{#1}\gdef\@secondabstract{#2}}
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}} % Optional
+\newcommand{\firstabstract}[1]{\gdef\@firstabstract{#1}} 
+\newcommand{\secondabstract}[2]{\gdef\@secondarylanguage{#1}\gdef\@secondabstract{#2}} % Optional
 \newcommand{\keywords}[1]{\gdef\@keywords{#1}}
-\newcommand{\preface}[1]{\gdef\@preface{#1}}
-\newcommand{\acknowledgements}[1]{\gdef\@acknowledgements{#1}}
-\newcommand{\dedication}[1]{\gdef\@dedication{#1}}
+\newcommand{\preface}[1]{\gdef\@preface{#1}} % Optional
+\newcommand{\acknowledgements}[1]{\gdef\@acknowledgements{#1}} % Optional
+\newcommand{\dedication}[1]{\gdef\@dedication{#1}} % Optional
 
 \newcommand{\coverfigure}[1]{\gdef\@coverfigure{#1}}
 \newcommand{\covercaption}[1]{\gdef\@covercaption{#1}}
 
 \newcommand{\copyrightyear}[1]{\gdef\@copyrightyear{#1}}
 \newcommand{\reportno}[1]{\gdef\@reportno{#1}}
-\newcommand{\ISSN}[1]{\gdef\@ISSN{#1}}
 \newcommand{\ISBN}[1]{\gdef\@ISBN{#1}}
-\newcommand{\printers}[1]{\gdef\@printers{#1}}
 
-\newcommand{\telephone}[1]{\gdef\@telephone{#1}}
-\newcommand{\postcode}[1]{\gdef\@postcode{#1}}
-%\newcommand{\city}[1]{\gdef\@city{#1}}
-%\newcommand{\country}[1]{\gdef\@country{#1}}
-%\newcommand{\university}[1]{\gdef\@university{#1}}
 \newcommand{\department}[1]{\gdef\@department{#1}}
 \newcommand{\division}[1]{\gdef\@division{#1}}
 \newcommand{\thesisin}[1]{\gdef\@thesisin{#1}}
 \newcommand{\paperwork}[1]{\gdef\@paperwork{#1}}
 
+% User commands which shouldn't need to be set.
+\newcommand{\ISSN}[1]{\gdef\@ISSN{#1}}
+\newcommand{\printers}[1]{\gdef\@printers{#1}}
+\newcommand{\telephone}[1]{\gdef\@telephone{#1}}
+\newcommand{\postcode}[1]{\gdef\@postcode{#1}}
+
+% User commands for the defence date.
 \newcommand{\opponent}[1]{\gdef\@opponent{#1}}
 \newcommand{\oppositiondate}[1]{\gdef\@oppositiondate{#1}}
-
-%\newcommand{\thesis}[1]{\gdef\@thesis{#1}}
-
-\newcommand{\papernumber}{\Alph} % Determines the numbering of papers.
 
 % Some default settings for Chalmers or at least the department of solid mechanics.
 \postcode{SE-412 96}
@@ -187,10 +183,10 @@
   \def\thesisname{\doctoratethesisname}
 \fi
 
-% Commands for the thesis table.
+% Commands for the thesis papers.
 \newcounter{paper}
 \setcounter{paper}{0}
-
+\newcommand{\papernumber}{\Alph} % Determines the numbering of papers.
 \newcommand{\toppapercolumn}[1]{ \begin{minipage}[t]{0.2\textwidth} \large \textbf{Paper #1}\end{minipage} }
 \newcommand{\topreferencecolumn}[1]{ \begin{minipage}[c]{0.7\textwidth} #1 \end{minipage} }
 
@@ -240,8 +236,14 @@
 \setlength{\headerheight}{0.215\paperheight}%~6.4cm in a4
 \setlength{\headeroffset}{0.125\headerheight}%~0.8cm in a4
 
-% Document metadata
-\hypersetup{ colorlinks = true }
+% Document metadata setup
+\hypersetup{
+  colorlinks = true,
+  urlcolor   = black,%
+  citecolor  = black,%
+  linkcolor  = black,%
+  filecolor  = black,%
+}
 \AtBeginDocument{
  {\renewcommand{\and}{, }
   \hypersetup{%
@@ -253,10 +255,6 @@
    pdftitle      = \@title,%
    pdfsubject    = \thesisname,%
    pdfkeywords   = \@keywords,%
-   urlcolor      = black,%
-   citecolor     = black,%
-   linkcolor     = black,%
-   filecolor     = black,%
   }
  }
 }
@@ -282,7 +280,7 @@
  \end{center}
  {\huge\noindent\@title\par} % title, 21
  \@ifundefined{@subtitle}{}{{\large\noindent\@subtitle\par}} % subtitle, 16
- {\normalsize\noindent\textit{\@thesis\ \inname\ \@thesisin}\par} % 14 thesis in programmename (only bachelor and master's)
+ {\normalsize\noindent\textit{\thesisname\ \inname\ \@thesisin}\par} % 14 thesis in programmename (only bachelor and master's)
  \vskip 1em
  {\renewcommand{\and}{\\}\Large\noindent \MakeUppercase{\@author}\par}% 18
  \vskip 1em
@@ -290,7 +288,7 @@
   \@ifundefined{@division}{}{\textit{\@division}\\}
   \MakeUppercase{\universityname}\\
   \cityname, \countryname\ \@copyrightyear
-  \new@bachelorormasters
+  \if@bachelorormasters
     \\ \thesisname\ \@reportno \fi
   \par}
 
@@ -302,13 +300,13 @@
 \newcommand{\maketitlepage}{
  \newpage\thispagestyle{empty}
  \begin{center}
-  {\MakeUppercase{\@thesis\ \inname\ \@thesisin}\ \@reportno\par} %  TODO:'thesis in'
+  {\MakeUppercase{\thesisname\ \inname\ \@thesisin}\ \@reportno\par}
   \vspace*{\stretch{1}}%\vskip 40mm
   {\Large \@title\par}
   \vskip 1em
   \@ifundefined{@subtitle}{}{{\@subtitle\par}}
   \vskip 1em
-  {\@thesis\par} % (if applicable) (if applicable)
+  {\thesisname\par} % (if applicable) (if applicable)
   {\renewcommand{\and}{, }\MakeUppercase{\@author}\par}
   \vspace*{\stretch{3}}%\vfill
   {\@department\par}
@@ -325,12 +323,12 @@
  {\noindent \@title\\
   \@ifundefined{@subtitle}{}{\@subtitle\\}
   \renewcommand{\and}{\\}\MakeUppercase{\@author}
-  %\@ifundefined{\@ISBN}{\\ISBN \@ISBN\\}{}
+  \@ifundefined{\@ISBN}{}{\\ISBN \@ISBN\\}
   \par}
  \vskip 10mm
  {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@copyrightyear\par}
  \vspace*{\stretch{1}} %\vskip 20mm
- {\noindent \@thesis\ \@reportno\\ % TODO: 'thesis in'
+ {\noindent \thesisname\ \@reportno\\ % TODO: 'thesis in'
   ISSN \@ISSN\\
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
@@ -339,10 +337,10 @@
   \countryname\\
   \telephonename: \@telephone\par}
  \vspace*{\stretch{3}}
- %\@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}} % Another translation here
+ \@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}} % Another translation here
  \vskip 5mm
  {\noindent \@printers
-  %\@department
+  \@department
   \\ \cityname, \countryname\ \@copyrightyear\par}
 }
 
@@ -360,7 +358,7 @@
  \phantomsection\addcontentsline{toc}{chapter}{\abstractname}
  \begin{center}\Large\textsc{\abstractname}\end{center} \@firstabstract
  \\[1em]
- \noindent \iflanguage{swedish}{Nyckelord}{Keywords}: \@keywords
+ \noindent \keywordsname: \@keywords
 }
 
 \renewcommand{\maketitle}{%
@@ -377,7 +375,8 @@
  % Empty or second abstract
  \@ifundefined{@secondabstract}{
   \newpage\mbox{}}{
-  \newpage\begin{otherlanguage}{swedish}\begin{center}\Large\textsc{\abstractname}\end{center} \@secondabstract \end{otherlanguage}}
+  \newpage\begin{otherlanguage}{\@secondarylanguage}
+    \begin{center}\Large\textsc{\abstractname}\end{center} \@secondabstract \end{otherlanguage}}
 
  \@ifundefined{@dedication}{}{
   \cleardoublepage
@@ -396,12 +395,16 @@
   \begin{center}\Large\textsc{\acknowledgementsname}\end{center} \@acknowledgements
  }
 
- \cleardoublepage
- \tableofpapers
+ % If its a doctorate or licentiate thesis, include the table of papers.
+ \if@bachelorormasters\else
+  \cleardoublepage
+  \tableofpapers
+ \fi
 
  \cleardoublepage
  \tableofcontents
 
+ % Sets up page numbering for the rest of the document.
  \newpage
  \pagenumbering{arabic}
  \pagestyle{fancy}

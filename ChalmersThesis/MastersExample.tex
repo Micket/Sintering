@@ -1,0 +1,53 @@
+% This is an example on how to use the chalmers-thesis document class for a master's thesis.
+% Document should be compiled with pdflatex
+
+\documentclass[masters,a4paper]{chalmers-thesis}
+\usepackage[utf8x]{inputenc} % File encoding, you should try to stick to utf8 or utf8x
+\usepackage{microtype} % Magically improves typesetting for pdflatex
+
+\usepackage{csquotes} % For biblatex
+\usepackage{biblatex} % Modern package for bibliographies.
+\usepackage{mathtools} % All your math related needs
+%\usepackage{subfiles} % Split up the contents, see Introduction.tex
+\usepackage{listings} % For source code.
+%\usepackage{customcommands} % Put your custom commands in a file 'customcommands.sty' and load it like this.
+
+\usepackage{blindtext} % Package used to put in placeholder text. Remove it.
+
+\title{The Title of Your Thesis which might be very long}
+\subtitle{And Perhaps a Subtitle}
+\author{Some Author\and Other Author}
+\thesisin{Solid and Structural Mechanics}
+\department{Department of Applied Mechanics}
+\division{Division of Solid Mechanics}
+\reportno{2010:37}
+\ISBN{123-21332-13423-123}
+\copyrightyear{2010}
+
+% You should scale the figure according to textwidth and or paperheight.
+\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/cover.png}}
+\covercaption{Some explanation}
+
+\firstabstract{\blindtext}
+%\secondabstract{swedish}{\blindtext}
+\keywords{Some stuff, More stuff, Stuff}
+
+\preface{\blindtext}
+\acknowledgements{\blindtext}
+
+\bibliography{mybib}
+
+\begin{document}
+\maketitle
+
+%\subfile{Introduction}
+
+%\subfile{Theory}
+
+%\subfile{Method}
+
+\nocite{*} % Causes everything in bibliography to be printed
+\printbibliography
+
+\end{document}
+
