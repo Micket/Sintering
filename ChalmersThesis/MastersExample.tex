@@ -5,34 +5,38 @@
 \usepackage[utf8x]{inputenc} % File encoding, you should try to stick to utf8 or utf8x
 \usepackage{microtype} % Magically improves typesetting for pdflatex
 
+% Required for the template
 \usepackage{csquotes} % For biblatex
 \usepackage{biblatex} % Modern package for bibliographies.
+\usepackage{subfiles} % Split up the contents, see Introduction.tex
+
+% Other optional packages.
 \usepackage{mathtools} % All your math related needs
-%\usepackage{subfiles} % Split up the contents, see Introduction.tex
+%\usepackage{thmtools} % For theorems.
 \usepackage{listings} % For source code.
 %\usepackage{customcommands} % Put your custom commands in a file 'customcommands.sty' and load it like this.
 
 \usepackage{blindtext} % Package used to put in placeholder text. Remove it.
 
+% User commands
 \title{The Title of Your Thesis which might be very long}
 \subtitle{And Perhaps a Subtitle}
 \author{Some Author\and Other Author}
 \thesisin{Solid and Structural Mechanics}
 \department{Department of Applied Mechanics}
 \division{Division of Solid Mechanics}
-\reportno{2010:37}
-\ISBN{123-21332-13423-123}
-\copyrightyear{2010}
+\reportno{2011:01}
+\copyrightyear{2011}
 
 % You should scale the figure according to textwidth and or paperheight.
 \coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/cover.png}}
 \covercaption{Some explanation}
 
 \firstabstract{\blindtext}
-%\secondabstract{swedish}{\blindtext}
+%\secondabstract{swedish}{\blindtext} % Optional
 \keywords{Some stuff, More stuff, Stuff}
 
-\preface{\blindtext}
+\preface{\blindtext} % You can use \input to put preface and acknowledgements in another document
 \acknowledgements{\blindtext}
 
 \bibliography{mybib}
@@ -40,13 +44,13 @@
 \begin{document}
 \maketitle
 
-%\subfile{Introduction}
+\subfile{Introduction}
 
 %\subfile{Theory}
 
 %\subfile{Method}
 
-\nocite{*} % Causes everything in bibliography to be printed
+\nocite{*} % Causes everything in bibliography to be printed (should not be used in final paper)
 \printbibliography
 
 \end{document}

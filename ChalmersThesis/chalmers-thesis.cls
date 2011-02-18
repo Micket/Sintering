@@ -318,12 +318,11 @@
 }
 
 \newcommand{\makeprintinfopage}{
- % Printing information
  \newpage
  {\noindent \@title\\
   \@ifundefined{@subtitle}{}{\@subtitle\\}
   \renewcommand{\and}{\\}\MakeUppercase{\@author}
-  \@ifundefined{\@ISBN}{}{\\ISBN \@ISBN\\}
+  \@ifundefined{@ISBN}{}{\\ISBN \@ISBN\\}
   \par}
  \vskip 10mm
  {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@copyrightyear\par}
@@ -363,7 +362,7 @@
 
 \renewcommand{\maketitle}{%
  \if@cover
-  %\makecoverpage
+  \makecoverpage
  \fi
 
  \maketitlepage
