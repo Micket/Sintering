@@ -301,12 +301,12 @@
  \newpage\thispagestyle{empty}
  \begin{center}
   {\MakeUppercase{\thesisname\ \inname\ \@thesisin}\ \@reportno\par}
-  \vspace*{\stretch{1}}%\vskip 40mm
+  \vspace*{\stretch{1}}
   {\Large \@title\par}
   \vskip 1em
   \@ifundefined{@subtitle}{}{{\@subtitle\par}}
   \vskip 1em
-  {\thesisname\par} % (if applicable) (if applicable)
+  {\thesisname\par}
   {\renewcommand{\and}{, }\MakeUppercase{\@author}\par}
   \vspace*{\stretch{3}}%\vfill
   {\@department\par}
@@ -327,8 +327,8 @@
   \par}
  \vskip 10mm
  {\noindent \copyright\ {\renewcommand{\and}{, }\MakeUppercase{\@author}}, \@copyrightyear\par}
- \vspace*{\stretch{1}} %\vskip 20mm
- {\noindent \thesisname\ \@reportno\\ % TODO: 'thesis in'
+ \vspace*{\stretch{1}}
+ {\noindent \thesisname\ \inname \@thesisin\ \@reportno\\ % TODO: This is inconsistent!
   ISSN \@ISSN\\
   \@department\\
   \@ifundefined{@division}{}{\@division\\}
@@ -337,7 +337,7 @@
   \countryname\\
   \telephonename: \@telephone\par}
  \vspace*{\stretch{3}}
- \@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}} % Another translation here
+ \@ifundefined{@covercaption}{}{{\noindent \covername:\\ \@covercaption\par}}
  \vskip 5mm
  {\noindent \@printers
   \@department
@@ -363,7 +363,7 @@
 
 \renewcommand{\maketitle}{%
  \if@cover
-  \makecoverpage
+  %\makecoverpage
  \fi
 
  \maketitlepage
@@ -410,6 +410,7 @@
  \pagestyle{fancy}
 }
 
+% Page + abstract for defence of thesis.
 \newcommand{\makethesisdefence}{
  \thispagestyle{empty}
  \begin{center}
