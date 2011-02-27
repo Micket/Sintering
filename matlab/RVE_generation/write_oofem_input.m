@@ -9,7 +9,6 @@ fname = '4particle_0.84_mesh';
 %fname = '4particle_coarse_mesh';
 %fname = '4particle_super_coarse_mesh';
 q1_to_q2
-return
 
 explanation = 'Simply 2D RVE with surface tension';
 gamma_s = 0.2;
@@ -66,44 +65,46 @@ end
 nelem = nelem + size(t2,1);
 
 if size(edges_free,1) > 0
-    surfacetension = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 2 mat 1 gamma_s %.5e\n',...
-        [(1:size(edges_free,1))'+nelem,edges2(edges_free,:),gamma_s(ones(size(edges_free,1),1),1)]');
+    surfacetension = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 2 mat 3\n',...
+        [(1:size(edges_free,1))'+nelem,edges2(edges_free,:)]');
 end
 nelem = nelem + size(edges_free,1);
 
 % Edges for topology description;
 if size(edges_left,1) > 0
-    surface_left = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 3 mat 1 gamma_s 0.0\n',...
+    surface_left = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 3 mat 4\n',...
         [(1:size(edges_left,1))'+nelem,edges2(edges_left,:)]');
 end
 nelem = nelem + size(edges_left,1);
 
 % Edges for topology description;
 if size(edges_top,1) > 0
-    surface_top = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 4 mat 1 gamma_s 0.0\n',...
+    surface_top = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 4 mat 4\n',...
         [(1:size(edges_top,1))'+nelem,edges2(edges_top,:)]');
 end
 nelem = nelem + size(edges_top,1);
 
 % Edges for topology description;
 if size(edges_right,1) > 0
-    surface_right = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 5 mat 1 gamma_s 0.0\n',...
+    surface_right = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 5 mat 4\n',...
         [(1:size(edges_right,1))'+nelem,edges2(edges_right,:)]');
 end
 nelem = nelem + size(edges_right,1);
 
 % Edges for topology description;
 if size(edges_bottom,1) > 0
-    surface_bottom = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 6 mat 1 gamma_s 0.0\n',...
+    surface_bottom = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 6 mat 4\n',...
         [(1:size(edges_bottom,1))'+nelem,edges2(edges_bottom,:)]');
 end
 nelem = nelem + size(edges_bottom,1);
 
 material = sprintf(['NewtonianFluid 1 d 1.0 mu 1.0\n'...
-                    'NewtonianFluid 2 d 1.0 mu 10.0\n']);
+                    'NewtonianFluid 2 d 1.0 mu 10.0\n',...
+                    'SurfaceTension 3 g %e\n',...
+                    'SurfaceTension 4\n'],gamma_s);
 
-grad = [0,0;0,0];
-dt = 0.05;
+grad = [0,0.1;0.1,0];
+dt = 0.1;
 rtolv = 1;
 nsteps = 100;
 
@@ -118,7 +119,7 @@ header = sprintf([...
     'vtk tstep_all domain_all primvars 2 4 5 cellvars 1 46\n',...
     'domain 2dIncompFlow\n',...
     'OutputManager tstep_all dofman_all element_all\n',...
-    'ndofman %d nelem %d ncrosssect 6 nmat 2 nbc %d nic 0 nltf 1\n'],...
+    'ndofman %d nelem %d ncrosssect 6 nmat 4 nbc %d nic 0 nltf 1\n'],...
     fname, explanation, nsteps, dt, rtolv, ndofman, nelem, 1);
  
 fid = fopen([fname,'.in'],'w+');
