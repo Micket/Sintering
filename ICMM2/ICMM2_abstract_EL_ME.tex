@@ -21,38 +21,48 @@
 \\[5mm]
 
 % Full names of all authors
-\textrm{\large Erik Lindfeldt${}_{}^{1}$, Magnus Ekh${}_{}^{1}$}
+\textrm{\large Mikael Öhman${}_{}^{1}$, Kenneth Runesson${}_{}^{1}$}
 \\[5mm]
 
 % Affiliations and addresses
 \textrm{${}_{}^{1}$Department of Applied Mechanics\\
 Chalmers University of Technology, Gothenburg, Sweden\\
-e-mail: \url{erik.lindfeldt@chalmers.se}}
+e-mail: \url{mikael.ohman@chalmers.se}}
 \\[5mm]
 \end{center}
 
 % =================================================================================================
+In this contribution, we discuss the multiscale modeling of sintering of hard metal, which is composed of hard particles (WC) with a melted binder (Co).
+The sintering phenomenon on the can be explained mesoscale by the effect of surface tension on the melted binder, and
+the homogenized effect of the surface tension is the so called sintering stress.
+From the macroscopic perspective, the specimen (green body) shrinks due to this volumetric sintering stress. In the case of inhomogeneous
+initial density in the green body, this procedure can result in unwanted deformations.
 
-Pearlitic steel consists of cementite lamellae embedded in a ferritic matrix. These lamellae are
-arranged in colonies within which the cementite orientation is (ideally) constant. In this
-contribution a representative microscale model that captures the behaviour of the cementite and the
-ferrite but also the interaction between these phases is proposed. In the microscale model the
-ferrite is modelled by using crystal plasticity \cite{Ekh} while the cementite is modelled as
-elastic.
+%Basis:
+%Sintering, sintering stress, inhomogeneous shrinkage
 
-The homogenised response from the micromodel is passed via the mesoscopic model, using a multiscale
-modeling approach, to the macroscale model which represents the structural level. The mesoscale
-model consists of nodules, with different crystallographic orientations of the ferrite, within which
-different colonies reside.
+Finite elements and computational homogenization have been applied to a Representative Volume Element (RVE) of the mesoscale.
+The melted binder is modeled as a Stokes flow, with surface tension potential energy on the free surface. Hard inclusions are modeled by applying a high viscosity.
+%This is coupled to the macroscopic stress and strain and the mesoscale  is solved for every time step in every integration point.
+Different choices of boundary conditions are available on the RVE for the prolongation.
+The advantage of this kind of approach is that it can capture the complex behavior of sintering with simple material models with measurable parameters.
+%For the macro scale
+%Method:
+%Multi scale (FE$^2$, Homogenization)
+%Macro scale: deformation.
+%Micro scale: Stokes flow, surface tension.
 
-Different types of prolongation conditions on the micromodel from the mesoscale deformation gradient
-are discussed and and their results are compared. Furthermore, the number of directions of the
-cementite lamellae and the number of crystallographic directions of the ferrite needed to obtain a
-representative mesoscale behavior is investigated. 
-
-Finally, numerical results for different orientation distributions of the
-cementite lamellae that give different degree of anisoptropy of the pearlite are given and compared
-with experimental results in a qualitative fashion. 
+%Examples,
+Numerical examples are evaluated for a 2D, fully coupled, FE$^2$ problem as a proof of concept.
+Taylor-Hood elements for the linear Stokes flow, and quadratic edge elements for the surface tension, are employed for the mesoscale.
+Dirichlet boundary conditions are used for the prolongation of the macroscopic strain rate.
+Linear triangular elements with one integration point are used on the macroscopic scale.
+This is shown for both with and without hard inclusions and a viscous melt subjected to surface tension.
+The examples show how an inhomogeneous initial density will cause the macroscopic body to
+undergo deformation
+%shear
+during the sintering process.
+On the mesoscale, particles are merged, driven by the surface tension on the free pore surface.
 
 % =================================================================================================
 
@@ -76,15 +86,6 @@ International Journal of Plasticity,
 2143,
 2004
 %
-\bibitem{perlit}
-Elwazri, A.M. et al.,
-The effect of microstructural characteristics of pearlite on the mechanical properties of
-hypereutectoid steel,
-Materials Science and Engineering: A
-404,
-91,
-2005
-
 % conference proceedings
 % -----------------------------------------------
 % \bibitem{cp}
