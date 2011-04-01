@@ -11,7 +11,7 @@ fname = '4particle_0.84_mesh';
 q1_to_q2
 
 explanation = 'Simply 2D RVE with surface tension';
-gamma_s = 0.2;
+gamma_s = [0.2,0];
 ndofman = size(p2,1);
 nelem = 0;
 r = 0.82; % radius of the embedded, stiff particle
@@ -70,30 +70,27 @@ if size(edges_free,1) > 0
 end
 nelem = nelem + size(edges_free,1);
 
-% Edges for topology description;
+% Edges for topology description (material doesn't mean anything here)
 if size(edges_left,1) > 0
-    surface_left = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 3 mat 4\n',...
+    surface_left = sprintf('Line2BoundaryElement %3d nodes 3 %3d %3d %3d crossSect 3 mat 3\n',...
         [(1:size(edges_left,1))'+nelem,edges2(edges_left,:)]');
 end
 nelem = nelem + size(edges_left,1);
 
-% Edges for topology description;
 if size(edges_top,1) > 0
-    surface_top = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 4 mat 4\n',...
+    surface_top = sprintf('Line2BoundaryElement %3d nodes 3 %3d %3d %3d crossSect 4 mat 3\n',...
         [(1:size(edges_top,1))'+nelem,edges2(edges_top,:)]');
 end
 nelem = nelem + size(edges_top,1);
 
-% Edges for topology description;
 if size(edges_right,1) > 0
-    surface_right = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 5 mat 4\n',...
+    surface_right = sprintf('Line2BoundaryElement %3d nodes 3 %3d %3d %3d crossSect 5 mat 3\n',...
         [(1:size(edges_right,1))'+nelem,edges2(edges_right,:)]');
 end
 nelem = nelem + size(edges_right,1);
 
-% Edges for topology description;
 if size(edges_bottom,1) > 0
-    surface_bottom = sprintf('Line2SurfaceTension %3d nodes 3 %3d %3d %3d crossSect 6 mat 4\n',...
+    surface_bottom = sprintf('Line2BoundaryElement %3d nodes 3 %3d %3d %3d crossSect 6 mat 3\n',...
         [(1:size(edges_bottom,1))'+nelem,edges2(edges_bottom,:)]');
 end
 nelem = nelem + size(edges_bottom,1);
@@ -101,7 +98,7 @@ nelem = nelem + size(edges_bottom,1);
 material = sprintf(['NewtonianFluid 1 d 1.0 mu 1.0\n'...
                     'NewtonianFluid 2 d 1.0 mu 10.0\n',...
                     'SurfaceTension 3 g %e\n',...
-                    'SurfaceTension 4\n'],gamma_s);
+                    'SurfaceTension 4 g %e\n'],gamma_s);
 
 grad = [0,0.1;0.1,0];
 dt = 0.1;
