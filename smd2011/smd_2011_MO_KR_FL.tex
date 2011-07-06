@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage{anysize}
+\marginsize{2.5cm}{1.8cm}{2.2cm}{2.5cm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{url}
+\pagestyle{empty}
+\usepackage{color}
+
+\begin{document}
+\begin{center}
+\section*{FE\textsuperscript{2} Modeling of Liquid-Phase Sintering}
+%
+\begin{minipage}[t]{\textwidth}
+\centering
+\underline{Mikael Öhman}\textsuperscript{1}, Kenneth Runesson\textsuperscript{2},  Fredrik Larsson\textsuperscript{3}\\
+\vspace{0.5cm}
+\textsuperscript{1}Tillämpad Mekanik, Chalmers Tekniska Högskola, Göteborg, email: mikael.ohman@chalmers.se\\
+\textsuperscript{2}Tillämpad Mekanik, Chalmers Tekniska Högskola, Göteborg, email: kenneth.runesson@chalmers.se\\
+\textsuperscript{3}Tillämpad Mekanik, Chalmers Tekniska Högskola, Göteborg, email: fredrik.larsson@chalmers.se
+\end{minipage}
+\end{center}
+
+\large
+% =================================================================================================
+In this contribution, we discuss the two-scale modeling of liquid-phase sintering of hardmetal, which is composed of hard particles and a melted binder.
+%we discuss the two-scale modeling of sintering of hardmetal, which is composed of hard particles (WC) and a melted binder (Co).
+The sintering phenomenon can be explained on the mesoscale by surface tension, whose homogenized effect is the so-called sintering stress.
+From the macroscopic perspective, the compacted specimen (green body) shrinks due to this volumetric sintering stress. In the case of inhomogeneous
+initial density in the green body, the sintering process can result in unwanted distortions in the final product.
+
+Computational homogenization has been applied to a Representative Volume Element (RVE) of the mesoscale structure.
+A distinct advantage of this approach is that the complex behavior of sintering can be captured using relatively simple material models with
+measurable parameters for each microconstituent. The deformation of melted binder is modeled as nonlinear Stokes' flow, driven by surface
+tension (energy) on the free surface (interface between binder and porespace). Hard inclusions are modeled by a large viscosity.
+%Different types of prolongation conditions (boundary conditions on the RVE) are possible. A quite novel type of ``weakly periodic velocity''
+%is compared to Dirichlet and Neumann conditions. Although the latter conditions are classical for solid deformation, their application to
+%the present problem is not entirely trivial.
+It is important to accurately discern the (possibly) remaining porosity after finished sintering.
+The need to simulate how the individual pores can vanish represents a particular challenge on the meshing strategy.
+
+Numerical results are obtained for 2D, fully coupled (or nested), FE\textsuperscript{2} computations as a proof of concept.
+For the mesocsale analysis, Taylor-Hood elements are adopted for the Stokes' flow, whereas quadratic edge elements are used to represent the surface tension.
+The macroscale response changes character (from compressible to incompressible) when the porosity vanishes; hence, a mixed velocity-pressure format is a suitable choice that works in both regimes.
+%Linear triangular elements are used for the macroscale velocity field. It is demonstrated how an inhomogeneous initial density may result in inhomogeneous shrinkage
+%and remaining macroscopic distortion.
+
+% =================================================================================================
+
+\begin{thebibliography}{99}
+\normalsize
+
+\bibitem{Steinmann}
+A. Javili, P. Steinmann.
+A finite element framework for continua with boundary energies. Part I: The two-dimensional case,
+\textit{Comput. Meth. Appl. Mech. Engng.},
+198 pp. 2198--2208,
+2009
+
+\bibitem{Ohman}
+M. Öhman, K. Runesson, F. Larsson.
+Multiscale modeling of sintering of hardmetal,
+\textit{23\textsuperscript{rd} Nordic Seminar on Computational Mechanics}, (A. Eriksson, G. Tibert, eds.), pp. 334--336, 2010.
+\end{thebibliography}
+\end{document}
+% ================================================================================================= 
+
+\end{document} 

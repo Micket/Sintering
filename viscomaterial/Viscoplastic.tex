@@ -163,7 +163,7 @@ Under the condition $n=1$ we get
 \begin{align}
 	0 &= \epsilon_\rme^\rme - \epsilon_\rme^{\rm e,tr} + \frac{\Delta t}{t_\star} \frac{\langle 3 G \epsilon_\rme^\rme - \sigma_y \rangle}{\sigma_c}\\
 \nonumber &\Longrightarrow\\
-	\epsilon_\rme^\rme &= \frac{\sigma_y\Delta t + \epsilon_\rme^{\rm e,tr}\sigma_c t_\star}{\Delta t + \sigma_c t_\star}
+	\epsilon_\rme^\rme &= \frac{\sigma_y\Delta t + \epsilon_\rme^{\rm e,tr}\sigma_c t_\star}{3 G \Delta t + \sigma_c t_\star}
 \end{align}
 and $\mu$, $\ts\epsilon_\dev^\rme$ can be calculated like before.
 
@@ -185,7 +185,7 @@ which gives
 
 and we can obtain the relation
 \begin{align}
-	\rmd\ts\epsilon^\rme &= \rmd\ts\epsilon_\dev^\rme + \rmd\ts\epsilon_\vol \\
+	\rmd\ts\epsilon^\rme &= \rmd\ts\epsilon_\dev^\rme + \frac13\rmd\ts\epsilon_\vol \\
 	\rmd\ts\epsilon_\vol &= (\ts I\otimes\ts I)\colon\rmd\ts\epsilon\\
 	\rmd\ts\epsilon_\dev^\rme &= \pderiv{\ts\epsilon_\dev^\rme}{\epsilon_\rme^\rme}\bigg|_{\ts\epsilon}\rmd\epsilon_\rme^\rme 
 		+ \pderiv{\ts\epsilon_\dev^\rme}{\ts\epsilon}\bigg|_{\epsilon_\rme^\rme}\colon\rmd\ts\epsilon \\
@@ -200,7 +200,7 @@ Finally the ATS tensor as
 \begin{align}
 	\pderiv{\ts\epsilon^\rme}{\ts\epsilon} &= J^{-1} \frac23\frac{\mu-\mu'\epsilon_\rme^\rme}{\epsilon_\rme^{\rme,\rm tr}(\epsilon_\rme^\rme+\mu)^2}
 		\ts\epsilon_\dev^{\rme,\rm tr}\otimes\ts\epsilon_\dev^{\rme,\rm tr} + 
-		\frac{\epsilon_\rme^\rme}{\epsilon_\rme^\rme+\mu} \tf I_\dev + \ts I\otimes\ts I\\
+		\frac{\epsilon_\rme^\rme}{\epsilon_\rme^\rme+\mu} \tf I_\dev + \frac13\ts I\otimes\ts I\\
 	\ATS &= \tf E^\rme\colon\pderiv{\ts\epsilon^\rme}{\ts\epsilon}
 \end{align}
 \end{document}

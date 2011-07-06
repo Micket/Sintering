@@ -1,7 +1,7 @@
 for radius = linspace(0.52,1/sqrt(2),100)
+for n = 1:3
 
 innerradius = 0.4;
-n = 3;
 
 inside = [-1, -1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2];
 outside = [-1, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -17,7 +17,7 @@ fprintf('radius %e, rho = %.2f\n',radius, rho);
 basename = sprintf('rve_%d_%.2f',n,rho);
 
 fid = fopen([basename,'.in'],'w');
-fprintf(fid, ['%s.out\n',...
+fprintf(fid, ['%s\n',...
     'Simply 2D RVE with surface tension\n',...
     'StokesFlowStressHomogenization nsteps 2000 lstype 3 smtype 7 nmodules 1 deltaT 0.0005 nonlinform 2 rtolv 1.0\n',...
     'vtk tstep_all domain_all primvars 2 4 5 cellvars 1 46 stype 0\n',...
@@ -107,4 +107,5 @@ fprintf(fid, 'CornerPoint %d id %d coords 2 %f %f\n', c,12, 0, 0); c = c + 1;
 
 fclose(fid);
 
+end
 end
