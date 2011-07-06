@@ -17,3 +17,5 @@
 *.zip
 *.sw*
 .*
+*.run.xml
+*-blx.bib

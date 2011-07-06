@@ -1,0 +1,97 @@
+%% Text effects
+\newcommand{\bm}[1]{\mbox{\boldmath$#1$}}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\goodgap}{\hspace{\subfigtopskip}\hspace{\subfigbottomskip}}
+
+%% Tensors
+\newcommand{\Id}{\bm I}
+\newcommand{\normal}{\bm n}
+
+%% Calculus
+\newcommand{\pd}{\partial}
+\newcommand{\D}{\mbox{d}}
+\newcommand{\Div}[1]{\bm \nabla \cdot #1}
+\newcommand{\grad}[1]{\left[ #1 \otimes \bm \nabla \right]}
+\newcommand{\gradsym}[1]{\grad{#1}^{\mbox{sym}}}
+\newcommand{\dfdx}[2]{\frac{\pd #1}{\pd #2}}
+
+\newcommand{\mapfunc}{\varphi}
+
+\newcommand{\jump}[1]{\llbracket #1 \rrbracket}
+
+\newcommand{\traction}{\bm t}
+\newcommand{\tractionprime}{\bm{t}'}
+\newcommand{\tractionv}{\bm{t}^{\mbox{v}}}
+
+\newcommand{\bdot}{\bm \cdot}
+\newcommand{\dOmega}{\mbox{d}\Omega}
+\newcommand{\dGamma}{\mbox{d}\Gamma}
+
+\newcommand{\boundarymi}{\Gamma_{\Box}}
+\newcommand{\boundaryFmi}{\Gamma_{\Box}^{\mathrm{F}}}
+\newcommand{\boundarySmi}{\Gamma_{\Box}^{\mathrm{S}}}
+\newcommand{\boundaryintmi}{\Gamma_{\Box}^{\mathrm{int}}}
+
+\newcommand{\boundaryma}{\Gamma}
+
+\newcommand{\dommi}{\Omega_{\Box}}
+\newcommand{\domma}{\Omega}
+\newcommand{\fdommi}{{\Omega_{\Box}^{\mathrm{F}}}}
+\newcommand{\sdommi}{{\Omega_{\Box}^{\mathrm{S}}}}
+
+\newcommand{\testspacepma}{\tilde{\mathcal{Q}}}
+
+\newcommand{\shapemaA}{\tilde{N}_A}
+\newcommand{\shapema}{\tilde{N}}
+\newcommand{\shapemam}{\bm{\tilde{N}}}
+\newcommand{\gradshapemam}{\bm{\tilde{B}}}
+
+\newcommand{\Qma}{\tilde Q}
+\newcommand{\qma}{\tilde q}
+\newcommand{\pma}{\tilde p}
+\newcommand{\pmah}{\tilde{p}^h}
+\newcommand{\pmab}{\bm{\tilde p}}
+\newcommand{\npma}{\bm \nabla \tilde p}
+\newcommand{\vma}{\tilde{\bm w}}
+\newcommand{\velma}{\tilde{\bm v}}
+\newcommand{\Kma}{\tilde{\bm K}}
+\newcommand{\pmi}{p}
+\newcommand{\npmi}{\bm{\nabla} p}
+\newcommand{\vmi}{\bm v}
+\newcommand{\Rma}{\tilde{R}}
+\newcommand{\Rmi}{{R}}
+\newcommand{\porousity}{n^{\mbox{F}}}
+
+\newcommand{\pM}{p^{\mathrm{M}}}
+\newcommand{\pS}{p^{\mathrm{S}}}
+
+\newcommand{\testv}{\delta \bm v}
+\newcommand{\testp}{\delta \pmi}
+\newcommand{\testpma}{\delta \pma}
+\newcommand{\testpM}{\delta \pM}
+\newcommand{\testpS}{\delta \pS}
+\newcommand{\testvh}{{\delta \bm v}^h}
+\newcommand{\testph}{{\delta p}^h}
+\newcommand{\testwbar}{\delta \overline{\bm w}}
+%\newcommand{\testpma}{\delta \tilde{p}}
+
+\newcommand{\cLen}{l}
+\newcommand{\prescribedp}{\overline{\bm g}}
+
+\newcommand{\rvecentre}{\overline{\bm X}}
+
+\newcommand{\vscalar}{\hat{\varphi}}
+
+\newcommand{\permeability}{\bm{\kappa}}
+\newcommand{\dvisc}{\mu}
+
+\newcommand{\sigmaprime}{\bm{\sigma}'}
+\newcommand{\sigmav}{\bm{\sigma}^{\mathrm{V}}}
+
+\newcommand{\averageInt}[1]{\frac{1}{|\fdommi |}\int_{\fdommi} #1 \dOmega}
+\newcommand{\averageBoundaryInt}[2]{\frac{1}{|\fdommi |}\int_{#1} #2 \dGamma}
+
+\newcommand{\Macrodomain}{\Omega}
+\newcommand{\Inlet}{\Gamma_{\rm{Inlet}}}
+\newcommand{\Outlet}{\Gamma_{\rm{Outlet}}}
+\newcommand{\Wall}{\Gamma_{\rm{Wall}}}
