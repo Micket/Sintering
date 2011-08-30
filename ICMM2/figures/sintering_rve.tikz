@@ -1,0 +1,46 @@
+\begin{tikzpicture}[>=stealth,scale=2]
+  \coordinate (A) at (0.35,0.2);
+  \coordinate (B) at (0.4,0.3);
+  \coordinate (C) at (0.3,0.4);
+  \coordinate (D) at (0.15,0.5);
+  \coordinate (E) at (0.66,0.13);
+  \coordinate (F) at (0.6,0.45);
+  \coordinate (G) at (0.8,0.5);
+  \coordinate (H) at (0.5,0.5);
+  \coordinate (I) at (0.5,0.75);
+  \coordinate (J) at (0.6,0.8);
+  \coordinate (K) at (0.8,0.8);
+  \coordinate (L) at (0.35,0.8);
+  \coordinate (M) at (0.5,1);
+  \coordinate (N) at (0,0.9);
+  \coordinate (O) at (0.1,0.83);
+  \coordinate (P) at (0.5,0.15);
+  \coordinate (Q) at (0.48,0.9);
+  \coordinate (R) at (0.2,0.8);
+  
+  % Region 1 particles 
+  \draw[fill=blue!40] 
+  (0,0) -- (0.2,0) -- (A) -- (B) -- (C) -- (D) to[out=190,in=50] (0,0.4) -- cycle %A
+  (0.4,0) -- (P) -- (E) -- (0.8,0) -- cycle %B
+  (F) -- (G) to[out=70,in=-60] (K) -- (J) -- (I) -- (H) -- cycle %C
+  (M) -- (Q) -- (L) -- (R) -- (O) -- (N) -- (0,1) -- cycle %D
+  ;
+
+  % Region 2 particles
+  \draw[fill=red!20]
+  (0,0.6) to[out=0,in=-100] (O) -- (N) -- cycle %E
+  (D) to[out=90,in=-110] coordinate[near start] (surf3) (R) -- (L) -- (I) -- (H) -- (C) -- (D) coordinate[midway] (surf4) %F
+  (M) -- (Q) -- (J) -- (K) to[out=15,in=-140] (1,0.9) -- (1,1) -- cycle %G
+  (1,0.2) to[out=-160,in=5] coordinate[midway] (surf1) (E) -- (P) coordinate[midway] (surf2) -- (A) -- (B) to[out=50,in=-170] (F) -- (G) -- (1,0.5) -- cycle %H
+  ;
+
+  \draw[thick] (0,0) rectangle (1,1);
+
+  % Annotations
+  \draw[<-] (0.9,0.7) -- (1.1,0.9) node[right,font=\scriptsize] {Porespace};
+  \draw[<-] (0.9,0.35) -- (1.1,0.5) node[right,font=\scriptsize] {\shortstack{Contacting\\[-0.4em]solid/fluid\\[-0.4em]``particles''}};
+  \draw[<-] (surf1) to[out=-30,in=-160] (1.1,0.15) node[right,font=\scriptsize] {\shortstack{Surface\\[-0.4em]tension}};
+  \draw[<-] (surf2) to[out=40,in=160] (1.1,0.15); % extra arrow
+  \draw[<-] (surf3) to[out=180,in=0] (-0.05,0.5) node[left] {$\Gamma_i^{\mathrm{pore}}$};
+  \draw[<-] (surf4) to[out=-135,in=0] (-0.05,0.2) node[left] {$\Gamma_j^{\mathrm{cont}}$};
+\end{tikzpicture}
