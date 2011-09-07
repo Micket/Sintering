@@ -1,0 +1,72 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[margin=2cm,includehead]{geometry}
+
+\usepackage{amsmath,contmech}
+\renewcommand{\ta}[1]{\mathbfit{#1}}
+\renewcommand{\ts}[1]{\mathbfit{#1}}
+\renewcommand{\td}[1]{\mathbfcal{#1}}
+\renewcommand{\tf}[1]{\mathbfsf{#1}}
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{microtype}
+
+\setmainfont{xits}
+\setmathfont{xits-math.otf}
+
+\renewcommand{\Box}{\mdlgwhtsquare}
+\renewcommand{\leadsto}{\rightsquigarrow}
+
+\usepackage{fancyhdr}
+\headheight=14.5pt
+\pagestyle{fancy}
+\fancyhead[r]{\today}
+\fancyhead[l]{Mikael Öhman}
+
+\newcommand{\ATS}{\bar{\tf E}}
+\newcommand{\BC}{\mathrm{BC}}
+
+\begin{document}
+Document composed after discussion with Fredrik on how to split to a mixed macroscale formulation.
+On the macro level:
+ \begin{gather}
+  -\bar{\ts\sigma}_\dev + \diff \bar p = \ta b\\
+  \diff\cdot \bar{\ta v} + \bar d_\vol = 0
+ \end{gather}
+
+And the extension to the constitutive driver:
+ \begin{gather}
+  [\bar{\ts\sigma}_\dev, \bar{d}_\vol; \ATS_\dev] = f(\bar{\ts d}_\dev,\bar p)
+ \end{gather}
+
+If dense RVE $\implies$
+ \begin{gather}
+  \bar d_\vol = 0\\
+  \ts d = \ts d_\dev \leadsto \bar{\ts\sigma}_\dev, \; \ATS_\dev
+ \end{gather}
+else
+ \begin{gather}
+  \bar d_\vol^{(0)} = 0\\
+  \bar{\ts d}^{(k)} = \bar{\ts d}_\dev + \frac13 \bar d_\vol^{(k)} \ts I\\
+  \bar p \approx \bar p^{(k)} + E_\eqv \Delta d_\vol\\
+  \bar d_\vol^{(k+1)} = \bar d_\vol^{(k)} - E_\eqv^{-1} (\bar p^{(k)} - \bar p)
+ \end{gather}
+
+To perform Newton iterations the tangent $E_\eqv$ is needed;
+ \begin{gather}
+  \dif\bar{\ts\sigma} = \ATS \dprod \dif\bar{\ts d} \implies \\
+  \dif\bar{\ts\sigma}\dprod \ts I = \dif\bar{\ts\sigma}_\dev - \dif p \ts I \dprod \ts I 
+    = \ts I \dprod \ATS \dprod \dif \bar{\ts d}_\dev + \ts I \dprod \ATS \dprod \ts I \frac13 \dif \bar d_\vol \implies\\
+  \dif p = \underbrace{- \frac19\ts I \dprod \ATS \dprod \ts I}_{=E_\eqv} \dif \bar d_\vol 
+ \end{gather}
+
+An possible alternative approach would be to mix the boundary conditions
+ \begin{gather}
+  \ta v = \bar{\ts d}_\dev\cdot(\ta x - \bar{\ta x}) + \frac13 \bar{d}_\vol (\ta x-\bar{\ta x})\text{ on } \Gamma_\Box \\
+  \ta t^+ = -(\bar{p}-\bar{p}_0) \ta n \text{ on } \Gamma_\Box
+ \end{gather}
+where $\bar d_\vol$ is unknown and $\bar{p}_0$ is the internal pressure (assuming no pores on the boundary)
+
+ 
+\end{document}
