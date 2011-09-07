@@ -54,12 +54,12 @@ This document derives expressions necessary to calculate the load vector in FE a
 
 \subsection{Axisymmetric}
 \begin{align}
-  \uv F &= -2\pi \gamma \int_{-1}^{1} \left(r\uv A + \uv B\right) J_\xi\intd\xi\\
+  \uv F &= -2\pi \gamma \int_{-1}^{1} \left(\uv A + \uv B\right) r J_\xi\intd\xi\\
   \um K &= 2\pi \int_{-1}^{1} \bigg(
 	\uv A \otimes \uv B +
-	\uv B\otimes \uv A +
-	J_\xi^{-1} r({\um N}'^\T \cdot {\um N}' - \uv A\otimes \uv A)
-	\bigg)\intd\xi
+	\uv B \otimes \uv A +
+	r \left(\dderiv{\um N}{s}^\T \cdot \dderiv{\um N}{s} - \uv A\otimes \uv A\right)
+	\bigg) J_\xi \intd\xi
 %  \uv F_\boundary &= 2\pi\gamma\sign[\xi] r \uv D\\
 %  \um K_\boundary &= -2 \pi \gamma\sign[\xi] \left(\uv D\otimes\uv B + J_\xi^{-1} r \left(\um N^\T\cdot\um N' -\uv D\otimes\uv A\right) \right)
 \end{align}
