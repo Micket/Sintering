@@ -1,11 +1,33 @@
+clear
 % Create a mesh of some sort.
 n = 7;
+m = 6; % Number of partitions (parallel computations)
 [xx,yy] = meshgrid(linspace(-1,1,n),linspace(0,1,ceil(n/2)));
 xx = xx(:);
 yy = yy(:);
 coords = [xx,yy];
 elem = delaunay(coords(:,1),coords(:,2));
 
+cx = mean(xx(elem),2);
+
+nodepartitions = cell(size(xx,1),1);
+numnodes = zeros(m,1);
+
+for i = 1:m
+    limit = -1.01+2.02*i/m;
+    oldlimit = -1.01+2.02*(i-1)/m;
+    pelem = find(cx<=limit & cx > oldlimit);
+    partitions{i} = pelem;
+    for j = 1:length(pelem)
+        for k = 1:3
+            q = nodepartitions{elem(pelem(j),k)};
+            if length(intersect(q,i)) == 0
+                nodepartitions{elem(pelem(j),k)} = [q,i];
+                numnodes(i) = numnodes(i) + 1;
+            end
+        end
+    end
+end
 
 % Density function
 r_min = 0.83;
@@ -19,7 +41,10 @@ nelem = size(elem,1);
 
 
 % Write oofem input file.
-fid = fopen('macro_problem_nonhom.in','w');
+for mi = 1:m
+pelem = partitions{mi};
+
+fid = fopen(['macro_problem_nonhom.in.',num2str(mi-1)],'w');
 
 fprintf(fid, ['macro_problem_nonhom\n',...
 'The macroscale problem, using sintering.\n',...
@@ -28,7 +53,7 @@ fprintf(fid, ['macro_problem_nonhom\n',...
 'domain 2DPlaneStress\n',...
 'OutputManager tstep_all dofman_all element_all\n']);
 
-fprintf(fid, 'ndofman %d nelem %d ncrosssect 1 nmat %d nbc 1 nic 0 nltf 1\n',ndofman,nelem,length(available));
+fprintf(fid, 'ndofman %d nelem %d ncrosssect 1 nmat %d nbc 1 nic 0 nltf 1\n',numnodes(mi),length(pelem),length(available));
 
 for i = 1:ndofman
     bc = [0,0];
@@ -40,18 +65,26 @@ for i = 1:ndofman
             bc(2) = 1;
         end
     end
-    fprintf(fid, 'node %d coords 2 %f %f bc 2 %d %d\n',i,coords(i,1),coords(i,2),bc(1),bc(2));
+    np = nodepartitions{i};
+    if ~ismember(mi,np)
+        continue
+    end
+    if length(np) > 1
+        fprintf(fid, 'node %d coords 2 %f %f bc 2 %d %d shared partitions %d %s\n',...
+            i,coords(i,1),coords(i,2),bc(1),bc(2),length(np),num2str(np-1));
+    else
+        fprintf(fid, 'node %d coords 2 %f %f bc 2 %d %d\n',i,coords(i,1),coords(i,2),bc(1),bc(2));
+    end
 end
 
 
-for i = 1:nelem
-    gp = mean(coords(elem(i,1:3),:),1); % Gauss point (center)
+for i = 1:length(pelem)
+    k = pelem(i);
+    gp = mean(coords(elem(k,1:3),:),1); % Gauss point (center)
     density = rho(gp);
     [x,j] = min(abs(available-density));
-    disp(available(j))
-    fprintf(fid, 'trplanestress2d %d nodes 3 %d %d %d crossSect 1 mat %d\n', i, elem(i,1), elem(i,2), elem(i,3), j);
+    fprintf(fid, 'trplanestress2d %d nodes 3 %d %d %d crossSect 1 mat %d\n', k, elem(k,1), elem(k,2), elem(k,3), j);
 end
-
 fprintf(fid, 'SimpleCS 1 thick 1.0 width 1.0\n');
 
 for i = 1:length(available)
@@ -62,3 +95,5 @@ fprintf(fid, 'BoundaryCondition 1 LoadTimeFunction 1 prescribedvalue 0.0\n');
 fprintf(fid, 'ConstantFunction 1 f(t) 1.0\n');
 
 fclose(fid);
+
+end

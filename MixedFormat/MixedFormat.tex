@@ -1,22 +1,24 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[english]{babel}
-\usepackage[margin=2cm,includehead]{geometry}
+\usepackage{csquotes}
+\usepackage[margin=2cm,includehead,includefoot]{geometry}
 
 \usepackage{amsmath,contmech}
 \renewcommand{\ta}[1]{\mathbfit{#1}}
 \renewcommand{\ts}[1]{\mathbfit{#1}}
 \renewcommand{\td}[1]{\mathbfcal{#1}}
-\renewcommand{\tf}[1]{\mathbfsf{#1}}
+\renewcommand{\tf}[1]{\mathbfsfup{#1}}
+\renewcommand{\Box}{\mdlgwhtsquare}
+\renewcommand{\leadsto}{\rightsquigarrow}
 
 \usepackage{fontspec}
 \usepackage{unicode-math}
 \usepackage{microtype}
 
-\setmainfont{xits}
-\setmathfont{xits-math.otf}
-
-\renewcommand{\Box}{\mdlgwhtsquare}
-\renewcommand{\leadsto}{\rightsquigarrow}
+\setmainfont[Ligatures=TeX]{xits}
+\setmathfont[math-style=ISO]{xits-math}
+%\setmainfont[Ligatures=TeX]{Latin Modern Roman}
+%\setmathfont[math-style=ISO]{lmmath-regular.otf}
 
 \usepackage{fancyhdr}
 \headheight=14.5pt
@@ -27,6 +29,8 @@
 \newcommand{\ATS}{\bar{\tf E}}
 \newcommand{\BC}{\mathrm{BC}}
 
+\usepackage{enumitem}
+\setlist[itemize]{itemindent=-1.5em}
 \begin{document}
 Document composed after discussion with Fredrik on how to split to a mixed macroscale formulation.
 On the macro level:
@@ -66,7 +70,7 @@ An possible alternative approach would be to mix the boundary conditions
   \ta v = \bar{\ts d}_\dev\cdot(\ta x - \bar{\ta x}) + \frac13 \bar{d}_\vol (\ta x-\bar{\ta x})\text{ on } \Gamma_\Box \\
   \ta t^+ = -(\bar{p}-\bar{p}_0) \ta n \text{ on } \Gamma_\Box
  \end{gather}
-where $\bar d_\vol$ is unknown and $\bar{p}_0$ is the internal pressure (assuming no pores on the boundary)
+where $\bar d_\vol$ is unknown and $\bar{p}_0$ is the ``internal pressure'' (assuming no pores on the boundary)
 
  
 \end{document}
