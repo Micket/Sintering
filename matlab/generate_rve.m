@@ -1,5 +1,5 @@
 for radius = linspace(0.52,1/sqrt(2),100)
-for n = 1:3
+for n = 1:7
 
 innerradius = 0.4;
 
@@ -7,7 +7,8 @@ inside = [-1, -1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2];
 outside = [-1, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
 bc = [0,0,0,0,1,1,1,1,1,1,1,1];
 material = [1,2,3,4,5,5,5,5,5,5,5,5];
-eltype = [48, 48, 50, 50, 52, 52, 52, 52, 52, 52, 52, 52];
+%eltype = [51, 51, 54, 54, 56, 56, 56, 56, 56, 56, 56, 56];
+eltype = {'Tr21Stokes','Tr21Stokes','Line2SurfaceTension','Line2SurfaceTension','Line2BoundaryElement','Line2BoundaryElement','Line2BoundaryElement','Line2BoundaryElement','Line2BoundaryElement','Line2BoundaryElement','Line2BoundaryElement','Line2BoundaryElement'};
 a = acos(0.5/radius);
 rho = (radius^2*(pi/4-a) + sqrt(radius^2-0.5^2)/2)*4;
 
@@ -32,11 +33,15 @@ fprintf(fid, ['NewtonianFluid 1 d 1 mu 1\n',...
     'SurfaceTension 5\n',...
     'PrescribedGradient 1 loadTimeFunction 1 gradient 2 2 {0 0.0; 0.0 0} cCoord 2 %f %f defaultDofs 2 7 8\n',...
     'ConstantFunction 1 f(t) 1.0\n'], n/2, n/2);
+eltypestring = '';
+for i = 1:length(eltype)
+    eltypestring = sprintf('%s %s',eltypestring,eltype{i});
+end
 fprintf(fid, ['ParticleTopology nsd 2 baseresolution %d bboxa 2 %f %f bboxb 2 %f %f neighbors %d tubewidth %f nsegments %d',...
   ' regioninside %d %s regionoutside %d %s material %d %s bc %d %s elementtype %d %s\n'],...
     n*250,-0.5,-0.5,n+0.5,n+0.5,5,1.1,...
     segments, length(inside), int2str(inside), length(outside), int2str(outside), ...
-    length(material), int2str(material), length(bc), int2str(bc), length(eltype), int2str(eltype));
+    length(material), int2str(material), length(bc), int2str(bc), length(eltype), eltypestring);
 
 c = 1;
 for i = 0:n-1

@@ -24,7 +24,7 @@
 \headheight=14.5pt
 \pagestyle{fancy}
 \fancyhead[r]{\today}
-\fancyhead[l]{Mikael Öhman}
+\fancyhead[l]{Mikael Öhman, Fredrik Larsson}
 
 \newcommand{\ATS}{\bar{\tf E}}
 \newcommand{\BC}{\mathrm{BC}}
@@ -71,6 +71,105 @@ An possible alternative approach would be to mix the boundary conditions
   \ta t^+ = -(\bar{p}-\bar{p}_0) \ta n \text{ on } \Gamma_\Box
  \end{gather}
 where $\bar d_\vol$ is unknown and $\bar{p}_0$ is the ``internal pressure'' (assuming no pores on the boundary)
+
+
+\section{The macro-scale problem}
+Consider the macroscale problem at quasistatic equilibrium, stated as
+\begin{align}
+ -\bar{\ts\sigma}\cdot \diff = \bar{\ts b} \quad \text{in } \Omega
+\end{align}
+where we seek the macroscale velocity $\bar{\ts v}$. In particular, we identify two possible responses (induced by the submodel presented below):
+\begin{gather}
+ \bar{\ts\sigma} = \bar{\ts\sigma}_\Box(\bar{\ts d}) \label{eq:macro_compressible}\\
+ \begin{aligned}
+   \bar{\ts\sigma} &= \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev, \bar p) - \bar p \ts I\\
+   \bar{d}_\vol &= 0
+ \end{aligned} \label{eq:macro_incompressible}
+\end{gather}
+
+where \eqref{eq:macro_compressible} pertains to compressible and \eqref{eq:macro_incompressible} to incompressible response.
+In order to comply with both cases, we generalize the formulation as follows:
+\begin{gather}
+ \bar{\ts\sigma} = \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev,\bar p) - \bar p\ts I\\
+ \bar{d}_\vol - \bar{d}_{\Box,\vol}(\bar{\ts d}_\dev, \bar p) = 0
+\end{gather}
+Here we introduced $\bar{\ts d} = \left[ \bar{\ta v} \outerp \diff \right]^\sym$, $\bar{d}_\vol = \ts I \dprod \bar{\ts d}$ and $\bar{\ts d}_\dev = \bar{\ts d} - \frac{\bar d_\vol}{3}\ts I$ 
+
+We shall now show that the formulation in ... comprises both cases in ..
+First we note that case .. in eqv is trivially identified by 
+\begin{align}
+ \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev, \bar p), \quad \bar{d}_{\Box,\vol}(\bar{\ts d}_\dev,\bar p) = 0
+\end{align}
+Case .. can be recast into .. by defining
+\begin{align}
+ \bar d_{\Box,\vol}(\bar{\ts d}_\dev, \bar p) = d^*,\quad \text{s.t. } -\frac13 \ts I\dprod \bar{\ts\sigma}_\Box(\bar{\ts d}_\dev, d^*) = \bar p.
+\end{align}
+Consequently, the deviatoric stress is defined as
+\begin{align}
+ \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev,\bar p) = \bar{\ts\sigma}_\Box\left(\bar{\ts d}_\dev + \frac13 \bar{d}_{\Box,\vol}(\bar{\ts d}_\dev,\bar p)\ts I\right) + \bar p\ts I.
+\end{align}
+
+\subsection{Macro-scale problem}
+Starting from the formulation in .. we state the mean form as that of finding $(\bar{\ta v},\bar p) \in \bar{\set V} \times \bar{\set{P}}$ s.t. 
+\begin{align}
+ \bar a\{\bar{\ta v},\bar p, \delta\bar{\ta v}\} - \bar b\{\bar p, \delta\bar{\ta v}\} &= 0   \quad \forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0\\
+ \bar b\{\delta\bar p, \bar{\ta v}\} - \bar c\{\bar{\ta v}, \bar p, \delta\bar p\}&= 0   \quad \forall\; \delta\bar p \in \bar{\set{P}}^0
+\end{align}
+in the ??? form above, we defined
+\begin{align}
+ \bar a\{\bar{\ta v},\bar p, \delta\bar{\ta v}\} &\defeq \int_\Omega \bar{\ts\sigma}_{\Box,\dev}([\bar{\ta v}\outerp \diff]^\sym,\bar p)\dprod \bar{\ta v}\outerp \diff]^\sym \dif V \\
+ \bar b\{\delta\bar p, \bar{\ta v}\}             &\defeq \int_\Omega \bar p(\bar{\ta v}\cdot\diff)\dif V \\
+ \bar c\{\bar{\ta v}, \bar p, \delta\bar p\}     &\defeq \int_\Omega \bar d_{\Box,\vol}([\bar{\ta v}\outerp \diff]^\sym,\bar p)\delta\bar p\dif V
+\end{align}
+Newton iterations are obtained as
+\begin{align}
+ \bar{a}'_p\{\bullet; \delta\bar{\ta v},\dif\bar{p}\} + \bar{a}'_v\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} - \bar{b}\{\dif\bar p, \delta{\ta v}\} &= -\bar{a}\{\bullet; \delta\bar{\ta v}\} + \bar{b}\{\bullet, \delta\bar{\ta v}\}\quad \forall \delta\bar{\ta v}\\
+\bar{b}\{\delta\bar p, \Delta\bar{\ta v}\} - \bar{c}'_v\{\bullet; \delta\bar{p}, \Delta\bar{ \ta v}\} &= -\bar{b}\{\delta\bar{p},\bullet\} + \bar{c}\{\bullet;\delta\bar{p}\}\quad \forall \delta\bar{p}
+\end{align}
+where
+\begin{align}
+ \bar{a}'_v &= \int_\Omega [\delta\bar{\ta v}\outerp\diff]^\sym_\dev \dprod \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} \dprod [\Delta\bar{\ta v}\outerp\diff]^\sym_\dev \dif V\\
+ \bar{b}'_p &= \int_\Omega [\delta\bar{\ta v}\outerp\diff]^\sym_\dev \dprod \pd{\bar{\ts\sigma}}{\bar p} \Delta\bar{p} \dif V\\
+ \bar{c}'_v &= \int_\Omega \delta\bar{p} \pd{\bar{d}_{\Box,\vol}}{\bar{\ts d}_\dev} \dprod [\Delta\bar{\ta v}\outerp\diff]^\sym_\dev \dif V\\
+ \bar{c}'_p &= \int_\Omega \delta\bar{p} \pd{\bar{d}_{\Box,\vol}}{\bar p} \Delta\bar p\dif V
+\end{align}
+
+\section{Nested analysis}
+Assuming that the subscale problem is stated either as that of case (i) or case (ii) in \eqref{..} or \eqref{..} respectively.
+\subsection{Compressible subproblem}
+We assume that the subscale problem defines the function 
+\begin{align}
+ \bar{\ts\sigma} = \bar{\ts\sigma}_\Box(\bar{\ts d})\quad \text{and its derivative } \bar{\tf E} = \od{\bar{\ts\sigma}_\Box}{\bar{\ts d}}.
+\end{align}
+In order to utilize the general formulation in .., we formulate the intermediate problem of finding $\bar{d}_\vol^*$ s.t.
+\begin{align}
+ \frac13 \ts I\dprod \bar{\ts\sigma}_\Box\left(\bar{\ts d}_\dev + \frac13 \bar{d}_\vol^* \ts I\right) = -\bar p.
+\end{align}
+The iterative solution can be obtained by the update
+\begin{align}
+ \Delta\bar{d}_\vol &= \frac{1}{\bar K(\bar{\ts d}^{(k)})} \left[-\bar p - \frac13 \ts I\dprod \bar{\ts\sigma}_\Box\left(\bar{\ts d}^{(k)}\right)\right] \quad \text{with}\quad \bar{\ts d}^{(k)} = \bar{\ts d}_\dev + \frac13 \bar{d}_\vol^{(k)} \ts I\\
+ \bar{d}_\vol^{(k+1)} &= \bar{d}_\vol^{(k)} + \Delta\bar{d}_\vol
+\end{align}
+Here, we introduced the bulk stiffness
+\begin{align}
+  \bar K(\bar{\ts d}) \defeq \frac19  \ts I\dprod \bar{\tf E} \dprod \ts I.
+\end{align}
+Finally, we state the equations pertinent to ... as follows
+\begin{align}
+ \left\{ \begin{aligned}
+         \bar{\ts\sigma}_{\Box,\dev} &= \tf I_\dev \dprod \bar{\ts\sigma}_\Box(\bar{\ts d}_\dev + \frac13 \bar{d}_\vol^* \ts I)\\
+         \bar{d}_{\Box,\vol} &= \bar{d}_\vol^*
+        \end{aligned}
+ \right.
+\end{align}
+Pertubations of input, i.e. $\bar{\ts d}_\dev$ and $\bar p$,  give rise to the problems:
+\begin{align}
+ \dif\bar{\ts\sigma}_{\Box,\dev} &= \tf I_\dev \dprod \dif\bar{\ts\sigma} = \tf I_\dev \dprod \bar{\tf E} \dprod (\dif\bar{\ts d}_\dev + \frac13 \ts I \dif\bar{d}_\vol) = \\
+ \dif\bar{d}_{\Box,\vol} &= \od{\bar{d}_\vol^*}{\bar{\ts d}_\dev}\dprod \dif \bar{\ts d}_\dev + \od{\bar{\ts d}_\vol}{\bar p}\dif \bar p
+\end{align}
+
+
+
 
  
 \end{document}
