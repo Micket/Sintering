@@ -3,7 +3,7 @@
 \usepackage[margin=2.5cm,includehead,includefoot]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath,contmech}
-\usepackage[textsize=tiny]{todonotes}
+\usepackage[textsize=tiny,color=blue!10]{todonotes}
 
 \usepackage{ifluatex}
 \ifluatex
@@ -11,7 +11,7 @@
 \renewcommand{\ts}[1]{\mathbfit{#1}}
 \renewcommand{\td}[1]{\mathbfcal{#1}}
 \renewcommand{\tf}[1]{\mathbfsfup{#1}}
-\renewcommand{\Box}{{\scalebox{0.5}{\mdlgwhtsquare}}}
+\renewcommand{\Box}{\mdlgwhtsquare}
 \renewcommand{\leadsto}{\rightsquigarrow}
 
 \usepackage{fontspec}
@@ -29,6 +29,8 @@
 
 % Extra commands;
 \newcommand{\pressure}{\mathrm{p}}
+\newcommand{\internal}{\mathrm{int}}
+\newcommand{\external}{\mathrm{ext}}
 
 
 \usepackage{fancyhdr}
@@ -131,8 +133,6 @@ where we seek the macroscale velocity $\bar{\ts v}$. In particular, we identify 
   \bar{d}_\vol = 0
 \end{align}
 \end{subequations}
-
-
 where \eqref{eq:macro_compressible} pertains to compressible and \eqref{eq:macro_incompressible} to incompressible response.
 In order to comply with both cases, we generalize the formulation as follows:
 \begin{subequations} \label{eq:macro_mixed}
@@ -150,18 +150,18 @@ First we note that \eqref{eq:macro_incompressible} is trivially identified by
 \end{align}
 Equation \eqref{eq:macro_compressible} can be recast into \eqref{eq:macro_mixed} by defining
 \begin{align}
- \bar d_{\Box,\vol}(\bar{\ts d}_\dev, \bar p) = d^*,\quad \text{s.t. } -\frac13 \ts I\dprod \bar{\ts\sigma}_\Box(\bar{\ts d}_\dev, d^*) = \bar p.
+ \bar d_{\Box,\vol}(\bar{\ts d}_\dev, \bar p) = \bar{d}_\vol^*,\quad \text{s.t. } -\frac13 \ts I\dprod \bar{\ts\sigma}_\Box(\bar{\ts d}_\dev, \bar{d}_\vol^*) = \bar p.
 \end{align}
 Consequently, the deviatoric stress is defined as
 \begin{align}
- \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev,\bar p) = \bar{\ts\sigma}_\Box\left(\bar{\ts d}_\dev + \frac13 \bar{d}_{\Box,\vol}(\bar{\ts d}_\dev,\bar p)\ts I\right) + \bar p\ts I.
+ \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev,\bar p) = \tf I_\dev \dprod \bar{\ts\sigma}_\Box\left(\bar{\ts d}_\dev + \frac13 \bar{d}_\vol^*\ts I\right).
 \end{align}
 
 \subsection{Macro-scale problem}
 Starting from the formulation in \eqref{eq:macro_mixed} we state the mean form as that of finding $(\bar{\ta v},\bar p) \in \bar{\set V} \times \bar{\set{P}}$ s.t. 
 \begin{align}
  \bar a\{\bar{\ta v},\bar p; \delta\bar{\ta v}\} - \bar b\{\bar p, \delta\bar{\ta v}\} &= 0   \quad \forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0\\
- \bar b\{\delta\bar p, \bar{\ta v}\} - \bar c\{\bar{\ta v}, \bar p; \delta\bar p\}&= 0   \quad \forall\; \delta\bar p \in \bar{\set{P}}^0
+ \bar b\{\delta\bar p, \bar{\ta v}\} - \bar c\{\bar{\ta v}, \bar p; \delta\bar p\}&= 0   \quad \forall\; \delta\bar p \in \bar{\set{P}}
 \end{align}
 in the weak form above, we defined
 \begin{align}
@@ -173,9 +173,9 @@ in the weak form above, we defined
 Newton iterations are obtained as
 \begin{align}
  \bar{a}'_p\{\bullet; \delta\bar{\ta v},\Delta\bar{p}\} + \bar{a}'_v\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} - \bar{b}\{\Delta\bar p, \delta{\ta v}\}
-	  &= -\bar{a}\{\bullet; \delta\bar{\ta v}\} + \bar{b}\{\bar{p}, \delta\bar{\ta v}\}\quad \forall \delta\bar{\ta v}\\
+	  &= -\bar{a}\{\bullet; \delta\bar{\ta v}\} + \bar{b}\{\bar{p}, \delta\bar{\ta v}\}\quad \forall \delta\bar{\ta v} \in \bar{\set{V}}^0\\
 \bar{b}\{\delta\bar p, \Delta\bar{\ta v}\} - \bar{c}'_v\{\bullet; \delta\bar{p}, \Delta\bar{ \ta v}\} - \bar{c}'_p\{\bullet; \delta\bar{p},\Delta\bar{p}\}
-	  &= -\bar{b}\{\delta\bar{p},\bullet\} + \bar{c}\{\bullet;\delta\bar{p}\}\quad \forall \delta\bar{p}
+	  &= -\bar{b}\{\delta\bar{p},\bullet\} + \bar{c}\{\bullet;\delta\bar{p}\}\quad \forall \delta\bar{p} \in \bar{\set{P}}
 \end{align}
 where
 \begin{align}
@@ -187,14 +187,16 @@ where
 
 \section{Nested analysis}  \label{sec:nested}
 Assuming that the subscale problem is stated either as that of \eqref{eq:macro_compressible} or \eqref{eq:macro_incompressible} respectively we need to treat the two cases separately.
-Worth noting is that the subscale problem can shift from one case to another during an analysis, e.g. compaction of porous media.
+Worth noting is that the subscale problem can shift from one case to another during an analysis, e.g. compaction of porous media or liquid phase sintering.
+\todo{Cite and refer to problems in paper A}
+
 \subsection{Compressible subproblem} \label{sec:nested_compressible}
 We assume that the subscale problem defines the function 
 \begin{align}
  \bar{\ts\sigma} = \bar{\ts\sigma}_\Box(\bar{\ts d})\quad \text{and its derivative } \bar{\tf E} = \od{\bar{\ts\sigma}_\Box}{\bar{\ts d}}.
 \end{align}
 In order to utilize the general formulation in \eqref{eq:macro_mixed}, we formulate the intermediate problem of finding $\bar{d}_\vol^*$ s.t.
-\begin{align}
+\begin{align} \label{eq:find_pressure}
  \frac13 \ts I\dprod \bar{\ts\sigma}_\Box\left(\bar{\ts d}_\dev + \frac13 \bar{d}_\vol^* \ts I\right) = -\bar p.
 \end{align}
 The iterative solution can be obtained by the update
@@ -214,18 +216,18 @@ Finally, we state the equations pertinent to \eqref{eq:macro_mixed} as follows
         \end{aligned}
  \right.
 \end{align}
-Pertubations of input, i.e. $\bar{\ts d}_\dev$ and $\bar p$,  give rise to the problems:
+Pertubations of the input, i.e. $\bar{\ts d}_\dev$ and $\bar p$,  give rise to the pertinent output pertubations:
 \begin{align}
  \dif\bar{\ts\sigma}_{\Box,\dev} &= \tf I_\dev \dprod \dif\bar{\ts\sigma} = \tf I_\dev \dprod \dif\bar{\ts\sigma} = \tf I_\dev \dprod \bar{\tf E} \dprod \left[\dif\bar{\ts d}_\dev + \frac13 \ts I \dif\bar{d}_\vol\right]\\
 	  &= \tf I_\dev \dprod \bar{\tf E} \dprod \left[\tf I + \frac13 \ts I\outerp \od{\bar{d}_\vol^*}{\bar{\ts d}_\dev} \right] \dprod \dif\bar{\ts d}_\dev + \frac13 \tf I_\dev \dprod \bar{\tf E}\dprod \ts I \od{\bar{d}_\vol^*}{\bar p}\dif\bar{p}\\
  \dif\bar{d}_{\Box,\vol} &= \od{\bar{d}_\vol^*}{\bar{\ts d}_\dev}\dprod \dif \bar{\ts d}_\dev + \od{\bar{\ts d}_\vol}{\bar p}\dif \bar p
 \end{align}
-where the sensitivities are derived as
+where the sensitivities are derived from the linearization of \eqref{eq:find_pressure} as
 \begin{align}
  \frac19 \ts I\dprod \bar{\tf E} \dprod \ts I\outerp \od{\bar{d}_\vol^*}{\bar{\ts d}_\dev} &= -\frac13 \ts I\dprod \bar{\tf E} 
-	\leadsto \od{\bar{d}_\vol^*}{\bar{\ts d}_\dev} = - \frac1{3\bar{K}} \ts I\dprod \bar{\tf E}\\
- \frac19 \ts I\dprod \bar{\tf E} \dprod \ts I\od{\bar d_\vol^*}{\bar p} &= \dif\bar{p} 
-	\leadsto \od{\bar{d}_\vol^*}{\bar{p}} = -\frac{1}{\bar{K}}
+	\implies \od{\bar{d}_\vol^*}{\bar{\ts d}_\dev} = - \frac1{3\bar{K}} \ts I\dprod \bar{\tf E}\\
+ \frac19 \ts I\dprod \bar{\tf E} \dprod \ts I\od{\bar d_\vol^*}{\bar p} &= -1
+	\implies \od{\bar{d}_\vol^*}{\bar{p}} = -\frac{1}{\bar{K}}
 \end{align}
 
 
@@ -239,88 +241,87 @@ Finally we can thus state
 
 \subsection{Incompressible subproblem} \label{sec:nested_incompressible}
 If the subscale is, or becomes, incompressible a different approach is needed.
-Clearly, the macroscopic volumetric change is now known, $\bar{d}_\vol = 0$, with the corresponding tangent $\frac{1}{\bar{K}} = 0$ as no further compression is allowed.
+An incompressible is defined by $\bar{d}_\vol\{\ts d_\dev,\bar{p}\} = 0$, with the corresponding tangent $\frac{1}{\bar{K}} = 0$. This can be detected by computing the porosity. \todo{Refer to paper A}. 
 The subscale problem is
 \begin{align}
- a_\Box\{\ta v, p; \delta\ta v\} - b_\Box\{p,\delta\ta v\} &= 0\quad \forall\;\delta\ta v \in \set V^0 \\
- b_\Box\{\delta p, \ta v\} &= 0\quad \forall\;\delta p \in \set P
+ a_\Box(\ta v; \delta\ta v) - b_\Box(p,\delta\ta v) &= 0\quad \forall\;\delta\ta v \in \set V^0 \\
+ b_\Box(\delta p, \ta v) &= 0\quad \forall\;\delta p \in \set P\setminus\set R
 \end{align}
-where $\ta v = \ta v(\bar{\ts d}_\dev, \bar p)$ and $p = p(\bar{\ts d}_\dev, \bar p)$. More commonly, we have that 
-$\ta v = \ta v(\bar{\ts d}_\dev)$ and $p = p(\bar{\ts d}_\dev)$, 
-where standard Dirichlet, Neumann \todo{Does it come naturally for Neumann bc already?} or microperiodic boundary conditions for the deviatoric strain rate can be applied.
+where we have assumed that the subscale fields do not depend on absolute value of the pressure; $\ta v = \ta v(\bar{\ts d}_\dev)$ and $p = p(\bar{\ts d}_\dev)$.
+
+Standard Dirichlet, Neumann \todo{Does it come naturally for Neumann bc already?} or microperiodic boundary conditions for the deviatoric strain rate can be applied.
 For these boundary conditions combined with the case that the microstructure doesn't have any free surfaces, 
 the pressure needs to be set at some point to make the system solvable.
+\todo{More on this section later...}
 
 \section{Monolithic formulation} \label{sec:monolithic}
 \todo{Keep it general a(p)?}
 The general problem for subscale flow can be written as
 \begin{align}
  \underbrace{\frac{1}{|\Omega_\Box|} \int_{\Omega_\Box} \ts\sigma(\ta v, p)\dprod [\delta\ta v\outerp\diff] \dif V}_{a_\Box(\ta v,p;\delta\ta v^\fluct)-b_\Box(p,\delta\ta v^\fluct)}
-	= \underbrace{\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta t\cdot \delta\ta v\dif S}_{l_\Box(\delta\ta v^\fluct)}
+	= \underbrace{\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box^\external \cup \Gamma_\Box^\internal} \ta t\cdot \delta\ta v\dif S}_{l_\Box^\external(\delta\ta v^\fluct)+l_\Box^\internal(\delta \ta v^\fluct)}
  \label{eq:subscale_original}
 \end{align}
 where incompressibility has not been introduced yet to simplify derivations.
 The velocity is split into
 \begin{align}
- \ta v = \ta v^\macro + \ta v^\fluct = \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{d}_\vol \ta x^{\macro\pressure} + \ta v^\fluct.
+ \ta v = \ta v^\macro + \ta v^\fluct = \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{d}_\vol \ta x_\vol + \ta v^\fluct.
 \end{align}
 \todo{Check sign. Why all the double negatives?}
-where we define $\ta x^{\macro\pressure} \defeq \frac13[\ta x - \bar{\ta x}]$.
-For the additional unknown, $\bar{d}_\vol$, we choose the corresponding test function $\delta\ta x^{\macro\pressure} = \ta x^{\macro\pressure}$ in addition to $\delta \ta v^\fluct$.
-Introducing $\delta\ta x^{\macro\pressure}$ in \eqref{eq:subscale_original} we obtain
+where we define $\ta x_\vol \defeq \frac13[\ta x - \bar{\ta x}]$.
+For the additional unknown, $\bar{d}_\vol$, we choose the corresponding test function $\delta[\bar{d}_\vol \ta x_\vol] = \delta\bar{d}_\vol\ta x_\vol$ in addition to $\delta \ta v^\fluct$.
+Introducing $\delta[\bar{d}_\vol \ta x_\vol]$ in \eqref{eq:subscale_original} we obtain
 \begin{multline}
   \frac{1}{|\Omega_\Box|}
-	\int_{\Omega_\Box} \ts\sigma\dprod [\ta x^{\macro\pressure}\outerp\diff] \dif V
- =
--\frac{1}{|\Omega_\Box|}
-	\int_{\Omega_\Box} p \dif V
- = \\
-  \frac{1}{|\Omega_\Box|}
- \int_{\Gamma_\Box} \ta t\cdot \ta x^{\macro\pressure} \dif S = \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box}\frac13 \ta t\cdot(\ta x-\bar{\ta x}) \dif S = -\bar{p}
+	\int_{\Omega_\Box} \ts\sigma\dprod [\ta x_\vol\outerp\diff] \dif V \delta\bar{d}_\vol
+  =
+  -\frac{1}{|\Omega_\Box|} \int_{\Omega_\Box} p \dif V \delta\bar{d}_\vol
+  = \\
+  \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta t\cdot \ta x_\vol \dif S\delta\bar{d}_\vol
+ = 
+ \left[l_\Box^\internal(\ta x_\vol) + \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box^\external}\frac13 \ta t\cdot(\ta x-\bar{\ta x}) \dif S\right]\delta\bar{d}_\vol
+ = 
+  [l_\Box^\internal(\ta x_\vol)-\bar{p}]\delta\bar{d}_\vol
 \end{multline}
 % \begin{multline}
 %   \frac{1}{|\Omega_\Box|}\left(
 %   \int_{\Omega_\Box} \ts\sigma\dprod [\delta\ta v^\fluct \outerp\diff] \dif V
-% + \int_{\Omega_\Box} \ts\sigma\dprod [\ta v^{\macro\pressure}] \dif V \delta\bar{d}_\vol
+% + \int_{\Omega_\Box} \ts\sigma\dprod [\ta v_\vol] \dif V \delta\bar{d}_\vol
 % + \int_{\Omega_\Box} \ts\sigma\dif V\dprod\delta\bar{d}_\dev
 %   \right)
 % = \\
 %  \frac{1}{|\Omega_\Box|} \left(
 %   \int_{\Gamma_\Box} \ta t\cdot \delta\ta v^\fluct\dif S
-% + \int_{\Gamma_\Box} \ta t\cdot \ta v^{\macro\pressure} \dif S \delta\bar{d}_\vol
+% + \int_{\Gamma_\Box} \ta t\cdot \ta v_\vol \dif S \delta\bar{d}_\vol
 % + \int_{\Gamma_\Box} \ta t\outerp (\ta x-\bar{\ta x}) \dif S\dprod \delta\bar{\ts d}_\dev
 %  \right)
 % \end{multline}
 % where one can identify
 % \begin{align}
-%  \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta t\cdot \ta v^{\macro\pressure} \dif S
+%  \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta t\cdot \ta v_\vol \dif S
 %   = \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box}\frac13 \ta t\cdot(\ta x-\bar{\ta x}) \dif S
 %   = -\bar{p}
 % \end{align}
 
 The subscale problem can now be expressed as finding $(\bar{d}_\vol, \ta v^\fluct, p) \in \set{R} \times \set{V}_\Box^0 \times \set{P}_\Box$ in
 \begin{align}
- &a_\Box \left(\ta v, p; \delta\ta v^\fluct \right) -b_\Box \left(p,\delta\ta v^\fluct\right) &&= l_\Box\left(\delta\ta v^\fluct\right)\quad &\forall\:\delta\ta v^\fluct \in \set{V}_\Box^0\\
+ &a_\Box \left(\ta v, p; \delta\ta v^\fluct \right) -b_\Box \left(p,\delta\ta v^\fluct\right) &&= l_\Box^\internal\left(\delta\ta v^\fluct\right)\quad &\forall\:\delta\ta v^\fluct \in \set{V}_\Box^0\\
  &b_\Box\left(\delta p, \ta v\right) &&= 0 \quad &\forall\: \delta p \in \set{P}_\Box\\
- &- b_\Box\left(p,\ta x^{\macro\pressure}\right) &&= -\bar p &
+ &- b_\Box\left(p,\ta x_\vol\right)\delta\bar{d}_\vol &&= [l_\Box^\internal(\ta x_\vol)-\bar p]\delta\bar{d}_\vol &
 \end{align}
-<<<<<<< Updated upstream
 where, as with standard Dirichlet boundary condition, $\ta v^\fluct = 0$ on $\Gamma_\Box$.
-% where we define $\ta v^{\macro\pressure} \defeq -\frac13[\ta x - \bar{\ta x}]$ and used, for brevity
+% where we define $\ta v_\vol \defeq -\frac13[\ta x - \bar{\ta x}]$ and used, for brevity
 % \begin{align}
-%  \ta v = \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] - \bar{d}_\vol \ta v^{\macro\pressure} + \ta v^\fluct.
+%  \ta v = \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] - \bar{d}_\vol \ta v_\vol + \ta v^\fluct.
 % \end{align}
 
 The output (for given $\bar{\ts d}_\dev$, $\bar p$) is $\bar{d}_{\Box,\vol}(\bar{\ts d}_\dev,\bar p) = \bar{d}_\vol$,
 which is solved for directly, and the post processed
-\todo{No $b_\Box$?}
 \begin{align}
  \bar{\ts\sigma}_{\Box,\dev}(\bar{\ts d}_\dev,\bar p)
-  &=\sum_{ij} \left[ a_\Box\left(\ta v, p; \ta v^{\macro\dev(ij)}\right) - b_\Box(p,\ta v^{\macro\dev(ij)}) - l_\Box\left(\ta v^{\macro\dev(ij)}\right)\right] \bee ij\\
-  &=\sum_{ij} \left[ a_\Box\left(\ta v, p; \ta v^{\dev(ij)}\right) - l_\Box\left(\ta v^{\dev(ij)}\right)\right] \bee ij
+  &=\sum_{ij} \left[ a_\Box\left(\ta v, p; \ta v^{\macro\dev(ij)}\right) - \underbrace{b_\Box(p,\ta v^{\macro\dev(ij)})}_{=0} - l_\Box^\internal\left(\ta v^{\macro\dev(ij)}\right)\right] \bee ij
 \end{align}
-with $\ta v^{\macro\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}] + [\be i\cdot\be j]\ta x^{\macro\pressure}$
-or $\ta v^{\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}]$.
+with $\ta v^{\macro\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}] - [\be i\cdot\be j]\ta x_\vol$.
 % \subsection{Dirichlet boundary condition} \label{sec:monolithic_dirichlet}
 % As with standard Dirichlet boundary conditions for computational homogenization, we simply choose $\delta\ta v^\fluct = \ta 0$ on $\Gamma_\Box$.
 
@@ -333,11 +334,5 @@ or $\ta v^{\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}]$.
 The nested solution shown is 
 Advantages of the monolithic formulation is that it doesn't require iterations to obtain the volumetric part $\bar{d}_\vol^*$ or require any special treatment 
 for when a compressible RVE turns incompressible (as with vanishing porosity).
-=======
-with $\ta v^{\macro\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}] + [\be i\cdot\be j]\ta v^{\macro\pressure}$.
-
-One advantage of this choice is that it doesn't require iterations to obtain the volumetric part $\bar{d}_\vol^*$, at the cost of causing a more costly system to solve. An additional dense line and column is added the the sparsity structure when solving the subscale problem with Newton iterations.
-It also doesn't require any special treatment for when a compressible RVE turns incompressible (as with vanishing porosity). The average of the subscale pressure field also equal to the macroscale pressure $\bar p$, which is required if the constitutive behavior of the subscale constituents are pressure dependent.
->>>>>>> Stashed changes
 
 \end{document}
