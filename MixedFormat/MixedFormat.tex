@@ -11,7 +11,7 @@
 \renewcommand{\ts}[1]{\mathbfit{#1}}
 \renewcommand{\td}[1]{\mathbfcal{#1}}
 \renewcommand{\tf}[1]{\mathbfsfup{#1}}
-\renewcommand{\Box}{\mdlgwhtsquare}
+\renewcommand{\Box}{{\scalebox{0.5}{\mdlgwhtsquare}}}
 \renewcommand{\leadsto}{\rightsquigarrow}
 
 \usepackage{fontspec}
@@ -304,6 +304,7 @@ The subscale problem can now be expressed as finding $(\bar{d}_\vol, \ta v^\fluc
  &b_\Box\left(\delta p, \ta v\right) &&= 0 \quad &\forall\: \delta p \in \set{P}_\Box\\
  &- b_\Box\left(p,\ta x^{\macro\pressure}\right) &&= -\bar p &
 \end{align}
+<<<<<<< Updated upstream
 where, as with standard Dirichlet boundary condition, $\ta v^\fluct = 0$ on $\Gamma_\Box$.
 % where we define $\ta v^{\macro\pressure} \defeq -\frac13[\ta x - \bar{\ta x}]$ and used, for brevity
 % \begin{align}
@@ -332,5 +333,11 @@ or $\ta v^{\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}]$.
 The nested solution shown is 
 Advantages of the monolithic formulation is that it doesn't require iterations to obtain the volumetric part $\bar{d}_\vol^*$ or require any special treatment 
 for when a compressible RVE turns incompressible (as with vanishing porosity).
+=======
+with $\ta v^{\macro\dev(ij)} = \bee ij \cdot [\ta x - \bar{\ta x}] + [\be i\cdot\be j]\ta v^{\macro\pressure}$.
+
+One advantage of this choice is that it doesn't require iterations to obtain the volumetric part $\bar{d}_\vol^*$, at the cost of causing a more costly system to solve. An additional dense line and column is added the the sparsity structure when solving the subscale problem with Newton iterations.
+It also doesn't require any special treatment for when a compressible RVE turns incompressible (as with vanishing porosity). The average of the subscale pressure field also equal to the macroscale pressure $\bar p$, which is required if the constitutive behavior of the subscale constituents are pressure dependent.
+>>>>>>> Stashed changes
 
 \end{document}
