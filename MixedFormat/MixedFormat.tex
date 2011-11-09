@@ -271,38 +271,19 @@ The velocity is split into
 \end{align}
 where
 \begin{align}
- \ta x^\macro \defeq&
- \begin{cases}
-   [\ta x - \bar{\ta x}]\phantom{\frac13}&\text{on } \Gamma_\Box^\external\\
-   0 &\text{on } \Gamma_\Box^\internal
- \end{cases} \label{eq:basefunction}
+ \ta x^\macro \defeq& [\ta x - \bar{\ta x}]\phantom{\frac13} \quad\text{on } \Gamma_\Box^\external
+ \label{eq:basefunction}
 \\
-\ta x_\vol^\macro \defeq &
- \begin{cases}
-   \frac13[\ta x - \bar{\ta x}] &\text{on } \Gamma_\Box^\external\\
-   0 &\text{on } \Gamma_\Box^\internal
- \end{cases} \label{eq:basefunction_vol}
+\ta x_\vol^\macro \defeq & \frac13[\ta x - \bar{\ta x}] \quad\text{on } \Gamma_\Box^\external
+ \label{eq:basefunction_vol}
 \end{align}
  
 For the additional unknown, $\bar{d}_\vol$, we choose the corresponding test function $\delta[\bar{d}_\vol \ta x_\vol^\macro] = \delta\bar{d}_\vol\ta x_\vol^\macro$.
-Introducing $\delta[\bar{d}_\vol \ta x_\vol^\macro]$ in \eqref{eq:subscale_original} we obtain
-\begin{multline}
-  \left[a_\Box(\ta v,p; \ta x_\vol^\macro) - b_\Box(p, \ta x_\vol^\macro \right] \delta\bar{d}_\vol
-  =
-  -\frac{1}{|\Omega_\Box|} \int_{\Omega_\Box} p \dif V\;\delta\bar{d}_\vol
-  = \\
-  \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta t\cdot \ta x_\vol \dif S\;\delta\bar{d}_\vol
- = 
- \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box^\external}\frac13 \ta t\cdot(\ta x-\bar{\ta x}) \dif S\;\delta\bar{d}_\vol
- = 
-  -\bar{p}\delta\bar{d}_\vol
-\end{multline}
-
-The subscale problem can now be expressed as finding $(\bar{d}_\vol, \ta v^\fluct, p) \in \set{R} \times \set{V}_\Box^0 \times \set{P}_\Box$ in
+Introducing $\delta[\bar{d}_\vol \ta x_\vol^\macro]$, $\delta p$ and $\delta\ta v$ in \eqref{eq:subscale_original}, the subscale problem can be expressed as finding $(\ta v, p,\bar{d}_\vol) \in \set{V}_\Box^0 \times \set{P}_\Box \times \set{R}$ in
 \begin{align}
  &a_\Box \left(\ta v, p; \delta\ta v \right) -b_\Box \left(p,\delta\ta v\right) &&= l_\Box^\internal\left(\delta\ta v\right) &&\forall\:\delta\ta v \in \set{V}_\Box^0\\
  &b_\Box\left(\delta p, \ta v\right) &&= 0 &&\forall\: \delta p \in \set{P}_\Box\\
- &\left[a_\Box\left(\ta v, p; \ta x_\vol^\macro\right)- b_\Box\left(p,\ta x_\vol^\macro\right)\right]\delta\bar{d}_\vol &&= -\bar p\;\delta\bar{d}_\vol &&\forall\: \delta\bar{d}_\vol \in \set{R}
+ &\left[a_\Box\left(\ta v, p; \ta x_\vol^\macro\right)- b_\Box\left(p,\ta x_\vol^\macro\right)\right]\delta\bar{d}_\vol &&= [-\bar p+l_\Box^\internal(\ta x^\macro_\vol)]\delta\bar{d}_\vol &&\forall\: \delta\bar{d}_\vol \in \set{R}
 \end{align}
 where, as with standard Dirichlet boundary condition, $\ta v^\fluct = 0$ on $\Gamma_\Box$.
 
@@ -329,13 +310,56 @@ which is solved for directly, and the post processed deviatoric stress which is 
 % \subsection{Neumann boundary condition} \label{sec:monolithic_neumann}
 % Similar to the standard Neumann boundary condition we apply $\ta t = \bar{\ts\sigma} = -\bar{p}\ta n + \bar{\ts\sigma}_\dev$.
 
-To solve the macroscopic problems the tangents are also required;
+\subsection{Sensitivity analysis}
+For brevity, the following notation is introduced
 \begin{align}
- \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} &= \\
- \pd{\bar{\ts\sigma}_\dev}{\bar p} &= \\
- \pd{\bar{d}_\vol}{\bar{\ts d}_\dev} &= \\
- \pd{\bar{d}_\vol}{\bar p} &=
+ v_\Box(\Delta\ta v,\Delta p) &= a_{\Box,v}'(\bullet; \delta\ta v, \Delta\ta v) + a_{\Box,p}'(\bullet; \delta\ta v,\Delta p) - b_\Box(\Delta p,\delta\ta v)\\
+ d_\Box(\Delta\ta v,\Delta p) &= a_{\Box,v}'(\bullet; \delta\bar{d}_\vol\ta x^\macro_\vol,\Delta\ta v) + a_{\Box,p}'(\bullet;\delta\bar{d}_\vol\ta x^\macro_\vol,\Delta\ta v) - b_\Box(\Delta p,\delta\bar{d}_\vol\ta x^\macro_\vol)
 \end{align}
+
+Primal sensitivity
+% \begin{align}
+%  &a_{\Box,v}'(\bullet; \delta\ta v, \Delta\ta v) + a_{\Box,p}'(\bullet; \delta\ta v,\Delta p) - b_\Box(\Delta p,\delta\ta v) = 0 && \forall\; \delta\ta v\in \set{V}_\Box^0\\
+%  &b_\Box(\delta p,\Delta\ta v) + b_\Box(\delta p,\ta x^\macro_\vol) \Delta\bar{d}_\vol = 0 && \forall\; \delta p \in \set{P}_\Box\\
+%  \nonumber &[a_{\Box,v}'(\bullet; \ta x^\macro_\vol,\Delta\ta v) + a_{\Box,v}'(\bullet;\ta x^\macro_\vol,\ta x^\macro_\vol)\Delta\bar{d}_\vol\\
+%   &+a_{\Box,p}'(\bullet;\ta x^\macro_\vol,\Delta p) - b_\Box(\Delta p,\ta x^\macro_\vol)]\delta\bar{d}_\vol
+% 	= -\Delta\bar{p} \delta\bar{d}_\vol && \forall\;\delta\bar{d}_\vol \in \set{R}
+% \end{align}
+\begin{align}
+ &v_\Box(\Delta\ta v,\Delta p) = 0 && \forall\; \delta\ta v\in \set{V}_\Box^0\\
+ &b_\Box(\delta p,\Delta\ta v) + b_\Box(\delta p,\ta x^\macro_\vol) \Delta\bar{d}_\vol = 0 && \forall\; \delta p \in \set{P}_\Box\\
+ &d_\Box(\Delta\ta v,\Delta p) = -\Delta\bar{p} \delta\bar{d}_\vol && \forall\;\delta\bar{d}_\vol \in \set{R}
+\end{align}
+
+Sensitivity in $(\bar{\ts d}_\dev)_{ij}$: $(\hat{\ta v}^{\Delta(ij)}, \hat{p}^{\Delta(ij)}, \hat{d}^{\Delta(ij)}) \in \set{V}_\Box(\be i\outerp\be j - \frac13\be i\cdot\be j\ts I)\times \set{P}_\Box \times\set{R}$
+\begin{align}
+ &v_\Box(\hat{\ta v}^{\Delta(ij)}+\ta x^\macro_\vol \hat{d}^{\Delta(ij)}, \hat{p}^{\Delta(ij)}) = 0
+ %&a_{\Box,v}'(\bullet;\delta\ta v, )+a_{\Box,p}'(\bullet;\delta\ta v,\hat{p}^{\Delta(ij)}) - b_\Box(\hat{p}^{\Delta(ij)},\delta\ta v) = 0
+ \\
+ &b_\Box(\delta p,\hat{\ta v}^{\Delta(ij)} + \ta x^\macro_\vol \hat{d}^{\Delta(ij)}) = 0
+ \\
+ &d_\Box(\delta\bar{d}_\vol\ta x^\macro_\vol,\hat{\ta v}^{\Delta(ij)}+\ta x^\macro_\vol \hat{d}^{\Delta(ij)}) = 0
+ %&\delta\bar{d}_\vol[a_{\Box,v}'(\bullet; \ta x^\macro_\vol, \hat{\ta v}^{\Delta(ij)}+\ta x^\macro_\vol \hat{d}^{\Delta(ij)}) + a_{\Box,p}'(\bullet;\ta x^\macro_\vol,\hat{p}^{\Delta(ij)}) - b_\Box(\hat{p}^{\Delta(ij)},\ta x^\macro_\vol)] = 0
+\end{align}
+
+Sensitivity in $\bar p$: $(\hat{\ta v}^{p}, \hat{p}^{p}, \hat{d}^{p}) \in \set{V}_\Box(0)\times \set{P}_\Box \times\set{R}$
+\begin{align}
+ &v_\Box(\delta\ta v, \hat{\ta v}^{p}+\ta x^\macro_\vol \hat{d}^{p}) = 0
+ %&a_{\Box,v}'(\bullet;\delta\ta v, \hat{\ta v}^{p}+\ta x^\macro_\vol \hat{d}^{p})+a_{\Box,p}'(\bullet;\delta\ta v,\hat{p}^{p}) - b_\Box(\hat{p}^{p},\delta\ta v) = 0
+ \\
+ &b_\Box(\delta p,\hat{\ta v}^{p} + \ta x^\macro_\vol \hat{d}^{p}) = 0
+ \\
+ &d_\Box(\delta\bar{d}_\vol \ta x^\macro_\vol, \hat{\ta v}^{p}+\ta x^\macro_\vol \hat{d}^{p}) = 0
+ %&\delta\bar{d}_\vol[a_{\Box,v}'(\bullet; \ta x^\macro_\vol, \hat{\ta v}^{p}+\ta x^\macro_\vol \hat{d}^{p}) + a_{\Box,p}'(\bullet;\ta x^\macro_\vol,\hat{p}^{p}) - b_\Box(\hat{p}^{p},\ta x^\macro_\vol)] = -1 \delta\bar{d}_\vol
+\end{align}
+
+
+% \begin{align}
+%  \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} &= \\
+%  \pd{\bar{\ts\sigma}_\dev}{\bar p} &= \\
+%  \pd{\bar{d}_\vol}{\bar{\ts d}_\dev} &= \\
+%  \pd{\bar{d}_\vol}{\bar p} &=
+% \end{align}
 
 \section{Numerical examples} \label{sec:numerical_examples}
 
