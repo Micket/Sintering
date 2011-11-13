@@ -264,7 +264,7 @@ The general problem for subscale flow can be written as
 	= \underbrace{\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box^\external \cup \Gamma_\Box^\internal} \ta t\cdot \delta\ta v\dif S}_{l_\Box^\external(\delta\ta v^\fluct)+l_\Box^\internal(\delta \ta v^\fluct)}
  \label{eq:subscale_original}
 \end{align}
-where incompressibility has not been introduced yet to simplify derivations.
+where $l_\Box^\external$ is the reaction force from Dirichlet boundary conditions.
 The velocity is split into
 \begin{align}
  \ta v = \ta v^\macro + \ta v^\fluct = \bar{\ts d}_\dev \cdot \ta x^\macro + \bar{d}_\vol \ta x_\vol^\macro + \ta v^\fluct.
@@ -281,11 +281,15 @@ where
 For the additional unknown, $\bar{d}_\vol$, we choose the corresponding test function $\delta[\bar{d}_\vol \ta x_\vol^\macro] = \delta\bar{d}_\vol\ta x_\vol^\macro$.
 Introducing $\delta[\bar{d}_\vol \ta x_\vol^\macro]$, $\delta p$ and $\delta\ta v$ in \eqref{eq:subscale_original}, the subscale problem can be expressed as finding $(\ta v, p,\bar{d}_\vol) \in \set{V}_\Box^0 \times \set{P}_\Box \times \set{R}$ in
 \begin{align}
- &a_\Box \left(\ta v, p; \delta\ta v \right) -b_\Box \left(p,\delta\ta v\right) &&= l_\Box^\internal\left(\delta\ta v\right) &&\forall\:\delta\ta v \in \set{V}_\Box^0\\
- &b_\Box\left(\delta p, \ta v\right) &&= 0 &&\forall\: \delta p \in \set{P}_\Box\\
- &\left[a_\Box\left(\ta v, p; \ta x_\vol^\macro\right)- b_\Box\left(p,\ta x_\vol^\macro\right)\right]\delta\bar{d}_\vol &&= [-\bar p+l_\Box^\internal(\ta x^\macro_\vol)]\delta\bar{d}_\vol &&\forall\: \delta\bar{d}_\vol \in \set{R}
+ \label{eq:v_equation}&a_\Box \left(\ta v, p; \delta\ta v \right) -b_\Box \left(p,\delta\ta v\right) &&= l_\Box^\internal\left(\delta\ta v\right) &&\forall\:\delta\ta v \in \set{V}_\Box^0\\
+ \label{eq:p_equation}&b_\Box\left(\delta p, \ta v\right) &&= 0 &&\forall\: \delta p \in \set{P}_\Box\\
+ \label{eq:d_equation}&\left[a_\Box\left(\ta v, p; \ta x_\vol^\macro\right)- b_\Box\left(p,\ta x_\vol^\macro\right)\right]\delta\bar{d}_\vol &&= [-\bar p+l_\Box^\internal(\ta x^\macro_\vol)]\delta\bar{d}_\vol &&\forall\: \delta\bar{d}_\vol \in \set{R}
 \end{align}
 where, as with standard Dirichlet boundary condition, $\ta v^\fluct = 0$ on $\Gamma_\Box$.
+In \eqref{eq:d_equation} we recognize the homogenized pressure from 
+\begin{align}
+ l_\Box^\external(\ta x^\macro_\vol) = \frac13\int_{\Gamma_\Box^\external} \ta t \cdot [\ta x - \bar{\ta x}]\dif S = -\bar{p}.
+\end{align}
 
 The particular choice in \eqref{eq:basefunction} and \eqref{eq:basefunction_vol} means that the boundary condition is localized on $\Gamma_\Box^\external$. For the internal velocity field the total velocity is solved for directly.
 % where we define $\ta v_\vol \defeq -\frac13[\ta x - \bar{\ta x}]$ and used, for brevity
@@ -311,6 +315,7 @@ which is solved for directly, and the post processed deviatoric stress which is 
 % Similar to the standard Neumann boundary condition we apply $\ta t = \bar{\ts\sigma} = -\bar{p}\ta n + \bar{\ts\sigma}_\dev$.
 
 \subsection{Sensitivity analysis}
+\todo{This section is under heavy construction}
 For brevity, the following notation is introduced
 \begin{align}
  v_\Box(\Delta\ta v,\Delta p) &= a_{\Box,v}'(\bullet; \delta\ta v, \Delta\ta v) + a_{\Box,p}'(\bullet; \delta\ta v,\Delta p) - b_\Box(\Delta p,\delta\ta v)\\
@@ -329,6 +334,15 @@ Primal sensitivity
  &v_\Box(\Delta\ta v,\Delta p) = 0 && \forall\; \delta\ta v\in \set{V}_\Box^0\\
  &b_\Box(\delta p,\Delta\ta v) + b_\Box(\delta p,\ta x^\macro_\vol) \Delta\bar{d}_\vol = 0 && \forall\; \delta p \in \set{P}_\Box\\
  &d_\Box(\Delta\ta v,\Delta p) = -\Delta\bar{p} \delta\bar{d}_\vol && \forall\;\delta\bar{d}_\vol \in \set{R}
+\end{align}
+
+Super position
+\begin{align}
+ \Delta \ta v^\dev = \sum_{ij} \hat{\ta v}^{\Delta(ij)} \Delta(\bar{\ts d}_\dev)_{ij} + \hat{v}^p \Delta\bar{p}
+ \\
+ \Delta \bar{d}_\vol = \sum_{ij} \hat{d}^{\Delta(ij)} \Delta(\bar{\ts d}_\dev)_{ij} + \hat{d}^p \Delta\bar{p}
+ \\
+ \Delta p = \sum_{ij} \hat{p}^{\Delta(ij)} \Delta(\bar{\ts d}_\dev)_{ij} + \hat{p}^p \Delta\bar{p}
 \end{align}
 
 Sensitivity in $(\bar{\ts d}_\dev)_{ij}$: $(\hat{\ta v}^{\Delta(ij)}, \hat{p}^{\Delta(ij)}, \hat{d}^{\Delta(ij)}) \in \set{V}_\Box(\be i\outerp\be j - \frac13\be i\cdot\be j\ts I)\times \set{P}_\Box \times\set{R}$
@@ -351,6 +365,22 @@ Sensitivity in $\bar p$: $(\hat{\ta v}^{p}, \hat{p}^{p}, \hat{d}^{p}) \in \set{V
  \\
  &d_\Box(\delta\bar{d}_\vol \ta x^\macro_\vol, \hat{\ta v}^{p}+\ta x^\macro_\vol \hat{d}^{p}) = 0
  %&\delta\bar{d}_\vol[a_{\Box,v}'(\bullet; \ta x^\macro_\vol, \hat{\ta v}^{p}+\ta x^\macro_\vol \hat{d}^{p}) + a_{\Box,p}'(\bullet;\ta x^\macro_\vol,\hat{p}^{p}) - b_\Box(\hat{p}^{p},\ta x^\macro_\vol)] = -1 \delta\bar{d}_\vol
+\end{align}
+
+Expansion of $\Delta\bar{d}_\vol$
+\begin{align}
+ \nonumber \Delta\bar{d}_\vol &= \sum_{ij} \hat{d}^{\Delta(ij)} \Delta(\bar{\ts d}_\dev)_{ij} + \hat{d}^p\Delta\bar{p}\\
+ &= \left(\sum_{ij} \hat{d}^{\Delta(ij)} \be i\outerp \be j\right) \dprod \Delta\bar{d}_\dev + \hat{d}^p \Delta\bar{p}
+\end{align}
+
+Linearization of $\bar{\ts\sigma}_\dev$
+\begin{align}
+ \Delta(\bar{\ts\sigma}_\dev)_{ij} = v(\ta v^{\macro\dev(ij)}, \Delta\ta v) 
+\end{align}
+
+
+\begin{align}
+  \Delta\bar{\ts\sigma}_\dev &= \sum_{ij} \hat{d}^{\Delta(ij)} \Delta(\bar{\ts\sigma}_\dev)_{ij}
 \end{align}
 
 
