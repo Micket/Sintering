@@ -79,7 +79,7 @@ Chalmers University of Technology}
 
 \section{Introduction}
 
-Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality. For a hardmetal (such as WC-Co) cold compaction of the powder to a "green body" is followed by liquid-phase sintering from the subsequent heating. This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e. via surface traction, stemming from stored surface energy. The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally. To model and quantatively simulate the sintering process is a challenging task. The goal is to (i) estimate the final resulting quality (i.e. in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
+Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality. For a hardmetal (such as WC-Co) cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating. This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e. via surface traction, stemming from stored surface energy. The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally. To model and quantatively simulate the sintering process is a challenging task. The goal is to (i) estimate the final resulting quality (i.e. in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
 
 A wealth of literature has been devoted to the modeling and simulation of the sintering process. From a mesoscale viewpoint, a classical approach is to consider socalled ``unit problems'', whereby the constitutive modeling is based on diffusion and, most importantly, flow models. Among the early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are those by \cite{JagDaw1988a,JagDaw1988b}, \cite{Vorst1993}.
 In a series of papers, \cite{ZhoDer1998,ZhoDer2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction. The main challenges  are the complex subscale geometry and the moving free boundary giving rise to very large deformations and severe topology changes. Recent developments of free-boundary tracing FE-strategies for large deformations (without severe topological changes) are discussed by \cite{DetPer2006}, \cite{SakPer2006a}, \cite{SakPer2006b}.
@@ -279,7 +279,7 @@ where $\bar{\ts d}=\bar{\ts d}(\bar{\ta{x}})=\bar{\ts d}=\bar{\ts d}_\dev+\frac{
     \label{eq410}
 \end{equation}
 %----------------------------------------------------------------------------
-where $\phi\defeq 1-\frac{\Omega_\Box^\particle}{\Omega_\Box}$ is the (current) macroscopic porosity. The fluctuation field $\ta{v}^\fluct\{\bar{\ts d}\}$ is computed from the RVE-problem for given value of $\bar{\ts d}$. Now, let us consider the situation of Dirichlet\marginpar{other bc?} boundary conditions in the RVE-problem, $\ta{v}^\fluct=\ta{0}$, on (the exterior boundary) $\Gamma_\Box$ and the boundary integral in (\ref{eq410}) reduces to $\Gamma_\Box^\pore$. When the porosity vanishes, then $\Gamma_\Box^\pore$ disappears and we obtain $\bar{d}_\vol = 0$, which is a "pathological" situation from the point of view of the macroscale format. It is noted that, from the moment incompressibility is a fact, it is possible to trace the isochoric macroscale flow only if a mixed variational format is employed in terms of $(\bar{\ta v},\bar{p})$, where $\bar{p}$ is the macroscale pressure (negative mean stress). This mixed format is derived next.
+where $\phi\defeq 1-\frac{\Omega_\Box^\particle}{\Omega_\Box}$ is the (current) macroscopic porosity. The fluctuation field $\ta{v}^\fluct\{\bar{\ts d}\}$ is computed from the RVE-problem for given value of $\bar{\ts d}$. Now, let us consider the situation of Dirichlet\marginpar{other bc?} boundary conditions in the RVE-problem, $\ta{v}^\fluct=\ta{0}$, on (the exterior boundary) $\Gamma_\Box$ and the boundary integral in (\ref{eq410}) reduces to $\Gamma_\Box^\pore$. When the porosity vanishes, then $\Gamma_\Box^\pore$ disappears and we obtain $\bar{d}_\vol = 0$, which is a ``pathological'' situation from the point of view of the macroscale format. It is noted that, from the moment incompressibility is a fact, it is possible to trace the isochoric macroscale flow only if a mixed variational format is employed in terms of $(\bar{\ta v},\bar{p})$, where $\bar{p}$ is the macroscale pressure (negative mean stress). This mixed format is derived next.
 
 
 \subsection{Mixed format of the macroscale problem}
@@ -376,7 +376,7 @@ As long as the porosity is non-zero and macroscopic compressibility prevails, th
 \label{eq416a}
 \end{equation}
 %----------------------------------------------------------------------------
-However, in order to obtain a unified formulation that holds also for the situation when the macroscale response becomes incompressible, it is desirable to introduce a mixed variational format in terms of $\bar{\ts d}_\dev=\left(\bar{\ta v}\outerp\diff\right)^\sym_\dev$ and $\bar{p}$ as the "prolongation variables" that are imposed as input to the RVE-problem in a nested macroscale-subscale algorithm. This is achieved as follows:
+However, in order to obtain a unified formulation that holds also for the situation when the macroscale response becomes incompressible, it is desirable to introduce a mixed variational format in terms of $\bar{\ts d}_\dev=\left(\bar{\ta v}\outerp\diff\right)^\sym_\dev$ and $\bar{p}$ as the ``prolongation variables'' that are imposed as input to the RVE-problem in a nested macroscale-subscale algorithm. This is achieved as follows:
 
 For given values of $\bar{\ts d}_\dev$ and $\bar{p}$, the corresponding value $\bar{d}_\vol$ can be computed from the condition
 %----------------------------------------------------------------------------
@@ -392,7 +392,7 @@ and the solution is expressed as the the implicit function $\bar{d}_{\Box,\vol}\
 \label{eq418}
 \end{equation}
 %----------------------------------------------------------------------------
-Finally, for given $\bar{\ts d}_\dev$ and $\bar{p}$, we summarize the "mixed" relations
+Finally, for given $\bar{\ts d}_\dev$ and $\bar{p}$, we summarize the ``mixed'' relations
 %----------------------------------------------------------------------------
 \begin{align}
  \bar{\ts\sigma} & =  \bar{\ts\sigma}_{\Box,\dev}\{\bar{\ts d}_\dev,\bar p\} - \bar p\ts I
@@ -408,7 +408,7 @@ When the porosity vanishes and the macroscale response becomes incompressible, t
 
 \subsubsection{Mixed variational format of the macroscale problem}
 
-Using the expressions (\ref{eq418a}) and (\ref{eq418b}), we are in the position to formulate the "unified" macroscale problem as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
+Using the expressions (\ref{eq418a}) and (\ref{eq418b}), we are in the position to formulate the ``unified'' macroscale problem as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------
 \begin{align}
  \bar a\{\bar{\ta v},\bar p; \delta\bar{\ta v}\} - \bar b\{\bar p, \delta\bar{\ta v}\} &= 0   \quad \forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0
@@ -465,7 +465,7 @@ where
  \label{eq415d}
 \end{align}
 %----------------------------------------------------------------------------
-Once again we note that the problem in (\ref{eq411a}, \ref{eq411b}) does indeed represent both macroscopically compressible and incompressible states such that the transition is "seamless".
+Once again we note that the problem in (\ref{eq411a}, \ref{eq411b}) does indeed represent both macroscopically compressible and incompressible states such that the transition is ``seamless''.
 In the incompressible case, (\ref{eq411a}, \ref{eq411b}) can be replaced by the classical format
 %----------------------------------------------------------------------------
 \begin{align}
@@ -485,7 +485,7 @@ However, (\ref{eq411a}, \ref{eq411b}) is retained as the operational formulation
 %    \label{eq409a}
 %\end{equation}
 %%----------------------------------------------------------------------------
-%in terms of the "unit velocity fields" $\hat{\ta{v}}^{\macro(ij)}$ that are given as
+%in terms of the ``unit velocity fields'' $\hat{\ta{v}}^{\macro(ij)}$ that are given as
 %%----------------------------------------------------------------------------
 %\begin{equation}
 %    \hat{\ta{v}}^{\macro(ij)} \defeq \bee ij \cdot [{\bi x}-\bar{\bi x}] =
@@ -493,7 +493,7 @@ However, (\ref{eq411a}, \ref{eq411b}) is retained as the operational formulation
 %    \label{eq409b}
 %\end{equation}
 %%----------------------------------------------------------------------------
-%The corresponding "unit rate-of-deformation" fields are given as
+%The corresponding ``unit rate-of-deformation'' fields are given as
 %$\hat{\ts{d}}^{\macro(ij)}\defeq(\hat{\ta{v}}^{\macro(ij)}\outerp\diff)^\sym=\left({\bi e}_{i}\outerp{\bi e}_{j}\right)^\sym$.
 %
 %From (\ref{eq402a}) and (\ref{eq409a}) we now obtain that $a(z;\delta\ta{v}^\macro)$ can be expressed as
@@ -610,7 +610,7 @@ find ($\bar{d}_\vol,p,\ta{v}^\fluct)\in\set{R}\times\set{V}_\Box^{(\Dirichlet)}\
     && \forall \delta\bar{d}_\vol  \in \set{R}
 \end{align}
 %----------------------------------------------------------------------------
-%where we made explicit use of the local decomposition (within a given RVE) $\ta{v}=\ta{v}^\macro(\bar{\ts d})+\ta{v}^\fluct$ in terms of the "macroscale" part\footnote{The functional dependence on $\bar{\ts d}$ is explicit in the relation $\ta{v}^\macro(\bar{\ts d})$, whereas it is implicit in the relation $\ta{v}\{\bar{\ts d}\}$ for the total velocity.}, $\ta{v}^\macro(\bar{\ts d})=\bar{\ts d}\cdot[\ta{x}-\bar{\ta{x}}]$ and the
+%where we made explicit use of the local decomposition (within a given RVE) $\ta{v}=\ta{v}^\macro(\bar{\ts d})+\ta{v}^\fluct$ in terms of the ``macroscale'' part\footnote{The functional dependence on $\bar{\ts d}$ is explicit in the relation $\ta{v}^\macro(\bar{\ts d})$, whereas it is implicit in the relation $\ta{v}\{\bar{\ts d}\}$ for the total velocity.}, $\ta{v}^\macro(\bar{\ts d})=\bar{\ts d}\cdot[\ta{x}-\bar{\ta{x}}]$ and the
 %fluctuation part, $\ta{v}^\fluct$.
 %%fluctuation part, $\ta{v}^\fluct$, in standard fashion, together with the space-variational forms
 %%----------------------------------------------------------------------------
@@ -637,7 +637,7 @@ find ($\bar{d}_\vol,p,\ta{v}^\fluct)\in\set{R}\times\set{V}_\Box^{(\Dirichlet)}\
 %\end{eqnarray}
 %%----------------------------------------------------------------------------
 
-It is noted that the "macroscale" part, $\ta{v}^\macro=\ta{v}^\macro_\dev+\ta{v}^\macro_\vol$, of $\ta{v}$ is decomposed into the deviatoric part that is directly computed from the macroscale problem ($\ta{v}^\macro_\dev=\bar{\ts d}_\dev\cdot[\ta{x}-\bar{\ta{x}}]$), whereas the volumetric part $\ta{v}^\macro_\vol\defeq\bar{d}_\vol\ta{x}_\mean$ is computed from the RVE-problem and is thus implicitly dependent on the macroscale solution via $\bar{\ts d}_\dev\defeq(\bar{\ta v}\outerp\diff)^\sym_\dev$ and $\bar{p}$.
+It is noted that the ``macroscale'' part, $\ta{v}^\macro=\ta{v}^\macro_\dev+\ta{v}^\macro_\vol$, of $\ta{v}$ is decomposed into the deviatoric part that is directly computed from the macroscale problem ($\ta{v}^\macro_\dev=\bar{\ts d}_\dev\cdot[\ta{x}-\bar{\ta{x}}]$), whereas the volumetric part $\ta{v}^\macro_\vol\defeq\bar{d}_\vol\ta{x}_\mean$ is computed from the RVE-problem and is thus implicitly dependent on the macroscale solution via $\bar{\ts d}_\dev\defeq(\bar{\ta v}\outerp\diff)^\sym_\dev$ and $\bar{p}$.
 
 The output variables from the RVE-problem are $\bar{d}_\vol$, which is a direct part of the solution, whereas $\bar{\ts\sigma}_\dev$ is post-processed as discussed susequently.
 
@@ -754,26 +754,33 @@ perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\
 %----------------------------------------------------------------------------------
 whereby $(\ta{v}^\macro_\vol)'_d, (\ta{v}^\macro_\vol)'_p, (\ta{v}^\fluct)'_d, (\ta{v}^\fluct)'_d$ and $(p)'$ denote directional derivatives.
 
-From the first order representation $\ta{v}^\macro = \bar{\ts d}\cdot[\ta{x}-\bar{\ta{x}}]$ for $\ta{x}\in\Omega_\Box$, we obtain (while suppressing the arguments $\ta{x}$ and $\bar{\ta{x}}$)
+For a symmetric, deviatoric tensor, we can write
+\begin{align}
+ \bar{\ts\sigma}_\dev = \sum_i^{n_{\mathrm{B}}} \bar{\sigma}_{\dev,i} \ts E_i,\quad \bar{\ts d}_\dev = \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad n_{\mathrm{B}} = \begin{cases} 5 & \text{in 3D}\\ 2 & \text{in 2D}\end{cases}
+\end{align}
+for an orthonormal base $\ts E_i$, such that $\displaystyle \sum_i^{n_{\mathrm{B}}} \ts E_i \outerp \ts E_i = \tf I_\dev^\sym$ and $\ts E_i \dprod \ts E_j = \delta_{ij} $. 
+% \begin{align}
+%  \ts E_i \dprod \ts E_j = \begin{cases} 1 & i=j \\ 0 & i\neq j\end{cases}
+% \end{align}
+From the first order representation $\ta{v}^\macro = \bar{\ts d}\cdot[\ta{x}-\bar{\ta{x}}]$ for $\ta{x}\in\Omega_\Box$, we obtain %(while suppressing the arguments $\ta{x}$ and $\bar{\ta{x}}$)
 %----------------------------------------------------------------------------
 \begin{equation}
-    \dif \ta{v}^\macro_\dev =
-    \sum_{i,j=1}^{\NDIM} \hat{\ta{v}}^{\macro(ij)}_\dev \dif(\bar{\ts d}_\dev)_{ij}, \quad
-    \hat{\ta{v}}^{\macro(ij)}_\dev \defeq \bee ij \cdot [\ta x -\bar{\ta x}] =
-    \be i \left[x_j-\bar{x}_j\right]
+  \dif \ta{v}^{\macro}_\dev =
+    \sum_{i} \hat{\ta{v}}^{\macro(i)}_\dev \dif\bar{d}_{\dev,i}, \quad  \hat{\ta{v}}^{\macro(i)}_\dev = \ts E_i \cdot [\ta x - \bar{\ta x}]
     \label{eq216}
 \end{equation}
 %----------------------------------------------------------------------------
-where $\hat{\ta{v}}^{\macro(ij)}_\dev$ are the "unit velocity fields". Moreover, the (spatial) gradient of $\hat{\ta{v}}^{\macro(ij)}_\dev$ is given as $\hat{\ts{d}}^{\macro(ij)}_\dev\defeq(\hat{\ta{v}}^{\macro(ij)}_\dev\outerp\diff)^\sym=\left(\bee ij\right)^\sym$.
+where $\hat{\ta{v}}^{\macro(i)}_\dev$ are the ``unit velocity fields''. 
+%Moreover, the (spatial) gradient of $\hat{\ta{v}}^{\macro(i)}_\dev$ is given as $\hat{\ts{d}}^{\macro(ij)}_\dev\defeq(\hat{\ta{v}}^{\macro(ij)}_\dev\outerp\diff)^\sym=\left(\bee ij\right)^\sym$.
 
-In analogy with the definition of $\hat{\ta{v}}^{\macro(ij)}_\dev$
-in (\ref{eq216}), we introduce the "unit fields", or sensitivities, due to a unit perturbation of the components $\dif(\bar{\ts d}_\dev)_{ij}$ and of $\dif\bar{p}$, via the \emph{ansatz}
+In analogy with the definition of $\hat{\ta{v}}^{\macro(i)}_\dev$
+in (\ref{eq216}), we introduce the ``unit fields'', or sensitivities, due to a unit perturbation of the components $\dif\bar{d}_{\dev,i}$ and of $\dif\bar{p}$, via the \emph{ansatz}
 %----------------------------------------------------------------------
 \begin{align}
     (\ta{v}^\macro_\vol)'_d
     & = 
-    \sum_{i,j}\hat{\ta{v}}^{\macro(ij)}_{\vol,\ded} \dif(\bar{\ts d}_\dev)_{ij}, \quad
-    \hat{\ta{v}}^{\macro(ij)}_{\vol,\ded} = \hat{\bar{d}}^{(ij)}_{\vol,\ded}\ta{x}_\mean
+    \sum_{i}\hat{\ta{v}}^{\macro(i)}_{\vol,\ded} \dif\bar{d}_{\dev,i}, \quad
+    \hat{\ta{v}}^{\macro(i)}_{\vol,\ded} = \hat{\bar{d}}^{(i)}_{\vol,\ded}\ta{x}_\mean
 \label{eq221a} \\
     (\ta{v}^\macro_\vol)'_p
     & = 
@@ -782,7 +789,7 @@ in (\ref{eq216}), we introduce the "unit fields", or sensitivities, due to a uni
 \label{eq221b} \\
     (\ta{v}^\fluct)'_d
     & = 
-    \sum_{i,j}\hat{\ta{v}}^{\fluct(ij)}_\ded\dif(\bar{\ts d}_\dev)_{ij},
+    \sum_{i}\hat{\ta{v}}^{\fluct(i)}_\ded\dif\bar{d}_{\dev,i},
 \label{eq222a} \\
     (\ta{v}^\fluct)'_p
     & = 
@@ -790,7 +797,7 @@ in (\ref{eq216}), we introduce the "unit fields", or sensitivities, due to a uni
 \label{eq222b} \\
     (p)'_d
     & = 
-    \sum_{i,j}\hat{p}^{(ij)}_\ded\dif(\bar{\ts d}_\dev)_{ij},
+    \sum_{i}\hat{p}^{(i)}_\ded\dif\bar{d}_{\dev,i},
 \label{eq223a} \\
     (p)'_p
     & = 
@@ -798,42 +805,31 @@ in (\ref{eq216}), we introduce the "unit fields", or sensitivities, due to a uni
 \label{eq223b}
 \end{align}
 %-----------------------------------------------------------------
-Upon using the identity $\dif\bar{\ts\sigma}_\dev=\left\langle \dif\ts{\sigma}_\dev\right\rangle_\Box$, we deduce
-%%---------------------------------------------------------------------------------------
-%\begin{equation}
-%\d(\bar{\ts\sigma}_\dev)_{ij}=
-%\left\langle \dif\ts{\sigma}_\dev\dprod\left(\bee ij\right)^\sym\right\rangle_\Box=
-%\left\langle \dif\ts{\sigma}_\dev\dprod\hat{\ts{d}}^{\macro(ij)}_\dev\right\rangle_\Box=
-%\dif\left[\left\langle \ts{\sigma}_\dev \dprod \hat{\ts{d}}^{\macro(ij)}_\dev \right\rangle_\Box\right]=
-%\dif\left[a_\Box(\ta{v}; \hat{\ta{v}}^{\macro(ij)}_\dev\right]
-%\label{eq218}
-%\end{equation}
-%%------------------------------------------------------------------------------------
+Upon using the identity $\dif\bar{\ts\sigma}=\frac{1}{\Omega_\Box} \int_{\Gamma_\Box} \ts t \outerp [\ta x - \bar{\ta x}]\dif a$, we deduce
 %---------------------------------------------------------------------------------------
 \begin{align}
-    \dif(\bar{\ts\sigma}_\dev)_{ij}
+    \dif\bar{\sigma}_{\dev,i}
     & = 
-%    \dif \left[\left\langle \ts{\sigma} \dprod \hat{\ts{d}}^{\macro(ij)}_\dev \right\rangle_\Box\right] =
-%    \dif \left[a_\Box(\ta{v}; \hat{\ta{v}}^{\macro(ij)}_\dev)\right]
-%    \nonumber \\
-    \left\langle \dif\ts{\sigma}_\dev\dprod\left(\bee ij\right)^\sym\right\rangle_\Box=
-    \left\langle \dif\ts{\sigma}_\dev\dprod\hat{\ts{d}}^{\macro(ij)}_\dev\right\rangle_\Box=
-    \dif\left[\left\langle \ts{\sigma}_\dev \dprod \hat{\ts{d}}^{\macro(ij)}_\dev \right\rangle_\Box\right]
+    \dif\bar{\ts\sigma}\dprod \ts E_i 
+    =
+    \dif\left[\frac{1}{\Omega_\Box} \int_{\Gamma_\Box} \ts t \cdot \ts E_i \cdot [\ta x - \bar{\ta x}]\dif a\right]
+    =
+    %\left\langle \dif\ts{\sigma}_\dev\dprod\left(\bee ij\right)^\sym\right\rangle_\Box=
+    %\left\langle \dif\ts{\sigma}_\dev\dprod\hat{\ts{d}}^{\macro(ij)}_\dev\right\rangle_\Box=
+    %\dif\left[\left\langle \ts{\sigma}_\dev \dprod \hat{\ts{d}}^{\macro(ij)}_\dev \right\rangle_\Box\right]
+    %\nonumber \\
+    %& = 
+    \dif\left[a_\Box(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev)\right] = ({a}_\Box)'(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev,\dif\ta{v})
     \nonumber \\
     & = 
-    \dif\left[a_\Box(\ta{v}; \hat{\ta{v}}^{\macro(ij)}_\dev)\right] = ({a}_\Box)'(\ta{v}; \hat{\ta{v}}^{\macro(ij)}_\dev,\dif\ta{v})
-    \nonumber \\
-    & = 
-    \sum_{k,l}\left[
-    (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro(kl)}_\dev) +
-    (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro(kl)}_{\vol,\ded}) +
-    (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\fluct(kl)}_\ded)
-    \right]\dif(\bar{\ts d}_\dev)_{kl}
-    \nonumber \\
-    &
-    + \left[(a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro}_{\vol,\dep}) +
-    (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\fluct}_\dep)
-    \right]\dif\bar{p}
+    \sum_{j}
+    (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(j)}_\dev +
+    \hat{\ta{v}}^{\macro(j)}_{\vol,\ded} +
+    \hat{\ta{v}}^{\fluct(j)}_\ded)
+    \dif\bar{d}_{\dev,j}
+    + (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro}_{\vol,\dep} +
+    \hat{\ta{v}}^{\fluct}_\dep)
+    \dif\bar{p}.
     \label{eq219}
 \end{align}
 %------------------------------------------------------------------------------------
@@ -842,7 +838,7 @@ We also obtain trivially the relation
 \begin{align}
     \dif\bar{d}_\vol
     & = 
-    \sum_{i,j}\hat{\bar{d}}^{(ij)}_{\vol,\ded}\dif(\bar{\ts d}_\dev)_{ij} + \hat{\bar{d}}_{\vol,\dep}\dif\bar{p}
+    \sum_{i}\hat{\bar{d}}^{(i)}_{\vol,\ded}\dif\bar{d}_{\dev,i} + \hat{\bar{d}}_{\vol,\dep}\dif\bar{p}
     \label{eq220}
 \end{align}
 %------------------------------------------------------------------------------------
@@ -876,24 +872,24 @@ for $\bar{\ts d}_\dev,\bar{p}$ as well as for a perturbed state $\bar{\ts d}_\de
 which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus consider the cases ($\dif\bar{\ts d}_\dev\neq \ts{0}, \dif\bar{p}=0$) and ($\dif\bar{\ts d}_\dev=\ts{0}, \dif\bar{p}\neq 0$) in turn:
 
 \begin{enumerate}
-\item $\dif\bar{\ts d}_\dev\neq \ts{0}$ while $\dif\bar{p}=0$: For $i,j=1,2, ..., \NDIM$, solve for the sensitivities $\hat{\bar{d}}^{(ij)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(ij)}_\ded$, and $\hat{p}^{(ij)}_\ded$ from the system
+\item $\dif\bar{\ts d}_\dev\neq \ts{0}$ while $\dif\bar{p}=0$: For $i=1,\ldots,n_{\mathrm{B}}$, solve for the sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(i)}_\ded$, and $\hat{p}^{(i)}_\ded$ from the system
 %----------------------------------------------------------------------------
 \begin{align}
     \label{eq233a} &
-    (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\macro(ij)}_{\vol,\ded}+\hat{\ta{v}}^{\fluct(ij)}_\ded) +
-    b_\Box(\hat{p}^{(ij)}_\ded,\delta\ta{v}^\fluct)
+    (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\macro(i)}_{\vol,\ded}+\hat{\ta{v}}^{\fluct(i)}_\ded) +
+    b_\Box(\hat{p}^{(i)}_\ded,\delta\ta{v}^\fluct)
     && =
-    - (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\macro(ij)}_\dev)
+    - (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\macro(i)}_\dev)
     && \forall \delta \ta{v}^\fluct\in\set{V}_\Box^{(\Dirichlet)}
  \\
     \label{eq233b} &
-    b_\Box(\delta p,\hat{\ta{v}}^{\macro(ij)}_{\vol,\ded}+\hat{\ta{v}}^{\fluct(ij)}_\ded)
+    b_\Box(\delta p,\hat{\ta{v}}^{\macro(i)}_{\vol,\ded}+\hat{\ta{v}}^{\fluct(i)}_\ded)
     && =
-    - b_\Box(\delta p,\hat{\ta{v}}^{\macro(ij)}_\dev)
+    - b_\Box(\delta p,\hat{\ta{v}}^{\macro(i)}_\dev)
     && \forall \delta p\in\set{P}_\Box
 \\
     \label{eq233c} &
-    b_\Box(\hat{p}^{(ij)}_\ded,\ta{x}_\mean)
+    b_\Box(\hat{p}^{(i)}_\ded,\ta{x}_\mean)
     && =
     0
     &&
@@ -928,16 +924,16 @@ We may express the source terms in (\ref{eq233a}) and (\ref{eq233b}) more explic
 %\end{document}
 %----------------------------------------------------------------------------
 \begin{align}
-    (a_\Box)'(\bullet; \delta\ta{v},\hat{\ta{v}}^{\macro(ij)}_\dev)
+    (a_\Box)'(\bullet; \delta\ta{v},\hat{\ta{v}}^{\macro(i)}_\dev)
     & = 
-    \langle \delta \ts{d} \dprod \tf{E}_{\majorT,\dev} \dprod \hat{\ts{d}}^{\macro(ij)}_\dev \rangle_\Box
+    \langle \delta \ts{d} \dprod \tf{E}_{\majorT,\dev} \dprod \hat{\ts{d}}^{\macro(i)}_\dev \rangle_\Box
     =
-    \langle \left(\left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}\right)_{ij} \rangle_\Box
+    \langle \left(\left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}\right)_{i} \rangle_\Box
 \label{eq263a}
 \\
-    b_\Box(\delta p,\hat{\ta{v}}^{\macro(ij)}_\dev)
+    b_\Box(\delta p,\hat{\ta{v}}^{\macro(i)}_\dev)
     & = 
-    - \langle \delta p\,\ts{I}\dprod\hat{\ts{d}}^{\macro(ij)}_\dev \rangle_\Box =
+    - \langle \delta p\,\ts{I}\dprod\hat{\ts{d}}^{\macro(i)}_\dev \rangle_\Box =
     - \langle \delta p \rangle_\Box\, \delta_{ij}
 \nonumber
 \\
@@ -979,7 +975,7 @@ We may express the source terms in (\ref{eq233a}) and (\ref{eq233b}) more explic
 %    \label{eq41c}
 %\end{eqnarray}
 %%-------------------------------------------------------------------------------
-The sensitivities $\hat{\bar{d}}^{(ij)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(ij)}_\ded$, and $\hat{\bar{d}}_{\vol,\dep}$, $\hat{\ta{v}}^{\fluct}_\ded$ are used to obtain explicit expressions for the tangent tensors
+The sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(i)}_\ded$, and $\hat{\bar{d}}_{\vol,\dep}$, $\hat{\ta{v}}^{\fluct}_\ded$ are used to obtain explicit expressions for the tangent tensors
 $\bar{\tf E}_\ded$ and $\bar{\ts E}_\ded$ as follows:
 %--------------------------------------------------------------------
 \begin{align}
@@ -1010,11 +1006,11 @@ where we introduced the notation
 and the following identities were used:
 %--------------------------------------------------------------------
 \begin{align}
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro(kl)}_\dev)
+    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(kl)}_\dev)
     & = 
     \left\langle({\tf E}_\dev)_{ijkl}\right\rangle_\Box,
 \label{eq225a} \\
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro(kl)}_{\vol,\ded})
+    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(kl)}_{\vol,\ded})
     & = 
     \frac{1}{3}\left\langle ({\tf E}_\dev\dprod \ts{I})_{ij} \right\rangle_\Box\hat{\bar{d}}^{(kl)}_{\vol,\ded}
 \label{eq225b} \\
@@ -1037,13 +1033,13 @@ and the following identities were used:
 \end{align}
 %-------------------------------------------------------------------------------
 
-The sensitivities $\hat{\bar{d}}^{(ij)}_{\vol,\ded}$ and $\hat{\bar{d}}_{\vol,\dep}$ are used to obtain explicit expressions for the tangent tensors
+The sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$ and $\hat{\bar{d}}_{\vol,\dep}$ are used to obtain explicit expressions for the tangent tensors
 $\bar{\ts C}_\ded$ and $\bar{C}_\dep$ as follows:
 %--------------------------------------------------------------------
 \begin{align}
     \bar{\ts C}_\ded
     & = 
-    \sum_{i,j}\hat{\bar{d}}^{(ij)}_{\vol,\ded} \bee ij
+    \sum_{i,j}\hat{\bar{d}}^{(i)}_{\vol,\ded} \ts E_i
 \label{eq234a} \\
     \bar{C}_\dep
     & = 
@@ -1051,7 +1047,6 @@ $\bar{\ts C}_\ded$ and $\bar{C}_\dep$ as follows:
 \label{eq234b}
 \end{align}
 %-------------------------------------------------------------------------------
-\textbf{Remark}: The sensitivities $\hat{p}^{(ij)}_\ded$ and $\hat{p}_\dep$ must be solved from the tangent problems; however, they are never used explicitly. $\Box$
 
 \section{Numerical examples}\label{sec:examples}
 
