@@ -5,7 +5,7 @@
 %\usepackage{fontspec}
 
 \usepackage[margin=2cm,includefoot]{geometry}
-\usepackage{amsmath, mathtools}
+\usepackage{amsmath, mathtools, cancel}
 \usepackage{graphicx, subfig, float, grffile}
 \usepackage{algorithm,algorithmic}
 \usepackage{microtype}
@@ -579,33 +579,29 @@ The task is to obtain the homogenized response for prescribed values of $\bar{\t
 %\end{equation}
 %%------------------------------------------------------------------
 %----------------------------------------------------------------------------
-\begin{equation}
-    \set V_\Box^{(\Dirichlet)} = \{\ta{v} \mbox{ sufficiently regular in } \Omega_\Box, \,\, \ta{v}=\ta{0}\,\,\mbox{on}\,\,\Gamma_\Box\}
+\begin{align}
+    \set V_\Box^{(\Dirichlet)} &= \{\ta{v} \mbox{ sufficiently regular in } \Omega_\Box, \,\, \ta{v}=\ta{0}\,\,\mbox{on}\,\,\Gamma_\Box\}
+\label{eq212}\\
+    \set{P}_\Box &= \{p\in L_2(\Omega_\Box)\}
 \label{eq212}
-\end{equation}
-%----------------------------------------------------------------------------
-%----------------------------------------------------------------------------
-\begin{equation}
-    \set{P}_\Box = \{p\in L_2(\Omega_\Box)\}
-\label{eq212}
-\end{equation}
+\end{align}
 %----------------------------------------------------------------------------
 The appropriate space-variational format of the RVE-problem can now be formulated as follows (a derivation is given in the Appendix): For given macroscale variables $\bar{\ts d}_\dev$ and $\bar{p}$,
 find ($\bar{d}_\vol,p,\ta{v}^\fluct)\in\set{R}\times\set{V}_\Box^{(\Dirichlet)}\times\set{P}_\Box$ that solve the system
 %----------------------------------------------------------------------------
 \begin{align}
     \label{eq213a} & a_\Box(\ta{v}^\macro_\dev + \ta{v}^\macro_\vol(\bar{d}_\vol)+\ta{v}^\fluct;\delta \ta{v}^\fluct) +  b_\Box(p,\delta\ta{v}^\fluct)
-    & =
+    && =
     l^\pore_\Box(\delta \ta{v}^\fluct)
     && \forall \delta \ta{v}^\fluct\in\set{V}_\Box^{(\Dirichlet)}
  \\
     \label{eq213b} & b_\Box(\delta p,\ta{v}^\macro_\dev + \ta{v}^\macro_\vol(\bar{d}_\vol)+\ta{v}^\fluct)
-    & =
+    && =
     0
     && \forall \delta p\in\set{P}_\Box
 \\
     \label{eq213c} & b_\Box(p,\ta{x}_\mean)\delta\bar{d}_\vol
-    & =
+    && =
     [\bar{p} - l_\Box^\pore(\ta{x}_\mean)]\delta\bar{d}_\vol
     && \forall \delta\bar{d}_\vol  \in \set{R}
 \end{align}
@@ -708,13 +704,13 @@ is given explicitly as\marginpar{check!}
 \begin{align}
     (a_\Box)'(\bullet; \delta \ta{v}^\fluct,\Delta{\ta{v}}^\fluct)
     & = 
-    \left\langle \left(\delta\ta{v}\outerp\diff\right)^\sym \dprod \tf{E}_{\majorT,\dev} \dprod
-    \left(\Delta\ta{v}^\fluct\outerp\diff\right)^\sym \right\rangle_\Box
+    \left\langle \left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}(\bullet) \dprod
+    \left[\Delta\ta{v}^\fluct\outerp\diff\right]^\sym \right\rangle_\Box
 \label{eq253a} \\
     (a_\Box)'(\bullet; \delta \ta{v}^\fluct,\ta{v}^\macro_\vol(\Delta\bar{d}_\vol))
     & = 
-    \left\langle \left(\delta\ta{v}\outerp\diff\right)^\sym \dprod \tf{E}_{\majorT,\dev} \dprod
-    \ts{I} \right\rangle_\Box\Delta\bar{d}_\vol
+    \left\langle \left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}(\bullet) \dprod
+    \ts{I} \right\rangle_\Box\Delta\bar{d}_\vol = 0
 \label{eq253b}
 \end{align}
 %----------------------------------------------------------------------------
@@ -723,89 +719,93 @@ is given explicitly as\marginpar{check!}
 \subsection{Macroscale algorithmic tensors}
 
 The algorithmic tensors $\bar{\tf{E}}_\ded, \bar{\ts E }_\dep, \bar{\ts C}_\ded$ and $\bar{C}_\dep$, needed in order to carry out macroscale Newton iterations, are obtained for
-perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$. It is then convenient to compute \emph{sensitivity fields}, corresponding to a unit variation of the macroscale variables $\bar{\ts d}_\dev$ and $\bar{p}$. Hence, we shall need to compute the differentials
+perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$.
+We first note that for a symmetric, deviatoric tensors, we can write
+\begin{align}
+ \bar{\ts\sigma}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{\sigma}_{\dev,i} \ts E_i,\quad \bar{\sigma}_{\dev,i} = \bar{\ts\sigma}_\dev\dprod \ts E_i\\
+ \bar{\ts d}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad  \bar{d}_{\dev,i} = \bar{\ts d}_\dev\dprod \ts E_i
+\end{align}
+for an orthonormal base $\ts E_i$, such that $\ts E_i \dprod \ts E_j = \delta_{ij} $.\\
+\textbf{Remark}: For 3D $n_{\mathrm{B}} = 5$, and for 2D $n_{\mathrm{B}} = 2$.
+
+It is then convenient to compute \emph{sensitivity fields}, corresponding to a unit variation of the macroscale variables $\bar{\ts d}_\dev$ and $\bar{p}$. Hence, we shall need to compute the differentials, $\dif\bar p$ and
 %----------------------------------------------------------------------------
 \begin{align}
     \dif\ta{v}
      = &
-    \dif\ta{v}^\macro_\dev + \dif\ta{v}^\macro_\vol + \dif\ta{v}^\fluct
-\nonumber \\
-     = &
-    \dif\ta{v}^\macro_\dev + (\ta{v}^\macro_\vol)'_d \{\ta{v}^\macro_\dev,\bar{p};\dif\ta{v}^\macro_\dev\} + (\ta{v}^\macro_\vol)'_p \{\ta{v}^\macro_\dev,\bar{p};\dif\bar{p}\} +
-\nonumber\\
-    &
-    (\ta{v}^\fluct)'_d\{\ta{v}^\macro_\dev,\bar{p};\dif\ta{v}^\macro_\dev\} + (\ta{v}^\fluct)'_p\{\ta{v}^\macro_\dev,\bar{p};\dif\bar{p}\}
+    \dif\ta{v}^\macro_\dev + \dif\ta{v}^\macro_\vol + \dif\ta{v}^\fluct.
+%\nonumber \\
+%     = &
+%    \dif\ta{v}^\macro_\dev + (\ta{v}^\macro_\vol)'_d \{\ta{v}^\macro_\dev,\bar{p};\dif\ta{v}^\macro_\dev\} + (\ta{v}^\macro_\vol)'_p \{\ta{v}^\macro_\dev,\bar{p};\dif\bar{p}\}
+%\nonumber\\
+%    &
+%    +(\ta{v}^\fluct)'_d\{\ta{v}^\macro_\dev,\bar{p};\dif\ta{v}^\macro_\dev\} + (\ta{v}^\fluct)'_p\{\ta{v}^\macro_\dev,\bar{p};\dif\bar{p}\}
 %\nonumber \\
 %    & = &
 %    \dif\bar{\ts d}_\dev[\ta{x}-\bar{\ta{x}}] + (\bar{d}_\vol)'_d\{\bar{\ts d}_\dev,\bar{p};\dif\bar{\ts d}_\dev\}\ta{x}_\mean + (\bar{d}_\vol)'_p \{\bar{\ts d}_\dev,\bar{p};\dif\bar{p}\}\ta{x}_\mean +
 %\nonumber\\
 %    &&
 %    (\ta{v}^\fluct)'_d\{\bar{\ts d}_\dev,\bar{p};\dif\bar{\ts d}_\dev\} + (\ta{v}^\fluct)'_p\{\bar{\ts d}_\dev,\bar{p};\dif\bar{p}\}
-\label{eq215a}
-\\
-    \dif p
-    & = 
-    (p)'_d\{\ta{v}^\macro_\dev,\bar{p};\dif\ta{v}^\macro_\dev\} + (p)'_p\{\ta{v}^\macro_\dev,\bar{p};\dif\bar{p}\}
+%\label{eq215a}
+%\\
+%    \dif p
+%     = &
+%    (p)'_d\{\ta{v}^\macro_\dev,\bar{p};\dif\ta{v}^\macro_\dev\} + (p)'_p\{\ta{v}^\macro_\dev,\bar{p};\dif\bar{p}\}
 %\nonumber \\
 %    & = &
 %    (p)'_d\{\bar{\ts d}_\dev,\bar{p};\dif\bar{\ts d}_\dev\} + (p)'_p\{\bar{\ts d}_\dev,\bar{p};\dif\bar{p}\}
-\label{eq215b}
+%\label{eq215b}
 \end{align}
 %----------------------------------------------------------------------------------
-whereby $(\ta{v}^\macro_\vol)'_d, (\ta{v}^\macro_\vol)'_p, (\ta{v}^\fluct)'_d, (\ta{v}^\fluct)'_d$ and $(p)'$ denote directional derivatives.
-
-For a symmetric, deviatoric tensor, we can write
-\begin{align}
- \bar{\ts\sigma}_\dev = \sum_i^{n_{\mathrm{B}}} \bar{\sigma}_{\dev,i} \ts E_i,\quad \bar{\ts d}_\dev = \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad n_{\mathrm{B}} = \begin{cases} 5 & \text{in 3D}\\ 2 & \text{in 2D}\end{cases}
-\end{align}
-for an orthonormal base $\ts E_i$, such that $\displaystyle \sum_i^{n_{\mathrm{B}}} \ts E_i \outerp \ts E_i = \tf I_\dev^\sym$ and $\ts E_i \dprod \ts E_j = \delta_{ij} $. 
-% \begin{align}
-%  \ts E_i \dprod \ts E_j = \begin{cases} 1 & i=j \\ 0 & i\neq j\end{cases}
-% \end{align}
+% whereby $(\ta{v}^\macro_\vol)'_d, (\ta{v}^\macro_\vol)'_p, (\ta{v}^\fluct)'_d, (\ta{v}^\fluct)'_d$ and $(p)'$ denote directional derivatives.
 From the first order representation $\ta{v}^\macro = \bar{\ts d}\cdot[\ta{x}-\bar{\ta{x}}]$ for $\ta{x}\in\Omega_\Box$, we obtain %(while suppressing the arguments $\ta{x}$ and $\bar{\ta{x}}$)
 %----------------------------------------------------------------------------
-\begin{equation}
-  \dif \ta{v}^{\macro}_\dev =
-    \sum_{i} \hat{\ta{v}}^{\macro(i)}_\dev \dif\bar{d}_{\dev,i}, \quad  \hat{\ta{v}}^{\macro(i)}_\dev = \ts E_i \cdot [\ta x - \bar{\ta x}]
-    \label{eq216}
-\end{equation}
+\begin{align}
+  \dif \ta{v}^{\macro}_\dev &= \sum_{i} \hat{\ta{v}}^{\macro(i)}_\dev \dif\bar{d}_{\dev,i}, \quad  \hat{\ta{v}}^{\macro(i)}_\dev = \ts E_i \cdot [\ta x - \bar{\ta x}]
+    \label{eq216}\\
+\dif\ta{v}^\macro_\vol &= \ta x_\mean \dif \bar{d}_\vol
+\end{align}
 %----------------------------------------------------------------------------
 where $\hat{\ta{v}}^{\macro(i)}_\dev$ are the ``unit velocity fields''. 
-%Moreover, the (spatial) gradient of $\hat{\ta{v}}^{\macro(i)}_\dev$ is given as $\hat{\ts{d}}^{\macro(ij)}_\dev\defeq(\hat{\ta{v}}^{\macro(ij)}_\dev\outerp\diff)^\sym=\left(\bee ij\right)^\sym$.
-
 In analogy with the definition of $\hat{\ta{v}}^{\macro(i)}_\dev$
 in (\ref{eq216}), we introduce the ``unit fields'', or sensitivities, due to a unit perturbation of the components $\dif\bar{d}_{\dev,i}$ and of $\dif\bar{p}$, via the \emph{ansatz}
 %----------------------------------------------------------------------
 \begin{align}
-    (\ta{v}^\macro_\vol)'_d
-    & = 
-    \sum_{i}\hat{\ta{v}}^{\macro(i)}_{\vol,\ded} \dif\bar{d}_{\dev,i}, \quad
-    \hat{\ta{v}}^{\macro(i)}_{\vol,\ded} = \hat{\bar{d}}^{(i)}_{\vol,\ded}\ta{x}_\mean
-\label{eq221a} \\
-    (\ta{v}^\macro_\vol)'_p
-    & = 
-    \hat{\ta{v}}^{\macro}_{\vol,\dep} \dif\bar{p}, \quad
-    \hat{\ta{v}}^{\macro}_{\vol,\dep} = \hat{\bar{d}}_{\vol,\dep}\ta{x}_\mean
-\label{eq221b} \\
-    (\ta{v}^\fluct)'_d
-    & = 
-    \sum_{i}\hat{\ta{v}}^{\fluct(i)}_\ded\dif\bar{d}_{\dev,i},
-\label{eq222a} \\
-    (\ta{v}^\fluct)'_p
-    & = 
-    \hat{\ta{v}}^{\fluct}_\dep\dif\bar{p},
-\label{eq222b} \\
-    (p)'_d
-    & = 
-    \sum_{i}\hat{p}^{(i)}_\ded\dif\bar{d}_{\dev,i},
-\label{eq223a} \\
-    (p)'_p
-    & = 
-    \hat{p}_\dep\dif\bar{p}
-\label{eq223b}
+    \dif\bar{d}_\vol &= \sum_i \hat{\bar{d}}_{\vol,\ded}^{(i)}\dif\bar{d}_{\dev,i} + \hat{\bar{d}}_{\vol,\dep} \dif \bar{p}
+\\
+    \dif\ta v^\fluct &= \sum_i \hat{\ta{v}}_{\ded}^{\fluct(i)}\dif\bar{d}_{\dev,i} + \hat{\ta v}_{\dep}^\fluct \dif \bar{p}
+\\
+    \dif p           &= \sum_i \hat{p}_{\ded}^{(i)}\dif\bar{d}_{\dev,i} + \hat{p}_{\dep} \dif \bar{p}
+%\\
+%     (\ta{v}^\macro_\vol)'_d
+%     & = 
+%     \sum_{i}\hat{\ta{v}}^{\macro(i)}_{\vol,\ded} \dif\bar{d}_{\dev,i}, \quad
+%     \hat{\ta{v}}^{\macro(i)}_{\vol,\ded} = \hat{\bar{d}}^{(i)}_{\vol,\ded}\ta{x}_\mean
+% \label{eq221a} \\
+%     (\ta{v}^\macro_\vol)'_p
+%     & = 
+%     \hat{\ta{v}}^{\macro}_{\vol,\dep} \dif\bar{p}, \quad
+%     \hat{\ta{v}}^{\macro}_{\vol,\dep} = \hat{\bar{d}}_{\vol,\dep}\ta{x}_\mean
+% \label{eq221b} \\
+%     (\ta{v}^\fluct)'_d
+%     & = 
+%     \sum_{i}\hat{\ta{v}}^{\fluct(i)}_\ded\dif\bar{d}_{\dev,i},
+% \label{eq222a} \\
+%     (\ta{v}^\fluct)'_p
+%     & = 
+%     \hat{\ta{v}}^{\fluct}_\dep\dif\bar{p},
+% \label{eq222b} \\
+%     (p)'_d
+%     & = 
+%     \sum_{i}\hat{p}^{(i)}_\ded\dif\bar{d}_{\dev,i},
+% \label{eq223a} \\
+%     (p)'_p
+%     & = 
+%     \hat{p}_\dep\dif\bar{p}
+% \label{eq223b}
 \end{align}
 %-----------------------------------------------------------------
-Upon using the identity $\dif\bar{\ts\sigma}=\frac{1}{\Omega_\Box} \int_{\Gamma_\Box} \ts t \outerp [\ta x - \bar{\ta x}]\dif a$, we deduce
+Upon using the identity $\bar{\ts\sigma}=\frac{1}{\Omega_\Box} \int_{\Gamma_\Box} \ts t \outerp [\ta x - \bar{\ta x}]\dif a$, we deduce
 %---------------------------------------------------------------------------------------
 \begin{align}
     \dif\bar{\sigma}_{\dev,i}
@@ -819,26 +819,40 @@ Upon using the identity $\dif\bar{\ts\sigma}=\frac{1}{\Omega_\Box} \int_{\Gamma_
     %\dif\left[\left\langle \ts{\sigma}_\dev \dprod \hat{\ts{d}}^{\macro(ij)}_\dev \right\rangle_\Box\right]
     %\nonumber \\
     %& = 
-    \dif\left[a_\Box(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev)\right] = ({a}_\Box)'(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev,\dif\ta{v})
+    -\dif\left[R_\Box^{\ts v}(\bullet;\hat{\ts v}_\dev^{\macro(i)})\right]
+\nonumber\\
+    &=
+    \dif\left[a_\Box(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev)\right] + \dif\left[\cancel{b_\Box(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev)}\right] + \cancel{\dif\left[l_\Box^\pore(\hat{\ta{v}}^{\macro(i)}_\dev)\right]} = (a_\Box)'(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev,\dif\ta{v})
     \nonumber \\
     & = 
     \sum_{j}
-    (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(j)}_\dev +
+    \underbrace{(a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(j)}_\dev +
     \hat{\ta{v}}^{\macro(j)}_{\vol,\ded} +
-    \hat{\ta{v}}^{\fluct(j)}_\ded)
+    \hat{\ta{v}}^{\fluct(j)}_\ded)}_{\displaystyle \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}}}
     \dif\bar{d}_{\dev,j}
-    + (a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro}_{\vol,\dep} +
-    \hat{\ta{v}}^{\fluct}_\dep)
+% Second term
+    + \underbrace{(a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev, \hat{\ta{v}}^{\fluct}_\dep)}_{\displaystyle \pd{\bar{\sigma}_{\dev,i} }{ \bar{p} } }
     \dif\bar{p}.
     \label{eq219}
+\end{align}
+For full tensor can be obtained from
+\begin{align}
+ \dif\bar{\ts\sigma}_\dev 
+	&= \sum_i \ts E_i \dif\bar{\sigma}_{\dev,i}
+	= \sum_{i,j} \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} \dif\bar{d}_{\dev,j} + \sum_i \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{p}}\dif\bar{p}
+\nonumber\\
+	&= \sum_{i,j} \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} [\ts E_j \dprod \dif\bar{\ts d}_{\dev}] + \sum_i \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{p}}\dif\bar{p}
+\nonumber\\
+    &= \underbrace{\left[\sum_{i,j} \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} \ts E_i \outerp \ts E_j\right]}_{\bar{\tf E}_\ded} \dprod \dif\bar{\ts d}_{\dev}
+	  + \underbrace{\sum_i \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{p}}}_{\bar{\ts E}_\dep}\dif\bar{p}
 \end{align}
 %------------------------------------------------------------------------------------
 We also obtain trivially the relation
 %---------------------------------------------------------------------------------------
 \begin{align}
     \dif\bar{d}_\vol
-    & = 
-    \sum_{i}\hat{\bar{d}}^{(i)}_{\vol,\ded}\dif\bar{d}_{\dev,i} + \hat{\bar{d}}_{\vol,\dep}\dif\bar{p}
+    & = \sum_{i}\hat{\bar{d}}^{(i)}_{\vol,\ded}\dif\bar{d}_{\dev,i} + \hat{\bar{d}}_{\vol,\dep}\dif\bar{p}
+      = \underbrace{\left[\sum_{i}\hat{\bar{d}}^{(i)}_{\vol,\ded} \ts E_i\right]}_{\bar{\ts C}_\ded} \dprod\dif\bar{\ts d}_{\dev} + \underbrace{\hat{\bar{d}}_{\vol,\dep}}_{\bar{C}_\dep}\dif\bar{p}
     \label{eq220}
 \end{align}
 %------------------------------------------------------------------------------------
@@ -876,7 +890,7 @@ which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus 
 %----------------------------------------------------------------------------
 \begin{align}
     \label{eq233a} &
-    (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\macro(i)}_{\vol,\ded}+\hat{\ta{v}}^{\fluct(i)}_\ded) +
+    (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\fluct(i)}_\ded) +
     b_\Box(\hat{p}^{(i)}_\ded,\delta\ta{v}^\fluct)
     && =
     - (a_\Box)'(\bullet;\delta\ta{v}^\fluct,\hat{\ta{v}}^{\macro(i)}_\dev)
@@ -920,132 +934,132 @@ which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus 
 \end{align}
 \end{enumerate}
 %----------------------------------------------------------------------------
-We may express the source terms in (\ref{eq233a}) and (\ref{eq233b}) more explicitly as
-%\end{document}
-%----------------------------------------------------------------------------
-\begin{align}
-    (a_\Box)'(\bullet; \delta\ta{v},\hat{\ta{v}}^{\macro(i)}_\dev)
-    & = 
-    \langle \delta \ts{d} \dprod \tf{E}_{\majorT,\dev} \dprod \hat{\ts{d}}^{\macro(i)}_\dev \rangle_\Box
-    =
-    \langle \left(\left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}\right)_{i} \rangle_\Box
-\label{eq263a}
-\\
-    b_\Box(\delta p,\hat{\ta{v}}^{\macro(i)}_\dev)
-    & = 
-    - \langle \delta p\,\ts{I}\dprod\hat{\ts{d}}^{\macro(i)}_\dev \rangle_\Box =
-    - \langle \delta p \rangle_\Box\, \delta_{ij}
-\nonumber
-\\
-    & = 
-%    - \left[\frac{1}{|\Omega_\Box|}\int_{\Omega_\Box} \delta p\, \dif v\right] \delta_{kl} =
-    - \frac{1}{|\Omega_\Box|}\int_{\Gamma_\Box} \delta p\, n_i [x_j-\bar{x}_j] \dif a
-\label{eq263b}
-\end{align}
-%----------------------------------------------------------------------------
-%
-%\subsubsection{Primal approach for computing the ATS tensor}
+% We may express the source terms in (\ref{eq233a}) and (\ref{eq233b}) more explicitly as
+% %\end{document}
+% %----------------------------------------------------------------------------
+% \begin{align}
+%     (a_\Box)'(\bullet; \delta\ta{v},\hat{\ta{v}}^{\macro(i)}_\dev)
+%     & = 
+%     \langle \delta \ts{d} \dprod \tf{E}_{\majorT,\dev} \dprod \hat{\ts{d}}^{\macro(i)}_\dev \rangle_\Box
+%     =
+%     \langle \left(\left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}\right)_{i} \rangle_\Box
+% \label{eq263a}
+% \\
+%     b_\Box(\delta p,\hat{\ta{v}}^{\macro(i)}_\dev)
+%     & = 
+%     - \langle \delta p\,\ts{I}\dprod\hat{\ts{d}}^{\macro(i)}_\dev \rangle_\Box =
+%     - \langle \delta p \rangle_\Box\, \delta_{ij}
+% \nonumber
+% \\
+%     & = 
+% %    - \left[\frac{1}{|\Omega_\Box|}\int_{\Omega_\Box} \delta p\, \dif v\right] \delta_{kl} =
+%     - \frac{1}{|\Omega_\Box|}\int_{\Gamma_\Box} \delta p\, n_i [x_j-\bar{x}_j] \dif a
+% \label{eq263b}
+% \end{align}
+% %----------------------------------------------------------------------------
+% %
+% %\subsubsection{Primal approach for computing the ATS tensor}
+% 
+% %%--------------------------------------------------------------------
+% %\begin{equation}
+% %    \ded\bar{P}_{ij}=
+% %    \sum_{k,l=1}^{\NDIM}
+% %    \left[({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\macro(kl)}) +
+% %    ({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\fluct(kl)})
+% %    \right]
+% %    \ded\bar{H}_{kl}
+% %    \label{eq40}
+% %\end{equation}
+% %%-------------------------------------------------------------------------------
+% %
+% %Hence, with known values of $\hat{\ta{u}}^{\fluct(ij)}$, for
+% %$i,j=1,2,...,\NDIM$, we are in the position to compute the components
+% %of $\bar{\tf L}$ explicitly from (\ref{eq40}) as
+% %%--------------------------------------------------------------------
+% %\begin{eqnarray}
+% %    (\bar{\tf{L}})_{ijkl}
+% %    & = &
+% %    ({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\macro(kl)}) +
+% %    ({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\fluct(kl)})
+% %    \nonumber \\
+% %    & = &
+% %    \left\langle({\tf L})_{ijkl}\right\rangle_\Box +
+% %    \left\langle ({\tf L}\dprod {\ts G}[\hat{\ta{u}}^{\fluct(kl)}])_{ij}
+% %    \right\rangle_\Box
+% %    \label{eq41c}
+% %\end{eqnarray}
+% %%-------------------------------------------------------------------------------
+% The sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(i)}_\ded$, and $\hat{\bar{d}}_{\vol,\dep}$, $\hat{\ta{v}}^{\fluct}_\ded$ are used to obtain explicit expressions for the tangent tensors
+% $\bar{\tf E}_\ded$ and $\bar{\ts E}_\ded$ as follows:
+% %--------------------------------------------------------------------
+% \begin{align}
+%     \bar{\tf E}_\ded
+%     & = 
+%     \left\langle \tf{E}_\ded \right\rangle_\Box +
+%     \sum_{k,l} \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\macro(kl)}_{\vol,\ded}\right\rangle_\Box +
+%     \sum_{k,l} \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\fluct(kl)}_\ded\right\rangle_\Box
+% \label{eq224a} \\
+%     \bar{\ts E}_\ded
+%     & = 
+%     \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\macro}_{\vol,\dep}\right\rangle_\Box +
+%     \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\fluct}_\dep\right\rangle_\Box
+% \label{eq224b}
+% \end{align}
+% %-------------------------------------------------------------------------------
+% where we introduced the notation
+% %---------------------------------------------------------------------------------------
+% \begin{align}
+%     & \hat{\ts{d}}^{\macro(kl)}_{\vol,\ded}\defeq\left([\hat{\bar{d}}^{(kl)}_{\vol,\ded}\ta{x}_\mean]\outerp\diff\right)^\sym = \frac{1}{3}\hat{\bar{d}}^{(kl)}_{\vol,\ded}\ts{I}, \,\,\,
+%     \hat{\ts{d}}^{\macro}_{\vol,\dep}\defeq\left([\hat{\bar{d}}_{\vol,\dep}\ta{x}_\mean]\outerp\diff\right)^\sym = \frac{1}{3}\hat{\bar{d}}_{\vol,\dep}\ts{I},
+% \nonumber \\
+%     & \hat{\ts{d}}^{\fluct(kl)}_\ded\defeq\left(\hat{\ta{v}}^{\fluct(kl)}_\ded\outerp\diff\right)^\sym, \,\,\,
+%     \hat{\ts{d}}^{\fluct}_\dep\defeq\left(\hat{\ta{v}}^{\fluct(kl)}_\dep\outerp\diff\right)^\sym
+% \label{eq227}
+% \end{align}
+% %------------------------------------------------------------------------------------
+% and the following identities were used:
+% %--------------------------------------------------------------------
+% \begin{align}
+%     ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(kl)}_\dev)
+%     & = 
+%     \left\langle({\tf E}_\dev)_{ijkl}\right\rangle_\Box,
+% \label{eq225a} \\
+%     ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(kl)}_{\vol,\ded})
+%     & = 
+%     \frac{1}{3}\left\langle ({\tf E}_\dev\dprod \ts{I})_{ij} \right\rangle_\Box\hat{\bar{d}}^{(kl)}_{\vol,\ded}
+% \label{eq225b} \\
+%     ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro}_{\vol,\dep})
+%     & = 
+%     \frac{1}{3}\left\langle ({\tf E}_\dev\dprod \ts{I})_{ij} \right\rangle_\Box\hat{\bar{d}}_{\vol,\dep}
+% \label{eq225c} \\
+%     ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\fluct(kl)}_\ded)
+%     & = 
+%     \left\langle ({\tf E}_\dev\dprod \hat{\ts{d}}^{\fluct(kl)}_\ded)_{ij} \right\rangle_\Box
+% \label{eq225d} \\
+%     ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\fluct}_\dep)
+%     & = 
+%     \left\langle ({\tf E}_\dev\dprod \hat{\ts{d}}^{\fluct}_\dep)_{ij} \right\rangle_\Box
+% \label{eq225e}
+% %    {b}_\Box(\hat{p}^{(kl)},\hat{\ta{v}}^{\macro(ij)})
+% %    & = &
+% %    - \delta_{ij} \left\langle \hat{p}^{(kl)} \right\rangle_\Box
+% %\label{eq225c}
+% \end{align}
 
-%%--------------------------------------------------------------------
-%\begin{equation}
-%    \ded\bar{P}_{ij}=
-%    \sum_{k,l=1}^{\NDIM}
-%    \left[({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\macro(kl)}) +
-%    ({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\fluct(kl)})
-%    \right]
-%    \ded\bar{H}_{kl}
-%    \label{eq40}
-%\end{equation}
-%%-------------------------------------------------------------------------------
-%
-%Hence, with known values of $\hat{\ta{u}}^{\fluct(ij)}$, for
-%$i,j=1,2,...,\NDIM$, we are in the position to compute the components
-%of $\bar{\tf L}$ explicitly from (\ref{eq40}) as
-%%--------------------------------------------------------------------
-%\begin{eqnarray}
-%    (\bar{\tf{L}})_{ijkl}
-%    & = &
-%    ({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\macro(kl)}) +
-%    ({a}_\Box)'(\bullet;\hat{\ta{u}}^{\macro(ij)},\hat{\ta{u}}^{\fluct(kl)})
-%    \nonumber \\
-%    & = &
-%    \left\langle({\tf L})_{ijkl}\right\rangle_\Box +
-%    \left\langle ({\tf L}\dprod {\ts G}[\hat{\ta{u}}^{\fluct(kl)}])_{ij}
-%    \right\rangle_\Box
-%    \label{eq41c}
-%\end{eqnarray}
-%%-------------------------------------------------------------------------------
-The sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(i)}_\ded$, and $\hat{\bar{d}}_{\vol,\dep}$, $\hat{\ta{v}}^{\fluct}_\ded$ are used to obtain explicit expressions for the tangent tensors
-$\bar{\tf E}_\ded$ and $\bar{\ts E}_\ded$ as follows:
-%--------------------------------------------------------------------
-\begin{align}
-    \bar{\tf E}_\ded
-    & = 
-    \left\langle \tf{E}_\ded \right\rangle_\Box +
-    \sum_{k,l} \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\macro(kl)}_{\vol,\ded}\right\rangle_\Box +
-    \sum_{k,l} \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\fluct(kl)}_\ded\right\rangle_\Box
-\label{eq224a} \\
-    \bar{\ts E}_\ded
-    & = 
-    \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\macro}_{\vol,\dep}\right\rangle_\Box +
-    \left\langle \tf{E}_\ded \dprod \hat{\ts{d}}^{\fluct}_\dep\right\rangle_\Box
-\label{eq224b}
-\end{align}
-%-------------------------------------------------------------------------------
-where we introduced the notation
-%---------------------------------------------------------------------------------------
-\begin{align}
-    & \hat{\ts{d}}^{\macro(kl)}_{\vol,\ded}\defeq\left([\hat{\bar{d}}^{(kl)}_{\vol,\ded}\ta{x}_\mean]\outerp\diff\right)^\sym = \frac{1}{3}\hat{\bar{d}}^{(kl)}_{\vol,\ded}\ts{I}, \,\,\,
-    \hat{\ts{d}}^{\macro}_{\vol,\dep}\defeq\left([\hat{\bar{d}}_{\vol,\dep}\ta{x}_\mean]\outerp\diff\right)^\sym = \frac{1}{3}\hat{\bar{d}}_{\vol,\dep}\ts{I},
-\nonumber \\
-    & \hat{\ts{d}}^{\fluct(kl)}_\ded\defeq\left(\hat{\ta{v}}^{\fluct(kl)}_\ded\outerp\diff\right)^\sym, \,\,\,
-    \hat{\ts{d}}^{\fluct}_\dep\defeq\left(\hat{\ta{v}}^{\fluct(kl)}_\dep\outerp\diff\right)^\sym
-\label{eq227}
-\end{align}
-%------------------------------------------------------------------------------------
-and the following identities were used:
-%--------------------------------------------------------------------
-\begin{align}
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(kl)}_\dev)
-    & = 
-    \left\langle({\tf E}_\dev)_{ijkl}\right\rangle_\Box,
-\label{eq225a} \\
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(kl)}_{\vol,\ded})
-    & = 
-    \frac{1}{3}\left\langle ({\tf E}_\dev\dprod \ts{I})_{ij} \right\rangle_\Box\hat{\bar{d}}^{(kl)}_{\vol,\ded}
-\label{eq225b} \\
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\macro}_{\vol,\dep})
-    & = 
-    \frac{1}{3}\left\langle ({\tf E}_\dev\dprod \ts{I})_{ij} \right\rangle_\Box\hat{\bar{d}}_{\vol,\dep}
-\label{eq225c} \\
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\fluct(kl)}_\ded)
-    & = 
-    \left\langle ({\tf E}_\dev\dprod \hat{\ts{d}}^{\fluct(kl)}_\ded)_{ij} \right\rangle_\Box
-\label{eq225d} \\
-    ({a}_\Box)'(\bullet;\hat{\ta{v}}^{\macro(ij)}_\dev,\hat{\ta{v}}^{\fluct}_\dep)
-    & = 
-    \left\langle ({\tf E}_\dev\dprod \hat{\ts{d}}^{\fluct}_\dep)_{ij} \right\rangle_\Box
-\label{eq225e}
-%    {b}_\Box(\hat{p}^{(kl)},\hat{\ta{v}}^{\macro(ij)})
-%    & = &
-%    - \delta_{ij} \left\langle \hat{p}^{(kl)} \right\rangle_\Box
-%\label{eq225c}
-\end{align}
-%-------------------------------------------------------------------------------
-
-The sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$ and $\hat{\bar{d}}_{\vol,\dep}$ are used to obtain explicit expressions for the tangent tensors
-$\bar{\ts C}_\ded$ and $\bar{C}_\dep$ as follows:
-%--------------------------------------------------------------------
-\begin{align}
-    \bar{\ts C}_\ded
-    & = 
-    \sum_{i,j}\hat{\bar{d}}^{(i)}_{\vol,\ded} \ts E_i
-\label{eq234a} \\
-    \bar{C}_\dep
-    & = 
-    \hat{\bar{d}}_{\vol,\dep}
-\label{eq234b}
-\end{align}
+% %-------------------------------------------------------------------------------
+% The sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$ and $\hat{\bar{d}}_{\vol,\dep}$ are used to obtain explicit expressions for the tangent tensors
+% $\bar{\ts C}_\ded$ and $\bar{C}_\dep$ as follows:
+% %--------------------------------------------------------------------
+% \begin{align}
+%     \bar{\ts C}_\ded
+%     & = 
+%     \sum_{i,j}\hat{\bar{d}}^{(i)}_{\vol,\ded} \ts E_i
+% \label{eq234a} \\
+%     \bar{C}_\dep
+%     & = 
+%     \hat{\bar{d}}_{\vol,\dep}
+% \label{eq234b}
+% \end{align}
 %-------------------------------------------------------------------------------
 
 \section{Numerical examples}\label{sec:examples}
@@ -1065,8 +1079,8 @@ The weak format of equilibrium for an RVE is
 for suitable choice of test functions $\delta \ta{v}$. Testing (\ref{eq280}) with $\delta \ta{v}^\fluct$, we directly obtain
 %--------------------------------------------------------------------
 \begin{equation}
-    \int_{\Omega^\fluid_\Box} \ts{\sigma} \dprod \left[\delta \ta{v}\outerp\diff\right]^\sym \dif v =
-    \int_{\Gamma_\Box^\pore} \ta{t}_\surf \cdot \delta\ta{v} \dif a
+    \int_{\Omega^\fluid_\Box} \ts{\sigma} \dprod \left[\delta \ta{v}^\fluct\outerp\diff\right]^\sym \dif v =
+    \int_{\Gamma_\Box^\pore} \ta{t}_\surf \cdot \delta\ta{v}^\fluct \dif a
 \label{eq281}
 \end{equation}
 %-------------------------------------------------------------------------------
