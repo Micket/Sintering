@@ -1,8 +1,19 @@
 \RequirePackage[l2tabu,orthodox]{nag} % This package helps prevent you from doing things wrong.
 
 \documentclass[10pt,a4paper]{article}
+
+\usepackage{ifluatex}
+\ifluatex
+\usepackage{fontspec}
+\usepackage{unicode-math}
+
+%\setmainfont[Ligatures=TeX]{xits}
+%\setmathfont[math-style=ISO]{xits-math}
+\setmainfont[Ligatures=TeX]{Latin Modern Roman}
+\setmathfont[math-style=ISO]{lmmath-regular.otf}
+\else
 \usepackage[utf8]{inputenc}
-%\usepackage{fontspec}
+\fi
 
 \usepackage[margin=2cm,includefoot]{geometry}
 \usepackage{amsmath, mathtools, cancel}
@@ -17,11 +28,20 @@
 \usepackage{pgfplots}
 
 %\usepackage{hyperref}
+\usepackage{cleveref}
 %\usepackage[T1]{fontenc}
 
 %\usepackage[width=0.7\paperwidth,height=0.85\paperheight]{geometry}
 \linespread{1.3}
 \usepackage{contmech}
+\ifluatex
+  \renewcommand{\ta}[1]{\mathbfit{#1}}
+  \renewcommand{\ts}[1]{\mathbfit{#1}}
+  \renewcommand{\td}[1]{\mathbfcal{#1}}
+  \renewcommand{\tf}[1]{\mathbfsfup{#1}}
+  \renewcommand{\Box}{\mdlgwhtsquare}
+  \renewcommand{\leadsto}{\rightsquigarrow}
+\fi
 % \renewcommand{\vec}[1]{\mathds{#1}}
 % \renewcommand{\mat}[1]{\mathds{#1}}
 
@@ -631,9 +651,14 @@ find ($\bar{d}_\vol,p,\ta{v}^\fluct)\in\set{R}\times\set{V}_\Box^{(\Dirichlet)}\
 %\end{eqnarray}
 %%----------------------------------------------------------------------------
 
-It is noted that the ``macroscale'' part, $\ta{v}^\macro=\ta{v}^\macro_\dev+\ta{v}^\macro_\vol$, of $\ta{v}$ is decomposed into the deviatoric part that is directly computed from the macroscale problem ($\ta{v}^\macro_\dev=\bar{\ts d}_\dev\cdot[\ta{x}-\bar{\ta{x}}]$), whereas the volumetric part ($\ta{v}^\macro_\vol\defeq\bar{d}_\vol\ta{x}_\mean$, $\ta{x}_\mean \defeq \frac13[\ta x-\bar{\ta x}]$) is computed from the RVE-problem and is thus implicitly dependent on the macroscale solution via $\bar{\ts d}_\dev\defeq[\bar{\ta v}\outerp\diff]^\sym_\dev$ and $\bar{p}$.
+It is noted that the ``macroscale'' part, $\ta{v}^\macro=\ta{v}^\macro_\dev+\ta{v}^\macro_\vol$, of $\ta{v}$ is decomposed into the deviatoric part that is directly computed from the macroscale problem \eqref{eq:vMdev}, whereas the volumetric part \eqref{eq:vMvol}
+is computed from the RVE-problem and is thus implicitly dependent on the macroscale solution via $\bar{\ts d}_\dev\defeq[\bar{\ta v}\outerp\diff]^\sym_\dev$ and $\bar{p}$.
+\begin{align}
+ \label{eq:vMdev} \ta{v}^\macro_\dev &\defeq \bar{\ts d}_\dev\cdot[\ta{x}-\bar{\ta{x}}]\\
+ \label{eq:vMvol} \ta{v}^\macro_\vol &\defeq \bar{d}_\vol\ta{x}_\mean,\quad \ta{x}_\mean \defeq \frac13[\ta x-\bar{\ta x}]
+\end{align}
 
-The output variables from the RVE-problem are $\bar{d}_\vol$, which is a direct part of the solution, whereas $\bar{\ts\sigma}_\dev$ is post-processed as discussed susequently.
+The output variables from the RVE-problem are $\bar{d}_\vol$, which is a direct part of the solution, whereas $\bar{\ts\sigma}_\dev$ is post-processed as discussed subsequently.
 
 The RVE-problem \eqref{eq213a} to \eqref{eq213c} must be solved iteratively in practice due to the
 subscale nonlinearities. To this end, we first rewrite the RVE-problem as the vanishing residuals
@@ -675,7 +700,7 @@ where the iterative updates $\Delta\bar{d}_\vol\in\set{R}, \Delta {\ta{v}}^\fluc
 %----------------------------------------------------------------------------
 \begin{equation}
 \begin{array}{rcll}
-    (a_\Box)'(\bullet; \delta\ta{v}^\fluct,\Delta \ta{v}^\fluct)
+    (a_\Box)'(\ta v^\macro_\dev + \ta v^\fluct; \delta\ta{v}^\fluct,\Delta \ta{v}^\fluct)
     + b_\Box(\Delta p,\delta\ta{v}^\fluct)
     & = &
     R_\Box^{\ta v}(\bullet^{(k)}; \delta\ta{v}^\fluct)
@@ -699,9 +724,9 @@ until the residuals are sufficiently small. The tangent form $(a_\Box)'$
 is given explicitly as\todo{check!}
 %----------------------------------------------------------------------------
 \begin{align}
-    (a_\Box)'(\bullet; \delta \ta{v}^\fluct,\Delta{\ta{v}}^\fluct)
+    (a_\Box)'(\ta v^\macro_\dev + \ta v^\fluct; \delta \ta{v}^\fluct,\Delta{\ta{v}}^\fluct)
     & = 
-    \left\langle \left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}(\bullet) \dprod
+    \left\langle \left[\delta\ta{v}\outerp\diff\right]^\sym \dprod \tf{E}_{\majorT,\dev}(\ta v^\macro_\dev + \ta v^\fluct) \dprod
     \left[\Delta\ta{v}^\fluct\outerp\diff\right]^\sym \right\rangle_\Box
 \end{align}
 %----------------------------------------------------------------------------
@@ -750,7 +775,7 @@ It is then convenient to compute \emph{sensitivity fields}, corresponding to a u
 \end{align}
 %----------------------------------------------------------------------------------
 % whereby $(\ta{v}^\macro_\vol)'_d, (\ta{v}^\macro_\vol)'_p, (\ta{v}^\fluct)'_d, (\ta{v}^\fluct)'_d$ and $(p)'$ denote directional derivatives.
-From the first order representation $\ta{v}^\macro = \bar{\ts d}\cdot[\ta{x}-\bar{\ta{x}}]$ for $\ta{x}\in\Omega_\Box$, we obtain %(while suppressing the arguments $\ta{x}$ and $\bar{\ta{x}}$)
+From \eqref{eq:vMdev} and \eqref{eq:vMvol} respectively we obtain
 %----------------------------------------------------------------------------
 \begin{align}
   \dif \ta{v}^{\macro}_\dev &= \sum_{i} \hat{\ta{v}}^{\macro(i)}_\dev \dif\bar{d}_{\dev,i}, \quad  \hat{\ta{v}}^{\macro(i)}_\dev = \ts E_i \cdot [\ta x - \bar{\ta x}]
@@ -817,7 +842,6 @@ Upon using the identity $\bar{\ts\sigma}=\frac{1}{\Omega_\Box} \int_{\Gamma_\Box
     \dif\left[a_\Box(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev)\right] + \dif\left[b_\Box(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev)\right] + \dif\left[l_\Box^\pore(\hat{\ta{v}}^{\macro(i)}_\dev)\right] = (a_\Box)'(\bullet; \hat{\ta{v}}^{\macro(i)}_\dev,\dif\ta{v})
     \nonumber \\
     & = 
-    \sum_{j}
     \underbrace{(a_\Box)'(\bullet;\hat{\ta{v}}^{\macro(i)}_\dev,\hat{\ta{v}}^{\macro(j)}_\dev +
     \hat{\ta{v}}^{\fluct(j)}_\ded)}_{\displaystyle \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}}}
     \dif\bar{d}_{\dev,j}
@@ -827,8 +851,7 @@ Upon using the identity $\bar{\ts\sigma}=\frac{1}{\Omega_\Box} \int_{\Gamma_\Box
     \label{eq219}
 \end{align}
 where we used that $b_\Box(\bullet;\hat{\ta v}_\dev^{\macro(i)}) = 0$ and $\dif\left[l_\Box^\pore\right(\hat{\ta v}^{\macro(i)}_\dev)] = 0$.
-
-For full tensor can be obtained from
+The full tensor form can be obtained from
 \begin{align}
  \dif\bar{\ts\sigma}_\dev 
 	&= \sum_i \ts E_i \dif\bar{\sigma}_{\dev,i}
@@ -878,7 +901,7 @@ Upon linearizing \eqref{eq213a} to \eqref{eq213c} , while using \eqref{eq:dv}, w
 which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus consider the cases ($\dif\bar{\ts d}_\dev\neq \ts{0}, \dif\bar{p}=0$) and ($\dif\bar{\ts d}_\dev=\ts{0}, \dif\bar{p}\neq 0$) in turn:
 
 \begin{enumerate}
-\item $\dif\bar{\ts d}_\dev\neq \ts{0}$ while $\dif\bar{p}=0$: For $i=1,\ldots,n_{\mathrm{B}}$, solve for the sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(i)}_\ded$, and $\hat{p}^{(i)}_\ded$ from the system
+\item $\dif\bar{\ts d}_\dev = \ts E_i $ while $\dif\bar{p}=0$: For $i=1,\ldots,n_{\mathrm{B}}$, solve for the sensitivities $\hat{\bar{d}}^{(i)}_{\vol,\ded}$, $\hat{\ta{v}}^{\fluct(i)}_\ded$, and $\hat{p}^{(i)}_\ded$ from the system
 %----------------------------------------------------------------------------
 \begin{align}
     \label{eq233a} &
@@ -891,7 +914,7 @@ which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus 
     \label{eq233b} &
     b_\Box(\delta p, \ta x_\mean \hat{\bar{d}}_{\vol,\ded}^{(i)} + \hat{\ta{v}}^{\fluct(i)}_\ded)
     && =
-    - b_\Box(\delta p,\hat{\ta{v}}^{\macro(i)}_\dev)
+    0
     && \forall \delta p\in\set{P}_\Box
 \\
     \label{eq233c} &
@@ -902,7 +925,7 @@ which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus 
 \end{align}
 %----------------------------------------------------------------------------
 
-\item $\dif\bar{p}\neq 0$ while $\dif\bar{\ts d}_\dev=\ts{0}$: Solve for the sensitivities $\hat{\bar{d}}_{\vol,\dep}$, $\hat{\ta{v}}^{\fluct}_\dep$, and $\hat{p}_\dep$ from the system
+\item $\dif\bar{p} = 1$ while $\dif\bar{\ts d}_\dev=\ts{0}$: Solve for the sensitivities $\hat{\bar{d}}_{\vol,\dep}$, $\hat{\ta{v}}^{\fluct}_\dep$, and $\hat{p}_\dep$ from the system
 %----------------------------------------------------------------------------
 \begin{align}
     \label{eq243a} &
@@ -1094,11 +1117,23 @@ where it was used that $[\ta{x}_\mean\outerp\diff]^\sym=\frac{1}{3}\ts{I}$, $p=-
 %-------------------------------------------------------------------------------
 Dividing \eqref{eq282} by $|\Omega_\Box|$, we obtain \eqref{eq213c}.
 
+The orthonormal base $\ts E_i$ can be chosen, in 2D, as
+\begin{align}
+ \ts E_1 = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 0\\ 0 & -1\end{bmatrix}\quad \ts E_2 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 1\\ 1 & 0\end{bmatrix}
+\end{align}
+and in 3D, as
+\begin{align}
+ &\ts E_1 = \frac{1}{\sqrt{6}}\begin{bmatrix} 2 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1\end{bmatrix}
+ &&\ts E_2 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 0\\ 0 & 1 & 0 \\ 0 & 0 & -1\end{bmatrix}
+ &&\\
+ &\ts E_3 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 1 & 0\\ 1 & 0 & 0 \\ 0 & 0 & 0\end{bmatrix}
+ &&\ts E_4 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 1\\ 0 & 0 & 0 \\ 1 & 0 & 0\end{bmatrix}
+ &&\ts E_5 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 0\\ 0 & 0 & 1 \\ 0 & 1 & 0\end{bmatrix}
+\end{align}
+
 
 %\clearpage
 %\printbibliography
-\section{References}
-
 \bibliography{Boundary_representation,Boundary_potentials,Multiscale,FEM_Software,Sintering,Mesh}
 \bibliographystyle{plain}
 
