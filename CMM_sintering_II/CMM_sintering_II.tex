@@ -1,6 +1,6 @@
 \RequirePackage[l2tabu,orthodox]{nag} % This package helps prevent you from doing things wrong.
 
-\documentclass[10pt,a4paper,fleqn]{article}
+\documentclass[12pt,a4paper,fleqn]{article}
 
 \usepackage{ifluatex}
 \ifluatex
@@ -13,7 +13,8 @@
   \usepackage[utf8]{inputenc}
 \fi
 
-\usepackage[margin=2cm,includefoot]{geometry}
+%\usepackage[margin=2cm,includefoot]{geometry}
+\usepackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
 \usepackage{amsmath, amssymb, mathtools}
 \usepackage{graphicx, subfig, float, grffile}
 \usepackage{algorithm,algorithmic}
@@ -23,17 +24,18 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 
-\usepackage[firstinits=true, style=numeric, url=false, isbn=false, hyperref=true,backend=biber]{biblatex}
+\usepackage[firstinits=true, style=numeric, url=false, isbn=false, hyperref=true, maxbibnames=100, backend=biber]{biblatex}
 \def\bibfont{\footnotesize}
 
 \usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,filecolor=black]{hyperref}
 %\usepackage{cleveref}
 
-\linespread{1.3}
+%\linespread{1.2}
 \usepackage{contmech}
 \ifluatex
   \usepackage{unicode-math}
   \setmathfont[math-style=ISO]{lmmath-regular.otf}
+  %\setmathfont[math-style=ISO]{xits-math.otf}
   \renewcommand{\ta}[1]{\mathbfit{#1}}
   \renewcommand{\ts}[1]{\mathbfit{#1}}
   \renewcommand{\td}[1]{\mathbfcal{#1}}
@@ -84,10 +86,16 @@
 %\newcommand{\surfdiff}{\hat{\ts\nabla}}
 %\newcommand{\at}[2]{\left.#1\right|_{#2}}
 
-\bibliography{Boundary_representation,Boundary_potentials,Multiscale,FEM_Software,Sintering,Mesh,OhmanPublications}
+\addbibresource{Boundary_representation.bib}
+\addbibresource{Boundary_potentials.bib}
+\addbibresource{Multiscale.bib}
+\addbibresource{FEM_Software.bib}
+\addbibresource{Sintering.bib}
+\addbibresource{Mesh.bib}
+\addbibresource{OhmanPublications.bib}
 
 \begin{document}
-\title{FE$^2$ for Liquid-Phase Sintering with Seamless Transition from Macroscopic Compressibility to Incompressibility}
+\title{FE\textsuperscript{2} for Liquid-Phase Sintering with Seamless Transition from Macroscopic Compressibility to Incompressibility}
 
 \author{
 Mikael Öhman, Fredrik Larsson and Kenneth Runesson\\
@@ -97,17 +105,24 @@ Chalmers University of Technology}
 \maketitle
 
 \begin{abstract}
-\noindent In a previous paper, \textsc{Öhman et al.} \cite{Ohman2011a}, liquid phase sintering of particle agglomerates was modeled on the mesoscale as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface. A FE\textsuperscript{2}-strategy was outlined; however, the variational setting is applicable only under the restriction of non-vanishing macroscopic porosity (corresponding to a not fully dense end-product). The present paper generalizes this situation such that it allows for the transition to zero porosity, which is accomplished by introducing a mixed variational format of the macroscale problem. This has consequences also for the formulation of the RVE-problem, that is complemented with an extra constraint equation regarding the prolongation of the volumetric part of the macroscopic rate-of-deformation.
-Still, Dirichlet boundary conditions on the subscale velocity are adopted.
-The numerical example shows the sintering of a single RVE, which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
+\noindent
+Liquid phase sintering of particle agglomerates is modeled on the mesoscale as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface.
+On the macroscale, a quasistatic equilibrium problem allows for the prediction of the shrinkage of the sintering body. 
+The present paper presents a novel FE\textsuperscript{2} formulation of the two-scale sintering problem allowing for the transition to zero porosity, implying macroscale incompressibility.
+The seamless transition from compressibility to incompressibility on the macroscale is accomplished by introducing a mixed variational format.
+This has consequences also for the formulation of the mesoscale problem, that is complemented with an extra constraint equation regarding the prolongation of the volumetric part of the macroscopic rate-of-deformation.
+The numerical example shows the sintering of a single representative volume element (RVE), which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
 
 \end{abstract}
 
 \section{Introduction}
 
-Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality. For a hardmetal (such as WC-Co) cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating. This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e. via surface traction, stemming from stored surface energy. The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally. To model and quantatively simulate the sintering process is a challenging task. The goal is to (i) estimate the final resulting quality (i.e. in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
+Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality. For a hardmetal (such as WC-Co) cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating.
+This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e. via surface traction, stemming from stored surface energy.
+The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally. To model and quantitatively simulate the sintering process is a challenging task. The goal is to (i) estimate the final resulting quality (i.e. in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
 
-A wealth of literature has been devoted to the modeling and simulation of the sintering process. From a mesoscale viewpoint, a classical approach is to consider socalled ``unit problems'', whereby the constitutive modeling is based on diffusion and, most importantly, flow models. Among the early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are those by \cite{JagDaw1988a,JagDaw1988b}, \cite{Vorst1993}.
+A wealth of literature has been devoted to the modeling and simulation of the sintering process.
+From a mesoscale viewpoint, a classical approach is to consider socalled ``unit problems'', whereby the constitutive modeling is based on diffusion and, most importantly, flow models. Among the early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are those by \cite{JagDaw1988a,JagDaw1988b}, \cite{Vorst1993}.
 In a series of papers, \cite{ZhoDer1998,ZhoDer2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction. The main challenges  are the complex subscale geometry and the moving free boundary giving rise to very large deformations and severe topology changes. Recent developments of free-boundary tracing FE-strategies for large deformations (without severe topological changes) are discussed by \cite{DetPer2006}, \cite{SakPer2006a}, \cite{SakPer2006b}.
 All the mentioned work consider surface tension effects in fluids. A recent extension to include surface tension in the context of solid modeling, where anisotropic surface energy may be present, is due to \cite{JavSte2009:2d,JavSte2010:3d}.
 
@@ -124,9 +139,11 @@ The various features of subscale modeling (surface tension, particle arrangement
 
 \subsection{Preliminaries}
 
-We consider a sintering body with current macroscale configuration $\Omega(t)$ in space for any given time $t\geq 0$. The boundary of $\Omega(t)$ is denoted $\Gamma^\external(t)$, and we adopt standard Dirichlet and Neumann boundary conditions on the (external) boundary parts $\Gamma^\external_\Dirichlet$ and $\Gamma^\external_\Neumann$, respectively. In particular, prescribed tractions, $\bar{\ta t}_\prescribed$, act on $\Gamma^\external_\Neumann$.  Our aim is to exploit the concept of computational homogenization in order to determine the unknown $\Omega(t)$ and certain mechanical fields on $\Omega(t)$, such as the current macroscale velocity field, $\bar{\ts v}$, the macroscale true stress field, $\bar{\ts\sigma}$, and the macroscale porosity field, $\phi$. We note that the initial configuration $\Omega(0)$ represents the so called ``green body'', obtained after cold compaction and characterized by the inhomogeneous (macroscopic) porosity $\phi_0$. In the case of ``free sintering'', i.e. sintering without any external loading, it is clear that $\bar{\ts\sigma}$ represents the macroscopic residual stresses at every instant in time.
+We consider a sintering body with current macroscale configuration $\Omega(t)$ in space for any given time $t\geq 0$. The boundary of $\Omega(t)$ is denoted $\partial\Omega(t)$, and we adopt standard Dirichlet and Neumann boundary conditions on the (external) boundary parts $\partial\Omega_\Dirichlet$ and $\partial\Omega_\Neumann$, respectively. In particular, prescribed tractions, $\bar{\ta t}_\prescribed$, act on $\partial\Omega_\Neumann$.  Our aim is to exploit the concept of computational homogenization in order to determine the unknown $\Omega(t)$ and certain mechanical fields on $\Omega(t)$, such as the current macroscale velocity field, $\bar{\ts v}$, the macroscale true stress field, $\bar{\ts\sigma}$, and the macroscale porosity field, $\phi$. We note that the initial configuration $\Omega(0)$ represents the so called ``green body'', obtained after cold compaction and characterized by the inhomogeneous (macroscopic) porosity $\phi_0$. In the case of ``free sintering'', i.e. sintering without any external loading, it is clear that $\bar{\ts\sigma}$ represents the macroscopic residual stresses at every instant in time.
 
-Subsequently, we shall adopt modeling on the subscale in terms of an Eulerian description of the motion, which means that it will be possible to trace the development of the current macroscale configuration $\Omega(t)$ by computing the macroscale velocity field $\bar{\ta v}(\bar{\ta x},t)$ for $(\bar{\ta x},t)\in\Omega\times(0,T)$. It is then assumed, for the mesoscale representation, that the ``solid particle skeleton'' consists of a contiguous assembly of particles that are in contact, thereby occupying the multiply connected domain $\Omega^\particle=\cup_j\Omega^\particle_j$, as shown in Figure \figref{fig:micro}. We also identify smooth pore surfaces $\Gamma^\pore=\cup_i\Gamma^\pore_i$ and smooth contact surfaces $\Gamma^\contact=\cup_j\Gamma^\contact_j$.
+Subsequently, we shall adopt modeling on the subscale in terms of an Eulerian description of the motion, which means that it will be possible to trace the development of the current macroscale configuration $\Omega(t)$ by computing the macroscale velocity field $\bar{\ta v}(\bar{\ta x},t)$ for $(\bar{\ta x},t)\in\Omega\times(0,T)$.
+% It is then assumed, for the mesoscale representation, that the ``solid particle skeleton'' consists of a contiguous assembly of particles that are in contact, thereby occupying the multiply connected domain $\Omega^\particle=\cup_j\Omega^\particle_j$, as shown in Figure \figref{fig:micro}.
+% We also identify smooth pore surfaces $\Gamma^\pore=\cup_i\Gamma^\pore_i$ and smooth contact surfaces $\Gamma^\contact=\cup_j\Gamma^\contact_j$.
 
 In a 3D representation of the microstructure the assembly of sintering particles create an open pore system (at least initially). With reasonable accuracy one may then assume that the pore surfaces are ``free'' surfaces, i.e. the pore gas does not impose any resistance on the motion. The situation is, of course, different in the (physically unrealistic) case of a 2D representation of the microstructure. The pore system will then inevitably be closed from the start of the sintering process, and the ``trapped'' gas may impose a pressure on the pore surfaces. In any case the pertinent surfaces associated with surface tension are particle/pore and particle/particle (contact) surfaces, as indicated in \figref{fig:micro}.
 %-------------------------------------------------------------------------
@@ -226,10 +243,10 @@ In the absence of acceleration, the balance equations for the quasi-static motio
 %-----------------------------------------------------------------
 \begin{subequations}\label{eq204}
 \begin{align}
-    -\ts{\sigma}\cdot\diff & = \ts{0} \quad \mbox{ in }\,\Omega^\particle
+    -\ts{\sigma}\cdot\diff & = \ts{0} \quad \mbox{ in }\,\Omega^\particle_i\quad i = 1,2,...
 \label{eq204a}
 \\
-    \ta{v}\cdot\diff & = 0 \quad \mbox{ in }\,\Omega^\particle
+    \ta{v}\cdot\diff & = 0 \quad \mbox{ in }\,\Omega^\particle_i
 \label{eq204b}
 \end{align}
 \end{subequations}
@@ -237,15 +254,21 @@ In the absence of acceleration, the balance equations for the quasi-static motio
 where $\ts{\sigma}(\ts{d})=\ts{\sigma}_\dev(\ts{d}_\dev)-p\ts{I}$ is the total Cauchy stress, $p$ is the pressure (Lagrangian multiplier corresponding to the incompressibility constraint), and
 where $\diff$ denotes the spatial gradient.
 
-In order to establish the weak format of \eqref{eq204} for a sintering body, we henceforth assume (for simplicity) that the surface tension along the contact surfaces $\Gamma^\contact$ can be ignored; hence, the internal boundary of the domain $\Omega^\particle$ occupied by the particle assembly is $\Gamma^\pore$. It then appears that the space-variational forms of \eqref{eq204} read:
+% In order to establish the weak format of \eqref{eq204} for a sintering body, we henceforth assume (for simplicity) that the surface tension along the contact surfaces $\Gamma^\contact$ can be ignored; hence, the internal boundary of the domain $\Omega^\particle$ occupied by the particle assembly is $\Gamma^\pore$.
+% It then appears that the space-variational forms of \eqref{eq204} read:
+
+Referring to \figref{fig:micro}, we consider an arbitrarily chosen collection of particles in contact (inside $\Omega$)that constitutes the ``solid particle skeleton''.
+Each particle domain $\Omega_i^\particle$ has part of its boundary associated with the pore surface $\Gamma_i^\pore$.
+In addition, two particles are in contact across the surface $\Gamma_j^\contact$; however, we assume henceforth (for simplicity) that the surface tension along the contact surfaces can be ignored.
+We also introduce the notation $\Omega^\particle \defeq\cup_i\Omega_i^\particle$ and $\Gamma^\pore \defeq \cup_i\Gamma^\pore_i$.
+%These surfaces, that are internal to the microstructure, are collectively denoted $\Gamma^\internal=\Gamma^\pore\cup\Gamma^\contact$.
+It can then be shown that the weak form of \eqref{eq204} reads:
 %-----------------------------------------------------------------
 \begin{subequations}\label{eq205}
 \begin{align}
     \int_{\Omega^\particle} \ts{\sigma}\dprod\delta \ts{d} \dif v
     & =
     \int_{\Gamma^\pore} \ta{t}_\surf \cdot \delta\ta{v} \dif a
-%    - \int_{\Gamma^\internal} \hat{\ts\sigma}\dprod\left[\delta\ta{v}\outerp\hat{\diff}\right] \dif a
-    + \int_{\Gamma^\external_\Neumann} \bar{\ta t}_\prescribed\cdot\delta \ta{v} \dif a
 \label{eq205a} \\
     \int_{\Omega^\particle} \left[\ta{v}\cdot\diff\right] \delta p \dif v
     & =  0
@@ -253,13 +276,13 @@ In order to establish the weak format of \eqref{eq204} for a sintering body, we 
 \end{align}
 \end{subequations}
 %------------------------------------------------------------------
-for suitable test functions $\delta\ta{v}$ and $\delta p$ that satisfy the appropriate regularity requirements (not further elaborated in this paper). Here it was used that $\delta\ta{v}=\ta{0}$ on $\Gamma^\external_\Dirichlet$.
+for suitable test functions $\delta\ta{v}$ and $\delta p$ that satisfy the appropriate regularity requirements (not further elaborated in this paper).
 
 \textbf{Remark}: In the special case of isotropic surface tension (not necessarily state-independent or homogeneous), the operational format of \eqref{eq205a} is obtained by using the more explicit expression for the integral that represents ``surface tension loading'':
 %-----------------------------------------------------------------
 \begin{equation}
     \int_{\Gamma^\pore} \ta{t}_\surf \cdot \delta\ta{v} \dif a =
-    \int_{\Gamma^\pore} \gamma_\surf\left[\delta\ta{v}\cdot\hat{\diff}\right] \dif a
+    -\int_{\Gamma^\pore} \gamma_\surf\left[\delta\ta{v}\cdot\hat{\diff}\right] \dif a
 \label{eq206}
 \end{equation}
 %------------------------------------------------------------------
@@ -410,7 +433,7 @@ As long as the porosity is non-zero and macroscopic compressibility prevails, th
 \label{eq416a}
 \end{equation}
 %----------------------------------------------------------------------------
-However, in order to obtain a unified formulation that holds also for the situation when the macroscale response becomes incompressible, it is desirable to introduce a mixed variational format in terms of $\bar{\ts d}_\dev=\left(\bar{\ta v}\outerp\diff\right)^\sym_\dev$ and $\bar{p}$ as the ``prolongation variables'' that are imposed as input to the RVE-problem in a nested macroscale-subscale algorithm. This is achieved as follows:
+However, in order to obtain a unified formulation that holds also for the situation when the macroscale response becomes incompressible, it is desirable to introduce a mixed variational format in terms of $\bar{\ts d}_\dev=\left[\bar{\ta v}\outerp\diff\right]^\sym_\dev$ and $\bar{p}$ as the ``prolongation variables'' that are imposed as input to the RVE-problem in a nested macroscale-subscale algorithm. This is achieved as follows:
 
 For given values of $\bar{\ts d}_\dev$ and $\bar{p}$, the corresponding value $\bar{d}_\vol$ can be computed from the condition
 %----------------------------------------------------------------------------
@@ -556,7 +579,7 @@ find ($\bar{d}_\vol,p,\ta{v}^\fluct)\in\set{R}\times\set{V}_\Box^{(\Dirichlet)}\
 \\
     &b_\Box(p,\ta{x}_\mean)\delta\bar{d}_\vol
     && =
-    [\bar{p} - l_\Box^\pore(\ta{x}_\mean)]\delta\bar{d}_\vol
+    [l_\Box^\pore(\ta{x}_\mean) - \bar{p}]\delta\bar{d}_\vol
     && \forall\; \delta\bar{d}_\vol &&\in \set{R}
 \label{eq213c}
 \end{alignat}
@@ -640,7 +663,12 @@ The tangent form $(a_\Box)'$ is given explicitly as
 \subsection{Macroscale algorithmic tensors}
 
 The algorithmic tensors $\bar{\tf{E}}_\ded, \bar{\ts E }_\dep, \bar{\ts C}_\ded$ and $\bar{C}_\dep$, needed in order to carry out macroscale Newton iterations, are obtained for
-perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$. However, these perturbations are not entirely straightforward since the components of $\bar{\ts d}_\dev$ are not all independent. In fact, they must satisfy the constraint $\bar{\ts d}_\dev\dprod{\ts I}=0$. To circumvent this difficulty, we replace the standard dyad bases with the new orthonormal bases $\ts E_i$, i.e. $\ts E_i \dprod \ts E_j = \delta_{ij}$, such that they satisfy the constraint $\ts E_i\dprod{\ts I}=0$. Examples of such bases are shown in the Appendix. We may now adopt the expansions
+perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$.
+However, these perturbations are not entirely straightforward since the components of $\bar{\ts d}_\dev$ are not all independent.
+In fact, they must satisfy the constraint $\bar{\ts d}_\dev\dprod{\ts I}=0$.
+To circumvent this difficulty, we replace the standard dyad bases with a complete, orthonormal, basis $\{\ts E_i\}_{i=1}^{n_{\mathrm{b}}}$ for symmetric deviatoric tensors.
+Hence, these base dyadics satisfy the conditions $\ts E_i \dprod \ts E_j = \delta_{ij}$ and $\ts E_i\dprod{\ts I}=0$.
+Examples of such bases are shown in the Appendix. We may now adopt the expansions
 %----------------------------------------------------------------------------
 \begin{align}
  \bar{\ts d}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad  \bar{d}_{\dev,i} = \bar{\ts d}_\dev\dprod \ts E_i
@@ -746,7 +774,7 @@ Upon linearizing \eqref{eq213}, while using \eqref{eq:dv}, we obtain the appropr
     && \forall\; \delta p &&\in \set{P}_\Box
 \\
     &b_\Box(\dif p,\ta{x}_\mean)\delta\bar{d}_\vol
-    && = \dif\bar{p}\delta\bar{d}_\vol
+    && = -\dif\bar{p}\delta\bar{d}_\vol
     && \forall\; \delta\bar{d}_\vol &&\in \set{R}
 \end{alignat}
 \end{subequations}
@@ -795,7 +823,7 @@ which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus 
 \\
     \label{eq243c}
     &b_\Box(\hat{p}_\dep,\ta{x}_\mean)\delta\bar{d}_\vol
-    && = 1\delta\bar{d}_\vol
+    && = -1\delta\bar{d}_\vol
     && \forall\; \delta\bar{d}_\vol &&\in \set{R}
 \end{alignat}
 \end{subequations}
@@ -807,11 +835,11 @@ The computations were carried out with a linear constitutive model for the visco
 %
 \begin{figure}[thpb!]
     \centering
-    \subfloat[$t = 0$]{\includegraphics[scale=0.14]{figures/evolve_a}\label{fig:evolve_a}}
+    \subfloat[$t = 0$]{\includegraphics[scale=0.13]{figures/evolve_a}\label{fig:evolve_a}}
     \hspace{1em}
-    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_b}\label{fig:evolve_b}}
+    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.13]{figures/evolve_b}\label{fig:evolve_b}}
     \hspace{1em}
-    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_c}\label{fig:evolve_c}}
+    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.13]{figures/evolve_c}\label{fig:evolve_c}}
     \hspace{1em}
     \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_d}\label{fig:evolve_d}}
     \caption{Snapshots of evolving RVE subjected to constant macroscopic shear rate, $\bar{\ts d}_\dev \neq \ts 0$, and zero macroscopic pressure, $\bar{p}=0$.}
@@ -839,7 +867,7 @@ The computations were carried out with a linear constitutive model for the visco
 % The homogenized shear stress is nearly constant throughout the entire simulation.
 % Artifacts from remeshing of the RVE is noticeable in \figref{fig:evolve_graph}, however, the overall macroscopic behavior is mostly unaffected.
 
-A single unit cell (one pore) is subjected to prescribed constant macroscopic shear rate, i.e. $\bar{\ts d}_\dev\neq \ts 0$, whereas the macroscopic pressure is set to zero, $\bar{p}=0$. This situation of ``mixed control'' represents ``quasi-free'' sintering in the sense that the resulting homogenized value of $\bar{\ts\sigma}_\dev$ is non-zero (while $\bar p = 0 $), and it turns out that $\bar{\ts\sigma}_\dev$ stays nearly constant throughout the entire simulation time.
+A single unit cell (one pore) is subjected to prescribed constant macroscopic shear rate, i.e. $\bar{\ts d}_\dev\neq \ts 0$, whereas the macroscopic pressure is set to zero, $\bar{p}=0$. This situation of ``mixed control'' represents ``quasi-free'' sintering in the sense that the resulting value of $\bar{\ts\sigma}_\dev$ is non-zero (while $\bar p = 0 $), and it turns out that $\bar{\ts\sigma}_\dev$ stays nearly constant throughout the entire simulation time.
 Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_rve}, and it appears that effects of the adopted Dirichlet boundary condition is clearly visible in the severely sheared state.
 The evolution of $\bar d_\vol$, which is a primary variable in the RVE-problem, is shown in \figref{fig:evolve_graph}.
 Vanishing porosity, i.e. macroscopic incompressibility manifested by $\bar d_\vol = 0$, was reached at around $0.69\;t_{\mathrm{end}}$.
@@ -900,7 +928,7 @@ which is precisely \eqref{eq213a}. Next, testing \eqref{eq280} with $\ta{v}^\mac
 %--------------------------------------------------------------------
 \begin{equation}
     - \left[\int_{\Omega^\particle_\Box} p  \dif v \right]\delta\bar{d}_\vol =
-    \left[\int_{\Gamma_\Box^\pore} \ta{t}_\surf \cdot \ta{x}_\mean \dif a\right]\delta\bar{d}_\vol =
+    \left[\int_{\Gamma_\Box^\pore} \ta{t}_\surf \cdot \ta{x}_\mean \dif a\right]\delta\bar{d}_\vol
     - |\Omega_\Box|\bar{p}\,\delta\bar{d}_\vol
 \label{eq282}
 \end{equation}
@@ -914,7 +942,7 @@ where it was used that $[\ta{x}_\mean\outerp\diff]^\sym=\frac{1}{3}\ts{I}$, $p=-
 %-------------------------------------------------------------------------------
 Dividing \eqref{eq282} by $|\Omega_\Box|$, we obtain \eqref{eq213c}.
 
-\subsection{Base dyads in sensitivity problem}
+\subsection{Base dyadics in sensitivity problem}
 
 The orthonormal base $\ts E_i$ can be chosen in a cartesian basis, in 2D, as
 \begin{align}
