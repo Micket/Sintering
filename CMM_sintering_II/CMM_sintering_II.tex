@@ -958,6 +958,59 @@ and in 3D, as
  &&\ts E_5 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 0\\ 0 & 0 & 1 \\ 0 & 1 & 0\end{bmatrix}
 \end{align}
 
+\subsection{Symmetry of the macro-scale problem}
+
+We note that, if we can establish a potential 
+\begin{align}
+ \Pi_\Box(\bar{\ts d}_\dev, \bar p, \ta v^\fluct, p, \bar{d}_\vol)
+\end{align}
+and define the macro-scale quantities as
+\begin{align}
+ \bar{\ts\sigma}_\dev = \pd{\bar{\Pi}}{\bar{\ts d}_\dev},\quad \bar{d}_\vol = \pd{\bar{\Pi}}{\bar p}
+\end{align}
+with
+\begin{align}
+ \bar{\Pi}(\bar{\ts d}_\dev,\bar p)\defeq \Pi_\Box(\bar{\ts d}_\dev,\bar p,\ta v^\fluct\{\bar{\ts d}_\dev,\bar p\}, p\{\bar{\ts d}_\dev,\bar p\},\bar{d}_\vol\{\bar{\ts d}_\dev,\bar p\} )
+\end{align}
+then
+\begin{subequations}
+\begin{align}
+ \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} &= \frac{\partial^2\;\bar\Pi}{\partial\bar{\ts d}_\dev\outerp\partial\bar{\ts d}_\dev} = \tf I^\sym \dprod \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev}\\
+ \pd{\bar{\ts\sigma}_\dev}{\bar p} &= \frac{\partial^2\;\bar\Pi}{\partial\bar{\ts d}_\dev\partial\bar p} = \frac{\partial^2\;\bar\Pi}{\partial\bar p\partial\bar{\ts d}_\dev}
+\end{align}
+\end{subequations}
+
+The RVE problem is stated as
+\begin{subequations}\label{eq:potential_rve_problem}
+\begin{alignat}{5}
+&\Pi'_{\Box,\ta v^\fluct}(\bullet; \delta\ta v^\fluct)  &&= 0 \quad && \forall\; \delta\ta v^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}\\
+&\Pi'_{\Box, p}(\bullet; \delta p)                      &&= 0 \quad && \forall\; \delta p           &&\in \set{P}_\Box\\
+&\Pi'_{\Box, \bar{d}_\vol}(\bullet; \delta\bar{d}_\vol) &&= 0 \quad && \forall\; \delta\bar{d}_\vol &&\in \set{R}
+\end{alignat}
+\end{subequations}
+Furthermore, due to \eqref{eq:potential_rve_problem}, we note that 
+\begin{align}
+  \bar{\sigma}_\dev &= \pd{\bar\Pi}{\bar{\ts d}_\dev} = \pd{\Pi_\Box}{\bar{\ts d}_\dev}\\
+  \bar{d}_\vol &= \pd{\bar\Pi}{\bar p} = \pd{\Pi_\Box}{\bar p}
+\end{align}
+
+For our case, we explicitly have that 
+\begin{align}
+ \Pi_\Box(\bar{\ts d}_\dev, \bar p, \ta v^\fluct, p, \bar{d}_\vol) = \Psi_\Box(\ta v) + b_\Box(p,\ta v) - l_\Box^\pore(\ta v) + \bar p \bar{d}_\vol
+\end{align}
+where we assume a potential $\Psi_\Box(\ta v)$ such that 
+\begin{align}
+ \Psi_\Box'(\ta v;\delta\ta v) = a_\Box(\ta v;\delta\ta v)
+\end{align}
+and abbreviate $\ta v = \bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \bar d_\vol \ta x_\mean + \ta v^\fluct$.
+We have directly that \eqref{eq:potential_rve_problem} is equivalent to \eqref{eq213}.
+Furthermore,
+\begin{alignat}{3}
+ \pd{\bar\Pi}{\bar{\ts d}_\dev} &= \pd{\Pi_\Box}{\bar{\ts d}_\dev} &&= \sum_i \left[ a_\Box(\ta v;\ts E_i\cdot[\ta x-\bar{\ta x}])-l_\Box^\pore(\ts E_i\cdot[\ta x-\bar{\ta x}]) \right]\ts E_i = \bar{\ts\sigma}_{\dev,\Box}\\
+ \pd{\bar\Pi}{\bar{p}} &= \pd{\Pi_\Box}{\bar{p}} &&= \bar d_\vol = \bar d_{\vol,\Box}
+\end{alignat}
+which is identical to the definition of $\bar{\ts\sigma}_{\dev,\Box}\{\bar{\ts d}_\dev,\bar p\}$ and $\bar{d}_{\vol,\Box}\{\bar{\ts d}_\dev,\bar p\}$.
+With this, symmetry is proven.
 
 \end{document}
 
