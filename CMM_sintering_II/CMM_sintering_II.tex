@@ -433,7 +433,7 @@ As long as the porosity is non-zero and macroscopic compressibility prevails, th
 \label{eq416a}
 \end{equation}
 %----------------------------------------------------------------------------
-However, in order to obtain a unified formulation that holds also for the situation when the macroscale response becomes incompressible, it is desirable to introduce a mixed variational format in terms of $\bar{\ts d}_\dev=\left[\bar{\ta v}\outerp\diff\right]^\sym_\dev$ and $\bar{p}$ as the ``prolongation variables'' that are imposed as input to the RVE-problem in a nested macroscale-subscale algorithm. This is achieved as follows:
+However, in order to obtain a unified formulation that holds also for the situation when the macroscale response becomes incompressible, it is desirable to introduce a mixed variational format in terms of $\bar{\ts d}_\dev \defeq \left[\bar{\ta v}\outerp\diff\right]^\sym_\dev$ and $\bar{p}$ as the ``prolongation variables'' that are imposed as input to the RVE-problem in a nested macroscale-subscale algorithm. This is achieved as follows:
 
 For given values of $\bar{\ts d}_\dev$ and $\bar{p}$, the corresponding value $\bar{d}_\vol$ can be computed from the condition
 %----------------------------------------------------------------------------
@@ -502,10 +502,11 @@ Newton iterations for solving the system \eqref{eq411} employ the algorithmic ta
 \end{align}
 \end{subequations}
 %-----------------------------------------------------------------------------
-such that the increments $\Delta\bar{\ta v}$ and $\Delta\bar{p}$ are obtained from the system
+such that the increments $\Delta\bar{\ta v}$ and $\Delta\bar{p}$ are obtained from the macroscale tangent problem
 %----------------------------------------------------------------------------
+\begin{subequations}\label{eq:macro_tangent_problem}
 \begin{alignat}{4}
-  &\bar{a}'_\derv\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} + \bar{a}'_\dep\{\bullet; \delta\bar{\ta v},\Delta\bar{p}\} + \bar{b}\{\Delta\bar p, \delta{\ta v}\}
+  &\bar{a}'_\derv\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} + \bar{a}'_\dep\{\bullet; \delta\bar{\ta v},\Delta\bar{p}\} + \bar{b}\{\Delta\bar p, \delta\bar{\ta v}\}
   &&= \bar l\{\delta\bar{\ta v}\} - \bar{a}\{\bullet; \delta\bar{\ta v}\} - \bar{b}\{\bullet, \delta\bar{\ta v}\}
   &\quad&\forall\; \delta\bar{\ta v} &&\in \bar{\set{V}}^0
 \label{eq414a}\\
@@ -514,6 +515,7 @@ such that the increments $\Delta\bar{\ta v}$ and $\Delta\bar{p}$ are obtained fr
   &&\forall\; \delta\bar{p} &&\in \bar{\set{P}}
  \label{eq414b}
 \end{alignat}
+\end{subequations}
 %----------------------------------------------------------------------------
 where
 %----------------------------------------------------------------------------
@@ -591,7 +593,7 @@ It is noted that the ``macroscale'' part, $\ta{v}^\macro=\ta{v}^\macro_\dev+\ta{
  \label{eq:vMdev} \ta{v}^\macro_\dev &\defeq \bar{\ts d}_\dev\cdot[\ta{x}-\bar{\ta{x}}]\\
  \label{eq:vMvol} \ta{v}^\macro_\vol &\defeq \bar{d}_\vol\ta{x}_\mean,\quad \ta{x}_\mean \defeq \frac13[\ta x-\bar{\ta x}]
 \end{align}
-Whereas $\bar{\ts d}_\dev$ is directly computed from the macroscale problem, $\bar{d}_\vol$ is computed from the RVE-problem and is thus implicitly dependent on the macroscale solution via $\bar{\ts d}_\dev\defeq[\bar{\ta v}\outerp\diff]^\sym_\dev$ and $\bar{p}$.
+whereas $\bar{\ts d}_\dev$ is directly computed from the macroscale problem, $\bar{d}_\vol$ is computed from the RVE-problem and is thus implicitly dependent on the macroscale solution via $\bar{\ts d}_\dev\defeq[\bar{\ta v}\outerp\diff]^\sym_\dev$ and $\bar{p}$.
 
 %----------------------------------------------------------------------------
 The output variables from the RVE-problem, that will be ``returned'' to the macroscale problem \eqref{eq411} in a nested FE$^2$-iteration procedure, are $\bar{d}_\vol$ and $\bar{\ts\sigma}_\dev$. Whereas $\bar{d}_\vol$ is a direct part of the solution of the RVE-problem, $\bar{\ts\sigma}_\dev$ is post-processed as discussed subsequently.
@@ -614,7 +616,7 @@ subscale nonlinearities. To this end, we first rewrite the RVE-problem as the va
   && \forall\; \delta p &&\in \set{P}_\Box
   \\
   &R_\Box^\ded(p;\delta\bar{d}_\vol)
-  && \defeq [\bar{p} - l_\Box^\pore(\ta{x}_\mean)- b_\Box(p,\ta{x}_\mean)]\delta\bar{d}_\vol
+  && \defeq [l_\Box^\pore(\ta{x}_\mean) - \bar{p} - b_\Box(p,\ta{x}_\mean)]\delta\bar{d}_\vol
   && \forall\; \delta\bar{d}_\vol &&\in \set{R}
 \end{alignat}
 \end{subequations}
@@ -829,6 +831,20 @@ which must hold for any given $\dif\bar{\ts d}_\dev$ and $\dif\bar{p}$. We thus 
 \end{subequations}
 \end{enumerate}
 
+The question arises whether the macroscale tangent problem in \eqref{eq:macro_tangent_problem} is symmetrical. Indeed it can be shown (details in the Appendix) that $\bar{\tf E}_\ded$ has major symmetry, and that $\bar{\ts E}_\dep = \bar{\ts C}_\ded$. Due to the latter identity, we obtain $\bar{c}'_\derv\{\bullet;\delta\bar{p},\Delta\bar{\ta v}\} = \bar{a}'_\derv\{\bullet;\Delta\bar{\ta v},\delta\bar{p}\}$ such that \eqref{eq:macro_tangent_problem}
+\begin{subequations}
+\begin{alignat}{4}
+  &\bar{a}'_\derv\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} + \bar{a}'_\dep\{\bullet; \delta\bar{\ta v},\Delta\bar{p}\} + \bar{b}\{\Delta\bar p, \delta\bar{\ta v}\}
+  &&= \bar l\{\delta\bar{\ta v}\} - \bar{a}\{\bullet; \delta\bar{\ta v}\} - \bar{b}\{\bullet, \delta\bar{\ta v}\}
+  &\quad&\forall\; \delta\bar{\ta v} &&\in \bar{\set{V}}^0
+\\
+  &\bar{b}\{\delta\bar p, \Delta\bar{\ta v}\} + \bar{a}'_\derv\{\bullet; \Delta\bar{ \ta v}, \delta\bar{p}\} + \bar{c}'_\dep\{\bullet; \delta\bar{p},\Delta\bar{p}\}
+  &&= -\bar{b}\{\delta\bar{p},\bullet\} - \bar{c}\{\bullet;\delta\bar{p}\}
+  &&\forall\; \delta\bar{p} &&\in \bar{\set{P}}
+\end{alignat}
+\end{subequations}
+\textbf{Remark}: Since there is no need to compute $\bar{\ts C}_\ded$ as given in \eqref{eq220}, there is, in fact, non need to compute the sensitivity fields $\hat{\bar{d}}_{\vol,\ded}^{(i)}$; however, these are integral parts of the solution of the sensitivity problems defined by \eqref{eq233}. $\Box$
+
 \section{Numerical example}\label{sec:examples}
 
 The computations were carried out with a linear constitutive model for the viscous flow. Surface tension was considered only on the particle/pore interface. The viscosity $\mu$ and surface energy $\gamma_\surf$ were set to unit values, and the time step was adjusted to obtain sufficiently small deformations in each time step.
@@ -979,8 +995,7 @@ then
  \pd{\bar{\ts\sigma}_\dev}{\bar p} &= \frac{\partial^2\;\bar\Pi}{\partial\bar{\ts d}_\dev\partial\bar p} = \frac{\partial^2\;\bar\Pi}{\partial\bar p\partial\bar{\ts d}_\dev}
 \end{align}
 \end{subequations}
-
-The RVE problem is stated as
+and the RVE problem is stated as
 \begin{subequations}\label{eq:potential_rve_problem}
 \begin{alignat}{5}
 &\Pi'_{\Box,\ta v^\fluct}(\bullet; \delta\ta v^\fluct)  &&= 0 \quad && \forall\; \delta\ta v^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}\\
@@ -990,7 +1005,7 @@ The RVE problem is stated as
 \end{subequations}
 Furthermore, due to \eqref{eq:potential_rve_problem}, we note that 
 \begin{align}
-  \bar{\sigma}_\dev &= \pd{\bar\Pi}{\bar{\ts d}_\dev} = \pd{\Pi_\Box}{\bar{\ts d}_\dev}\\
+  \bar{\ts\sigma}_\dev &= \pd{\bar\Pi}{\bar{\ts d}_\dev} = \pd{\Pi_\Box}{\bar{\ts d}_\dev}\\
   \bar{d}_\vol &= \pd{\bar\Pi}{\bar p} = \pd{\Pi_\Box}{\bar p}
 \end{align}
 
@@ -1000,16 +1015,16 @@ For our case, we explicitly have that
 \end{align}
 where we assume a potential $\Psi_\Box(\ta v)$ such that 
 \begin{align}
- \Psi_\Box'(\ta v;\delta\ta v) = a_\Box(\ta v;\delta\ta v)
+ \Psi_\Box'(\ta v;\delta\ta v) = a_\Box(\ta v;\delta\ta v) \label{eq:rve_flow_potential}
 \end{align}
 and abbreviate $\ta v = \bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \bar d_\vol \ta x_\mean + \ta v^\fluct$.
-We have directly that \eqref{eq:potential_rve_problem} is equivalent to \eqref{eq213}.
+We have directly that \eqref{eq:potential_rve_problem} is equivalent to the RVE problem stated in \eqref{eq213}.
 Furthermore,
 \begin{alignat}{3}
- \pd{\bar\Pi}{\bar{\ts d}_\dev} &= \pd{\Pi_\Box}{\bar{\ts d}_\dev} &&= \sum_i \left[ a_\Box(\ta v;\ts E_i\cdot[\ta x-\bar{\ta x}])-l_\Box^\pore(\ts E_i\cdot[\ta x-\bar{\ta x}]) \right]\ts E_i = \bar{\ts\sigma}_{\dev,\Box}\\
- \pd{\bar\Pi}{\bar{p}} &= \pd{\Pi_\Box}{\bar{p}} &&= \bar d_\vol = \bar d_{\vol,\Box}
+ \bar{\ts\sigma}_{\dev} = \pd{\bar\Pi}{\bar{\ts d}_\dev} &= \pd{\Pi_\Box}{\bar{\ts d}_\dev} &&= \sum_i \left[ a_\Box(\ta v;\ts E_i\cdot[\ta x-\bar{\ta x}])-l_\Box^\pore(\ts E_i\cdot[\ta x-\bar{\ta x}]) \right]\ts E_i%\\
+ %\pd{\bar\Pi}{\bar{p}} &= \pd{\Pi_\Box}{\bar{p}} &&= \bar d_\vol
 \end{alignat}
-which is identical to the definition of $\bar{\ts\sigma}_{\dev,\Box}\{\bar{\ts d}_\dev,\bar p\}$ and $\bar{d}_{\vol,\Box}\{\bar{\ts d}_\dev,\bar p\}$.
+which is identical to the definition of $\bar{\ts\sigma}_{\dev}\{\bar{\ts d}_\dev,\bar p\}$. % and $\bar{d}_{\vol}\{\bar{\ts d}_\dev,\bar p\}$. 
 With this, symmetry is proven.
 
 \end{document}
