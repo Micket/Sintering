@@ -1,4 +1,5 @@
 *.dvi
+*.bcf
 *.nav
 *.snm
 *.pdf
@@ -19,3 +20,7 @@
 .*
 *.run.xml
 *-blx.bib
+*.wmv
+*.avi
+*.mpeg
+*.mpg
