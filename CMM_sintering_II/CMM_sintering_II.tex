@@ -114,11 +114,9 @@ The present paper presents a novel FE\textsuperscript{2} formulation of the two-
 The seamless transition from compressibility to incompressibility on the macroscale is accomplished by introducing a mixed variational format.
 This has consequences also for the formulation of the mesoscale problem, that is complemented with an extra constraint equation regarding the prolongation of the volumetric part of the macroscopic rate-of-deformation.
 The numerical example shows the sintering of a single representative volume element (RVE), which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
-
 \end{abstract}
 
 \section{Introduction}
-
 Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality. For a hardmetal (such as WC-Co) cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating.
 This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e. via surface traction, stemming from stored surface energy.
 The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally. To model and quantitatively simulate the sintering process is a challenging task.
@@ -399,16 +397,16 @@ Hence, we have $z^\macro = (\ta v^\macro,p^\macro)$ and $z^\fluct = (\ta v^\fluc
 
 Replacing the integrals in \eqref{eq:homogenized_problem_v} by the volume averages, we directly obtain 
 \begin{align}
- R^{\mathrm v}(\ta v, p; \delta\ta v^\macro) = - \bar{a}(\ta v;\delta\ta v^\macro) - \bar{b}(\ta v,\delta\ta v^\macro) = 0 \quad \forall\;\delta\ta v^\macro \in \set V^{\macro,0}
+ R^{\mathrm v}(\ta v, p; \delta\ta v^\macro) = \int_\Omega \left[ - a_\Box(\ta v;\delta\ta v^\macro) - b_\Box(\ta v,\delta\ta v^\macro) + l_\Box^\pore(\ta v,\delta\ta v^\macro)\right] \dif v = 0 \quad \forall\;\delta\ta v^\macro \in \set V^{\macro,0}
  \label{eq:macro_v}
 \end{align}
 with $\ta v = \ta v^\macro + \tilde{\ta v}^\fluct\{\ta v^\macro,p^\macro\}$, $p = p^\macro + \tilde{p}^\fluct\{\ta v^\macro,p^\macro\}$.
-Here we introduced the homogenized variational forms
-\begin{align}
- \label{eq:abar_def} \bar{a}(\ta v;\delta\ta v) &\defeq \int_{\Omega} \left[ a_{\Box}(\ta{v};\delta \ta{v}) - l_{\Box}^\pore(\delta \ta{v}) \right] \dif v\\
- \label{eq:bbar_def} \bar{b}(p, \delta\ta{v}) &\defeq \int_{\Omega} b_{\Box}(p;\delta \ta{v}) \dif v
-\end{align}
-in terms of the RVE-forms
+Here we introduced the RVE-forms
+% \begin{align}
+%  \label{eq:abar_def} \bar{a}(\ta v;\delta\ta v) &\defeq \int_{\Omega} \left[ a_{\Box}(\ta{v};\delta \ta{v}) - l_{\Box}^\pore(\delta \ta{v}) \right] \dif v\\
+%  \label{eq:bbar_def} \bar{b}(p, \delta\ta{v}) &\defeq \int_{\Omega} b_{\Box}(p;\delta \ta{v}) \dif v
+% \end{align}
+% in terms of the RVE-forms
 \begin{subequations}\label{eq:subscale_varforms}
 \begin{align}
     a_{\Box}(\ta{v};\delta \ta{v})
@@ -453,7 +451,7 @@ Here we introduce another homogenized variational form
 \begin{align}
  \bar{c}(\ta v^\fluct, \delta p) &= \int_{\Omega} \underbrace{\frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\cdot\diff]\dif v}_{\bar{d}_{\Box,\vol}} \dif v.
 \end{align}
-The RVE problem is thus composed by $\tilde v^\fluct\{\ta v^\macro,p^\macro\}$, $\tilde p^\fluct\{\ta v^\macro,p^\macro\}$, and $\bar d_{\Box,\vol}\{\ta v^\macro,p^\macro\}$.
+The RVE problem is thus composed by $\tilde v^\fluct\{\ta v^\macro,p^\macro\}$, $\tilde p^\fluct\{\ta v^\macro,p^\macro\}$, and $\bar d_{\vol}^\fluct\{\ta v^\macro,p^\macro\}$.
 %In the present study, we only consider surface energy on the pore boundary, $\Gamma^\pore$, which will be dominant, so for brevity, $\Gamma^\contact$ was dropped from \eqref{eq:subscale_varforms_l}.
 
 \subsection{Macroscale problem for first order homogenization}
@@ -741,6 +739,19 @@ However, \eqref{eq411} is retained as the operational formulation in practice. $
 
 The task is to obtain the homogenized response for prescribed values of $\bar{\ts d}_\dev$ and $\bar{p}$.
 The variables to be returned to the macroscale equilibrium equation are $\bar{\ts\sigma}_\dev=\bar{\ts\sigma}_{\Box,\dev}\{\bar{\ts d}_\dev,\bar{p}\}$ and $\bar{d}_\vol=\bar{d}_{\Box,\vol}\{\bar{\ts d}_\dev, \bar{p}\}$.
+We also replace replace the standard dyad bases with a complete, orthonormal, basis $\{\ts E_i\}_{i=1}^{n_{\mathrm{b}}}$ for symmetric deviatoric tensors.
+Hence, these base dyadics satisfy the conditions $\ts E_i \dprod \ts E_j = \delta_{ij}$ and $\ts E_i\dprod{\ts I}=0$.
+Examples of such bases are shown in the Appendix. We may now adopt the expansions
+%----------------------------------------------------------------------------
+\begin{align}
+ \bar{\ts d}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad  \bar{d}_{\dev,i} = \bar{\ts d}_\dev\dprod \ts E_i
+\label{eq:901} \\
+ \bar{\ts\sigma}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{\sigma}_{\dev,i} \ts E_i,\quad \bar{\sigma}_{\dev,i} = \bar{\ts\sigma}_\dev\dprod \ts E_i
+\label{eq:902}
+\end{align}
+%----------------------------------------------------------------------------
+\textbf{Remark}: For 3D $n_{\mathrm{B}} = 5$, while for 2D $n_{\mathrm{B}} = 2$.
+
 Henceforth, we shall adopt Dirichlet boundary conditions on the local fluctuation part of the velocity field, $\ta{v}^\fluct$.
 We are lead to the following trial and test spaces:
 %----------------------------------------------------------------------------
@@ -775,7 +786,6 @@ For given macroscale variables $\bar{\ts d}_\dev$ and $\bar{p}$, find ($\bar{d}_
 \label{eq:rve_problem_d}
 \end{alignat}
 \end{subequations}
-\todo{p-bar or p-m?}
 %%----------------------------------------------------------------------------
 It is noted that the ``macroscale'' part, $\ta{v}^\macro=\ta{v}^\macro_\dev+\ta{v}^\macro_\vol$, of $\ta{v}$ is decomposed into the deviatoric and volumetric parts as follows:
 %----------------------------------------------------------------------------
@@ -858,22 +868,6 @@ The tangent form $(a_\Box)'$ is given explicitly as
 \subsection{Macroscale algorithmic tensors}
 
 The algorithmic tensors $\bar{\tf{E}}_\ded, \bar{\ts E }_\dep, \bar{\ts C}_\ded$ and $\bar{C}_\dep$, needed in order to carry out macroscale Newton iterations, are obtained for perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$.
-However, these perturbations are not entirely straightforward since the components of $\bar{\ts d}_\dev$ are not all independent.
-In fact, they must satisfy the constraint $\bar{\ts d}_\dev\dprod{\ts I}=0$.
-To circumvent this difficulty, we replace the standard dyad bases with a complete, orthonormal, basis $\{\ts E_i\}_{i=1}^{n_{\mathrm{b}}}$ for symmetric deviatoric tensors.
-Hence, these base dyadics satisfy the conditions $\ts E_i \dprod \ts E_j = \delta_{ij}$ and $\ts E_i\dprod{\ts I}=0$.
-Examples of such bases are shown in the Appendix. We may now adopt the expansions
-%----------------------------------------------------------------------------
-\begin{align}
- \bar{\ts d}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad  \bar{d}_{\dev,i} = \bar{\ts d}_\dev\dprod \ts E_i
-\label{eq:901} \\
- \bar{\ts\sigma}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{\sigma}_{\dev,i} \ts E_i,\quad \bar{\sigma}_{\dev,i} = \bar{\ts\sigma}_\dev\dprod \ts E_i
-\label{eq:902}
-\end{align}
-%----------------------------------------------------------------------------
-
-\textbf{Remark}: For 3D $n_{\mathrm{B}} = 5$, while for 2D $n_{\mathrm{B}} = 2$.
-
 We are now in the position to compute \emph{sensitivity fields}, corresponding to a unit variation of the macroscale variables $\bar{d}_{\dev,i}$ and $\bar{p}$. First, we shall need to compute the differentials
 %----------------------------------------------------------------------------
 \begin{align}
