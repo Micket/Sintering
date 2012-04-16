@@ -339,10 +339,74 @@ In the paper by \textsc{Öhman et al.} \cite{Ohman2011a} the macroscale format i
 However, this format is inadequate and the algorithm breaks down when the macroscale response becomes incompressible, which situation is encountered when the porosity vanishes (locally).
 The goal with this new homogenization is to reach a set of equations that can deal with incompressible and compressible RVE's seamlessly.
 
+\subsection{Extension to macroscale incompressibility}
+In the previous paper, \cite{Ohman2011a}, only the momentum balance equation was homogenized, such that the macroscopic rate of deformation gradient, $\bar{\ts d}$,
+was prolonged to the RVE problem, and the corresponding macroscopic stress tensor $\bar{\ts\sigma}$ was obtained through homogenization, i.e.
+\begin{align}
+ \bar{\ts d} \longrightarrow \bar{\ts\sigma}
+\end{align}
+or alternatively
+\begin{align}
+ \label{eq:old_homogenization} \bar{\ts d}_\dev, \bar{d}_\vol \longrightarrow \bar{\ts\sigma}_\dev, \bar{p}.
+\end{align}
+where
+\begin{align}
+ \bar{\ts d}_\dev &= [\bar{\ta v}\outerp\diff]^\sym_\dev \\
+ \label{eq:dbarvol} \bar{d}_\vol &= \bar{\ta v}\cdot\diff \\
+ \bar{\ts\sigma} &= \bar{\ts\sigma}_\dev - \bar{p}\ts I
+\end{align}
+On each RVE, the incompressible Stokes' Flow problem is solved
+\begin{subequations}\label{eq:old_rve}
+\begin{alignat}{2}
+ &\int_{\Omega^\particle_\Box} \ts{\sigma}\dprod[\delta\ta v^\fluct\outerp\diff]^\sym \dif v
+   = \int_{\Gamma^\pore_\Box} \ta{t}_\surf \cdot \delta\ta v^\fluct \dif a &\quad& \forall \delta\ta v^\fluct\in\set{V}^0_\Box\\
+ &\int_{\Omega^\particle_\Box} \left[\ta{v}\cdot\diff\right] \delta p \dif v
+   =  0 &\quad& \forall \delta p\in\set{P}_\Box
+\end{alignat}
+\end{subequations}
+for the prolonged velocity $\ta v = \bar{\ta d}\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct$.
+The macroscale however only consist only of momentum balance equation
+\begin{align}
+ \label{old:macroscale} \int_\Omega \bar{\ts\sigma}\{\bar{\ts d}\} \dprod [\delta\bar{\ta v}\outerp \diff]^\sym \dif v = 0 \quad \forall \delta\bar{\ta v}\in \bar{\set{V}}^0.
+\end{align}
+
+This procedure breaks down when the porosity vanishes.
+However, this can be countered by softening \eqref{eq:dbarvol} through a Lagrange multiplier for the macroscopic pressure.
+For the RVE problem, this means a mixed control is introduced, whereby the homogenization procedure in \eqref{eq:old_homogenization} is exchanged for
+\begin{align}
+ \label{eq:new_homogenization} \bar{\ts d}_\dev, \bar{p} \longrightarrow \bar{\ts\sigma}_\dev, \bar{d}_\vol.
+\end{align}
+and the the macroscale problem in \eqref{old:macroscale} becomes
+\begin{subequations}\label{eq:new_macro}
+\begin{alignat}{2}
+ &\int_\Omega \bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar{p}\} \dprod [\delta\bar{\ta v}\outerp \diff]^\sym \dif v + \int_\Omega -\bar{p}\;[\delta\bar{\ta v}\cdot\diff]\dif v = 0 &\quad& \forall \delta\bar{\ta v}\in \bar{\set{V}}^0\\
+ &\int_\Omega \left[\bar{d}_\vol\{\bar{\ts d}_\dev,\bar{p}\} - \bar{\ta v}\cdot\diff\right]\delta\bar{p} \dif v &\quad& \forall \delta\bar{p}\in \bar{\set{P}}
+\end{alignat}
+\end{subequations}
+As before, the prolongation of $\bar{\ts d}$ on the RVE remains, but as its volumetric part is now unknown, 
+\begin{align}
+\ta v = \bar{\ts d}_\dev\cdot [x-\bar{x}]+ \bar{d}_\vol \frac13 [\ta x - \bar{\ta x}] + \ta v^{\fluct}
+\end{align}
+we test with $\delta\bar{d}_\vol \frac13[\ta x-\bar{\ta x}]$, which yields a third equation for the RVE problem, and we obtain
+\begin{subequations}\label{eq:new_rve}
+\begin{alignat}{2}
+ &\int_{\Omega^\particle_\Box} \ts{\sigma}\dprod[\delta\ta v^\fluct\outerp\diff]^\sym \dif v
+   = \int_{\Gamma^\pore_\Box} \ta{t}_\surf \cdot \delta\ta v^\fluct \dif a &\quad& \forall \delta\ta v^\fluct\in\set{V}^0_\Box\\
+ &\int_{\Omega^\particle_\Box} \left[\ta{v}\cdot\diff\right] \delta p \dif v
+   =  0 &\quad& \forall \delta p\in\set{P}_\Box \\
+ &\int_{\Omega^\particle_\Box} \frac13 p\;[\ta{x}-\bar{\ta x}]\dif v \;\delta\bar{d}_\vol 
+   =  \left[ \int_{\Gamma^\pore_\Box} \frac13 \ta{t}_\surf \cdot [\ta x-\bar{\ta x}] \dif a -\bar p\right]\delta\bar{d}_\vol &\quad& \forall \delta\bar{d}_\vol\in\set{R}
+\end{alignat}
+\end{subequations}
+
 \subsection{Macro- and subscale coupling --- Variational multiscale setting}
-Classical model-based homogenization for a single-phase medium (without pores) is based on the virtual work equation that is volume-averaged on the Representative Volume Element (RVE).
-Such a strategy can be formulated in the spirit of the Variational Multiscale Method (VMM), c.f. \cite{Hughesetal1998}, \cite{LarsonMalqvist2007}.
-In the present case, when the virtual work equation \eqref{eq:weak_form_v} is complemented by the constraint equation \eqref{eq:weak_form_p}, it is necessary to carefully consider the steps in VMM to arrive at the appropriate homogenized equation(s).
+One can also obtain an equivalent set of equations as \label{eq:new_rve} and \eqref{eq:new_macro} by directly homogenizing both the momentum balance and continuity equation in a variationally consistent way.
+This procedure is similar to previous work, \cite{Ohman2011a}, with the exception that both the velocity and pressure field are now divided into smooth macroscopic parts and subscale fluctuations.
+
+% Classical model-based homogenization for a single-phase medium (without pores) is based on the virtual work equation that is volume-averaged on the Representative Volume Element (RVE).
+% Such a strategy can be formulated in the spirit of the Variational Multiscale Method (VMM), c.f. \cite{Hughesetal1998}, \cite{LarsonMalqvist2007}.
+% In the present case, when the virtual work equation \eqref{eq:weak_form_v} is complemented by the constraint equation \eqref{eq:weak_form_p}, it is necessary to carefully consider the steps in VMM to arrive at the appropriate homogenized equation(s).
+
 To this end, we first introduce the abbreviated notation $z = (\ta v, p) \in \set{Z} = \set V \times \set P$, where $\set Z$ represents the space of fine-scale (non-homogenized) solutions to the system \eqref{eq:weak_form}, which may conveniently be abbreviated in abstract form as the residual equation
 \begin{align}
  R(z; \delta z) = 0\quad \forall\;\delta z\in \set Z^0
@@ -449,10 +513,11 @@ and the homogenized volumetric strain rate for an RVE as
 \end{align}
 Here we introduce another homogenized variational form
 \begin{align}
- \bar{c}(\ta v^\fluct, \delta p) &= \int_{\Omega} \underbrace{\frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\cdot\diff]\dif v}_{\bar{d}_{\Box,\vol}} \dif v.
+ \bar{c}(\ta v^\fluct, \delta p) &= \int_{\Omega} \underbrace{\frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\cdot\diff]\dif v}_{\bar{d}^\fluct_{\vol}} \dif v.
 \end{align}
 The RVE problem is thus composed by $\tilde v^\fluct\{\ta v^\macro,p^\macro\}$, $\tilde p^\fluct\{\ta v^\macro,p^\macro\}$, and $\bar d_{\vol}^\fluct\{\ta v^\macro,p^\macro\}$.
 %In the present study, we only consider surface energy on the pore boundary, $\Gamma^\pore$, which will be dominant, so for brevity, $\Gamma^\contact$ was dropped from \eqref{eq:subscale_varforms_l}.
+\todo{How to deal with ds and dbox?}
 
 \subsection{Macroscale problem for first order homogenization}
 In standard fashion the macroscale velocity field $\bar{\ta v}$ is prolonged to the RVE, whereby the explicit part, which is denoted $\ta{v}^\macro$, is assumed to vary only \emph{linearly} (derivatives up to first order are included) within the RVE, i.e.
@@ -733,7 +798,6 @@ In the incompressible case, \eqref{eq411} can be replaced by the classical forma
 However, \eqref{eq411} is retained as the operational formulation in practice. $\Box$
 
 \section{RVE-problem for given macroscale fields}\label{sec:rve_problem}
-
 
 \subsection{Variational format -- Dirichlet boundary conditions}
 
