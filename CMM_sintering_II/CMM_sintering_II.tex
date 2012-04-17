@@ -292,7 +292,7 @@ It can then be shown that the weak form of \eqref{eq:strong_form} reads:
 %-----------------------------------------------------------------
 \begin{subequations}\label{eq:weak_form}
 \begin{align}
-    \int_{\Omega^\particle} \ts{\sigma}\dprod\delta \ts{d} \dif v
+    \int_{\Omega^\particle} \ts{\sigma}\dprod[\delta \ta v\outerp\diff] \dif v
     & =
     \int_{\Gamma^\pore} \ta{t}_\surf \cdot \delta\ta{v} \dif a
 \label{eq:weak_form_v} \\
@@ -345,62 +345,102 @@ was prolonged to the RVE problem, and the corresponding macroscopic stress tenso
 \begin{align}
  \bar{\ts d} \longrightarrow \bar{\ts\sigma}
 \end{align}
-or alternatively
+or alternatively, by splitting into volumetric and deviatoric parts
+\begin{alignat}{2}
+ &\bar{\ts\sigma}\to \bar{\ts\sigma}_\dev, \bar{p}&\quad&\text{where}\quad \bar{p} \defeq -\frac13 \bar{\ts\sigma}\dprod \ts I,\quad \bar{\ts\sigma}_\dev \defeq \bar{\ts\sigma} - \bar{p} \ts I \\ 
+ &\bar{\ts d}\to \bar{\ts d}_\dev, \bar{d}_\vol   &\quad&\text{where}\quad \bar{d}_\vol \defeq \bar{\ts d}\dprod \ts I,\quad \bar{\ts d}_\dev \defeq \bar{\ts d} - \frac13\bar{d}_\vol\ts I
+\end{alignat}
+we can write an equivalent homogenization procedure as
 \begin{align}
  \label{eq:old_homogenization} \bar{\ts d}_\dev, \bar{d}_\vol \longrightarrow \bar{\ts\sigma}_\dev, \bar{p}.
 \end{align}
-where
+We also note that the relation between the rate of deformation gradient and velocity
 \begin{align}
- \bar{\ts d}_\dev &= [\bar{\ta v}\outerp\diff]^\sym_\dev \\
- \label{eq:dbarvol} \bar{d}_\vol &= \bar{\ta v}\cdot\diff \\
- \bar{\ts\sigma} &= \bar{\ts\sigma}_\dev - \bar{p}\ts I
+ \bar{\ts d}_\dev &= [\bar{\ta v} \outerp\diff]^\sym_\dev \\
+\label{eq:dbarvol} \bar{d}_\vol &= \bar{\ta v}\cdot\diff
 \end{align}
-On each RVE, the incompressible Stokes' Flow problem is solved
+
+The macroscale problem consist only of momentum balance equation; find $\bar{\ta v} \in \bar{\set{V}}$ such that
+\begin{align}
+ \label{eq:old_macro} \int_\Omega \bar{\ts\sigma}\{\bar{\ts d}\} \dprod [\delta\bar{\ta v}\outerp \diff] \dif v = 0 \quad \forall \delta\bar{\ta v}\in \bar{\set{V}}^0.
+\end{align}
+while on each RVE, the incompressible Stokes' Flow problem is as follows; find $(\ta v^\fluct,p) \in \set{V}_\Box\times\set{P}_\Box$ such that
 \begin{subequations}\label{eq:old_rve}
 \begin{alignat}{2}
- &\int_{\Omega^\particle_\Box} \ts{\sigma}\dprod[\delta\ta v^\fluct\outerp\diff]^\sym \dif v
-   = \int_{\Gamma^\pore_\Box} \ta{t}_\surf \cdot \delta\ta v^\fluct \dif a &\quad& \forall \delta\ta v^\fluct\in\set{V}^0_\Box\\
- &\int_{\Omega^\particle_\Box} \left[\ta{v}\cdot\diff\right] \delta p \dif v
+\label{eq:old_rve_momentum}
+ &\frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} \ts{\sigma}\dprod[\delta\ta v^\fluct\outerp\diff]^\sym \dif v
+   = \frac{1}{|\Omega_\Box|}\int_{\Gamma^\pore_\Box} \ta{t}_\surf \cdot \delta\ta v^\fluct \dif a &\quad& \forall \delta\ta v^\fluct\in\set{V}^0_\Box\\
+\label{eq:old_rve_cont}
+ &\frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} \left[\ta{v}\cdot\diff\right] \delta p \dif v
    =  0 &\quad& \forall \delta p\in\set{P}_\Box
 \end{alignat}
 \end{subequations}
 for the prolonged velocity $\ta v = \bar{\ta d}\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct$.
-The macroscale however only consist only of momentum balance equation
-\begin{align}
- \label{old:macroscale} \int_\Omega \bar{\ts\sigma}\{\bar{\ts d}\} \dprod [\delta\bar{\ta v}\outerp \diff]^\sym \dif v = 0 \quad \forall \delta\bar{\ta v}\in \bar{\set{V}}^0.
-\end{align}
+Considering \eqref{eq:old_rve_momentum}, $\ts\sigma = \ts\sigma_\dev(\ts d) - p \ts I$, where $\ts d\defeq[\ta v\outerp\diff]^\sym$ and $p$ is the Lagrange multiplier pertinent to the condition in \eqref{eq:old_rve_cont}.
+The macroscopic stress, $\bar{\ts\sigma}\{\bar{\ts d}\}$, is obtained through post-processing.
 
 This procedure breaks down when the porosity vanishes.
-However, this can be countered by softening \eqref{eq:dbarvol} through a Lagrange multiplier for the macroscopic pressure.
+However, this can be countered by relaxing \eqref{eq:dbarvol} through a Lagrange multiplier for the macroscopic pressure.
 For the RVE problem, this means a mixed control is introduced, whereby the homogenization procedure in \eqref{eq:old_homogenization} is exchanged for
 \begin{align}
  \label{eq:new_homogenization} \bar{\ts d}_\dev, \bar{p} \longrightarrow \bar{\ts\sigma}_\dev, \bar{d}_\vol.
 \end{align}
-and the the macroscale problem in \eqref{old:macroscale} becomes
+and the the macroscale problem in \eqref{eq:old_macro} is reformulated to find $(\bar{\ta v},\bar{p}) \in \bar{\set{V}}\times\bar{\set{P}}$ such that
 \begin{subequations}\label{eq:new_macro}
 \begin{alignat}{2}
- &\int_\Omega \bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar{p}\} \dprod [\delta\bar{\ta v}\outerp \diff]^\sym \dif v + \int_\Omega -\bar{p}\;[\delta\bar{\ta v}\cdot\diff]\dif v = 0 &\quad& \forall \delta\bar{\ta v}\in \bar{\set{V}}^0\\
+ &\int_\Omega \bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar{p}\} \dprod [\delta\bar{\ta v}\outerp \diff] \dif v + \int_\Omega -\bar{p}\;[\delta\bar{\ta v}\cdot\diff]\dif v = 0 &\quad& \forall \delta\bar{\ta v}\in \bar{\set{V}}^0\\
  &\int_\Omega \left[\bar{d}_\vol\{\bar{\ts d}_\dev,\bar{p}\} - \bar{\ta v}\cdot\diff\right]\delta\bar{p} \dif v &\quad& \forall \delta\bar{p}\in \bar{\set{P}}
 \end{alignat}
 \end{subequations}
-As before, the prolongation of $\bar{\ts d}$ on the RVE remains, but as its volumetric part is now unknown, 
+As before, the prolongation of $\bar{\ts d}$ on the RVE remains and can be expanded as
 \begin{align}
-\ta v = \bar{\ts d}_\dev\cdot [x-\bar{x}]+ \bar{d}_\vol \frac13 [\ta x - \bar{\ta x}] + \ta v^{\fluct}
+\ta v = \bar{\ts d}_\dev\cdot [\ta x-\bar{\ta x}]+ \bar{d}_\vol \frac13 [\ta x - \bar{\ta x}] + \ta v^{\fluct}
 \end{align}
-we test with $\delta\bar{d}_\vol \frac13[\ta x-\bar{\ta x}]$, which yields a third equation for the RVE problem, and we obtain
+but as its volumetric part is now an unknown output from the RVE-problem.
+Testing the subscale momentum balance with $\delta\bar{d}_\vol \frac13[\ta x-\bar{\ta x}]$ yields a third equation for the RVE problem (steps are detailed in Appendix A1).
+We then obtain the following RVE-problem; find $(\ta v^\fluct,p,\bar{d}_\vol)\in \set{V}_\Box \times \set{P}_\Box \times \set{R}$ such that
 \begin{subequations}\label{eq:new_rve}
 \begin{alignat}{2}
- &\int_{\Omega^\particle_\Box} \ts{\sigma}\dprod[\delta\ta v^\fluct\outerp\diff]^\sym \dif v
-   = \int_{\Gamma^\pore_\Box} \ta{t}_\surf \cdot \delta\ta v^\fluct \dif a &\quad& \forall \delta\ta v^\fluct\in\set{V}^0_\Box\\
- &\int_{\Omega^\particle_\Box} \left[\ta{v}\cdot\diff\right] \delta p \dif v
+ &\frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} \left[\ts{\sigma}_\dev\dprod[\delta\ta v^\fluct\outerp\diff] - p\;[\delta\ta v^\fluct \cdot \diff] \right]\dif v
+   = \frac{1}{|\Omega_\Box|}\int_{\Gamma^\pore_\Box} \ta{t}_\surf \cdot \delta\ta v^\fluct \dif a &\quad& \forall \delta\ta v^\fluct\in\set{V}^0_\Box\\
+ &\frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} \left[\ta{v}\cdot\diff\right] \delta p \dif v
    =  0 &\quad& \forall \delta p\in\set{P}_\Box \\
- &\int_{\Omega^\particle_\Box} \frac13 p\;[\ta{x}-\bar{\ta x}]\dif v \;\delta\bar{d}_\vol 
-   =  \left[ \int_{\Gamma^\pore_\Box} \frac13 \ta{t}_\surf \cdot [\ta x-\bar{\ta x}] \dif a -\bar p\right]\delta\bar{d}_\vol &\quad& \forall \delta\bar{d}_\vol\in\set{R}
+ &\frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} p\dif v \;\delta\bar{d}_\vol 
+   =  \left[\frac{1}{|\Omega_\Box|}\int_{\Gamma^\pore_\Box} \frac13 \ta{t}_\surf \cdot [\ta x-\bar{\ta x}] \dif a -\bar p\right]\delta\bar{d}_\vol &\quad& \forall \delta\bar{d}_\vol\in\set{R}
 \end{alignat}
 \end{subequations}
+From which the macroscale properties used in \eqref{eq:new_macro} is obtained; $\bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar p\}$ is post-processed while $\bar{d}_\vol$ is solved for directly.
+
+\subsubsection{Summary of old FE\textsuperscript{2} procedure}
+\begin{itemize}
+ \item Macroscale-problem
+ \begin{itemize}
+  \item Fields: $\bar{\ta v}$, solved from \eqref{eq:old_macro}
+ \end{itemize}
+ \item RVE-problem
+ \begin{itemize}
+  \item Input: $\bar{\ts d}$
+  \item Fields: $\ta v^\fluct$, $p$, solved from \eqref{eq:old_rve}
+  \item Output: $\bar{\ts\sigma}$ (post-processed)
+ \end{itemize}
+\end{itemize}
+
+\subsubsection{Summary of new FE\textsuperscript{2} procedure}
+\begin{itemize}
+ \item Macroscale-problem
+ \begin{itemize}
+  \item Fields: $\bar{\ta v}$, $\bar{p}$, solved from  \eqref{eq:new_macro}
+ \end{itemize}
+ \item RVE-problem
+ \begin{itemize}
+  \item Input: $\bar{\ts d}_\dev$, $\bar{p}$
+  \item Fields: $\ta v^\fluct$, $\bar{d}_\vol$, $p$, solved from \eqref{eq:new_rve}
+  \item Output: $\bar{\ts\sigma}$ (post-processed), $\bar{d}_\vol$
+ \end{itemize}
+\end{itemize}
 
 \subsection{Macro- and subscale coupling --- Variational multiscale setting}
-One can also obtain an equivalent set of equations as \label{eq:new_rve} and \eqref{eq:new_macro} by directly homogenizing both the momentum balance and continuity equation in a variationally consistent way.
+One can also obtain an equivalent set of equations as \eqref{eq:new_rve} and \eqref{eq:new_macro} by directly homogenizing both the momentum balance and continuity equation in a variationally consistent way.
 This procedure is similar to previous work, \cite{Ohman2011a}, with the exception that both the velocity and pressure field are now divided into smooth macroscopic parts and subscale fluctuations.
 
 % Classical model-based homogenization for a single-phase medium (without pores) is based on the virtual work equation that is volume-averaged on the Representative Volume Element (RVE).
