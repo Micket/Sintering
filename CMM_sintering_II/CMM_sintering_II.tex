@@ -97,7 +97,7 @@
 \addbibresource{OhmanPublications.bib}
 
 \begin{document}
-\title{FE\textsuperscript{2} for Liquid-Phase Sintering with Seamless Transition from Macroscopic Compressibility to Incompressibility}
+\title{Computational Homogenization of Liquid-Phase Sintering with Seamless Transition from Macroscopic Compressibility to Incompressibility}
 
 \author{
 Mikael Öhman, Fredrik Larsson and Kenneth Runesson\\
@@ -142,6 +142,7 @@ We (still) assume that the particles are homogeneous and deform as a viscous flu
 Moreover, the simplifying assumption is introduced that the flow properties are unaffected by temperature changes, i.e the sintering process is only modeled during the fully heated part of the process.
 
 The paper is structured as follows:
+\todo{Update this when its finished}
 The various features of subscale modeling (surface tension, particle arrangements within the RVE, etc.) are briefly summarized in Section \ref{sec:subscale}.
 This is followed in Section \ref{sec:macro} by the description of the macroscale problem, whereas the RVE-problem with Dirichlet boundary conditions is presented in Section \ref{sec:rve_problem}.
 Numerical examples, based on a single RVE as well as FE\textsuperscript{2}-computations, are presented in Section \ref{sec:examples}. Conclusions and an outlook to future developments are given in the final section.
@@ -330,7 +331,7 @@ The boundaries of the (closed) pore-space are collectively denoted $\Gamma_\Box^
 %-------------------------------------------------------------------------
 \begin{figure}[th!]
     \centering
-    \subfloat[$t = 0$]{\input{figures/4particle_rve.tikz}\label{fig:4particle_rve_a}}
+    \subfloat[$t = 0$]{\input{figures/4particle_rve.tikz}\label{fig:4particle_rve_a}} \hspace{1em}
     \subfloat[$t > 0$]{\input{figures/4particles_deformed.tikz}\label{fig:4particle_rve_b}}
     \caption{(a) Initial configuration of RVE in 2D consisting of circular particles in a perfect square lattice. The contact ``points'' are flattened due to precompaction. (b) Deformed configuration (sketchy).}
     \label{fig:4particleRVE}
@@ -363,7 +364,7 @@ where the macroscale (homogenized) stress $\bar{\ts\sigma}$ is computed as
 \bar{\ts\sigma} = 
 \langle \ts{\sigma} \rangle_{\Box} -
 \frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}^\pore} [\ts{t}_\surf\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a =
-\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}} [\ts{t}\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a
+\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}} [\ts{t}\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a.
 \label{eq:sigmmabardef}
 \end{align}
 %------------------------------------------------------------------
@@ -385,7 +386,7 @@ The RVE-problem is formulated as follows: For given value of the macroscale vari
     &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}
 \label{eq:rve_problem_old_v}
  \\
-    &b_\Box(\delta p, \ta{v}^\macro(\bar{e})+\ta{v}^\fluct)
+    &b_\Box(\delta p, \ta{v}^\macro+\ta{v}^\fluct)
     && =
     0
     && \forall\; \delta p &&\in \set{P}_\Box
@@ -443,7 +444,7 @@ In Box 1, we used the split into deviatoric and volumetric parts:
     &\bar{\ts d} = \bar{\ts d}_\dev + \frac{1}{3}\bar{e} \ts I
     &\quad&\text{where}\quad \bar{e} \defeq \bar{\ts d}\dprod \ts I,&\quad& \bar{\ts d}_\dev \defeq \bar{\ts d} - \frac13\bar{e}\ts I \\
     &\bar{\ts\sigma} = \bar{\ts\sigma}_\dev - \bar{p} \ts I
-    &\quad&\text{where}\quad \bar{p} \defeq -\frac13 \bar{\ts\sigma}\dprod \ts I,&\quad& \bar{\ts\sigma}_\dev \defeq \bar{\ts\sigma} - \bar{p} \ts I
+    &\quad&\text{where}\quad \bar{p} \defeq -\frac13 \bar{\ts\sigma}\dprod \ts I,&\quad& \bar{\ts\sigma}_\dev \defeq \bar{\ts\sigma} + \bar{p} \ts I
 \end{alignat}
 %-------------------------------------------------------------------------------------------------------------------
 and where $\bar{\ts d}_\dev = [\bar{\ta v} \outerp\diff]^\sym_\dev$, $\bar{e} = \bar{\ta v}\cdot\diff$.
@@ -455,9 +456,9 @@ and where $\bar{\ts d}_\dev = [\bar{\ta v} \outerp\diff]^\sym_\dev$, $\bar{e} = 
 In this Section we outline the the strategy for replacing the velocity-based format in Section \ref{sec:homogencompress} to a mixed variational format on the macroscale. Hence, we introduce the macroscale pressure $\bar{p}$ as an independent variable in the momentum balance equation, and the relation $\bar{e} = \bar{\ta v}\cdot\diff$ is imposed in a weak sense. The resulting macroscale problem then becomes: Find $(\bar{\ta v},\bar{p}) \in \bar{\set{V}}\times\bar{\set{P}}$ that solve
 %-------------------------------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq:new_macro}
-\begin{alignat}{2}
- &\int_\Omega \bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar{p}\} \dprod [\delta\bar{\ta v}\outerp \diff] \dif v + \int_\Omega -\bar{p}\;[\delta\bar{\ta v}\cdot\diff]\dif v = 0 &\quad& \forall \delta\bar{\ta v}\in \bar{\set{V}}^0\\
- &\int_\Omega \left[\bar{e}\{\bar{\ts d}_\dev,\bar{p}\} - \bar{\ta v}\cdot\diff\right]\delta\bar{p} \dif v &\quad& \forall \delta\bar{p}\in \bar{\set{P}}
+\begin{alignat}{3}
+ &\int_\Omega \bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar{p}\} \dprod [\delta\bar{\ta v}\outerp \diff] \dif v + \int_\Omega -\bar{p}\;[\delta\bar{\ta v}\cdot\diff]\dif v &&= 0 &\quad& \forall \delta\bar{\ta v}\in \bar{\set{V}}^0\\
+ &\int_\Omega \left[\bar{e}\{\bar{\ts d}_\dev,\bar{p}\} - \bar{\ta v}\cdot\diff\right]\delta\bar{p} \dif v &&= 0&\quad& \forall \delta\bar{p}\in \bar{\set{P}}
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------------------------------------------------------------------
@@ -482,7 +483,7 @@ The important difference to the previous formulation is that the volumetric part
     &b_\Box(\delta p, \ta{v}^\macro_\vol(\bar{e})+\ta{v}^\fluct)
     && =
     0
-    && \forall\; \delta p^\fluct &&\in \set{P}_\Box
+    && \forall\; \delta p &&\in \set{P}_\Box
 \label{eq:rve_problem_new_p}
 \\
     &b_\Box(p,\ta{x}_\mean)\delta\bar{e}
@@ -497,11 +498,11 @@ where $\ta{x}_\mean \defeq \frac13[\ta x-\bar{\ta x}]$.
 
 As to the ``feed-back'' of variables to the macroscale problem, we note that that $\bar{e}$ is part of the solution of the RVE-problem, whereas $\bar{\ts\sigma}_{\dev}\{\bar{\ts d}_\dev,\bar{p}\}$ is post-processed as
 %-----------------------------------------------------------------------------------------------------
-\begin{align}
- \bar{\ts\sigma}_\dev = \frac{1}{|\Omega_\Box|}\int_{\Gamma_\Box} [\ta t \outerp [\ta x-\bar{\ta x}]]^\sym \dif a
+\begin{align}\label{eq:sigma_bar_dev_hom}
+ \bar{\ts\sigma}_\dev = \frac{1}{|\Omega_\Box|}\int_{\Gamma_\Box} [\ta t \outerp [\ta x-\bar{\ta x}]]^\sym \dif a + \bar{p}\ts I
 \end{align}
 %----------------------------------------------------------------------------------
-\textbf{Remark}: It was used explicitly in \eqref{eq:rve_problem_new_v} that $\ta{\sigma}_\dev$ is proportional to ${\ts d}_\dev$; hence, it depends on $\bar{\ts d}_\dev$ (via $\ta{v}^\macro_\dev$) but \emph{not} on $\bar{e}$ (via $\ta{v}^\macro_\vol$). $\Box$
+\textbf{Remark}: It was used explicitly in \eqref{eq:rve_problem_new_v} that $\ta{\sigma}_\dev$ is proportional to ${\ts d}_\dev$. $\Box$
 %----------------------------------------------------------------------------------------------------------------
 \begin{center}
 \fbox{\begin{minipage}{\linewidth}
@@ -521,7 +522,7 @@ BOX2 Summary of FE\textsuperscript{2} format for seamless transition from macros
 \end{minipage}}
 \end{center}
 %-------------------------------------------------------------------------------------------------------------------------------
-
+\subsubsection{Macroscale incompressibility}
 Now, consider the extreme situation of macroscopic incompressibility, defined by the condition $\bar{e}=0$. The system \eqref{eq:new_macro} is then simplified as follows:
 %-------------------------------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq:new_macro_incomp}
@@ -544,7 +545,7 @@ i. e. $\bar{p}$ is now a classical Lagrange multiplier. Moreover, the result $\b
     &b_\Box(\delta p, \ta{v}^\macro_\vol(\bar{e})+\ta{v}^\fluct)
     && =
     0
-    && \forall\; \delta p^\fluct &&\in \set{P}_\Box
+    && \forall\; \delta p &&\in \set{P}_\Box
 \label{eq:rve_problem_new_p_incomp}
 \\
     &b_\Box(p,\ta{x}_\mean)\delta\bar{e}
@@ -627,23 +628,23 @@ where
  \label{eq415d}
 \end{align}
 %----------------------------------------------------------------------------
-\textbf{Remark}: In the incompressible case, \eqref{eq411} can be replaced by the classical format
-%----------------------------------------------------------------------------
-\begin{subequations}\label{eq420}
-\begin{alignat}{3}
- &\bar a\{\bar{\ta v},\bar p; \delta\bar{\ta v}\} + \bar b\{\bar p, \delta\bar{\ta v}\}
- &&= 0
- &\quad& \forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0
- \label{eq420a}\\
- &\bar b\{\delta\bar p, \bar{\ta v}\}
- &&= 0
- &\quad& \forall\; \delta\bar p \in \bar{\set{P}}
- \label{eq420b}
-\end{alignat}
-\end{subequations}
-%----------------------------------------------------------------------------
-However, \eqref{eq411} is always retained as the operational formulation in practice. $\Box$
-
+% \textbf{Remark}: In the incompressible case, \eqref{eq411} can be replaced by the classical format
+% %----------------------------------------------------------------------------
+% \begin{subequations}\label{eq420}
+% \begin{alignat}{3}
+%  &\bar a\{\bar{\ta v},\bar p; \delta\bar{\ta v}\} + \bar b\{\bar p, \delta\bar{\ta v}\}
+%  &&= 0
+%  &\quad& \forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0
+%  \label{eq420a}\\
+%  &\bar b\{\delta\bar p, \bar{\ta v}\}
+%  &&= 0
+%  &\quad& \forall\; \delta\bar p \in \bar{\set{P}}
+%  \label{eq420b}
+% \end{alignat}
+% \end{subequations}
+% %----------------------------------------------------------------------------
+% However, \eqref{eq411} is always retained as the operational formulation in practice. $\Box$
+% 
 
 %Special issues related to the RVE-problem will be discussed. These are (1) the iterative solution, (2) computation of macroscale algorithmic tangent tensors, (3) symmetry properties of the total macroscale tangent in the mixed format.
 
@@ -655,17 +656,17 @@ subscale nonlinearities. To this end, we first rewrite the RVE-problem as the va
 \begin{subequations}
 \begin{alignat}{4}
   &R_\Box^\derv(\ta{v}^\fluct,p; \delta \ta{v}^\fluct)
-  && \defeq l_\Box^\pore(\delta \ta{v}^\fluct) -
+  &&\defeq l_\Box^\pore(\delta \ta{v}^\fluct) -
     a_\Box(\ta{v}^\macro_\dev(\bar{\ta{d}}_\dev)+\ta{v}^\fluct;\delta \ta{v}^\fluct) -
     b_\Box(p,\delta\ta{v}^\fluct)
   &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}
   \\
   &R_\Box^\dep(\bar{e},\ta{v}^\fluct; \delta p)
-  && \defeq - b_\Box(\delta p,\ta{v}^\macro_\vol(\bar{e})+\ta{v}^\fluct)
+  &&\defeq - b_\Box(\delta p,\ta{v}^\macro_\vol(\bar{e})+\ta{v}^\fluct)
   && \forall\; \delta p &&\in \set{P}_\Box
   \\
   &R_\Box^\ded(p;\delta\bar{e})
-  && \defeq [l_\Box^\pore(\ta{x}_\mean) - \bar{p} - b_\Box(p,\ta{x}_\mean)]\delta\bar{e}
+  &&\defeq [l_\Box^\pore(\ta{x}_\mean) - \bar{p} - b_\Box(p,\ta{x}_\mean)]\delta\bar{e}
   && \forall\; \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
@@ -682,7 +683,7 @@ $\ta{v}^\fluct, p, \bar{e}$ for given $\bar{\ts d}_\dev$ and $\bar{p}$ then beco
 %----------------------------------------------------------------------------
 where the iterative updates $\Delta {\ta{v}}^\fluct\in{\set{V}}_\Box^{(\Dirichlet)}, \Delta p \in{\set{P}}_\Box, \Delta\bar{e}\in\set{R}$ are solved from the tangent equations
 %----------------------------------------------------------------------------
-\begin{subequations}\label{eq252b}
+\begin{subequations}\label{eq:rve_iterative}
 \begin{alignat}{4}
     &(a_\Box)'(\ta v^\macro_\dev + \ta v^{\fluct(k)}; \delta\ta{v}^\fluct,\Delta \ta{v}^\fluct)
     + b_\Box(\Delta p,\delta\ta{v}^\fluct)
@@ -711,7 +712,7 @@ The tangent form $(a_\Box)'$ is given explicitly as
 %----------------------------------------------------------------------------
 
 
-\subsection{Computation of macroscale algorithmic tangent tensors HOW MUCH IN APPENDIX??}
+\subsection{Computation of macroscale algorithmic tangent tensors}\todo{How much in appendix?}
 
 The algorithmic tensors $\bar{\tf{E}}_\ded, \bar{\ts E }_\dep, \bar{\ts C}_\ded$ and $\bar{C}_\dep$, needed in order to carry out macroscale Newton iterations in \eqref{eq:macro_tangent_problem}, are obtained for perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$. However, in order to obtain a suitable representation of deviatoric macroscale 2nd order tensors, we conclude that it is convenient to replace the standard dyad bases with a complete, orthonormal, basis $\{\ts E_i\}_{i=1}^{n_{\mathrm{b}}}$ for symmetric deviatoric tensors.
 Hence, these base dyadics satisfy the conditions $\ts E_i \dprod \ts E_j = \delta_{ij}$ and $\ts E_i\dprod{\ts I}=0$.
@@ -719,9 +720,9 @@ Examples of such bases are shown in the Appendix. We may now adopt the expansion
 %----------------------------------------------------------------------------
 \begin{align}
  \bar{\ts d}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{d}_{\dev,i} \ts E_i,\quad  \bar{d}_{\dev,i} = \bar{\ts d}_\dev\dprod \ts E_i
-\label{eq:901} \\
+\label{eq:d_dev_base} \\
  \bar{\ts\sigma}_\dev &= \sum_i^{n_{\mathrm{B}}} \bar{\sigma}_{\dev,i} \ts E_i,\quad \bar{\sigma}_{\dev,i} = \bar{\ts\sigma}_\dev\dprod \ts E_i
-\label{eq:902}
+\label{eq:s_dev_base}
 \end{align}
 %----------------------------------------------------------------------------
 \textbf{Remark}: For 3D $n_{\mathrm{B}} = 5$, while for 2D $n_{\mathrm{B}} = 2$.
@@ -735,7 +736,7 @@ We are now in the position to compute \emph{sensitivity fields}, corresponding t
 \label{eq:dv}
 \end{align}
 %----------------------------------------------------------------------------------
-Using \eqref{eq:901} we obtain
+Using \eqref{eq:d_dev_base} we obtain
 %----------------------------------------------------------------------------
 \begin{align}
   \dif \ta{v}^{\macro}_\dev &= \sum_{i} \hat{\ta{v}}^{\macro(i)}_\dev \dif\bar{d}_{\dev,i}, \quad  \hat{\ta{v}}^{\macro(i)}_\dev = \ts E_i \cdot [\ta x - \bar{\ta x}]
@@ -802,8 +803,8 @@ We also obtain trivially the relation
 \end{align}
 %------------------------------------------------------------------------------------
 In order to compute the pertinent sensitivities, we conclude that the state equations \eqref{eq:rve_problem_new} must hold for $\bar{\ts d}_\dev,\bar{p}$ as well as for a perturbed state $\bar{\ts d}_\dev+\dif\bar{\ts d}_\dev, \bar{p}+\dif\bar{p}$.
-However, a given change $\dif\bar{\ts d}_\dev$ gives rise to a change, not only of $\dif\ta{v}^\macro_\dev$, but also of $\dif\ta{v}^\fluct\in\set{V}_\Box^{(\Dirichlet)}, \dif p\in\set{P}_\Box$ and of $\dif \bar{e}\in\set{R}$ (that defines $\dif\ta{v}^\macro_\vol$).
-Upon linearizing \eqref{eq:rve_problem_new}, while using \eqref{eq:dv}, we obtain the appropriate tangent problem:
+These pertubations gives rise to pertubations of $\dif\ta{v}^\fluct\in\set{V}_\Box^{(\Dirichlet)}, \dif p\in\set{P}_\Box$ and of $\dif \bar{e}\in\set{R}$ (that defines $\dif\ta{v}^\macro_\vol$).
+Using the linearized form \eqref{eq:rve_iterative} at equilibrium with the split in \eqref{eq:dv}, we obtain the appropriate tangent problem:
 %----------------------------------------------------------------------------
 \begin{subequations}
 \begin{alignat}{4}
@@ -942,8 +943,8 @@ The viscosity $\mu$ and surface energy $\gamma_\surf$ were set to unit values, a
 A single unit cell (one pore) is subjected to prescribed constant macroscopic shear rate, i.e. $\bar{\ts d}_\dev\neq \ts 0$, whereas the macroscopic pressure is set to zero, $\bar{p}=0$.
 This situation of ``mixed control'' represents ``quasi-free'' sintering in the sense that the resulting value of $\bar{\ts\sigma}_\dev$ is non-zero (while $\bar p = 0 $), and it turns out that $\bar{\ts\sigma}_\dev$ stays nearly constant throughout the entire simulation time.
 Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_rve}, and it appears that effects of the adopted Dirichlet boundary condition is clearly visible in the severely sheared state.
-The evolution of $\bar d_\vol$, which is a primary variable in the RVE-problem, is shown in \figref{fig:evolve_graph}.
-Vanishing porosity, i.e. macroscopic incompressibility manifested by $\bar d_\vol = 0$, was reached at around $0.69\;t_{\mathrm{end}}$.
+The evolution of $\bar e$, which is a primary variable in the RVE-problem, is shown in \figref{fig:evolve_graph}.
+Vanishing porosity, i.e. macroscopic incompressibility manifested by $\bar e = 0$, was reached at around $0.69\;t_{\mathrm{end}}$.
 After this point in time, the deformation continues, but it is completely isochoric.
 Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_graph} at early times; however, the overall macroscopic behavior is mostly unaffected.
 
@@ -952,12 +953,12 @@ Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_gra
 By introducing the mixed variational ($\bar{\ts v},\bar{p}$)-format of the macroscale problem, we can ensure a ``seamless'' transition from the macroscopically compressible to the incompressible response.
 Hence, there is no need to change the computational algorithm when the simulation is taken beyond the state of a fully dense macroscopic response (in some spatial point in the macro-domain).
 Without such a mixed formulation, the macroscopic ATS-tensor would become unbounded at the transition state.
-A further advantage of the present formulation is that it allows for more complex constitutive models than the simple isotropic viscous model adopted in this work; one example of added complexity is when $\ts\sigma_\dev$ depends on the intrinsic pressure $p$ in addition to $\ts d_\dev$ (which is the case for anisotropic response due to applied shear rate).
+% A further advantage of the present formulation is that it allows for more complex constitutive models than the simple isotropic viscous model adopted in this work; one example of added complexity is when $\ts\sigma_\dev$ depends on the intrinsic pressure $p$ in addition to $\ts d_\dev$ (which is the case for anisotropic response due to applied shear rate).
 In any case we define $\bar{p}$ as the negative mean of $\ts\sigma$.
 
-The additional variable in the RVE-problem, as compared to the standard format of Stokes' problem when $\bar{\ts d}$ is the single variable that represents prolongation from the macroscale to the subscale, is $\bar d_\vol$. An additional constraint equation is added to ensure that the subscale pressure is homogenized to $p$ in a variationally consistent fashion, whereby the test function is $\delta\bar d_\vol\in\set{R}$.
+The additional variable in the RVE-problem, as compared to the standard format of Stokes' problem when $\bar{\ts d}$ is the single variable that represents prolongation from the macroscale to the subscale, is $\bar e$. An additional constraint equation is added to ensure that the subscale pressure is homogenized to $p$ in a variationally consistent fashion, whereby the test function is $\delta\bar e\in\set{R}$.
 Hence, symmetry is preserved of  the linearized RVE-problem due to the variational format of the ``Galerkin-type''.
-The extra computational cost for including $\bar d_\vol$ is, indeed, very small in the chosen monolithic format.
+The extra computational cost for including $\bar e$ is, indeed, very small in the chosen monolithic format.
 
 As an outlook to future developments, the new mixed RVE-format will be adopted in conjunction with micro-periodic and Neumann boundary conditions.
 It would also be of interest to extend the classical strong format of micro-periodicity to a weak variational setting, cf. Larsson et al. \cite{Larsson_etal2011}.
@@ -972,7 +973,7 @@ In order to make (inverse) parameter identification meaningful, it is necessary 
 %No change in procedure is required when the porosity vanishes.
 %In addition to this the mean stress in the RVE is also equal to the macroscopic pressure, which could be required for more complex constitutive behavior in the particles, e.g. $\ts\sigma_\dev(\ts d_\dev,p)$.
 %
-%The linearized system tangent matrix for the RVE problem gets an additional column and row corresponding to $\bar d_\vol$ and $\delta\bar d_\vol$.
+%The linearized system tangent matrix for the RVE problem gets an additional column and row corresponding to $\bar e$ and $\delta\bar e$.
 %Worth noting is that the test function in \eqref{eq:rve_problem_d} is chosen as $\ta x_\mean$, so that symmetry is preserved.
 %This extra column and row is dense, and with different physical units, but it doesn't cause problems and only brings a negligible computational cost.
 %This is due to the fact that a direct solver has to be used to deal with the continuity equation either way.
@@ -1003,7 +1004,7 @@ for suitable choice of test functions $\delta \ta{v}$. Testing \eqref{eq280} wit
 \label{eq281}
 \end{equation}
 %-------------------------------------------------------------------------------
-which is precisely \eqref{eq:rve_problem_v}. Next, testing \eqref{eq280} with $\ta{v}^\macro_\vol(\delta\bar{e})$, we obtain
+which is precisely \eqref{eq:rve_problem_new_v}. Next, testing \eqref{eq280} with $\ta{v}^\macro_\vol(\delta\bar{e})$, we obtain
 %--------------------------------------------------------------------
 \begin{equation}
     - \left[\int_{\Omega^\particle_\Box} p  \dif v \right]\delta\bar{e} =
@@ -1019,7 +1020,7 @@ where it was used that $[\ta{x}_\mean\outerp\diff]=\frac{1}{3}\ts{I}$, $p=-\frac
      - \underbrace{\left[\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta{t} \outerp [\ta{x}-\bar{\ta{x}}] \dif a\right]}_{\displaystyle\bar{\ts\sigma}}  \dprod \frac{1}{3}\ts{I}
 \end{equation}
 %-------------------------------------------------------------------------------
-Dividing \eqref{eq282} by $|\Omega_\Box|$, we obtain \eqref{eq:rve_problem_d}.
+Dividing \eqref{eq282} by $|\Omega_\Box|$, we obtain \eqref{eq:rve_problem_new_d}.
 
 \subsection{Base dyadics in sensitivity problem}
 
@@ -1103,7 +1104,7 @@ However, from the construction of the functional $\Pi_\Box$ in \eqref{eq:A3}, we
 \end{align}
 \end{subequations}
 %--------------------------------------------------------------------------------------------------------
-and with \eqref{eq:901} we obtain
+and with \eqref{eq:d_dev_base} we obtain
 %--------------------------------------------------------------------------------------------------------
 \begin{align}
 \label{eq:A8}
@@ -1112,7 +1113,7 @@ and with \eqref{eq:901} we obtain
  l_\Box^\pore(\dif\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) &= \sum_{i=1}^{n_{\mathrm{B}}} l_\Box^\pore(\ts E_i\cdot[\ta x-\bar{\ta x}])\ts E_i \dprod \dif{\ts d}_\dev
 \end{align}
 %--------------------------------------------------------------------------------------------------------------------------
-Next, using the identity in \eqref{stress_from_rve} \todo{Where?}
+Next, we can combine \eqref{eq:s_dev_base} with \eqref{eq:sigma_bar_dev_hom} to obtain % \todo{Where?}
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
 \label{eq:A10}
@@ -1128,9 +1129,6 @@ and combining this result with \eqref{eq:A8} and \eqref{eq:A9}, we may rephrase 
 %------------------------------------------------------------------------------------------------
 Finally, combining \eqref{eq:A11} and \eqref{eq:A7b} with \eqref{eq:A6}, we obtain the desired properties in \eqref{eq:A1}.
 Hence, symmetry is proven.
-
-
-
 
 \end{document}
 
@@ -1244,7 +1242,7 @@ Equation \eqref{eq:homogenized_problem_p} requires additional rewriting
 \begin{align}
  \nonumber R^{\mathrm p}(\ta v, p, \delta p^\macro) &= - \int_{\Omega^\particle} [\ta v\cdot\diff]\delta p^\macro \dif v \\
  \nonumber &= - \int_{\Omega} \frac{1}{|\Omega_\Box|} \int_{\Omega^\particle_\Box}[[\ta v^\macro+\tilde{\ta v}^\fluct\{\ta v^\macro,p^\macro\}]\cdot\diff]\dif v\, \delta p^\macro \dif v \\
- \nonumber &= - \int_{\Omega} [\ta v^\macro\cdot\diff - \bar{d}_{\vol}^\fluct\{\ta v^\macro,p^\macro\}] \Phi\, \delta p^\macro \dif v \\
+ \nonumber &= - \int_{\Omega} [\ta v^\macro\cdot\diff - \bar{e}^\fluct\{\ta v^\macro,p^\macro\}] \Phi\, \delta p^\macro \dif v \\
  \label{eq:macro_p} &= - \bar{b}(\Phi\delta p^\macro,\ta v^\macro) - \bar{c}(\ta v^\fluct,\Phi\delta p^\macro)
 \end{align}
 where we introduced the relative density
@@ -1253,13 +1251,13 @@ where we introduced the relative density
 \end{align}
 and the homogenized volumetric strain rate for an RVE as
 \begin{align}
- \bar d_{\vol}^\fluct\{\ta v^\macro, p^\macro\} \defeq \frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\{\ta v^\macro,p^\macro\}\cdot\diff]\dif v.
+ \bar e^\fluct\{\ta v^\macro, p^\macro\} \defeq \frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\{\ta v^\macro,p^\macro\}\cdot\diff]\dif v.
 \end{align}
 Here we introduce another homogenized variational form
 \begin{align}
- \bar{c}(\ta v^\fluct, \delta p) &= \int_{\Omega} \underbrace{\frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\cdot\diff]\dif v}_{\bar{d}^\fluct_{\vol}} \dif v.
+ \bar{c}(\ta v^\fluct, \delta p) &= \int_{\Omega} \underbrace{\frac{1}{|\Omega_\Box^\particle|} \int_{\Omega^\particle_\Box}[\tilde{\ta v}^\fluct\cdot\diff]\dif v}_{\bar{e}^\fluct} \dif v.
 \end{align}
-The RVE problem is thus composed by $\tilde v^\fluct\{\ta v^\macro,p^\macro\}$, $\tilde p^\fluct\{\ta v^\macro,p^\macro\}$, and $\bar d_{\vol}^\fluct\{\ta v^\macro,p^\macro\}$.
+The RVE problem is thus composed by $\tilde v^\fluct\{\ta v^\macro,p^\macro\}$, $\tilde p^\fluct\{\ta v^\macro,p^\macro\}$, and $\bar e^\fluct\{\ta v^\macro,p^\macro\}$.
 %In the present study, we only consider surface energy on the pore boundary, $\Gamma^\pore$, which will be dominant, so for brevity, $\Gamma^\contact$ was dropped from \eqref{eq:subscale_varforms_l}.
 \todo{How to deal with ds and dbox?}
 
