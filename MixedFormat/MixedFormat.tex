@@ -17,10 +17,10 @@
 \usepackage{fontspec}
 \usepackage{unicode-math}
 
-%\setmainfont[Ligatures=TeX]{xits}
-%\setmathfont[math-style=ISO]{xits-math}
-\setmainfont[Ligatures=TeX]{Latin Modern Roman}
-\setmathfont[math-style=ISO]{lmmath-regular.otf}
+\setmainfont[Ligatures=TeX]{xits}
+\setmathfont[math-style=ISO]{xits-math}
+%\setmainfont[Ligatures=TeX]{Latin Modern Roman}
+%\setmathfont[math-style=ISO]{lmmath-regular.otf}
 \else
 \usepackage[utf8]{inputenc}
 \fi
@@ -92,7 +92,7 @@
 \end{center}
 \begin{abstract}
 \noindent Prolongation and computational homogenization for is shown for mixed compressible\-/\-incompressible subscale behavior.
-The macroscale formulation is separated into deviatoric strain rate, $\bar{\ts d}_\dev$, and pressure, $\bar{p}$, 
+The macroscale formulation is separated into deviatoric strain rate and pressure,
 with classical momentum balance and continuity equation including source term to deal with compressibility.
 A nested, iterative approach, is shown for use with standard prolongation conditions.
 A monolithic approach is also shown, where the volumetric strain rate, $\bar{d}_\vol$, is a primary unknown in the subscale FE-problem.
@@ -104,7 +104,7 @@ In particular the implementation for a monolithic Dirichlet type boundary condit
  \item Something about computational homogenization and standard prolongation conditions. Suitable references to Geers and others.
 \end{itemize}
 
-Problems arise with standard prolongation conditions when the subscale behavior goes from compressible to incompressible, e.g. sintering or powder compaction.
+Problems arise with standard prolongation conditions when the subscale behavior goes from compressible to incompressible, e.g.\ sintering or powder compaction.
 In the case of liquid phase sintering, the subscale becomes completely or near incompressible when the porosity vanishes. 
 Penalty methods can be used to deal with the changing subscale property, but yields unsatisfactory numerical properties and an additional source of error.
 This paper proposes a new homogenization scheme to deal with these problems in a natural way.
@@ -116,8 +116,12 @@ where the compressible and incompressible case are presented in Section \ref{sec
 The monolithic formulation is presented in Section \ref{sec:monolithic}. Section \ref{sec:numerical_examples} shows some numerical examples.
 Conclusions and an outlook to future developments are given in the final section.
 
+\section{Preliminaries and Notation}\label{sec:preliminaries}
+The use of an over-bar, $\bar{\bullet}$, refers to a homogenized, macroscopic, quantity, while the subscript box, $\bar{\bullet}_\Box$, refers to the homogenized quantity of a Representative Volume Element (RVE). Brackets and parenthesis are used to denote implicit and explicit functions respectively.
+
+An important part of the theory is the
+
 \section{The macro-scale problem} \label{sec:macro}
-The use of an over-bar, $\bar{\bullet}$, refers to a macroscopic quantity.
 Consider the macroscale problem at quasistatic equilibrium, stated as
 \begin{align}
  -\bar{\ts\sigma}\cdot \diff = \bar{\ts b} \quad \text{in } \Omega
@@ -264,7 +268,8 @@ The general problem for subscale flow can be written as
 	= \underbrace{\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box^\external \cup \Gamma_\Box^\internal} \ta t\cdot \delta\ta v\dif S}_{l_\Box^\external(\delta\ta v^\fluct)+l_\Box^\internal(\delta \ta v^\fluct)}
  \label{eq:subscale_original}
 \end{align}
-where $l_\Box^\external$ is the reaction force from Dirichlet boundary conditions.
+where $l_\Box^\external$ is the reaction force.
+\subsection{Dirichlet boundary condition}
 The velocity is split into
 \begin{align}
  \ta v = \ta v^\macro + \ta v^\fluct = \bar{\ts d}_\dev \cdot \ta x^\macro + \bar{d}_\vol \ta x_\vol^\macro + \ta v^\fluct.
@@ -314,7 +319,7 @@ which is solved for directly, and the post processed deviatoric stress which is 
 % \subsection{Neumann boundary condition} \label{sec:monolithic_neumann}
 % Similar to the standard Neumann boundary condition we apply $\ta t = \bar{\ts\sigma} = -\bar{p}\ta n + \bar{\ts\sigma}_\dev$.
 
-\subsection{Sensitivity analysis}
+\subsubsection{Sensitivity analysis}
 \todo{This section is under heavy construction}
 For brevity, the following notation is introduced
 \begin{align}
@@ -383,6 +388,21 @@ Linearization of $\bar{\ts\sigma}_\dev$
   \Delta\bar{\ts\sigma}_\dev &= \sum_{ij} \hat{d}^{\Delta(ij)} \Delta(\bar{\ts\sigma}_\dev)_{ij}
 \end{align}
 
+\subsection{Neumann boundary condition}
+In comparison with Dirichlet boundary condition, modification to the classical Neumann boundary condition is simple to implement.
+The split is not introduced in the external, unknown, traction as
+\begin{align}
+ \ta t = \bar{\ts\sigma}\cdot\ta n = \bar{\ts\sigma}_\dev\cdot\ta n + \bar p \ta n = \sum_i \bar{\sigma}_{\dev,i} \ts E_i\cdot \ta n + \bar p \ta n \quad \text{on }\Gamma_\Box
+\end{align}
+
+
+\subsubsection{Sensitivity analysis}
+
+\subsection{Microperiodic boundary condition}
+\subsubsection{Sensitivity analysis}
+
+% \subsection{Weakly microperiodic boundary condition}
+% \subsubsection{Sensitivity analysis}
 
 % \begin{align}
 %  \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} &= \\
@@ -391,11 +411,6 @@ Linearization of $\bar{\ts\sigma}_\dev$
 %  \pd{\bar{d}_\vol}{\bar p} &=
 % \end{align}
 
-\section{Numerical examples} \label{sec:numerical_examples}
-
 \section{Conclusions and outlook} \label{sec:conclusions}
-The nested solution shown is 
-Advantages of the monolithic formulation is that it doesn't require iterations to obtain the volumetric part $\bar{d}_\vol^*$ or require any special treatment 
-for when a compressible RVE turns incompressible (as with vanishing porosity).
 
 \end{document}
