@@ -113,7 +113,7 @@ On the macroscale, a quasistatic equilibrium problem allows for the prediction o
 The present paper presents a novel FE\textsuperscript{2} formulation of the two-scale sintering problem allowing for the transition to zero porosity, implying macroscale incompressibility.
 The seamless transition from compressibility to incompressibility on the macroscale is accomplished by introducing a mixed variational format.
 This has consequences also for the formulation of the mesoscale problem, that is complemented with an extra constraint equation regarding the prolongation of the volumetric part of the macroscopic rate-of-deformation.
-The numerical example shows the sintering of a single representative volume element (RVE), which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
+The numerical examples shows the sintering of a single representative volume element (RVE) which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
 \end{abstract}
 
 \section{Introduction}
@@ -142,10 +142,9 @@ We (still) assume that the particles are homogeneous and deform as a viscous flu
 Moreover, the simplifying assumption is introduced that the flow properties are unaffected by temperature changes, i.e the sintering process is only modeled during the fully heated part of the process.
 
 The paper is structured as follows:
-\todo{Update this when its finished}
 The various features of subscale modeling (surface tension, particle arrangements within the RVE, etc.) are briefly summarized in Section \ref{sec:subscale}.
-This is followed in Section \ref{sec:macro} by the description of the macroscale problem, whereas the RVE-problem with Dirichlet boundary conditions is presented in Section \ref{sec:rve_problem}.
-Numerical examples, based on a single RVE as well as FE\textsuperscript{2}-computations, are presented in Section \ref{sec:examples}. Conclusions and an outlook to future developments are given in the final section.
+This is followed in Section \ref{sec:homogenization} which describes the transition to macroscale and RVE problems through computational homogenization.
+Numerical examples, based on a single RVE, are presented in Section \ref{sec:examples}. Conclusions and an outlook to future developments are given in the final section.
 
 
 \section{Subscale modeling}\label{sec:subscale}
@@ -316,7 +315,7 @@ for suitable test functions $\delta\ta{v}$ and $\delta p$ that satisfy the appro
 %------------------------------------------------------------------
 where the surface divergence theorem was used for any smooth pore surface segment $\Gamma^\pore_i$. $\Box$
 
-\section{Computational homogenization}
+\section{Computational homogenization} \label{sec:homogenization}
 
 \subsection{Representative Volume Element}
 
@@ -421,7 +420,7 @@ where the variational forms are defined as
 Details regarding the solution of this system in terms of the relevant iteration procedure and how to compute the ATS-tensor in the FE\textsuperscript{2} algorithm are given in \cite{Ohman2011a} and are not further elaborated here. The flow chart is summarized in Box 1:
 %-------------------------------------------------------------------------------------------------------------
 \begin{center}
-\fbox{\begin{minipage}{\linewidth}
+\fbox{\begin{minipage}{0.98\linewidth}
 BOX1: Summary of FE\textsuperscript{2} format valid only for macroscopic compressibility
 \begin{itemize}
  \item Macroscale-problem
@@ -505,7 +504,7 @@ As to the ``feed-back'' of variables to the macroscale problem, we note that tha
 \textbf{Remark}: It was used explicitly in \eqref{eq:rve_problem_new_v} that $\ta{\sigma}_\dev$ is proportional to ${\ts d}_\dev$. $\Box$
 %----------------------------------------------------------------------------------------------------------------
 \begin{center}
-\fbox{\begin{minipage}{\linewidth}
+\fbox{\begin{minipage}{0.98\linewidth}
 BOX2 Summary of FE\textsuperscript{2} format for seamless transition from macroscopic compressibility to incompressibility
 \begin{itemize}
  \item Macroscale-problem
@@ -710,7 +709,7 @@ The tangent form $(a_\Box)'$ is given explicitly as
 %----------------------------------------------------------------------------
 
 
-\subsection{Computation of macroscale algorithmic tangent tensors}\todo{How much in appendix?}
+\subsection{Computation of macroscale algorithmic tangent tensors}
 
 The algorithmic tensors $\bar{\tf{E}}_\ded, \bar{\ts E }_\dep, \bar{\ts C}_\ded$ and $\bar{C}_\dep$, needed in order to carry out macroscale Newton iterations in \eqref{eq:macro_tangent_problem}, are obtained for perturbations of the RVE-solution expressed in terms of perturbations of $\bar{\ts d}_\dev$ and $\bar{p}$. However, in order to obtain a suitable representation of deviatoric macroscale 2nd order tensors, we conclude that it is convenient to replace the standard dyad bases with a complete, orthonormal, basis $\{\ts E_i\}_{i=1}^{n_{\mathrm{b}}}$ for symmetric deviatoric tensors.
 Hence, these base dyadics satisfy the conditions $\ts E_i \dprod \ts E_j = \delta_{ij}$ and $\ts E_i\dprod{\ts I}=0$.
@@ -951,9 +950,9 @@ A single unit cell (one pore) is subjected to prescribed constant macroscopic sh
 This situation of ``mixed control'' represents ``quasi-free'' sintering in the sense that the resulting value of $\bar{\ts\sigma}_\dev$ is non-zero (while $\bar p = 0 $), and it turns out that $\bar{\ts\sigma}_\dev$ stays nearly constant throughout the entire simulation time.
 Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_shear}, and it appears that effects of the adopted Dirichlet boundary condition is clearly visible in the severely sheared state.
 
-Another unit cell was subjected to zero macroscopic stress, i.e. $\bar{\ts\sigma} = \ts 0$. Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_free}. The evolution of the relative density $\Phi$ is shown in \figref{fig:evolve_graph}.
+A second unit cell was subjected to zero macroscopic stress, i.e. $\bar{\ts\sigma} = \ts 0$. Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_free}. The evolution of the relative density $\Phi$ is shown for both cases in \figref{fig:evolve_graph}.
 Vanishing porosity, i.e. macroscopic incompressibility manifested by $\bar e = 0$ and $\Phi = 1$, was reached at around $0.69\;t_{\mathrm{end}}$ for both cases.
-After this point in time, the deformation continues in the first case, but it is completely isochoric, while in the second case, all deformation stops.
+After this point in time, the deformation continues in the first case, but it is completely isochoric, while in the second case all deformation stops.
 Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_graph} under close examination; however, the overall macroscopic behavior is mostly unaffected.
 
 \section{Conclusions and outlook}\label{sec:conlusions}
