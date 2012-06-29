@@ -892,7 +892,7 @@ Indeed it can be shown (details in the Appendix) that $\bar{\tf E}_\ded$ has maj
 \textbf{Remark}: Since there is no need to compute $\bar{\ts C}_\ded$ as given in \eqref{eq220}, there is, in fact, no need to compute the sensitivity fields $\hat{\bar{e}}_{\ded}^{(i)}$; however, these are integral parts of the solution of the sensitivity problems defined by \eqref{eq233}. $\Box$
 
 
-\section{Numerical example}\label{sec:examples}
+\section{Numerical examples}\label{sec:examples}
 
 The computations were carried out with a linear constitutive model for the viscous flow.
 Surface tension was considered only on the particle/pore interface.
@@ -900,15 +900,27 @@ The viscosity $\mu$ and surface energy $\gamma_\surf$ were set to unit values, a
 %
 \begin{figure}[thpb!]
     \centering
-    \subfloat[$t = 0$]{\includegraphics[scale=0.13]{figures/evolve_a}\label{fig:evolve_a}}
+    \subfloat[$t = 0$]{\includegraphics[scale=0.14]{figures/evolve_shear_a}\label{fig:evolve_shear_a}}
     \hspace{1em}
-    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.13]{figures/evolve_b}\label{fig:evolve_b}}
-    \hspace{1em}
-    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.13]{figures/evolve_c}\label{fig:evolve_c}}
-    \hspace{1em}
-    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_d}\label{fig:evolve_d}}
+    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_shear_b}\label{fig:evolve_shear_b}}
+    %\hspace{1em}
+    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_shear_c}\label{fig:evolve_shear_c}}
+    %\hspace{1em}
+    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_shear_d}\label{fig:evolve_shear_d}}
     \caption{Snapshots of evolving RVE subjected to constant macroscopic shear rate, $\bar{\ts d}_\dev \neq \ts 0$, and zero macroscopic pressure, $\bar{p}=0$.}
-    \label{fig:evolve_rve}
+    \label{fig:evolve_shear}
+\end{figure}
+\begin{figure}[thpb!]
+    \centering
+    \subfloat[$t = 0$]{\includegraphics[scale=0.14]{figures/evolve_free_a}\label{fig:evolve_free_a}}
+    \hspace{1em}
+    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_free_b}\label{fig:evolve_free_b}}
+    \hspace{1em}
+    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_free_c}\label{fig:evolve_free_c}}
+    \hspace{1em}
+    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.14]{figures/evolve_free_d}\label{fig:evolve_free_d}}
+    \caption{Snapshots of evolving RVE subjected to zero macroscopic stress, $\bar{\ts \sigma}_\dev = \ts 0$ and $\bar{p}=0$.}
+    \label{fig:evolve_free}
 \end{figure}
 %
 \begin{figure}[thpb!]
@@ -916,13 +928,16 @@ The viscosity $\mu$ and surface energy $\gamma_\surf$ were set to unit values, a
   \begin{tikzpicture}
   \begin{axis}[ yticklabel style={ /pgf/number format/fixed, /pgf/number format/precision=2 },
                 tick label style={font=\tiny},font=\footnotesize,
-                height=0.2\textheight, width=0.9\textwidth, xmin=0, xmax=1, ymin=-0.5,
+                height=0.2\textheight, width=0.9\textwidth, xmin=0, xmax=1, ymin=0.80,
                 legend style={font=\tiny,at={(1,0)},anchor=south east},
-                xlabel={$t_{\mathrm{end}}$}, ylabel={$\bar{e}$}]
-    \addplot[thick,black] table[x=t,y=dvol] {figures/evolve_data.txt};
+                xlabel={$t_{\mathrm{end}}$}, ylabel={$\Phi$}]
+    \addplot[black] table[x=t,y=free] {figures/evolve_gp.txt};
+    \addlegendentry {$\bar{\ts\sigma}_\dev = \ts 0, \bar{p} = 0$}
+    \addplot[red] table[x=t,y=shear] {figures/evolve_gp.txt};
+    \addlegendentry {$\bar{\ts d}_\dev \neq \ts 0, \bar{p} = 0$}
   \end{axis}
   \end{tikzpicture}
-  \caption{Evolution of $\bar{e}$ with time for the RVE subjected to constant macroscopic shear rate and zero macroscopic pressure.}
+  \caption{Evolution of $\Phi$ with time for the RVE subjected to zero macroscopic pressure.}
   \label{fig:evolve_graph}
 \end{figure}
 
@@ -934,11 +949,12 @@ The viscosity $\mu$ and surface energy $\gamma_\surf$ were set to unit values, a
 
 A single unit cell (one pore) is subjected to prescribed constant macroscopic shear rate, i.e. $\bar{\ts d}_\dev\neq \ts 0$, whereas the macroscopic pressure is set to zero, $\bar{p}=0$.
 This situation of ``mixed control'' represents ``quasi-free'' sintering in the sense that the resulting value of $\bar{\ts\sigma}_\dev$ is non-zero (while $\bar p = 0 $), and it turns out that $\bar{\ts\sigma}_\dev$ stays nearly constant throughout the entire simulation time.
-Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_rve}, and it appears that effects of the adopted Dirichlet boundary condition is clearly visible in the severely sheared state.
-The evolution of $\bar e$, which is a primary variable in the RVE-problem, is shown in \figref{fig:evolve_graph}.
-Vanishing porosity, i.e. macroscopic incompressibility manifested by $\bar e = 0$, was reached at around $0.69\;t_{\mathrm{end}}$.
-After this point in time, the deformation continues, but it is completely isochoric.
-Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_graph} at early times; however, the overall macroscopic behavior is mostly unaffected.
+Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_shear}, and it appears that effects of the adopted Dirichlet boundary condition is clearly visible in the severely sheared state.
+
+Another unit cell was subjected to zero macroscopic stress, i.e. $\bar{\ts\sigma} = \ts 0$. Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_free}. The evolution of the relative density $\Phi$ is shown in \figref{fig:evolve_graph}.
+Vanishing porosity, i.e. macroscopic incompressibility manifested by $\bar e = 0$ and $\Phi = 1$, was reached at around $0.69\;t_{\mathrm{end}}$ for both cases.
+After this point in time, the deformation continues in the first case, but it is completely isochoric, while in the second case, all deformation stops.
+Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_graph} under close examination; however, the overall macroscopic behavior is mostly unaffected.
 
 \section{Conclusions and outlook}\label{sec:conlusions}
 
