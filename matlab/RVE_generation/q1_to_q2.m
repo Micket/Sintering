@@ -8,17 +8,12 @@
 
 load([fname,'.mat'])
 
-
-nodes_left   = p(:,1) == min(p(:,1));
-nodes_right  = p(:,1) == max(p(:,1));
-nodes_top    = p(:,2) == max(p(:,2));
-nodes_bottom = p(:,2) == min(p(:,2));
-
 % Construct all edges
 n = size(t,1);
 edges = sort([t(:,1),t(:,2); t(:,2),t(:,3); t(:,3),t(:,1)],2);
 et = [1:n,1:n,1:n]';
-[tmp,I] = sort(edges(:,1)*1e6 + edges(:,2));
+% Sorting makes it easier to detect duplicates
+[tmp,I] = sort(edges(:,1)*max(edges(:,2)) + edges(:,2));
 edges = edges(I,:);
 et = et(I);
 
@@ -66,12 +61,18 @@ end
 edges2 = [edges,(1:size(edges,1))'+size(p,1)];
 new_p = (p(edges(:,1),:) + p(edges(:,2),:))/2;
 
-% For the corner nodes (needed to find boundaries only)
-bc_nodes = nodes_left | nodes_right | nodes_top | nodes_bottom;
-
 % Construct new elements
 p2 = [p;new_p];
 t2 = [t,te+size(p,1)];
+
+% Other stuff
+nodes_left   = p(:,1) == min(p(:,1));
+nodes_right  = p(:,1) == max(p(:,1));
+nodes_top    = p(:,2) == max(p(:,2));
+nodes_bottom = p(:,2) == min(p(:,2));
+
+% For the corner nodes (needed to find boundaries only)
+bc_nodes = nodes_left | nodes_right | nodes_top | nodes_bottom;
 
 new_p_left   = new_p(:,1) < min(new_p(:,1))+1e-5;
 new_p_right  = new_p(:,1) > max(new_p(:,1))-1e-5;

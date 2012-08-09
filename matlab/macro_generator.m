@@ -1,6 +1,6 @@
 clear
 % Create a mesh of some sort.
-n = 17;
+n = 4;
 m = n-1; % Number of partitions (parallel computations)
 cells = 1;
 available = 0.83:0.01:1.00;
@@ -9,14 +9,13 @@ deltaT = 0.002;
 nsteps = 200;
 
 [xx,yy] = meshgrid(linspace(-1,1,n),linspace(0,1,ceil(n/2)));
-xx = xx(:);
-yy = yy(:);
-coords = [xx,yy];
+coords = [xx(:),yy(:)];
 elem = delaunay(coords(:,1),coords(:,2));
-
+[elem, coords] = lin2quad(elem,coords);
+xx = coords(:,1); yy = coords(:,2);
 cx = mean(xx(elem),2);
 
-nodepartitions = cell(size(xx,1),1);
+nodepartitions = cell(size(coords,1),1);
 numnodes = zeros(m,1);
 
 for i = 1:m
@@ -37,7 +36,7 @@ end
 
 % Density function
 r_min = 0.83;
-r_max = 0.96;
+r_max = 0.97;
 rho = @(x) r_min + (r_max-r_min)*(1-x(2))*(0+x(1)^2);
 
 ndofman = size(coords,1);
@@ -88,14 +87,14 @@ for i = 1:length(pelem)
     gp = mean(coords(elem(k,1:3),:),1); % Gauss point (center)
     density = rho(gp);
     [x,j] = min(abs(available-density));
-    fprintf(fid, 'trplanestress2d %d nodes 3 %d %d %d crossSect 1 mat %d\n', k, elem(k,1), elem(k,2), elem(k,3), j);
+    fprintf(fid, 'tr21stokes %d nodes 3 %d %d %d crossSect 1 mat %d\n', k, elem(k,1), elem(k,2), elem(k,3), j);
 end
 fprintf(fid, 'SimpleCS 1 thick 1.0 width 1.0\n');
 
 for i = 1:length(available)
-    fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "/beda/users/home/ohmanm/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
-    %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "/home/mikael/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
-    %fprintf(fid, 'IsoLE %d d 0.0 E 10.0 n 0.0 tAlpha 0.000012\n', i);
+    %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "/beda/users/home/ohmanm/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
+    %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "~/rve_%d_%.2f.in"\n', i, cells, available(i));
+    fprintf(fid, 'NewtonianFluid %d mu 1.0\n', i);
 end
 
 fprintf(fid, 'BoundaryCondition 1 LoadTimeFunction 1 prescribedvalue 0.0\n');
