@@ -1,6 +1,6 @@
 clear
 % Create a mesh of some sort.
-n = 4;
+n = 3;
 m = n-1; % Number of partitions (parallel computations)
 cells = 1;
 available = 0.83:0.01:1.00;
@@ -24,7 +24,7 @@ for i = 1:m
     pelem = find(cx<=limit & cx > oldlimit);
     partitions{i} = pelem;
     for j = 1:length(pelem)
-        for k = 1:3
+        for k = 1:length(elem(pelem,:))
             q = nodepartitions{elem(pelem(j),k)};
             if length(intersect(q,i)) == 0
                 nodepartitions{elem(pelem(j),k)} = [q,i];
@@ -51,15 +51,22 @@ fid = fopen(['macro_problem_nonhom.in.',num2str(mi-1)],'w');
 
 fprintf(fid, ['macro_problem_nonhom\n',...
 'The macroscale problem, using sintering.\n',...
-'IncrLinearStatic nmodules 1 deltat %e nsteps %d smtype 7 lstype 3\n',...
-'vtk tstep_all domain_all primvars 1 1 cellvars 1 43 stype 0\n',...
+'StokesFlow nmodules 1 deltat %e nsteps %d smtype 7 lstype 3 rtolv 1e-6 rtold 1e6 manrmsteps 1\n',...
+'vtk tstep_all domain_all primvars 2 4 5 cellvars 2 43 46 stype 0\n',...
 'domain 2DPlaneStress\n',...
 'OutputManager tstep_all dofman_all element_all\n'], deltaT, nsteps);
 
 fprintf(fid, 'ndofman %d nelem %d ncrosssect 1 nmat %d nbc 1 nic 0 nltf 1\n',numnodes(mi),length(pelem),length(available));
 
 for i = 1:ndofman
-    bc = [0,0];
+    if i <= n*ceil(n/2)
+        dofidmask = [7,8,11];
+        bc = [0,0,0];
+    else 
+        dofidmask = [7,8];
+        bc = [0,0];
+    end
+
     if abs(coords(i,1)) < eps
         %if coords(i,2) < 1/(ceil(n/2))*2 + eps
         bc(1) = 1;
@@ -74,10 +81,14 @@ for i = 1:ndofman
         continue
     end
     if length(np) > 1
-        fprintf(fid, 'node %d coords 2 %f %f bc 2 %d %d shared partitions %d %s\n',...
-            i,coords(i,1),coords(i,2),bc(1),bc(2),length(np),num2str(np-1));
+        fprintf(fid, 'node %2d coords 2 %9.6f %9.6f', i, coords(i,1), coords(i,2));
+        fprintf(fid, ' bc %d %s',length(bc), num2str(bc));
+        fprintf(fid, ' ndofs %d dofidmask %d %s',length(dofidmask), length(dofidmask), num2str(dofidmask));
+        fprintf(fid, ' shared partitions %d %s\n', length(np), num2str(np-1));
     else
-        fprintf(fid, 'node %d coords 2 %f %f bc 2 %d %d\n',i,coords(i,1),coords(i,2),bc(1),bc(2));
+        fprintf(fid, 'node %2d coords 2 %9.6f %9.6f', i, coords(i,1), coords(i,2));
+        fprintf(fid, ' bc %d %s',length(bc), num2str(bc));
+        fprintf(fid, ' ndofs %d dofidmask %d %s\n',length(dofidmask), length(dofidmask), num2str(dofidmask));
     end
 end
 
@@ -87,14 +98,16 @@ for i = 1:length(pelem)
     gp = mean(coords(elem(k,1:3),:),1); % Gauss point (center)
     density = rho(gp);
     [x,j] = min(abs(available-density));
-    fprintf(fid, 'tr21stokes %d nodes 3 %d %d %d crossSect 1 mat %d\n', k, elem(k,1), elem(k,2), elem(k,3), j);
+    fprintf(fid, 'tr21stokes %d nodes %d ', k, length(elem(k,:)));
+    fprintf(fid, '%d ', elem(k,:));
+    fprintf(fid, 'crossSect 1 mat %d\n', j);
 end
 fprintf(fid, 'SimpleCS 1 thick 1.0 width 1.0\n');
 
 for i = 1:length(available)
     %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "/beda/users/home/ohmanm/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
     %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "~/rve_%d_%.2f.in"\n', i, cells, available(i));
-    fprintf(fid, 'NewtonianFluid %d mu 1.0\n', i);
+    fprintf(fid, 'NewtonianFluid %d d 0.0 mu 1.0\n', i);
 end
 
 fprintf(fid, 'BoundaryCondition 1 LoadTimeFunction 1 prescribedvalue 0.0\n');
