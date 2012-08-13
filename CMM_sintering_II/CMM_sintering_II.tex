@@ -15,8 +15,9 @@
   \usepackage[utf8]{inputenc}
 \fi
 
-%\usepackage{refcheck}
 
+\usepackage{lineno}
+%\usepackage{refcheck}
 %\usepackage[margin=2cm,includefoot]{geometry}
 %\usepackage[top=0.1\paperheight, bottom=0.1\paperheight, left=0.1\paperwidth, right=0.1\paperwidth]{geometry}
 \usepackage{amsmath, amssymb, mathtools}
@@ -28,8 +29,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usetikzlibrary{external}
-
-\usepackage{lineno}
+\tikzexternalize[prefix=figures/]
 
 
 %\usepackage[firstinits=true, style=numeric, url=false, isbn=false, hyperref=true, maxbibnames=100, backend=biber]{biblatex}
@@ -108,11 +108,8 @@
 \journal{Computer Methods in Applied Mechanics and Engineering}
 
 \begin{document}
-
-\maketitle
-
-%\linenumbers 
-
+\begin{frontmatter}
+%\maketitle
 \begin{abstract}
 \noindent
 Liquid phase sintering of particle agglomerates is modeled on the mesoscale as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface.
@@ -122,6 +119,12 @@ The seamless transition from compressibility to incompressibility on the macrosc
 This has consequences also for the formulation of the mesoscale problem, that is complemented with an extra constraint equation regarding the prolongation of the volumetric part of the macroscopic rate-of-deformation.
 The numerical examples shows the sintering of a single representative volume element (RVE) which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
 \end{abstract}
+\begin{keyword}
+Sintering; FE2; Multiscale; Stokes' flow; Surface tension
+\end{keyword}
+\end{frontmatter}
+
+%\linenumbers 
 
 \section{Introduction}
 Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality.
@@ -954,6 +957,7 @@ Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_gra
 
 \begin{figure}[thpb!]
   \centering
+  \tikzsetnextfilename{porosity_over_time}
   \begin{tikzpicture}
   \begin{axis}[ yticklabel style={ /pgf/number format/fixed, /pgf/number format/precision=2 },
                 tick label style={font=\tiny},font=\footnotesize,
@@ -1076,14 +1080,15 @@ The orthonormal base $\ts E_i$ can be chosen in a cartesian basis, in 2D, as
  \ts E_1 = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 0\\ 0 & -1\end{bmatrix}\quad \ts E_2 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 1\\ 1 & 0\end{bmatrix}
 \end{align}
 and in 3D, as
-\begin{align}
- &\ts E_1 = \frac{1}{\sqrt{6}}\begin{bmatrix} 2 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1\end{bmatrix}
- &&\ts E_2 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 0\\ 0 & 1 & 0 \\ 0 & 0 & -1\end{bmatrix}
- &&\\
- &\ts E_3 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 1 & 0\\ 1 & 0 & 0 \\ 0 & 0 & 0\end{bmatrix}
- &&\ts E_4 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 1\\ 0 & 0 & 0 \\ 1 & 0 & 0\end{bmatrix}
- &&\ts E_5 = \frac{1}{\sqrt{2}}\begin{bmatrix} 0 & 0 & 0\\ 0 & 0 & 1 \\ 0 & 1 & 0\end{bmatrix}
-\end{align}
+\begin{equation}
+\begin{gathered}
+ \ts E_1 = \frac{1}{\sqrt{6}}\left[\begin{smallmatrix} 2 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1\end{smallmatrix}\right],\quad
+ \ts E_2 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 0\\ 0 & 1 & 0 \\ 0 & 0 & -1\end{smallmatrix}\right],\\
+ \ts E_3 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 1 & 0\\ 1 & 0 & 0 \\ 0 & 0 & 0\end{smallmatrix}\right],\quad
+ \ts E_4 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 1\\ 0 & 0 & 0 \\ 1 & 0 & 0\end{smallmatrix}\right],\quad
+ \ts E_5 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 0\\ 0 & 0 & 1 \\ 0 & 1 & 0\end{smallmatrix}\right]
+\end{gathered}
+\end{equation}
 
 
 \section{Symmetry of the macro-scale problem}
