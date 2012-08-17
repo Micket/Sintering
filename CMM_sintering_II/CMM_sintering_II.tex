@@ -1,20 +1,20 @@
+%pdflatex
 %\RequirePackage[l2tabu,orthodox]{nag} % This package helps prevent you from doing things wrong.
 
 %\documentclass[12pt,a4paper,fleqn]{article}
 \documentclass[12pt,review]{elsarticle}
-%\documentclass[10pt,5p]{elsarticle} % Seems to be closer to the final articles
+%\documentclass[final,5p,times,twocolumn]{elsarticle}
 
-\usepackage{ifluatex}
-\ifluatex
-  \usepackage{fontspec}
-  %\setmainfont[Ligatures=TeX]{xits}
-  %\setmathfont[math-style=ISO]{xits-math}
-  \setmainfont[Ligatures=TeX]{Latin Modern Roman}
-  \fontspec[SmallCapsFeatures={Letters=SmallCaps}]{Latin Modern Roman}
-\else
+% \usepackage{ifluatex}
+% \ifluatex
+%   \usepackage{fontspec}
+%   %\setmainfont[Ligatures=TeX]{xits}
+%   %\setmathfont[math-style=ISO]{xits-math}
+%   \setmainfont[Ligatures=TeX]{Latin Modern Roman}
+%   \fontspec[SmallCapsFeatures={Letters=SmallCaps}]{Latin Modern Roman}
+% \else
   \usepackage[utf8]{inputenc}
-\fi
-
+% \fi
 
 \usepackage{lineno}
 %\usepackage{refcheck}
@@ -26,11 +26,13 @@
 \usepackage{microtype}
 \usepackage{todonotes}
 \usepackage{siunitx}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usetikzlibrary{external}
-\tikzexternalize[prefix=figures/]
 
+% Not supported by the primitive Elsevier submission system;
+% \usepackage{tikz}
+% \usepackage{pgfplots}
+% \usetikzlibrary{external}
+% \tikzexternalize[prefix=figures/]
+% \tikzexternalize
 
 %\usepackage[firstinits=true, style=numeric, url=false, isbn=false, hyperref=true, maxbibnames=100, backend=biber]{biblatex}
 %\def\bibfont{\footnotesize}
@@ -38,19 +40,18 @@
 %\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,filecolor=black]{hyperref}
 %\usepackage{cleveref}
 
-\linespread{1.2}
 \usepackage{contmech}
-\ifluatex
-  \usepackage{unicode-math}
-  \setmathfont[math-style=ISO]{lmmath-regular.otf}
-  %\setmathfont[math-style=ISO]{xits-math.otf}
-  \renewcommand{\ta}[1]{\mathbfit{#1}}
-  \renewcommand{\ts}[1]{\mathbfit{#1}}
-  \renewcommand{\td}[1]{\mathbfcal{#1}}
-  \renewcommand{\tf}[1]{\mathbfsfup{#1}}
-  \renewcommand{\Box}{\mdlgwhtsquare}
-  \renewcommand{\leadsto}{\rightsquigarrow}
-\fi
+% \ifluatex
+%   \usepackage{unicode-math}
+%   \setmathfont[math-style=ISO]{lmmath-regular.otf}
+%   %\setmathfont[math-style=ISO]{xits-math.otf}
+%   \renewcommand{\ta}[1]{\mathbfit{#1}}
+%   \renewcommand{\ts}[1]{\mathbfit{#1}}
+%   \renewcommand{\td}[1]{\mathbfcal{#1}}
+%   \renewcommand{\tf}[1]{\mathbfsfup{#1}}
+%   \renewcommand{\Box}{\mdlgwhtsquare}
+%   \renewcommand{\leadsto}{\rightsquigarrow}
+% \fi
 % \renewcommand{\vec}[1]{\mathds{#1}}
 % \renewcommand{\mat}[1]{\mathds{#1}}
 
@@ -102,14 +103,18 @@
 %\addbibresource{Mesh.bib}
 %\addbibresource{OhmanPublications.bib}
 
-\title{Computational Homogenization of Liquid-Phase Sintering with Seamless Transition from Macroscopic Compressibility to Incompressibility}
-\author{Mikael \"Ohman and Fredrik Larsson and Kenneth Runesson}
-\address{Chalmers University of Technology, H\"orsalsv\"agen 7B, G\"oteborg}
-\journal{Computer Methods in Applied Mechanics and Engineering}
-
 \begin{document}
 \begin{frontmatter}
+\title{Computational Homogenization of Liquid-Phase Sintering with Seamless Transition from Macroscopic Compressibility to Incompressibility}
+\author[]{Mikael \"Ohman\corref{*}}
+\author[]{Fredrik Larsson}
+\author[]{Kenneth Runesson}
+\address{Dept. Appl. Mech., Chalmers Univ. of Tech., H\"orsalsv. 7B, SE-412 96 G\"oteborg, Sweden}
+\journal{Computer Methods in Applied Mechanics and Engineering}
+
 %\maketitle
+\cortext[*]{Correspondance: Tel.: +46(0)31$\;$772$\;$1301; Fax:+46(0)31$\;$772$\;$3827. E-mail address: mikael.ohman@chalmers.se}
+
 \begin{abstract}
 \noindent
 Liquid phase sintering of particle agglomerates is modeled on the mesoscale as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface.
@@ -185,7 +190,9 @@ In any case the pertinent surfaces associated with surface tension are particle/
 %-------------------------------------------------------------------------
 \begin{figure}[th!]
     \centering
-    \input{figures/sintering_rve.tikz}
+%     \tikzsetnextfilename{sintering_rve}
+%     \input{figures/sintering_rve.tikz}
+    \includegraphics{sintering_rve.pdf}
     \caption{Microstructure of porous particulate material with sintering particles in contact. The sintering body is subjected to Dirichlet and Neumann boundary conditions on the external boundary.}
     \label{fig:micro}
 \end{figure}
@@ -354,8 +361,16 @@ The boundaries of the (closed) pore-space are collectively denoted $\Gamma_\Box^
 %-------------------------------------------------------------------------
 \begin{figure}[th!]
     \centering
-    \subfloat[$t = 0$]{\input{figures/4particle_rve.tikz}\label{fig:4particle_rve_a}} \hspace{1em}
-    \subfloat[$t > 0$]{\input{figures/4particles_deformed.tikz}\label{fig:4particle_rve_b}}
+    \subfloat[$t = 0$]{\label{fig:4particle_rve_a}
+      %\tikzsetnextfilename{4particle_rve}
+      %\input{figures/4particle_rve.tikz}
+      \includegraphics{4particle_rve.pdf}
+    } \hspace{1em}
+    \subfloat[$t > 0$]{\label{fig:4particle_rve_b}
+      %\tikzsetnextfilename{4particles_deformed}
+      %\input{figures/4particles_deformed.tikz}
+      \includegraphics{4particles_deformed.pdf}
+    }
     \caption{(a) Initial configuration of RVE in 2D consisting of circular particles in a perfect square lattice. The contact ``points'' are flattened due to precompaction. (b) Deformed configuration (sketchy).}
     \label{fig:4particleRVE}
 \end{figure}
@@ -387,10 +402,11 @@ As a direct consequence of the assumption that it is only $\ta v$ that is that i
 where the macroscale (homogenized) stress $\bar{\ts\sigma}$ is computed as
 %-----------------------------------------------------------------
 \begin{align}
-\bar{\ts\sigma} = 
+\bar{\ts\sigma} &= 
 \langle \ts{\sigma} \rangle_{\Box} -
-\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}^\pore} [\ts{t}_\surf\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a =
-\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}} [\ts{t}\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a.
+\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}^\pore} [\ts{t}_\surf\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a 
+  \\ &= % Broken for 2 column
+  \frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}} [\ts{t}\otimes[\ts{x}-\bar{\ts{x}}]]^\sym \dif a.
 \label{eq:sigmmabardef}
 \end{align}
 %------------------------------------------------------------------
@@ -409,7 +425,7 @@ The RVE-problem is formulated as follows: For given value of the macroscale vari
     & a_\Box(\ta{v}^\macro + \ta{v}^\fluct;\delta \ta{v}^\fluct) +  b_\Box(p,\delta\ta{v}^\fluct)
     && =
     l^\pore_\Box(\delta \ta{v}^\fluct)
-    &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}
+    &\;\;& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}
 \label{eq:rve_problem_old_v}
  \\
     &b_\Box(\delta p, \ta{v}^\macro+\ta{v}^\fluct)
@@ -424,21 +440,21 @@ where the variational forms are defined as
 %-------------------------------------------------------------------------------
 \begin{subequations}\label{eq:subscale_varforms}
 \begin{align}
-    a_{\Box}(\ta{v};\delta \ta{v})
-    & \defeq
-    \homogenized{ \ts{\sigma}_\dev(\ts{d}) \dprod [\delta\ta v\outerp\diff]}_{\Box} =
+    a_{\Box}(\ta{v};\delta \ta{v}) & \defeq
+    \homogenized{ \ts{\sigma}_\dev(\ts{d}) \dprod [\delta\ta v\outerp\diff]}_{\Box} 
+    \nonumber\\& = % Broken for 2 column
     \frac{1}{|\Omega_{\Box}|}\int_{\Omega^\particle_{\Box}} \ts{\sigma}_\dev(\ts{d}) \dprod \left[\delta \ta{v}\outerp\diff\right] \dif v
 \label{eq:subscale_varforms_a}
 \\
-    b_{\Box}(p, \delta\ta{v})
-    & \defeq
-    - \homogenized{[\delta\ta{v}\cdot\diff] p }_{\Box} =
+    b_{\Box}(p, \delta\ta{v}) & \defeq
+    - \homogenized{[\delta\ta{v}\cdot\diff] p }_{\Box}
+    \nonumber\\ & = % Broken for 2 column
     - \frac{1}{|\Omega_{\Box}|}\int_{\Omega^\particle_{\Box}} [\delta\ta{v}\cdot\diff] p \dif v
 \label{eq:subscale_varforms_b}
 \\
-    l_{\Box}^\pore(\delta \ta{v})
-    & \defeq
-    -\frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore} \hat{\ts\sigma}\dprod\left[\delta\ta{v}\outerp\hat{\diff}\right] \dif a =
+    l_{\Box}^\pore(\delta \ta{v}) & \defeq
+    -\frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore} \hat{\ts\sigma}\dprod\left[\delta\ta{v}\outerp\hat{\diff}\right] \dif a
+    \nonumber\\ & = % Broken for 2 column
     -\frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore} \gamma_\surf\left[\delta\ta{v}\cdot\hat{\diff}\right] \dif a
 \label{eq:subscale_varforms_l}
 \end{align}
@@ -468,9 +484,9 @@ In Box 1, we used the split into deviatoric and volumetric parts:
 %------------------------------------------------------------------------------------------------------------
 \begin{alignat}{3}
     &\bar{\ts d} = \bar{\ts d}_\dev + \frac{1}{3}\bar{e} \ts I
-    &\quad&\text{where}\quad \bar{e} \defeq \bar{\ts d}\dprod \ts I,&\quad& \bar{\ts d}_\dev \defeq \bar{\ts d} - \frac13\bar{e}\ts I \\
+    &\;\;&\text{where}\;\; \bar{e} \defeq \bar{\ts d}\dprod \ts I,&\;\;& \bar{\ts d}_\dev \defeq \bar{\ts d} - \frac13\bar{e}\ts I \\
     &\bar{\ts\sigma} = \bar{\ts\sigma}_\dev - \bar{p} \ts I
-    &\quad&\text{where}\quad \bar{p} \defeq -\frac13 \bar{\ts\sigma}\dprod \ts I,&\quad& \bar{\ts\sigma}_\dev \defeq \bar{\ts\sigma} + \bar{p} \ts I
+    &\;\;&\text{where}\;\; \bar{p} \defeq -\frac13 \bar{\ts\sigma}\dprod \ts I,&\;\;& \bar{\ts\sigma}_\dev \defeq \bar{\ts\sigma} + \bar{p} \ts I
 \end{alignat}
 %-------------------------------------------------------------------------------------------------------------------
 and where $\bar{\ts d}_\dev = [\bar{\ta v} \outerp\diff]^\sym_\dev$, $\bar{e} = \bar{\ta v}\cdot\diff$.
@@ -508,7 +524,7 @@ As the result, we obtain the following RVE-problem: For given macroscale variabl
     & a_\Box(\ta{v}^\macro_\dev(\bar{\ts d}_\dev) + \ta{v}^\fluct;\delta \ta{v}^\fluct) +  b_\Box(p,\delta\ta{v}^\fluct)
     && =
     l^\pore_\Box(\delta \ta{v}^\fluct)
-    &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}
+    &\;\;& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{(\Dirichlet)}
 \label{eq:rve_problem_new_v}
  \\
     &b_\Box(\delta p, \ta{v}^\macro_\vol(\bar{e})+\ta{v}^\fluct)
@@ -697,16 +713,18 @@ Newton iterations for solving the system \eqref{eq411} employ the algorithmic ta
 taken with respect to $\bar{\ts d}_\dev \defeq [\bar{\ta v}\outerp\diff]^\sym_\dev$ and $\bar p$, such that the increments $\Delta\bar{\ta v}$ and $\Delta\bar{p}$ are obtained from the macroscale tangent problem
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:macro_tangent_problem}
-\begin{alignat}{1}
+\begin{multline}
   \bar{a}'_\derv\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} + \bar{a}'_\dep\{\bullet; \delta\bar{\ta v},\Delta\bar{p}\} + \bar{b}\{\Delta\bar p, \delta\bar{\ta v}\}
-  &= - \bar{a}\{\bullet; \delta\bar{\ta v}\} - \bar{b}\{\bullet, \delta\bar{\ta v}\}
+  \\= - \bar{a}\{\bullet; \delta\bar{\ta v}\} - \bar{b}\{\bullet, \delta\bar{\ta v}\}
   \quad\forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0
-\label{eq414a}\\
+\label{eq414a}
+\end{multline}
+\begin{multline}
   \bar{b}\{\delta\bar p, \Delta\bar{\ta v}\} + \bar{c}'_\derv\{\bullet; \delta\bar{p}, \Delta\bar{ \ta v}\} + \bar{c}'_\dep\{\bullet; \delta\bar{p},\Delta\bar{p}\}
-  &= -\bar{b}\{\delta\bar{p},\bullet\} - \bar{c}\{\bullet;\delta\bar{p}\}
+  \\= -\bar{b}\{\delta\bar{p},\bullet\} - \bar{c}\{\bullet;\delta\bar{p}\}
   \quad\;\,\forall\; \delta\bar{p} \in \bar{\set{P}}
 \label{eq414b}
-\end{alignat}
+\end{multline}
 \end{subequations}
 %----------------------------------------------------------------------------
 where
@@ -816,7 +834,8 @@ where we used that $b_\Box(\bullet;\hat{\ta v}_\dev^{\macro(i)}) = 0$ and $\dif\
 \begin{align}
  \dif\bar{\ts\sigma}_\dev
 	&= \sum_i \ts E_i \dif\bar{\sigma}_{\dev,i}
-	= \sum_{i,j} \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} \dif\bar{d}_{\dev,j} + \sum_i \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{p}}\dif\bar{p}
+\nonumber\\ % Broken for twocolumn
+	&= \sum_{i,j} \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} \dif\bar{d}_{\dev,j} + \sum_i \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{p}}\dif\bar{p}
 \nonumber\\
 	&= \sum_{i,j} \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} [\ts E_j \dprod \dif\bar{\ts d}_{\dev}] + \sum_i \ts E_i \pd{\bar{\sigma}_{\dev,i}}{\bar{p}}\dif\bar{p}
 \nonumber\\
@@ -911,15 +930,16 @@ The question arises whether the macroscale tangent problem in \eqref{eq:macro_ta
 Indeed it can be shown (details in the Appendix) that $\bar{\tf E}_\ded$ has major symmetry, and that $\bar{\ts E}_\dep = \bar{\ts C}_\ded$. Due to the latter identity, we obtain $\bar{c}'_\derv\{\bullet;\delta\bar{p},\Delta\bar{\ta v}\} = \bar{a}'_\dep\{\bullet;\Delta\bar{\ta v},\delta\bar{p}\}$ such that \eqref{eq:macro_tangent_problem} can be rewritten as
 %--------------------------------------------------------------------------------------------------------------------
 \begin{subequations}
-\begin{alignat}{1}
+\begin{multline}
   \bar{a}'_\derv\{\bullet; \delta\bar{\ta v},\Delta\bar{\ta v}\} + \bar{a}'_\dep\{\bullet; \delta\bar{\ta v},\Delta\bar{p}\} + \bar{b}\{\Delta\bar p, \delta\bar{\ta v}\}
-  &= - \bar{a}\{\bullet; \delta\bar{\ta v}\} - \bar{b}\{\bullet, \delta\bar{\ta v}\}
+  \\= - \bar{a}\{\bullet; \delta\bar{\ta v}\} - \bar{b}\{\bullet, \delta\bar{\ta v}\}
   \quad\forall\; \delta\bar{\ta v} \in \bar{\set{V}}^0
-\\
+\end{multline}
+\begin{multline}
   \bar{b}\{\delta\bar p, \Delta\bar{\ta v}\} + \bar{a}'_\dep\{\bullet; \Delta\bar{ \ta v}, \delta\bar{p}\} + \bar{c}'_\dep\{\bullet; \delta\bar{p},\Delta\bar{p}\}
-  &= -\bar{b}\{\delta\bar{p},\bullet\} - \bar{c}\{\bullet;\delta\bar{p}\}
+  \\= -\bar{b}\{\delta\bar{p},\bullet\} - \bar{c}\{\bullet;\delta\bar{p}\}
   \quad\;\,\forall\; \delta\bar{p} \in \bar{\set{P}}
-\end{alignat}
+\end{multline}
 \end{subequations}
 %---------------------------------------------------------------------------------------------------------------------
 \textbf{Remark}: Since there is no need to compute $\bar{\ts C}_\ded$ as given in \eqref{eq220}, there is, in fact, no need to compute the sensitivity fields $\hat{\bar{e}}_{\ded}^{(i)}$; however, these are integral parts of the solution of the sensitivity problems defined by \eqref{eq233}. $\Box$
@@ -940,13 +960,13 @@ Snapshots of the evolving RVE-configuration are given in \figref{fig:evolve_shea
 
 \begin{figure}[thpb!]
     \centering
-    \subfloat[$t = 0$]{\includegraphics[scale=0.12]{figures/evolve_shear_a}\label{fig:evolve_shear_a}}
+    \subfloat[$t = 0$]{\includegraphics[scale=0.12]{evolve_shear_a.pdf}\label{fig:evolve_shear_a}}
     \hspace{1em}
-    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{figures/evolve_shear_b}\label{fig:evolve_shear_b}}
+    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{evolve_shear_b.pdf}\label{fig:evolve_shear_b}}
+    \\%\hspace{1em}
+    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{evolve_shear_c.pdf}\label{fig:evolve_shear_c}}
     %\hspace{1em}
-    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{figures/evolve_shear_c}\label{fig:evolve_shear_c}}
-    %\hspace{1em}
-    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{figures/evolve_shear_d}\label{fig:evolve_shear_d}}
+    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{evolve_shear_d.pdf}\label{fig:evolve_shear_d}}
     \caption{Snapshots of evolving RVE subjected to constant macroscopic shear rate, $\bar{\ts d}_\dev \neq \ts 0$, and zero macroscopic pressure, $\bar{p}=0$.}
     \label{fig:evolve_shear}
 \end{figure}
@@ -957,20 +977,22 @@ Artifacts from the remeshing of the RVE are noticeable in \figref{fig:evolve_gra
 
 \begin{figure}[thpb!]
   \centering
-  \tikzsetnextfilename{porosity_over_time}
-  \begin{tikzpicture}
-  \begin{axis}[ yticklabel style={ /pgf/number format/fixed, /pgf/number format/precision=2 },
-                tick label style={font=\tiny},font=\footnotesize,
-                height=0.2\textheight, width=0.8\linewidth, xmin=0, xmax=1, ymax=0.175, ymin=-0.015,
-                legend style={font=\tiny,at={(1,1)},anchor=north east},
-                xlabel={$t_{\mathrm{end}}$}, ylabel={$\bar{\phi}$}]
-    \addplot[black, densely dashed] table[x=t,y=free] {figures/evolve_gp_porosity.txt};
-    \addlegendentry {$\bar{\ts\sigma}_\dev = \ts 0, \bar{p} = 0$}
-    \addplot[red] table[x=t,y=shear] {figures/evolve_gp_porosity.txt};
-    \addlegendentry {$\bar{\ts d}_\dev \neq \ts 0, \bar{p} = 0$}
-  \end{axis}
-  \end{tikzpicture}
-  \caption{Evolution of porosity, $\bar{\phi} \defeq 1-\frac{|\Omega_\Box^\particle|}{|\Omega_\Box|}$,  with time for the RVE subjected to control representing macroscopic shear ($\bar{\ts d}_\dev \neq \ts 0$, $\bar{p} = 0$) and free sintering ($\bar{\ts\sigma}_\dev = \ts 0$, $\bar{p}$).}
+%   \tikzsetnextfilename{porosity_over_time}
+%   \begin{tikzpicture}
+%   \begin{axis}[ yticklabel style={ /pgf/number format/fixed, /pgf/number format/precision=2 },
+%                 tick label style={font=\tiny},font=\footnotesize,
+%                 height=0.2\textheight, width=1.0\linewidth, xmin=0, xmax=1, ymax=0.175, ymin=-0.015,
+%                 legend style={font=\tiny,at={(1,1)},anchor=north east},
+%                 xlabel={$t_{\mathrm{end}}$}, ylabel={$\bar{\phi}$}]
+%     \addplot[black, densely dashed] table[x=t,y=free] {figures/evolve_gp_porosity.txt};
+%     \addlegendentry {$\bar{\ts\sigma}_\dev = \ts 0, \bar{p} = 0$}
+%     \addplot[red] table[x=t,y=shear] {figures/evolve_gp_porosity.txt};
+%     \addlegendentry {$\bar{\ts d}_\dev \neq \ts 0, \bar{p} = 0$}
+%   \end{axis}
+%   \end{tikzpicture}
+  \includegraphics{porosity_over_time.pdf}
+  \caption{Foobar}
+  %\caption{Evolution of porosity, $\bar{\phi} \defeq 1-\frac{|\Omega_\Box^\particle|}{|\Omega_\Box|}$,  with time for the RVE subjected to control representing macroscopic shear ($\bar{\ts d}_\dev \neq \ts 0$, $\bar{p} = 0$) and free sintering ($\bar{\ts\sigma}_\dev = \ts 0$, $\bar{p}=0$).}
   \label{fig:evolve_graph}
 \end{figure}
 
@@ -983,13 +1005,13 @@ Like in the case of macroscopic shear, a fully dense state was reached at around
 
 \begin{figure}[thpb!]
     \centering
-    \subfloat[$t = 0$]{\includegraphics[scale=0.12]{figures/evolve_free_a}\label{fig:evolve_free_a}}
+    \subfloat[$t = 0$]{\includegraphics[scale=0.12]{evolve_free_a.pdf}\label{fig:evolve_free_a}}
     \hspace{1em}
-    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{figures/evolve_free_b}\label{fig:evolve_free_b}}
+    \subfloat[$t = 0.45\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{evolve_free_b.pdf}\label{fig:evolve_free_b}}
+    \\%\hspace{1em}
+    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{evolve_free_c.pdf}\label{fig:evolve_free_c}}
     \hspace{1em}
-    \subfloat[$t = 0.65\; t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{figures/evolve_free_c}\label{fig:evolve_free_c}}
-    \hspace{1em}
-    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{figures/evolve_free_d}\label{fig:evolve_free_d}}
+    \subfloat[$t = t_{\mathrm{end}}$]{\includegraphics[scale=0.12]{evolve_free_d.pdf}\label{fig:evolve_free_d}}
     \caption{Snapshots of evolving RVE subjected to zero macroscopic stress, $\bar{\ts \sigma}_\dev = \ts 0$ and $\bar{p}=0$.}
     \label{fig:evolve_free}
 \end{figure}
@@ -1082,10 +1104,10 @@ The orthonormal base $\ts E_i$ can be chosen in a cartesian basis, in 2D, as
 and in 3D, as
 \begin{equation}
 \begin{gathered}
- \ts E_1 = \frac{1}{\sqrt{6}}\left[\begin{smallmatrix} 2 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1\end{smallmatrix}\right],\quad
+ \ts E_1 = \frac{1}{\sqrt{6}}\left[\begin{smallmatrix} 2 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1\end{smallmatrix}\right],\;
  \ts E_2 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 0\\ 0 & 1 & 0 \\ 0 & 0 & -1\end{smallmatrix}\right],\\
- \ts E_3 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 1 & 0\\ 1 & 0 & 0 \\ 0 & 0 & 0\end{smallmatrix}\right],\quad
- \ts E_4 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 1\\ 0 & 0 & 0 \\ 1 & 0 & 0\end{smallmatrix}\right],\quad
+ \ts E_3 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 1 & 0\\ 1 & 0 & 0 \\ 0 & 0 & 0\end{smallmatrix}\right],\;
+ \ts E_4 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 1\\ 0 & 0 & 0 \\ 1 & 0 & 0\end{smallmatrix}\right],\;
  \ts E_5 = \frac{1}{\sqrt{2}}\left[\begin{smallmatrix} 0 & 0 & 0\\ 0 & 0 & 1 \\ 0 & 1 & 0\end{smallmatrix}\right]
 \end{gathered}
 \end{equation}
@@ -1100,19 +1122,21 @@ In order to prove symmetry of the macroscale tangent problem it is sufficient to
  \label{eq:A1}
 \end{align}
 %--------------------------------------------------------------------------------------------------
-From \eqref{eq:A1} it directly follows that
+from which it follows directly that
 %--------------------------------------------------------------------------------------------------
 \begin{align}
  \bar{\tf E}_\ded \defeq \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} = \frac{\partial^2 \bar{\Pi}}{\partial\bar{\ts d}_\dev \outerp \partial\bar{\ts d}_\dev}
 \end{align}
 %--------------------------------------------------------------------------------------------------
-is symmetric and 
+and
 %--------------------------------------------------------------------------------------------------
 \begin{align}
- \bar{\tf E}_\dep = \pd{\bar{\ts\sigma}_\dev}{\bar{p}} = \frac{\partial^2 \bar{\Pi}}{\partial\bar{\ts d}_\dev \partial\bar{p}} = \pd{\bar{e}}{\bar{\ts d}_\dev} \defeq \bar{\tf C}_\ded.
+ \bar{\ts E}_\dep = \pd{\bar{\ts\sigma}_\dev}{\bar{p}} = \frac{\partial^2 \bar{\Pi}}{\partial\bar{\ts d}_\dev \partial\bar{p}} = \pd{\bar{e}}{\bar{\ts d}_\dev} \defeq \bar{\ts C}_\ded.
 \end{align}
 %--------------------------------------------------------------------------------------------------
-As a point of departure, we start by assuming that it is possible to establish the subscale potential $\Pi_\Box(\bar{\ts d}_\dev,\bar p;\ta v^\fluct,p,\bar{e})$, for given macroscale values $\bar{\ts d}_\dev$, $\bar p$, such that the RVE-problem in \eqref{eq:rve_problem_new} can be stated as
+We note that that the ``tangent stiffness'' tensor $\bar{\tf E}_\ded$  is symmetrical.
+
+In order to show \eqref{eq:A1}, we start by assuming that it is possible to establish the subscale potential $\Pi_\Box(\bar{\ts d}_\dev,\bar p;\ta v^\fluct,p,\bar{e})$, for given macroscale values $\bar{\ts d}_\dev$, $\bar p$, such that the RVE-problem in \eqref{eq:rve_problem_new} can be stated as
 %----------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq:A2}%\label{eq:potential_rve_problem}
 \begin{alignat}{5}
@@ -1160,9 +1184,9 @@ However, from the construction of the functional $\Pi_\Box$ in \eqref{eq:A3}, we
 %-------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq:A7}
 \begin{align}
-\label{eq:A7a}
- \pd{\Pi_\Box}{\bar{\ts d}_\dev} \dprod \dif \bar{\ts d}_\dev &= a_\Box(\ta v; \dif \bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) + \underbrace{b_\Box(\dif\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) }_{=0}
-    - l_\Box^\pore(\dif\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) \\
+\nonumber \pd{\Pi_\Box}{\bar{\ts d}_\dev} \dprod \dif \bar{\ts d}_\dev &= a_\Box(\ta v; \dif \bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) + \\
+  &\underbrace{b_\Box(\dif\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) }_{=0}
+    - l_\Box^\pore(\dif\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}]) \label{eq:A7a}\\
 \label{eq:A7b}
  \pd{\Pi_\Box}{\bar{p}} \dif \bar{p} &= \bar{e} \dif\bar{p}
 \end{align}
