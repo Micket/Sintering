@@ -106,8 +106,8 @@ fprintf(fid, 'SimpleCS 1 thick 1.0 width 1.0\n');
 
 for i = 1:length(available)
     %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "/beda/users/home/ohmanm/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
-    %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "~/rve_%d_%.2f.in"\n', i, cells, available(i));
-    fprintf(fid, 'NewtonianFluid %d d 0.0 mu 1.0\n', i);
+    fprintf(fid, 'FE2FluidMaterial %d d 0.0 inputfile "~/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
+    %fprintf(fid, 'NewtonianFluid %d d 0.0 mu 1.0\n', i);
 end
 
 fprintf(fid, 'BoundaryCondition 1 LoadTimeFunction 1 prescribedvalue 0.0\n');

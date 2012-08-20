@@ -134,5 +134,5 @@ fwrite(fid,material);
 fwrite(fid,boundarycondition);
 fwrite(fid,loadtimefunc);
 
-system(['cp ',fname,'.in ~/workspace/OOFEM/']);
+system(['cp ',fname,'.in ~/rve/']);
 
