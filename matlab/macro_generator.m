@@ -5,7 +5,7 @@ m = n-1; % Number of partitions (parallel computations)
 cells = 1;
 available = 0.83:0.01:1.00;
 
-deltaT = 0.05;
+deltaT = 0.003;
 nsteps = 5;
 
 [xx,yy] = meshgrid(linspace(-1,1,n),linspace(0,1,ceil(n/2)));
