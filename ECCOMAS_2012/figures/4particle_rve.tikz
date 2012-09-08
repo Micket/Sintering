@@ -1,0 +1,30 @@
+\begin{tikzpicture}[>=latex,scale=2.2] % Use this to scale the image. Text is always normal-size
+  \def\particleradius{1.05} % Adjust this to change the contact size.
+  \pgfmathsetmacro{\contactsize}{sqrt(\particleradius^2-1)} % Automatically calculated.
+  \begin{scope}[very thick]
+  	\draw[clip] (-1,-1) rectangle (1,1);
+  	\draw[clip]
+  		(-1,-1) circle (\particleradius)
+ 		( 1,-1) circle (\particleradius)
+ 		(-1, 1) circle (\particleradius)
+   		( 1, 1) circle (\particleradius);
+  	\fill[fill=black!10] (-1,-1) rectangle (1,1);
+  \end{scope}
+
+  % Markers
+  \foreach \q in {0,90,180,270} { \draw[rotate=\q] (1-\contactsize,-0.05) -- +(0,0.1); }
+  \draw[dashed,gray] (-1.1,0) -- (1.1,0) (0,-1.1) -- (0,1.1);
+  % Annotations
+  %\node[below] at (0,0) {$\Omega_\Box^p(0)$};
+  %\draw[|<->|] (-1,-1.4) -- (1,-1.4) node[midway,above] {$L_\Box(0)$};
+  \draw[<->|] (-1,-0.05) -- +(\contactsize,0) node[midway,below] {$a_0$};
+  \node at (0.6,-0.6) {$\Omega_\Box(0)$};
+  \draw[<-] (-1,0.5) -- +(0.2,0) node[right] {$\Gamma_\Box(0)$};
+  \draw[<-] (1,1) ++(-135:\particleradius) -- +(0.00,0.15) node[above right] {$\Gamma_\Box^{\mathrm{pore}}(0)$};
+  
+  %\draw[use as bounding box] (-1.7,-1.5) rectangle (1.7,1.1);
+  %\useasboundingbox (-1.7,-1.1) (1.7,1.1);
+  % Transformation arrow (makes the picture very unaligned)
+  %\draw[->] (1.5,0) to[out=45,in=-150] (2,0);% +(135:0.1) -- (2,0) -- +(-135:0.1);
+  \draw[black] (-1,-1) rectangle (1,1);
+\end{tikzpicture}
