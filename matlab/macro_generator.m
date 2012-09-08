@@ -1,12 +1,12 @@
 clear
 % Create a mesh of some sort.
-n = 3;
+n = 9;
 m = n-1; % Number of partitions (parallel computations)
 cells = 1;
 available = 0.83:0.01:1.00;
 
 deltaT = 0.003;
-nsteps = 5;
+nsteps = 400;
 
 [xx,yy] = meshgrid(linspace(-1,1,n),linspace(0,1,ceil(n/2)));
 coords = [xx(:),yy(:)];
@@ -24,7 +24,7 @@ for i = 1:m
     pelem = find(cx<=limit & cx > oldlimit);
     partitions{i} = pelem;
     for j = 1:length(pelem)
-        for k = 1:length(elem(pelem,:))
+        for k = 1:size(elem(pelem,:),2)
             q = nodepartitions{elem(pelem(j),k)};
             if length(intersect(q,i)) == 0
                 nodepartitions{elem(pelem(j),k)} = [q,i];
@@ -51,8 +51,8 @@ fid = fopen(['macro_problem_nonhom.in.',num2str(mi-1)],'w');
 
 fprintf(fid, ['macro_problem_nonhom\n',...
 'The macroscale problem, using sintering.\n',...
-'StokesFlow nmodules 1 deltat %e nsteps %d nonlinform 2 smtype 7 lstype 3 rtolv 1e-6 rtold 1e6 manrmsteps 1\n',...
-'vtkxml tstep_all domain_all primvars 2 4 5 cellvars 2 43 76\n',...
+'StokesFlow nmodules 1 deltat %e nsteps %d nonlinform 2 smtype 7 lstype 3 rtolv 1e-3 rtold 1e6 manrmsteps 1\n',...
+'vtkxml tstep_all domain_all primvars 2 4 5 cellvars 2 43 76 vars 2 43 76 stype 1\n',...
 'domain 2DPlaneStress\n',...
 'OutputManager tstep_all dofman_all element_all\n'], deltaT, nsteps);
 
@@ -105,8 +105,8 @@ end
 fprintf(fid, 'SimpleCS 1 thick 1.0 width 1.0\n');
 
 for i = 1:length(available)
-    %fprintf(fid, 'FE2SinteringMaterial %d d 0.0 inputfile "/beda/users/home/ohmanm/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
-    fprintf(fid, 'FE2FluidMaterial %d d 0.0 inputfile "/home/mikael/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
+    fprintf(fid, 'FE2FluidMaterial %d d 0.0 inputfile "/beda/users/home/ohmanm/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
+    %fprintf(fid, 'FE2FluidMaterial %d d 0.0 inputfile "/home/mikael/rve/rve_%d_%.2f.in"\n', i, cells, available(i));
     %fprintf(fid, 'NewtonianFluid %d d 0.0 mu 1.0\n', i);
 end
 
