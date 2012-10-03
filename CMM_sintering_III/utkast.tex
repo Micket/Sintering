@@ -1,0 +1,134 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,mathtools}
+\usepackage{contmech}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\newcommand{\surf}{\mathrm{s}}
+\newcommand{\pore}{\mathrm{pore}}
+\newcommand{\particle}{\mathrm{part}}
+
+\newcommand{\unknown}[1]{{\color{red}#1}}
+\newcommand{\highlight}[1]{{\color{red!70!black}#1}}
+
+\begin{document}
+
+\textbf{Mikael Öhman, 2012-09-27}
+\section*{Neumann B.C for incompressible Stokes' flow}
+For brevity;
+\begin{gather}
+ \bullet \defeq \frac{1}{|\Omega_\Box|}
+\end{gather}
+%
+% Constraints
+% \begin{gather}
+%  \diff \cdot \ta v = 0
+%  \\
+%  %\bullet \int_{\Gamma_\Box} \ta v\outerp \ta n \dif A = \bar{\ts d}
+%  %   \\ \implies
+%  \bullet \int_{\Gamma_\Box}[\ta v\outerp\ta n]_\dev \dif A = \bar{\ts d}_\dev
+%  \\
+%  %,\quad \bullet \int_{\Gamma_\Box}\ta v\cdot \ta n\dif A = \bar{e}
+%  -\frac13 \bullet \int_{\Gamma_\Box} \ta t \cdot  [\ta x - \bar{\ta x}] \dif A = \bar{p} \quad 
+%  \\
+%  \nonumber\text{expanded}
+%  \\
+%  -\frac13\bullet \int_{\Gamma_\Box} \ta n\cdot [\bar{\ts\sigma}_\dev - p\ts I] \cdot [\ta x - \bar{\ta x}] \dif A = \bar{p}
+% %  \\
+% %  \nonumber\text{or even further expanded}
+% %  \\
+% %  -\frac13\bullet \int_{\Gamma_\Box} \ta n \outerp [\ta x - \bar{\ta x}] \dif A\dprod \bar{\ts\sigma}_\dev
+% %  +\frac13\bullet \int_{\Gamma_\Box} p\; \ta n \cdot [\ta x - \bar{\ta x}] \dif A
+% %  = \bar{p}
+% \end{gather}
+% 
+% $\implies$
+% \begin{align}
+%  \Lambda_\Box =& \bullet\int_{\Omega_\Box^\particle} \Psi \dif V + \bullet\int_{\Gamma_\Box^\pore} \Psi_\surf \dif A + \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot\ta v] \dif V
+%  \nonumber\\
+%  &+ \left[\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A - \bar{\ts d}_\dev\right]\dprod \bar{\ts\sigma}_\dev
+%  + \left[-\frac13\bullet \int_{\Gamma_\Box} \ta n\cdot [\bar{\ts\sigma}_\dev - p\ts I] \cdot [\ta x - \bar{\ta x}] \dif A - \bar{p}\right] \bar{e}
+% \end{align}
+% 
+% \begin{align}
+%  \delta\ta v &:\quad 
+%  \bullet \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod \delta\ts d \dif V + \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot \delta\ta v] \dif V 
+%   +\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n]_\dev\dif A\dprod \bar{\ts\sigma}_\dev
+%   = -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod \delta\hat{\ts d}\dif A
+%  \\
+%  \delta p &:\quad 
+%  \bullet \int_{\Omega_\Box^\particle} [\diff\cdot\ta v] \delta p\dif V + \frac13\bullet \int_{\Gamma_\Box} \ta n \cdot [\ta x - \bar{\ta x}] \delta p\dif A\; \bar{e}= 0
+%  \\
+%  \delta\bar{\ts\sigma}_\dev &:\quad 
+%  \bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A \dprod \delta\bar{\ts\sigma}_\dev = \bar{\ts d}_\dev \dprod \delta\bar{\ts\sigma}_\dev
+%  \\
+%  \delta\bar{e} &:\quad 
+%  -\frac13\bullet \int_{\Gamma_\Box} \ta n\cdot [\bar{\ts\sigma}_\dev - p\ts I] \cdot [\ta x - \bar{\ta x}] \dif A\;\delta\bar{e} = \bar{p}\;\delta\bar{e}
+% \end{align}
+% 
+Introduce the split in velocity, as with Dirichlet b.c
+\begin{gather}
+ \ta v = \ta v_\dev + \bar{e}\;\ta x_\mean, \quad \ta x_\mean \defeq \frac13 [\ta x - \bar{\ta x}]
+\end{gather}
+Still subject to the constraint
+\begin{gather}
+ \diff \cdot \ta v = 0
+\end{gather}
+Instead of prescribing the deviatoric part on the boundary, we introduce an additional constraint
+\begin{gather}
+ \bullet \int_{\Gamma_\Box}[\ta v\outerp\ta n]_\dev \dif A = \bar{\ts d}_\dev
+\end{gather}
+Which leads to the RVE-potential
+\begin{align}
+ \Lambda_\Box =& \bullet\int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\diff\outerp\ta v]\dif V + \bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\hat{\diff}\outerp\ta v]\dif A - \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot\ta v] \dif V
+ - \overbrace{\bullet\int_{\Gamma_\Box} \ta t\cdot \ta x_\mean\dif A}^{-\bar{p}}\bar{e}
+ \nonumber\\
+ &\highlight{- \left[\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A - \bar{\ts d}_\dev\right]\dprod \bar{\ts\sigma}_\dev}
+\end{align}
+(intentionally test with $\delta\ta v$ instead of only $\delta\ta v_\dev$)
+\begin{align}
+ \delta\ta v &:\quad 
+ \bullet \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod [\diff\outerp\delta\ta v]\dif V - \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot \ta v] \dif V 
+  \;\highlight{-\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n]_\dev\dif A\dprod \bar{\ts\sigma}_\dev}
+  = -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod [\hat{\diff}\outerp\delta\ta v]\dif A
+ \\
+ \delta p &:\quad 
+ -\bullet \int_{\Omega_\Box^\particle} [\diff\cdot\ta v] \delta p\dif V = 0
+ \\
+ \highlight{\delta\bar{\ts\sigma}_\dev  }&\highlight{:\quad
+ -\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A \dprod \delta\bar{\ts\sigma}_\dev = -\bar{\ts d}_\dev \dprod \delta\bar{\ts\sigma}_\dev
+ }
+ \\
+ \delta\bar{e} &:\quad 
+ -\bullet\int_{\Omega_\Box^\particle} p\dif V\;\delta\bar{e}  = \left[-\bar{p} -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}\dprod[\hat{\diff}\outerp\ta x_\mean]\dif A\right]\delta\bar{e} 
+\end{align}
+
+\emph{Terms in red are new terms (compared to Dirichlet b.c).}
+\newpage
+
+\section{}
+Expand in deviatoric, non-symmetric base;
+\begin{gather}
+ \bar{\ts\sigma}_\dev = \sum_{i=1}^{n_{\mathrm{b}}} \bar{\sigma}_{\dev,i} \ts E_i
+\label{eq:sigma_base} \\
+ \bar{\ts d}_\dev = \sum_{i=1}^{n_{\mathrm{b}}} \bar{d}_{\dev,i} \ts E_i
+\label{eq:d_base} \\
+\end{gather}
+In 2D
+\begin{align}
+ \ts E_1 = \frac{1}{\sqrt{2}}\begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}, \quad
+ \ts E_2 = \begin{pmatrix}0 & 1 \\ 0 & 0\end{pmatrix},\;\quad\;
+ \ts E_3 = \begin{pmatrix}0 & 0 \\ 1 & 0\end{pmatrix}.
+\end{align}
+Starting with
+\begin{gather}
+ -\bullet\int_{\Gamma_\Box} [\ta v \outerp \ta n]_\dev \dif A \dprod \delta\bar{\ts\sigma}_\dev = -\bar{\ts d}_\dev \dprod \delta\bar{\ts\sigma}_\dev
+\end{gather}
+and using \eqref{eq:sigma_base} we obtain
+\begin{gather}
+ -\bullet\int_{\Gamma_\Box} \ta v \outerp \ta n \dif A \dprod \ts E_i \;\delta\bar{\sigma}_{\dev,i} = -\bar{d}_{\dev,i} \;\delta\bar{\sigma}_{\dev,i} 
+\end{gather}
+By testing with $\delta\bar{\ts\sigma}_{\dev} = \delta\bar{\sigma}_{\dev,i}\;\ts E_i$ for $i = 1,2,3..$ one obtains the set of equations to solve.
+
+\end{document}
