@@ -12,9 +12,12 @@
 \newcommand{\unknown}[1]{{\color{red}#1}}
 \newcommand{\highlight}[1]{{\color{red!70!black}#1}}
 
+\newcommand{\dep}{\mathrm{p}}
+\newcommand{\ded}{\mathrm{d}}
+
 \begin{document}
 
-\textbf{Mikael Öhman, 2012-09-27}
+\textbf{Mikael Öhman, \today}
 \section*{Neumann B.C for incompressible Stokes' flow}
 For brevity;
 \begin{gather}
@@ -67,10 +70,44 @@ For brevity;
 %  -\frac13\bullet \int_{\Gamma_\Box} \ta n\cdot [\bar{\ts\sigma}_\dev - p\ts I] \cdot [\ta x - \bar{\ta x}] \dif A\;\delta\bar{e} = \bar{p}\;\delta\bar{e}
 % \end{align}
 % 
-Introduce the split in velocity, as with Dirichlet b.c
-\begin{gather}
- \ta v = \ta v_\dev + \bar{e}\;\ta x_\mean, \quad \ta x_\mean \defeq \frac13 [\ta x - \bar{\ta x}]
-\end{gather}
+% Introduce the split in velocity, as with Dirichlet b.c
+% \begin{gather}
+%  \ta v = \ta v_\dev + \bar{e}\;\ta x_\mean, \quad \ta x_\mean \defeq \frac13 [\ta x - \bar{\ta x}]
+% \end{gather}
+% Still subject to the constraint
+% \begin{gather}
+%  \diff \cdot \ta v = 0
+% \end{gather}
+% Instead of prescribing the deviatoric part on the boundary, we introduce an additional constraint
+% \begin{gather}
+%  \bullet \int_{\Gamma_\Box}[\ta v\outerp\ta n]_\dev \dif A = \bar{\ts d}_\dev
+% \end{gather}
+% Which leads to the RVE-potential
+% \begin{align}
+%  \Lambda_\Box =& \bullet\int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\diff\outerp\ta v]\dif V + \bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\hat{\diff}\outerp\ta v]\dif A - \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot\ta v] \dif V
+%  - \overbrace{\bullet\int_{\Gamma_\Box} \ta t\cdot \ta x_\mean\dif A}^{-\bar{p}}\bar{e}
+%  \nonumber\\
+%  &\highlight{- \left[\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A - \bar{\ts d}_\dev\right]\dprod \bar{\ts\sigma}_\dev}
+% \end{align}
+% (intentionally test with $\delta\ta v$ instead of only $\delta\ta v_\dev$)
+% \begin{align}
+%  \delta\ta v &:\quad 
+%  \bullet \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod [\diff\outerp\delta\ta v]\dif V - \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot \ta v] \dif V 
+%   \;\highlight{-\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n]_\dev\dif A\dprod \bar{\ts\sigma}_\dev}
+%   = -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod [\hat{\diff}\outerp\delta\ta v]\dif A
+%  \\
+%  \delta p &:\quad 
+%  -\bullet \int_{\Omega_\Box^\particle} [\diff\cdot\ta v] \delta p\dif V = 0
+%  \\
+%  \highlight{\delta\bar{\ts\sigma}_\dev  }&\highlight{:\quad
+%  -\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A \dprod \delta\bar{\ts\sigma}_\dev = -\bar{\ts d}_\dev \dprod \delta\bar{\ts\sigma}_\dev
+%  }
+%  \\
+%  \delta\bar{e} &:\quad 
+%  -\bullet\int_{\Omega_\Box^\particle} p\dif V\;\delta\bar{e}  = \left[-\bar{p} -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}\dprod[\hat{\diff}\outerp\ta x_\mean]\dif A\right]\delta\bar{e} 
+% \end{align}
+
+\section*{Without split}
 Still subject to the constraint
 \begin{gather}
  \diff \cdot \ta v = 0
@@ -81,40 +118,44 @@ Instead of prescribing the deviatoric part on the boundary, we introduce an addi
 \end{gather}
 Which leads to the RVE-potential
 \begin{align}
- \Lambda_\Box =& \bullet\int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\diff\outerp\ta v]\dif V + \bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\hat{\diff}\outerp\ta v]\dif A - \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot\ta v] \dif V
- - \overbrace{\bullet\int_{\Gamma_\Box} \ta t\cdot \ta x_\mean\dif A}^{-\bar{p}}\bar{e}
+ \Lambda_\Box =& \bullet\int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\ta v\outerp\diff]\dif V + \bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\ta v\outerp\hat{\diff}]\dif A - \bullet\int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V
+ \;\highlight{+ \bullet\int_{\Gamma_\Box}[\ta v\cdot \ta n]\dif A\;\bar{p}}
  \nonumber\\
  &\highlight{- \left[\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A - \bar{\ts d}_\dev\right]\dprod \bar{\ts\sigma}_\dev}
 \end{align}
-(intentionally test with $\delta\ta v$ instead of only $\delta\ta v_\dev$)
+and we obtain
+\begin{subequations}
 \begin{align}
- \delta\ta v &:\quad 
- \bullet \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod [\diff\outerp\delta\ta v]\dif V - \bullet\int_{\Omega_\Box^\particle} p\;[\diff\cdot \ta v] \dif V 
+ \delta\ta v :&\quad 
+ \bullet \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod [\delta\ta v\outerp\diff]\dif V - \bullet\int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V 
   \;\highlight{-\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n]_\dev\dif A\dprod \bar{\ts\sigma}_\dev}
-  = -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod [\hat{\diff}\outerp\delta\ta v]\dif A
+  = \nonumber\\&\highlight{-\bullet\int_{\Gamma_\Box}[\delta\ta v\cdot \ta n]\dif A\;\bar{p}} - \bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod [\delta\ta v\outerp\hat{\diff}]\dif A
  \\
- \delta p &:\quad 
- -\bullet \int_{\Omega_\Box^\particle} [\diff\cdot\ta v] \delta p\dif V = 0
+ \delta p :&\quad 
+ -\bullet \int_{\Omega_\Box^\particle} [\ta v\cdot\diff]\;\delta p\dif V = 0
  \\
- \highlight{\delta\bar{\ts\sigma}_\dev  }&\highlight{:\quad
+ \highlight{\delta\bar{\ts\sigma}_\dev  :}&\highlight{\quad
  -\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A \dprod \delta\bar{\ts\sigma}_\dev = -\bar{\ts d}_\dev \dprod \delta\bar{\ts\sigma}_\dev
  }
- \\
- \delta\bar{e} &:\quad 
- -\bullet\int_{\Omega_\Box^\particle} p\dif V\;\delta\bar{e}  = \left[-\bar{p} -\bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}\dprod[\hat{\diff}\outerp\ta x_\mean]\dif A\right]\delta\bar{e} 
+\end{align}
+\end{subequations}
+and $\bar{e}$ is obtained through post-processing
+\begin{align}
+ \bar{e} = \bullet\int_{\Gamma_\Box} [\ta v \cdot \ta n]\dif A
 \end{align}
 
-\emph{Terms in red are new terms (compared to Dirichlet b.c).}
 \newpage
 
-\section{}
+\section*{Deviatoric base}
 Expand in deviatoric, non-symmetric base;
+\begin{subequations}
 \begin{gather}
  \bar{\ts\sigma}_\dev = \sum_{i=1}^{n_{\mathrm{b}}} \bar{\sigma}_{\dev,i} \ts E_i
 \label{eq:sigma_base} \\
  \bar{\ts d}_\dev = \sum_{i=1}^{n_{\mathrm{b}}} \bar{d}_{\dev,i} \ts E_i
 \label{eq:d_base} \\
 \end{gather}
+\end{subequations}
 In 2D
 \begin{align}
  \ts E_1 = \frac{1}{\sqrt{2}}\begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}, \quad
@@ -129,6 +170,95 @@ and using \eqref{eq:sigma_base} we obtain
 \begin{gather}
  -\bullet\int_{\Gamma_\Box} \ta v \outerp \ta n \dif A \dprod \ts E_i \;\delta\bar{\sigma}_{\dev,i} = -\bar{d}_{\dev,i} \;\delta\bar{\sigma}_{\dev,i} 
 \end{gather}
-By testing with $\delta\bar{\ts\sigma}_{\dev} = \delta\bar{\sigma}_{\dev,i}\;\ts E_i$ for $i = 1,2,3..$ one obtains the set of equations to solve.
+We can now express the final system of equations as
+\begin{subequations}
+\begin{align}
+ \delta\ta v :&\quad 
+ \bullet \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod [\delta\ta v\outerp\diff]\dif V - \bullet\int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V 
+  -\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n]\dif A\dprod \ts E_i\;\bar{\sigma}_{\dev,i}
+  = \nonumber\\&-\bullet\int_{\Gamma_\Box}[\delta\ta v\cdot \ta n]\dif A\;\bar{p} - \bullet\int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod [\delta\ta v\outerp\hat{\diff}]\dif A
+ \\
+ \delta p :&\quad 
+ -\bullet \int_{\Omega_\Box^\particle} [\ta v\cdot\diff] \delta p\dif V = 0
+ \\
+ \delta\bar{\sigma}_{\dev,i} :&\quad
+ -\bullet \int_{\Gamma_\Box} [\ta v\outerp\ta n] \dif A \dprod \ts E_i \; \delta\bar{\sigma}_{\dev,i} = -\bar{d}_{\dev,i} \dprod \delta\bar{\sigma}_{\dev,i}
+\end{align}
+\end{subequations}
+
+\section*{Tangents}
+We need to obtain the tangents
+\begin{align}
+ \bar{    C}_\dep \defeq \pd{\bar{e}}{\bar{p}}, \quad
+ \bar{\ts C}_\ded \defeq \pd{\bar{e}}{\bar{\ts d}_\dev}, \quad
+ \bar{\ts E}_\dep \defeq \pd{\bar{\ts\sigma}_\dev}{\bar{p}}, \quad
+ \bar{\tf E}_\ded \defeq \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev}
+\end{align}
+As before, we can express them in the deviatoric base;
+\begin{align}
+ \bar{\ts C}_\ded \defeq \;&\pd{\bar{e}}{\bar{\ts d}_\dev} = \sum_{i=1}^{n_\mathrm{b}} \pd{\bar{e}}{\bar{d}_{\dev,i}} \ts E_i\\
+ \bar{\ts E}_\dep \defeq \;&\pd{\bar{\ts\sigma}_\dev}{\bar{p}} = \sum_{i=1}^{n_\mathrm{b}} \pd{\bar{\sigma}_{\dev,i}}{\bar{p}} \ts E_i\\
+ \bar{\tf E}_\ded \defeq \;&\pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} =  \sum_{i,j=1}^{n_\mathrm{b}} \pd{\bar{\sigma}_{\dev,i}}{\bar{d}_{\dev,j}} \ts E_i \outerp \ts E_j
+\end{align}
+These are determined from a sensitivity analysis such that
+\begin{align}
+ \bar{    C}_\dep &= \hat{\bar{e}}_{\dep}\\
+ \bar{\ts C}_\ded &= \sum_{i=1}^{n_\mathrm{b}} \hat{\bar{e}}_{\ded}^{(i)}\;\ts E_i\\
+ \bar{\ts E}_\dep &= \sum_{i=1}^{n_\mathrm{b}} \hat{\bar{\sigma}}_{\dev,i,\dep}\;\ts E_i\\
+ \bar{\tf E}_\ded &= \sum_{i,j=1}^{n_\mathrm{b}} \hat{\bar{\sigma}}_{\dev,i,\ded}^{(j)}\;\ts E_i \outerp \ts E_j
+\end{align}
+
+Using the perbutations $\bar{d}_{\dev,k} + \dif\bar{d}_{\dev,k}$ and $\bar{p} + \dif\bar{p}$ in the linearized form at equilibrium we obtain
+\begin{align}
+ \delta\ta v :&\quad 
+ \bullet \int_{\Omega_\Box^\particle} [\delta\ta v\outerp\diff] \dprod \tf E_\dev \dprod [\Delta\ta v\outerp\diff] \dif V - \bullet\int_{\Omega_\Box^\particle} [\delta\ta v\cdot\diff]\;\Delta p \dif V 
+  -\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n] \dif A\dprod \ts E_i\;\Delta\bar{\sigma}_{\dev,i}
+  = \nonumber\\&-\bullet\int_{\Gamma_\Box}[\delta\ta v\cdot \ta n]\dif A\;\dif\bar{p}
+ \\
+ \delta p :&\quad 
+ -\bullet \int_{\Omega_\Box^\particle} [\Delta\ta v\cdot\diff]\;\delta p\dif V = 0
+ \\
+ \delta\bar{\sigma}_{\dev,i} :&\quad
+ -\bullet\int_{\Gamma_\Box} [\Delta\ta v \outerp \ta n] \dif A \dprod \ts E_i \;\delta\bar{\sigma}_{\dev,i} = -\dif\bar{d}_{\dev,i} \; \delta\bar{\sigma}_{\dev,i}
+\end{align}
+which must hold for any given $\dif\bar{d}_{\dev,i}$ and $\dif\bar{p}$. We thus consider the cases
+\begin{enumerate}
+ \item $\dif\bar{d}_{\dev,k} = 1$, $\dif\bar{d}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta v}_{\ded,k}$, $\hat{p}_{\ded,k}$, $\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}$ from the system 
+\begin{subequations}\label{eq:sensitivities_d}
+\begin{align}
+ \delta\ta v :&\quad 
+ \bullet \int_{\Omega_\Box^\particle} [\delta\ta v\outerp\diff] \dprod \tf E_\dev \dprod [\hat{\ta v}_{\ded}^{(k)}\outerp\diff] \dif V - \bullet\int_{\Omega_\Box^\particle} [\delta\ta v\cdot\diff]\;\hat{p}_{\ded}^{(k)} \dif V 
+  -\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n] \dif A\dprod \ts E_i\;\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}
+  = 0
+ \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \delta p :&\quad 
+ -\bullet \int_{\Omega_\Box^\particle} [\hat{\ta v}_{\ded}^{(k)}\cdot\diff]\;\delta p\dif V = 0
+ \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \delta\bar{\sigma}_{\dev,i} :&\quad
+ -\bullet\int_{\Gamma_\Box} [\hat{\ta v}_{\ded}^{(k)} \outerp \ta n] \dif A \dprod \ts E_i \;\delta\bar{\sigma}_{\dev,i} = -\delta_{ik} \; \delta\bar{\sigma}_{\dev,i}
+\end{align}
+\end{subequations}
+\item $\dif\bar{p} = 1$, $\dif\bar{d}_{\dev,k} = 0$: Solve the sensitivities $\hat{\ta v}_\dep$, $\hat{p}_\dep$, $\hat{\sigma}_{\dev,i,\dep}$ from the system 
+\begin{subequations}\label{eq:sensitivities_p}
+\begin{align}
+ \delta\ta v :&\quad 
+ \bullet \int_{\Omega_\Box^\particle} [\delta\ta v\outerp\diff] \dprod \tf E_\dev \dprod [\hat{\ta v}_\dep\outerp\diff] \dif V - \bullet\int_{\Omega_\Box^\particle} [\delta\ta v\cdot\diff]\;\hat{p}_\dep \dif V 
+  -\bullet \int_{\Gamma_\Box} [\delta\ta v\outerp\ta n] \dif A\dprod \ts E_i\;\hat{\bar{\sigma}}_{\dev,i,\dep}
+  = \nonumber\\&-\bullet\int_{\Gamma_\Box}[\delta\ta v\cdot \ta n]\dif A
+ \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \delta p :&\quad 
+ -\bullet \int_{\Omega_\Box^\particle} [\hat{\ta v}_\dep\cdot\diff]\;\delta p\dif V = 0
+ \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \delta\bar{\sigma}_{\dev,i} :&\quad
+ -\bullet\int_{\Gamma_\Box} [\hat{\ta v}_\dep \outerp \ta n] \dif A \dprod \ts E_i \;\delta\bar{\sigma}_{\dev,i} = 0
+\end{align}
+\end{subequations}
+\end{enumerate}
+The stresses, $\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}$ and $\hat{\bar{\sigma}}_{\dev,i,\dep}$, are solved for directly, and the volumetric strain rates are post-processed as
+\begin{align}
+ \hat{\bar{e}}_{\ded}^{(k)} &= \bullet\int_{\Gamma_\Box} [\hat{\ta v}_{\ded}^{(k)} \cdot \ta n]\dif A\\
+ \hat{\bar{e}}_\dep &= \bullet\int_{\Gamma_\Box} [\hat{\ta v}_\dep \cdot \ta n]\dif A 
+\end{align}
+
 
 \end{document}
