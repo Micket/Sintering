@@ -1,2 +1,0 @@
-figures/porosity_over_time.pdf: figures/evolve_gp_porosity.txt
-figures/porosity_over_time.pdf: figures/evolve_gp_porosity.txt
