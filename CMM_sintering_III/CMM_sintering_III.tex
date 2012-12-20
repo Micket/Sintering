@@ -105,7 +105,7 @@
 %\addbibresource{Mesh.bib}
 %\addbibresource{OhmanPublications.bib}
 
-\title{Neumann Type Boundary Condition for Computational Homogenization of Liquid-Phase Sintering}
+\title{Classical Boundary Conditions for Computational Homogenization of Incompressible Fluid}
 \author{Mikael \"Ohman, Kenneth Runesson, Fredrik Larsson}
 
 \begin{document}
@@ -419,7 +419,7 @@ and the choice of homogenization of the deviatoric strain rate
 which leads to the suitable RVE-potential
 \begin{multline}
  \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \bar{\ts\sigma}_\dev) \defeq
-     \volume\int_{\Omega_\Box^\particle} [\ts\sigma_\dev-p\ts I]\dprod[\ta v\outerp\diff] \dif V
+     \volume\int_{\Omega_\Box^\particle} [\Psi(\ta v\outerp\diff) - p\;[\ta v\cdot\diff]] \dif V
    + \volume\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\ta v\outerp\hat{\diff}]\dif A
 \\
    + \volume\int_{\Gamma_\Box} [\ta v \cdot \ta n] \dif A \bar{p}
