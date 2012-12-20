@@ -26,6 +26,7 @@
 \usepackage{microtype}
 \usepackage{todonotes}
 \usepackage{siunitx}
+\usepackage{todonotes}
 
 % Not supported by the primitive Elsevier submission system;
 % \usepackage{tikz}
@@ -586,13 +587,15 @@ where
  \set{V}_\Box^{0+} &= \{ \ta v^\fluct \in \set{V}_\Box : \jump{\ta v^\fluct} = \ta 0 \text{ on }\Gamma_\Box \}
 \end{align}
 
+\todo{Check sigma}
 The macroscopic response is obtained from
 \begin{align}
  \bar{\ts\sigma}_\dev &= \pd{\Psi_\Box^\Periodic}{\bar{\ts d}_\dev} = \volume \left[
-    %\int_{\Omega_\Box^\particle} \bar{\ts\sigma}_\dev \dif V + 
-    %\int_{\Gamma_\Box^\pore} [\hat{\ts\sigma}\dprod[\ta x \outerp \hat{\diff}]]_\dev \dif A 
-TODO
+    \int_{\Omega_\Box^\particle} \bar{\ts\sigma}_\dev ??????? \dif V + 
+    \int_{\Gamma_\Box^\pore} [\hat{\ts\sigma}\dprod[\ta x \outerp \hat{\diff}]]_\dev ??????? \dif A 
 \right]
+ \\
+ &= \volume \int_{\Gamma_\Box} [\ta t \outerp \ta x] \dif A + \bar{p} \ts I
 % =
 %\nonumber\\
 %    &= \volume \int_{\Gamma_\Box} [\ta t \outerp \ta x] \dif A + \bar{p}\;\ts I
