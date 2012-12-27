@@ -215,16 +215,37 @@ The ``surface tension'' along particle/particle and particle/pore interfaces (th
 In the simplest (and most common) case of isotropic surface tension, this traction is characterized by the constant surface-specific surface energy $\gamma_\surf$ in the current configuration as the single material parameter.
 Although we adopt this simplified model below in the numerical results, it is possible to consider the more general situation of anisotropic ``surface stress'' that may also depend on the surface deformation via a suitable constitutive assumption, cf.\ \cite{Steinmann2008:boundaryenergies}.
 
-As shown in, e.g.\ \textsc{\"Ohman et al.} \cite{Ohman2012a}, it is possible to represent the surface tension force by an equivalent surface traction, henceforth denoted $\ta{t}_\fluct$, acting on the surface (or interface).
-In the presently assumed case of isotropic surface tension, $\ta{t}_\fluct$ is directed in the normal direction to the surface and is given as
-%-----------------------------------------------------------------
+We shall adopt the general expression for the surface energy
+\begin{align}
+  \hat{\ts\sigma} \cdot \hat{\diff}
+\label{eq:surface_energy}
+\end{align}
+where
+\begin{align}
+  \hat{\diff} &\defeq \diff \cdot \hat{\ts I}
+\\
+  \hat{\ts I} &\defeq  \ts I - \ta n \outerp \ta n
+\end{align}
+Here, $\ta{n}$ is taken positive outwards from a convex surface.
+More specifically, we consider the special case of isotropic surface tension $\hat{\ts\sigma} = \gamma_\surf \hat{\ts I}$, for the numerical examples.
+In this case we obtain the familiar equivalent surface traction
 \begin{equation}
     \ta{t}_\surf\defeq -\kappa\gamma_\surf\ta{n}
 \label{eq:surface_traction_strong}
 \end{equation}
-%------------------------------------------------------------------
 where $\kappa\defeq\ta{n}\cdot\hat{\diff}$ is the curvature.
-Here, $\ta{n}$ is taken positive outwards from a convex surface, whereas $\hat\diff \defeq \diff - [\diff\cdot\ta{n}]\ta{n}$ is the surface gradient operator.
+
+% As shown in, e.g.\ \textsc{\"Ohman et al.} \cite{Ohman2012a}, it is possible to represent the surface tension force by an equivalent surface traction, henceforth denoted $\ta{t}_\fluct$, acting on the surface (or interface).
+% In the presently assumed case of isotropic surface tension, $\ta{t}_\fluct$ is directed in the normal direction to the surface and is given as
+% %-----------------------------------------------------------------
+% \begin{equation}
+%     \ta{t}_\surf\defeq -\kappa\gamma_\surf\ta{n}
+% \label{eq:surface_traction_strong}
+% \end{equation}
+% %------------------------------------------------------------------
+% where $\kappa\defeq\ta{n}\cdot\hat{\diff}$ is the curvature.
+
+
 
 %The smooth space-curved surface segment $\Gamma$, as shown in \figref{fig:surfacestress}, is considered as a ``thin shell'' acted upon by the tractions $\ta{t}^+$ and $\ta{t}^-$ on the upper and lower sides.
 %These tractions are part of the final solution in the case $\Gamma$ is the contact interface of two bodies (solid or fluid) with different material properties.
@@ -293,7 +314,7 @@ The weak form of \eqref{eq:strong_form} then reads:
 \begin{align}
     \int_{\Omega^\particle} \ts{\sigma}\dprod[\delta \ta v\outerp\diff] \dif v
     & =
-    \int_{\Gamma^\pore} \ta{t}_\surf \cdot \delta\ta{v} \dif a
+    -\int_{\Gamma^\pore} \hat{\ts\sigma} \dprod [\delta\ta{v}\outerp\hat{\diff}] \dif a
 \label{eq:weak_form_v} \\
     \int_{\Omega^\particle} \left[\ta{v}\cdot\diff\right] \delta p \dif v
     & =  0
@@ -306,16 +327,15 @@ for suitable test functions $\delta\ta{v}$ and $\delta p$ that satisfy the appro
 \textbf{Remark}: In the special case of isotropic surface tension (not necessarily homogeneous), the operational format of \eqref{eq:weak_form_v} is obtained by using the more explicit expression for the integral that represents ``surface tension loading'':
 %-----------------------------------------------------------------
 \begin{equation}
-    \int_{\Gamma^\pore} \ta{t}_\surf \cdot \delta\ta{v} \dif a =
-    -\int_{\Gamma^\pore} \gamma_\surf\left[\delta\ta{v}\cdot\hat{\diff}\right] \dif a
+    \int_{\Gamma^\pore} \hat{\ts\sigma} \dprod [\delta\ta{v}\outerp\hat{\diff}] \dif a =
+    \int_{\Gamma^\pore} \gamma_\surf\left[\delta\ta{v}\cdot\hat{\diff}\right] \dif a
 \label{eq:surface_traction_weak}
 \end{equation}
 %------------------------------------------------------------------
 where the surface divergence theorem was used for any smooth pore surface segment $\Gamma^\pore_i$. $\Box$
 
 \section{Macro problem}
-
-The macroscale problem can be put in the abstract form as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
+As shown in \textsc{\"Ohman et al.} \cite{Ohman2012b}, the macroscale problem can be put in the abstract form as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:macro}
 \begin{alignat}{3}
@@ -404,7 +424,7 @@ where examples of base dyads are listed in Appendix \ref{sec:base_dyads}.
 
 \subsection{RVE potential}
 
-In order to show the Neumann-type boundary condition we shall first revisit the Dirichlet type boundary condition shown in \cite{Ohman2012b} but express as a minimization problem.
+In order to show the Neumann-type boundary condition we shall first revisit the Dirichlet type boundary condition shown in \cite{Ohman2012b} but expressed as a minimization problem.
 The subscale fluid is still subject to incompressibility constraint
 \begin{gather}
  \diff \cdot \ta v = 0
@@ -435,7 +455,7 @@ which leads to the suitable RVE-potential
 We can express the Neumann boundary condition as
 \begin{align}
  \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
-    \inf_{\ta v^\fluct \in \set V_\Box^0} \;
+    \inf_{\ta v \in \set V_\Box} \;
     \sup_{\substack{p\in \set P_\Box \\ \bar{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3}}} \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \bar{\ts\sigma}_\dev).
 \end{align}
 
@@ -455,10 +475,15 @@ Stationarity gives us the weak form: Find $(\ta v, p, \bar{\ts\sigma}_\dev) \in 
 \end{subequations}
 where
 \begin{alignat}{2}
+ \label{eq:rve_a}
  a_\Box(\ta v, \delta\ta v)          &\defeq \phantom{-} \volume \int_{\Omega_\Box^\particle} \ts\sigma_\dev \dprod [\delta\ta v\outerp\diff] \dif V \\
+ \label{eq:rve_b}
  b_\Box(p, \ta v)                    &\defeq -\volume \int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif A \\
+ \label{eq:rve_c}
  c_\Box(\bar{\ts\sigma}_\dev, \ta v) &\defeq -\volume \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev \dif A \dprod \bar{\ts\sigma}_\dev\\
+ \label{eq:rve_f}
  f_\Box(\bar{p},\delta\ta v)         &\defeq -\volume \int_{\Gamma_\Box} [\delta\ta v\cdot\ta n] \dif A\; \bar{p} \\
+ \label{eq:rve_l}
  l_\Box(\delta\ta v)                 &\defeq -\volume \int_{\Gamma_\Box^\pore} \hat{\ts\sigma} \dprod [\delta\ta v\outerp\hat{\diff}] \dif A
 \end{alignat}
 % With \eqref{eq:rve_neumann} we solve for $\bar{\ts\sigma}_\dev$ directly while $\bar{e}$ is obtained through post-processing
@@ -485,9 +510,9 @@ We can express the Dirichlet boundary condition using the same RVE-potential
 \begin{align}
 \label{eq:dirichlet_potential}
  \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
-    \inf_{\ta v^\fluct \in \set V_\Box^\Dirichlet} \;
+    \inf_{\ta v \in \set V_\Box^\Dirichlet} \;
     \sup_{\substack{ p\in \set P_\Box \\ \bar{\ts\sigma}_\dev \in \set{R}_\dev^{3\times 3} }}
-    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e} \ta x_\mean + \ta v^\fluct, p, \bar{\ts\sigma}_\dev)
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \bar{\ts\sigma}_\dev)
 \end{align}
 where
 \begin{align}
@@ -520,7 +545,7 @@ where
 %  + \volume \int_{\Gamma_\Box^\pore} \hat{\ts\sigma}\dprod [\bar{\ts d}_\dev \cdot \ta x + \bar{e}\;\ta x_\mean + \ta v^\fluct]\outerp\hat{\diff}]\dif A
 % \end{multline}
 %and
-Introducing the stationarity condition we obtain the weak form for the Dirichlet type boundary condition: Find $(\ta v^\fluct, p, \bar{e}) \in \set{V}_\Box\times\set{P}_\Box\times\set{R}$ such that
+Introducing the stationarity condition we obtain the weak form for the Dirichlet type boundary condition: Find $(\ta v^\fluct, p, \bar{e}) \in \set{V}_\Box^0\times\set{P}_\Box\times\set{R}$ such that
 % \begin{align}
 %  \Lambda^{\Dirichlet\prime}_{\Box,\ta v^\fluct} (\bar{\ta d}_\dev, \bar{p};\ta v^\fluct, p, \bar{e}; \delta\ta v^\fluct) = 0 \forall \delta v^\fluct \in \set{V}_\Box^0
 % \end{align}
@@ -534,12 +559,12 @@ Introducing the stationarity condition we obtain the weak form for the Dirichlet
  &b_\Box(p, \ta x_\mean) \delta\bar{e} &&= [l_\Box(\ta x_\mean) - \bar p]\delta\bar{e} 
 &\quad &\forall\;\delta\bar{e}&&\in\set{R}
 \end{alignat}
-where
-\begin{alignat}{2}
- a_\Box(\ta v; \delta\ta v) &\defeq \phantom{-}\volume \int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\delta\ta v\outerp\diff] \dif V  \\
- b_\Box(p, \ta v)           &\defeq -\volume \int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V   \\
- l_\Box(\delta\ta v)        &\defeq -\volume \int_{\Gamma_\Box^\pore}\hat{\ts\sigma}\dprod[\delta\ta v \outerp\hat{\diff}] \dif A
-\end{alignat}
+where the abstract forms are as given in \eqref{eq:rve_a}, \eqref{eq:rve_b}, \eqref{eq:rve_l}.
+% \begin{alignat}{2}
+%  a_\Box(\ta v; \delta\ta v) &\defeq \phantom{-}\volume \int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\delta\ta v\outerp\diff] \dif V  \\
+%  b_\Box(p, \ta v)           &\defeq -\volume \int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V   \\
+%  l_\Box(\delta\ta v)        &\defeq -\volume \int_{\Gamma_\Box^\pore}\hat{\ts\sigma}\dprod[\delta\ta v \outerp\hat{\diff}] \dif A
+% \end{alignat}
 
 The macroscopic response is obtained from
 \begin{align}
@@ -559,9 +584,9 @@ We can express the periodic boundary condition using the same RVE-potential
 \begin{align}
 \label{eq:periodic_potential}
  \Psi^\Periodic_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
-    \inf_{\ta v^\fluct \in \set V_\Box^\Periodic} \;
+    \inf_{\ta v \in \set V_\Box^\Periodic} \;
     \sup_{\substack{ p\in \set P_\Box \\ \bar{\ts\sigma}_\dev \in \set{R}_\dev^{3\times 3} }}
-    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e} \ta x_\mean + \ta v^\fluct, p, \bar{\ts\sigma}_\dev)
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \bar{\ts\sigma}_\dev)
 \end{align}
 where
 \begin{align}
@@ -586,6 +611,18 @@ where
 \begin{align}
  \set{V}_\Box^{0+} &= \{ \ta v^\fluct \in \set{V}_\Box : \jump{\ta v^\fluct} = \ta 0 \text{ on }\Gamma_\Box \}
 \end{align}
+
+Introducing the stationarity condition we obtain the weak form for the Periodic type boundary condition: Find $(\ta v^\fluct, p, \bar{e}) \in \set{V}_\Box^{0+}\times\set{P}_\Box\times\set{R}$ such that
+\begin{alignat}{4}
+ &a_\Box(\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct; \delta\ta v^\fluct) + b_\Box(p,\delta\ta v^\fluct) &&= l_\Box(\delta\ta v^\fluct)
+&\quad &\forall\;\delta\ta v^\fluct &&\in \set{V}_\Box^{0+}
+\\
+ &b_\Box(\delta p, \bar{e}\;\ta x_\mean + \ta v^\fluct) &&= 0
+&\quad &\forall\;\delta p&&\in\set{P}_\Box
+\\
+ &b_\Box(p, \ta x_\mean) \delta\bar{e} &&= [l_\Box(\ta x_\mean) - \bar p]\delta\bar{e} 
+&\quad &\forall\;\delta\bar{e}&&\in\set{R}
+\end{alignat}
 
 \todo{Check sigma}
 The macroscopic response is obtained from
