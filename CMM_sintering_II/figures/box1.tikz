@@ -1,0 +1,48 @@
+\begin{tikzpicture}[node distance = 2cm, auto,scale=0.6, transform shape]
+    %\small
+    %\tikzstyle{every node}=[font=\footnotesize]
+    \tikzstyle{group}    = [rectangle, draw, thick, dashed, text width=6em, text centered, rounded corners]
+    \tikzstyle{decision} = [diamond,   draw, fill=white, text width=6em, text centered, node distance=2.5cm, inner sep=0pt]
+    \tikzstyle{block}    = [rectangle, draw, fill=white, text width=6em, text centered, rounded corners]
+    \tikzstyle{line}     = [draw, -latex']
+
+    \draw [thick, dashed, fill=blue!10, rounded corners] (-4.5,0.5) rectangle ( 1.9,-7.8);
+    \draw [thick, dashed, fill=red!10,  rounded corners] ( 3.8,0.5) rectangle (10.1,-7.8);
+    \node [below right, inner sep=10pt] at (-4.5,0.5) { \textbf{\large Macro} };
+    \node [below left,  inner sep=10pt] at (10.1,0.5) { \textbf{\large RVE} };
+
+    % Place nodes
+    \node [block] (init) {Initial guess};
+    \node [block, below of=init, text width=8em, node distance=1.5cm] (residual) {Compute residual from (12)};
+    \node [decision, below of=residual,node distance=2cm] (convergence) {Converged?};
+    \node [block, below of=convergence, node distance=2.3cm] (stop) {Finish step};
+    \node [block, left of=stop, node distance=3cm] (update) {Newton iteration: Compute tangent};
+    % Draw edges
+    \path [line] (init) -- (residual) node[midway] {$\bar{\ta{v}}$};
+    \path [line] (residual) -- (convergence);
+    \path [line] (convergence) -- node {False} (update);
+    \path [line] (convergence) -- node {True} (stop);
+    \path [line] (update) |- node[near start,right] {$\bar{\ta{v}}$} (residual);
+
+    % Place nodes
+    \node [block, right of=init, node distance=5.6cm] (rve_init) {Initial guess};
+    \node [block, below of=rve_init, text width=8em, node distance=1.5cm] (rve_residual) {Compute residual from (16)};
+    \node [decision, below of=rve_residual, node distance=2cm] (rve_convergence) {Converged?};
+    \node [block, below of=rve_convergence, node distance=2.3cm] (rve_stop) {Post-process $\bar{\ts\sigma}$};
+    \node [block, right of=rve_stop, node distance=3cm] (rve_update) {Newton iteration: Compute tangent};
+    % Sensitivity problem
+    \node [block, below of=rve_stop, node distance=1.3cm] (rve_sensitivity) {Sensitivity problem};
+    
+    % Draw edges
+    \path [line] (rve_init) -- (rve_residual) node[midway] {$\ta{v}^\fluct,p$};
+    \path [line] (rve_residual) -- (rve_convergence);
+    \path [line] (rve_convergence) -- node {False} (rve_update);
+    \path [line] (rve_convergence) -- node {True} (rve_stop);
+    \path [line] (rve_update) |- node[right, near start] {$\ta{v}^\fluct,p$} (rve_residual);
+
+    \path [line] (residual.east) ++(0, 0.2cm) -- ++(0.7cm,0) |- node [below,pos=0.65] {$\bar{\ts d}_\dev, \bar{e}$} (rve_init);
+    % Draw this backwards in order to get exact alignments
+    \path [line, latex'-] (residual.east) ++(0,-0.2cm) -- ++(0.7cm,0) |- node [below,pos=0.65] {$\bar{\ts\sigma}_\dev, \bar{p}$} (rve_stop);
+
+    \path [line] (rve_sensitivity) -| node[below, pos=0.10] {$\bar{\tf E}$} (update);
+\end{tikzpicture}

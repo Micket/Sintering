@@ -29,7 +29,7 @@
   % Region 2 particles
   \draw[fill=red!20]
   (0,0.6) to[out=0,in=-100] (O) -- (N) -- cycle %E
-  (D) to[out=90,in=-110] coordinate[near start] (surf3) (R) -- (L) -- (I) -- (H) -- (C) -- (D) coordinate[midway] (surf4) %F
+  (D) to[out=90,in=-110] coordinate[near start] (surf3) (R) -- (L) -- coordinate[midway] (surf6) (I) -- (H) -- coordinate[midway] (surf5) (C) -- (D) coordinate[midway] (surf4) %F
   (M) -- (Q) -- (J) -- (K) to[out=15,in=-140] (1,0.9) -- (1,1) -- cycle %G
   (1,0.2) to[out=-160,in=5] coordinate[midway] (surf1) (E) -- (P) coordinate[midway] (surf2) -- (A) -- (B) to[out=50,in=-170] (F) -- (G) -- (1,0.5) -- cycle %H
   ;
@@ -40,8 +40,10 @@
   \draw[<-] (0.9,0.7) -- (1.1,0.7) node[right,font=\scriptsize] {Porespace};
   \draw[<-] (0.9,0.35) -- (1.1,0.35) node[right,font=\scriptsize] {\shortstack{Contacting\\solid/fluid\\``particles''}};
   \draw[<-] (surf1) to[out=-30,in=-160] (1.1,0.15) node[right,font=\scriptsize] {Surface tension};
-  \draw[<-] (surf2) to[out=40,in=160] (1.1,0.15); % extra arrow
+  %\draw[<-] (surf2) to[out=40,in=160] (1.1,0.15); % extra arrow
   \draw[<-] (surf3) to[out=180,in=0] (-0.1,0.5) node[left] {$\Gamma_i^{\mathrm{pore}}$};
-  \draw[<-] (surf4) to[out=-135,in=0] (-0.1,0.3) node[left] {$\Gamma_j^{\mathrm{cont}}$};
+  \draw[<-] (surf5) to[out=135,in=0] (-0.1,0.5);
+  \draw[<-] (surf6) to[out=-135,in=0] (-0.1,0.5);
+  %\draw[<-] (surf4) to[out=-135,in=0] (-0.1,0.3) node[left] {$\Gamma_j^{\mathrm{cont}}$};
   \draw[<-] (0.3,0.7) to[out=180,in=0] (-0.1,0.7) node[left] {$\Omega_i^{\mathrm{part}}$};
 \end{tikzpicture}

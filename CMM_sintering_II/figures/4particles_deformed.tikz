@@ -1,4 +1,4 @@
-\begin{tikzpicture}[>=latex,scale=2.0] % Use this to scale the image. Text is always normal-size
+\begin{tikzpicture}[>=latex,scale=1.6] % Use this to scale the image. Text is always normal-size
   \def\particleradius{1.05} % Adjust this to change the contact size.
   \draw[thick,fill=black!10,even odd rule] (0.9,-1.1) 
   	to[out=190,in=10] (-1.1,-0.9)

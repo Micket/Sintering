@@ -1,4 +1,4 @@
-\begin{tikzpicture}[>=latex,scale=2.2] % Use this to scale the image. Text is always normal-size
+\begin{tikzpicture}[>=latex,scale=1.7] % Use this to scale the image. Text is always normal-size
   \def\particleradius{1.05} % Adjust this to change the contact size.
   \pgfmathsetmacro{\contactsize}{sqrt(\particleradius^2-1)} % Automatically calculated.
   \begin{scope}[very thick]
