@@ -1,0 +1,3 @@
+* A novel method for computational homogenization of liquid-phase sintering
+* Seamless transition from macroscopically compressible to incompressible behavior
+* FE2 example showing heterogeneous macroscopic porosity
