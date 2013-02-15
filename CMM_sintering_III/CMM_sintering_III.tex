@@ -71,16 +71,8 @@
 \DeclarePairedDelimiter{\homogenized}{\langle}{\rangle}
 \newcommand{\pore}{\mathrm{pore}}
 \newcommand{\particle}{\mathrm{part}}
-\newcommand{\free}{\mathrm{f}}
-\newcommand{\prescribed}{\mathrm{p}}
-\newcommand{\moving}{\mathrm{mov}}
-\newcommand{\segment}{\mathrm{segm}}
-\newcommand{\corner}{\mathrm{corn}}
 \newcommand{\contact}{\mathrm{cont}}
-\newcommand{\external}{\mathrm{ext}}
-\newcommand{\internal}{\mathrm{int}}
 \newcommand{\surf}{\mathrm{s}}
-\newcommand{\mesh}{\mathcal{M}}
 \newcommand{\on}{\quad\text{ on }}
 \newcommand{\NDIM}{n_\mathrm{dim}}
 \newcommand{\tang}{\mathrm{T}}
@@ -106,7 +98,7 @@
 %\addbibresource{Mesh.bib}
 %\addbibresource{OhmanPublications.bib}
 
-\title{Classical Boundary Conditions for Computational Homogenization of Incompressible Fluid}
+\title{Boundary Conditions and Bounds for Computational Homogenization of Incompressible Microstructures}
 \author{Mikael \"Ohman, Kenneth Runesson, Fredrik Larsson}
 
 \begin{document}
@@ -124,6 +116,7 @@
 
 \begin{abstract}
 \noindent
+UPDATE THIS LAST!
 Liquid phase sintering of particle agglomerates is modeled on the mesoscale as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface.
 On the macroscale, a quasistatic equilibrium problem allows for the prediction of the shrinkage of the sintering body.
 The present paper presents a novel FE\textsuperscript{2} formulation of the two-scale sintering problem allowing for the transition to zero porosity, implying macroscale incompressibility.
@@ -132,7 +125,7 @@ A Neumann type boundary condition is introduced for computational homogenization
 The numerical examples shows comparisons between the Dirichlet and Neumann type boundary conditions for both a single RVE and a full FE\textsuperscript{2} simulation.
 \end{abstract}
 %\begin{keyword}
-Sintering; FE2; Multiscale; Neumann; Stokes' flow; Surface tension
+FE2; Multiscale; Neumann boundary conditions; Periodicity; Bounds; Stokes' flow; Incompressible Flow; Surface tension; Sintering
 %\end{keyword}
 %\end{frontmatter}
 
@@ -439,24 +432,126 @@ and the choice of homogenization of the deviatoric strain rate
 % \end{gather}
 which leads to the suitable RVE-potential
 \begin{multline}
- \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \bar{\ts\sigma}_\dev) \defeq
-     \volume\int_{\Omega_\Box^\particle} [\Psi(\ta v\outerp\diff) - p\;[\ta v\cdot\diff]] \dif V
-   + \volume\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\ta v\outerp\hat{\diff}]\dif A
+ \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \ta t, \bar{e}) \defeq
 \\
-   + \volume\int_{\Gamma_\Box} [\ta v \cdot \ta n] \dif A \bar{p}
-   + \left[\bar{\ts d}_\dev - \volume\int_{\Gamma_\Box} [\ta v\outerp\ta n] \dif A\right]\dprod \bar{\ts\sigma}_\dev.
-% \\
-%   + \volume\int_{\Gamma_\Box}[\ta v\cdot \ta n]\dif A\;\bar{p}
-%   - \left[\volume \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A - \bar{\ts d}_\dev\right]\dprod \bar{\ts\sigma}_\dev
+     \Lambda_\Box^\particle(\bar{\ts d}_\dev, \bar{p}; \ta v, p)
+  + \bar{p}\; \bar{e}
+  + \volume \int_{\Gamma_\Box^+} \ta t \cdot \jump{[\bar{\ts d}_\dev + \frac13\bar{e} \ts I]\cdot[\ta x - \bar{\ta x}] - \ta v}\dif A
 \end{multline}
+\begin{align}
+ \Lambda_\Box^\particle(\bar{\ts d}_\dev, \bar{p}; \ta v, p) \defeq  \volume\int_{\Omega_\Box^\particle} [\Psi(\ta v\outerp\diff) - p\;[\ta v\cdot\diff]] \dif V
+   + \volume\int_{\Gamma_\Box^\pore} \hat{\ts\sigma}_\dev\dprod[\ta v\outerp\hat{\diff}]\dif A.
+\end{align}
+Here we introduced $\Gamma_\Box^+$ and the jump $\jump{\bullet} \defeq \bullet^+ - \bullet^-$, where $+$ and $-$ represents the opposing sides on an cubic RVE.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Dirichlet boundary condition}
+We can express the Dirichlet boundary condition using the same RVE-potential
+\begin{align}
+\label{eq:dirichlet_potential}
+ \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
+    \inf_{\substack{ \ta v \in \set V_\Box^\Dirichlet \\ \bar{e} \in \set{R} }} \;
+    \sup_{\substack{ p\in \set P_\Box \\ \ta t \in \set{T}_\Box }}
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \ta t, \bar{e})
+\end{align}
+where
+\begin{align}
+ \set{V}_\Box^\Dirichlet &= \{ \ta v \in \set{V}_\Box : \exists\; (\hat{\ts d}_\dev,\bar{e}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \ta v = \hat{\ts d}_\dev\cdot[\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean \text{ on }\Gamma_\Box \} \\
+ \ta x_\mean        &\defeq \frac13 [\ta x - \bar{\ta x}].
+\end{align}
+Simplifying \eqref{eq:dirichlet_potential} we obtain
+\begin{align}
+\nonumber
+ \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) &=
+    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^0 \\ \bar{e} \in \set R \\ \hat{\ts d}_\dev \in \set{R}_\dev^{3\times 3} }} \;
+    \sup_{\substack{ p\in \set P_\Box \\ \bar{\ts\sigma}_\dev \in \set{R}_\dev^{3\times 3} }}
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \hat{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean + \ta v^\fluct, p, \ta t, \bar{e})
+\intertext{ \{ $\hat{\ts d}_\dev = \bar{\ts d}_\dev$ only possible minimum due to $\sup\;\bar{\ts\sigma}_\dev$ \} }
+  &=
+    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^0 \\ \bar{e} \in \set R }} \;
+    \sup_{\substack{ p\in \set P_\Box }}
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean + \ta v^\fluct, p, \ta t, \bar{e})
+\\
+  &=
+    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^0 \\ \bar{e} \in \set R }} \;
+    \sup_{\substack{ p\in \set P_\Box }}
+    \Lambda_\Box^\particle(\bar{\ts d}_\dev, \bar{p}; \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean + \ta v^\fluct, p) + \bar{p}\;\bar{e}
+\end{align}
+where
+\begin{align}
+ \set{V}_\Box^0 &= \{ \ta v^\fluct \in \set{V}_\Box : \ta v^\fluct = \ta 0 \text{ on }\Gamma_\Box \}.
+\end{align}
+
+% We can express the RVE-potential as
+% \begin{multline}
+%  \Lambda_\Box \equiv \Lambda_\Box^\Dirichlet(\bar{\ts d}_\dev, \bar{p}; \ta v^\fluct, p, \bar{e}) \defeq 
+%   \volume \int_{\Omega_\Box^\particle} \Psi(\bar{\ts d}_\dev + \ta v^\fluct \outerp \diff) - p [\ta v^\fluct \cdot \diff] \dif V \\ 
+%  +  \bar{e} [\bar{p} - \volume \int_{\Omega_\Box^\particle} p \dif V]
+%  + \volume \int_{\Gamma_\Box^\pore} \hat{\ts\sigma}\dprod [\bar{\ts d}_\dev \cdot \ta x + \bar{e}\;\ta x_\mean + \ta v^\fluct]\outerp\hat{\diff}]\dif A
+% \end{multline}
+%and
+Introducing the stationarity condition we obtain the weak form for the Dirichlet type boundary condition: Find $(\ta v^\fluct, p, \bar{e}) \in \set{V}_\Box^0\times\set{P}_\Box\times\set{R}$ such that
+% \begin{align}
+%  \Lambda^{\Dirichlet\prime}_{\Box,\ta v^\fluct} (\bar{\ta d}_\dev, \bar{p};\ta v^\fluct, p, \bar{e}; \delta\ta v^\fluct) = 0 \forall \delta v^\fluct \in \set{V}_\Box^0
+% \end{align}
+\begin{alignat}{4}
+ &a_\Box(\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct; \delta\ta v^\fluct) + b_\Box(p,\delta\ta v^\fluct) &&= l_\Box(\delta\ta v^\fluct)
+&\quad &\forall\;\delta\ta v^\fluct &&\in \set{V}_\Box^0
+\\
+ &b_\Box(\delta p, \bar{e}\;\ta x_\mean + \ta v^\fluct) &&= 0
+&\quad &\forall\;\delta p&&\in\set{P}_\Box
+\\
+ &b_\Box(p, \ta x_\mean) \delta\bar{e} &&= [l_\Box(\ta x_\mean) - \bar p]\delta\bar{e} 
+&\quad &\forall\;\delta\bar{e}&&\in\set{R}
+\end{alignat}
+where the abstract forms are as given in \eqref{eq:rve_a}, \eqref{eq:rve_b}, \eqref{eq:rve_l}.
+% \begin{alignat}{2}
+%  a_\Box(\ta v; \delta\ta v) &\defeq \phantom{-}\volume \int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\delta\ta v\outerp\diff] \dif V  \\
+%  b_\Box(p, \ta v)           &\defeq -\volume \int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V   \\
+%  l_\Box(\delta\ta v)        &\defeq -\volume \int_{\Gamma_\Box^\pore}\hat{\ts\sigma}\dprod[\delta\ta v \outerp\hat{\diff}] \dif A
+% \end{alignat}
+
+The macroscopic response is obtained from
+\begin{align}
+ \bar{\ts\sigma}_\dev &= \pd{\Psi_\Box^\Dirichlet}{\bar{\ts d}_\dev} = \volume \left[
+    \int_{\Omega_\Box^\particle} \bar{\ts\sigma}_\dev \dif V + 
+    \int_{\Gamma_\Box^\pore} [\hat{\ts\sigma}\dprod[\ta x \outerp \hat{\diff}]]_\dev \dif A \right] =
+\nonumber\\
+    &= \volume \int_{\Gamma_\Box} [\ta t \outerp \ta x] \dif A + \bar{p}\;\ts I
+\\
+ \bar{e} &= \pd{\Psi_\Box^\Dirichlet}{\bar{p}} = \bar{e} \quad \text{(by construction)}
+\end{align}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Neumann boundary condition}
-We can express the Neumann boundary condition as
+We can obtain the Neumann boundary condition by restricting the space for $\ta t$:
 \begin{align}
- \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
+ \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) &\defeq
+    \inf_{\substack{\ta v \in \set V_\Box \\ \bar{e} \in R}} \;
+    \sup_{\substack{p\in \set P_\Box \\ \ta t \in \set T_\Box^\Neumann}} \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \ta t, \bar{e})
+\label{eq:neumann_potential}
+\end{align}
+where
+\begin{align}
+ \set T_\Box^\Neumann = \{ \ta t : \exists\; (\bar{\ts\sigma}_\dev, \hat{p}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \ta t = \bar{\ts\sigma}_\dev\cdot\ta n - \hat{p}\;\ta n \}
+\end{align}
+Simplifying \eqref{eq:neumann_potential} we obtain
+\begin{align}
+ \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) &\defeq
+    \inf_{\substack{\ta v \in \set V_\Box \\ \bar{e} \in R}} \;
+    \sup_{\substack{p\in \set P_\Box \\ \bar{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3} \\ \hat{p}\in \set{R} }} \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \bar{\ts\sigma}_\dev\cdot\ta n - \hat{p}\;\ta n, \bar{e})
+\intertext{ \{ $\hat{p} = \bar{p}$ only possible minimum due to $\inf\;\bar{e}$ \} }
+    &= 
     \inf_{\ta v \in \set V_\Box} \;
-    \sup_{\substack{p\in \set P_\Box \\ \bar{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3}}} \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \bar{\ts\sigma}_\dev).
+    \sup_{\substack{p\in \set P_\Box \\ \bar{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3}}}
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \bar{\ts\sigma}_\dev\cdot\ta n, 0)
+\\
+    &=
+    \inf_{\ta v \in \set V_\Box} \;
+    \sup_{\substack{p\in \set P_\Box \\ \bar{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3}}}
+    \!\!\Lambda_\Box^\particle(\bar{\ts d}_\dev, \bar p; \ta v, p) + 
+    \left[\bar{\ts d}_\dev - \volume\int_{\Gamma_\Box} [\ta v\outerp\ta n] \dif A\right]\dprod \bar{\ts\sigma}_\dev.
 \end{align}
 
 Stationarity gives us the weak form: Find $(\ta v, p, \bar{\ts\sigma}_\dev) \in \set{V}_\Box \times \set{P}_\Box \times \set{R}_\dev^{3\times 3}$ such that
@@ -505,82 +600,15 @@ The macroscopic responses are defined from the potential as
 for $i = 1, \ldots, n_{\mathrm{b}}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Dirichlet boundary condition}
-We can express the Dirichlet boundary condition using the same RVE-potential
-\begin{align}
-\label{eq:dirichlet_potential}
- \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
-    \inf_{\ta v \in \set V_\Box^\Dirichlet} \;
-    \sup_{\substack{ p\in \set P_\Box \\ \bar{\ts\sigma}_\dev \in \set{R}_\dev^{3\times 3} }}
-    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \bar{\ts\sigma}_\dev)
-\end{align}
-where
-\begin{align}
- \set{V}_\Box^\Dirichlet &= \{ \ta v \in \set{V}_\Box : \exists\; (\hat{\ts d}_\dev,\bar{e}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \ta v = \hat{\ts d}_\dev\cdot[\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean \text{ on }\Gamma_\Box \} \\
- \ta x_\mean        &\defeq \frac13 [\ta x - \bar{\ta x}].
-\end{align}
-Simplifying \eqref{eq:dirichlet_potential} we obtain
-\begin{align}
-\nonumber
- \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) &=
-    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^0 \\ \bar{e} \in \set R \\ \hat{\ts d}_\dev \in \set{R}_\dev^{3\times 3} }} \;
-    \sup_{\substack{ p\in \set P_\Box \\ \bar{\ts\sigma}_\dev \in \set{R}_\dev^{3\times 3} }}
-    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \hat{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean + \ta v^\fluct, p, \bar{\ts\sigma}_\dev)
-\intertext{ \{ $\hat{\ts d}_\dev = \bar{\ts d}_\dev$ only possible minimum due to $\sup\;\bar{\ts\sigma}_\dev$ \} }
-  &=
-    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^0 \\ \bar{e} \in \set R }} \;
-    \sup_{\substack{ p\in \set P_\Box }}
-    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean + \ta v^\fluct, p, \bar{\ts\sigma}_\dev)
-\end{align}
-where
-\begin{align}
- \set{V}_\Box^0 &= \{ \ta v^\fluct \in \set{V}_\Box : \ta v^\fluct = \ta 0 \text{ on }\Gamma_\Box \}
-\end{align}
-
-% We can express the RVE-potential as
-% \begin{multline}
-%  \Lambda_\Box \equiv \Lambda_\Box^\Dirichlet(\bar{\ts d}_\dev, \bar{p}; \ta v^\fluct, p, \bar{e}) \defeq 
-%   \volume \int_{\Omega_\Box^\particle} \Psi(\bar{\ts d}_\dev + \ta v^\fluct \outerp \diff) - p [\ta v^\fluct \cdot \diff] \dif V \\ 
-%  +  \bar{e} [\bar{p} - \volume \int_{\Omega_\Box^\particle} p \dif V]
-%  + \volume \int_{\Gamma_\Box^\pore} \hat{\ts\sigma}\dprod [\bar{\ts d}_\dev \cdot \ta x + \bar{e}\;\ta x_\mean + \ta v^\fluct]\outerp\hat{\diff}]\dif A
-% \end{multline}
-%and
-Introducing the stationarity condition we obtain the weak form for the Dirichlet type boundary condition: Find $(\ta v^\fluct, p, \bar{e}) \in \set{V}_\Box^0\times\set{P}_\Box\times\set{R}$ such that
-% \begin{align}
-%  \Lambda^{\Dirichlet\prime}_{\Box,\ta v^\fluct} (\bar{\ta d}_\dev, \bar{p};\ta v^\fluct, p, \bar{e}; \delta\ta v^\fluct) = 0 \forall \delta v^\fluct \in \set{V}_\Box^0
-% \end{align}
-\begin{alignat}{4}
- &a_\Box(\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct; \delta\ta v^\fluct) + b_\Box(p,\delta\ta v^\fluct) &&= l_\Box(\delta\ta v^\fluct)
-&\quad &\forall\;\delta\ta v^\fluct &&\in \set{V}_\Box^0
-\\
- &b_\Box(\delta p, \bar{e}\;\ta x_\mean + \ta v^\fluct) &&= 0
-&\quad &\forall\;\delta p&&\in\set{P}_\Box
-\\
- &b_\Box(p, \ta x_\mean) \delta\bar{e} &&= [l_\Box(\ta x_\mean) - \bar p]\delta\bar{e} 
-&\quad &\forall\;\delta\bar{e}&&\in\set{R}
-\end{alignat}
-where the abstract forms are as given in \eqref{eq:rve_a}, \eqref{eq:rve_b}, \eqref{eq:rve_l}.
-% \begin{alignat}{2}
-%  a_\Box(\ta v; \delta\ta v) &\defeq \phantom{-}\volume \int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\delta\ta v\outerp\diff] \dif V  \\
-%  b_\Box(p, \ta v)           &\defeq -\volume \int_{\Omega_\Box^\particle} p\;[\ta v\cdot\diff] \dif V   \\
-%  l_\Box(\delta\ta v)        &\defeq -\volume \int_{\Gamma_\Box^\pore}\hat{\ts\sigma}\dprod[\delta\ta v \outerp\hat{\diff}] \dif A
-% \end{alignat}
-
-The macroscopic response is obtained from
-\begin{align}
- \bar{\ts\sigma}_\dev &= \pd{\Psi_\Box^\Dirichlet}{\bar{\ts d}_\dev} = \volume \left[
-    \int_{\Omega_\Box^\particle} \bar{\ts\sigma}_\dev \dif V + 
-    \int_{\Gamma_\Box^\pore} [\hat{\ts\sigma}\dprod[\ta x \outerp \hat{\diff}]]_\dev \dif A \right] =
-\nonumber\\
-    &= \volume \int_{\Gamma_\Box} [\ta t \outerp \ta x] \dif A + \bar{p}\;\ts I
-\\
- \bar{e} &= \pd{\Psi_\Box^\Dirichlet}{\bar{p}} = \bar{e} \quad \text{(by construction)}
-\end{align}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Periodic boundary condition}
 We can express the periodic boundary condition using the same RVE-potential
+\begin{align}
+  \Psi^\Periodic_\Box(\bar{\ts d}_\dev, \bar{p} ) &\defeq
+    \inf_{\substack{\ta v \in \set V_\Box \\ \bar{e} \in R}} \;
+    \sup_{\substack{p\in \set P_\Box \\ \ta t \in \set T_\Box^\Periodic}} \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \ta t, \bar{e})
+\label{eq:periodic_potential}
+\end{align}
+.............
 \begin{align}
 \label{eq:periodic_potential}
  \Psi^\Periodic_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
@@ -592,7 +620,6 @@ where
 \begin{align}
  \set{V}_\Box^\Periodic &= \{ \ta v \in \set{V}_\Box : \exists\; (\hat{\ts d}_\dev,\bar{e}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \jump{\ta v} = \hat{\ts d}_\dev\cdot\jump{\ta x - \bar{\ta x}} + \bar{e}\; \jump{\ta x_\mean} \text{ on }\Gamma_\Box^+ \}.
 \end{align}
-Here we introduced the jump $\jump{\bullet} \defeq \bullet^+ - \bullet^-$, where $+$ and $-$ represents the opposing sides on an cubic RVE.
 
 Simplifying \eqref{eq:periodic_potential} we obtain
 \begin{align}
@@ -644,7 +671,8 @@ The macroscopic response is obtained from
 \subsubsection{Bounds}
 Hence, since 
 \begin{align}
- \set{V}_\Box^\Dirichlet \subset \set{V}_\Box^\Periodic \subset \set{V}_\Box
+ \set{V}_\Box^\Dirichlet \subset \set{V}_\Box\\
+ \set{T}_\Box^\Neumann \subset \set{T}_\Box
 \end{align}
 we have that
 \begin{align}
