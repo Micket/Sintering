@@ -451,12 +451,12 @@ We can express the periodic boundary condition using the same RVE-potential
   \Psi^\Periodic_\Box(\bar{\ts d}_\dev, \bar{p} ) &\defeq
     \inf_{\ta v \in \set V_\Box } \;
     \sup_{\substack{p\in \set P_\Box \\ \ta t \in \set T_\Box}}
-    \inf_{\bar{e} \in R} \;
+    \inf_{\bar{e} \in \set{R}} \;
     \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \ta t, \bar{e}).
 \label{eq:periodic_potential}
 \end{align}
-
 Introducing the stationarity condition we obtain the weak form for the Periodic type boundary condition: Find $(\ta v, p, \ta t, \bar{e}) \in\set{V}_\Box\times\set{P}_\Box\times\set{T}_\Box\times\set{R}$ such that
+\begin{subequations}\label{eq:rve_weakperiodicity}
 \begin{alignat}{4}
  &a_\Box(\ta v; \delta\ta v) + b_\Box(p,\delta\ta v) + t_\Box(\ta t,\delta\ta v) &&= l_\Box(\delta\ta v)
 &\quad &\forall\;\delta\ta v &&\in \set{V}_\Box
@@ -470,6 +470,7 @@ Introducing the stationarity condition we obtain the weak form for the Periodic 
  &t_\Box(\ta t, \ta x_\mean) \delta\bar{e} &&= - \bar p\;\delta\bar{e} 
 &\quad &\forall\;\delta\bar{e}&&\in\set{R}
 \end{alignat}
+\end{subequations}
 where
 \begin{alignat}{2}
  \label{eq:rve_a}
@@ -479,8 +480,53 @@ where
  \label{eq:rve_t}
  t_\Box(\ta t, \ta v)                &\defeq \phantom{-} \volume \int_{\Gamma_\Box^+} \ta t \cdot \jump{\ta v} \dif A\\
  \label{eq:rve_l}
- l_\Box(\delta\ta v)                 &\defeq -\volume \int_{\Gamma_\Box^\pore} \gamma_\surf [\delta\ta v\cdot\hat{\diff}] \dif A
+ l_\Box(\delta\ta v)                 &\defeq -\volume \int_{\Gamma_\Box^\pore} \gamma_\surf [\delta\ta v\cdot\hat{\diff}] \dif A.
 \end{alignat}
+
+\newcommand{\StrongPeriodic}{\mathrm{S}}
+We can also state the problem as strongly periodic by restricting the space for velocities as
+\begin{align}
+ \set{V}_\Box^\StrongPeriodic &= \{ \ta v \in \set{V}_\Box : \exists\; (\hat{\ts d}_\dev,\hat{e}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \jump{\ta v} = \hat{\ts d}_\dev\cdot\jump{\ta x - \bar{\ta x}} + \hat{e}\; \jump{\ta x_\mean} \text{ on }\Gamma_\Box^+ \}.
+\end{align}
+which gives 
+\begin{align}
+  \Psi^\Periodic_\Box(\bar{\ts d}_\dev, \bar{p} ) &=
+    \inf_{\ta v \in \set V_\Box^\StrongPeriodic } \;
+    \sup_{\substack{p\in \set P_\Box \\ \ta t \in \set T_\Box}}
+    \inf_{\bar{e} \in \set{R}} \;
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \ta t, \bar{e})
+\\
+&=
+    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^{0+} \\ \hat{e} \in \set R \\ \hat{\ts d}_\dev \in \set{R}_\dev^{3\times 3} }} \;
+    \sup_{\substack{ p\in \set P_\Box \\ \ta t \in \set{T}_\Box }} \;
+    \inf_{ \bar{e} \in \set{R} }
+    \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \hat{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \hat{e}\; \ta x_\mean + \ta v^\fluct, p, \ta t, \bar{e})
+\intertext{ \{ $\hat{\ts d}_\dev = \bar{\ts d}_\dev$ and $\hat{e} = \bar{e}$ only possible minimum due to $\sup\;\ta t$ \} }
+&=
+    \inf_{\substack{ \ta v^\fluct \in \set V_\Box^{0+} \\ \bar{e} \in \set{R} }} \;
+    \sup_{p\in \set P_\Box}
+    \Lambda_\Box^\particle(\bar{\ts d}_\dev \cdot [\ta x - \bar{\ta x}] + \bar{e}\; \ta x_\mean + \ta v^\fluct, p) + \bar{p}\;\bar{e}
+\label{eq:strong_periodic_potential}
+\end{align}
+where
+\begin{align}
+ \set{V}_\Box^{0+} &= \{ \ta v^\fluct \in \set{V}_\Box : \jump{\ta v^\fluct} = \ta 0 \text{ on }\Gamma_\Box^+ \}.
+\end{align}
+Introducing the stationary condition we obtain the weak form for the strongly periodic boundary condition: Find $(\ts v^\fluct,p,\bar{e})\in \set{V}_\Box^{0+}\times \set{P}_\Box\times\set{R}$ such that
+\begin{subequations}\label{eq:rve_strongperiodicity}
+\begin{alignat}{4}
+ &a_\Box(\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct; \delta\ta v^\fluct) + b_\Box(p,\delta\ta v^\fluct) &&= l_\Box(\delta\ta v^\fluct)
+&\quad &\forall\;\delta\ta v^\fluct &&\in \set{V}_\Box^{0+}
+\\
+ &b_\Box(\delta p, \bar{e}\;\ta x_\mean + \ta v^\fluct) &&= 0
+&\quad &\forall\;\delta p&&\in\set{P}_\Box
+\\
+ &b_\Box(p, \ta x_\mean) \delta\bar{e} &&= [l_\Box(\ta x_\mean) - \bar p]\delta\bar{e} 
+&\quad &\forall\;\delta\bar{e}&&\in\set{R}
+\end{alignat}
+\end{subequations}
+where the abstract forms are as given in \eqref{eq:rve_a}, \eqref{eq:rve_b}, \eqref{eq:rve_l}.
+
 % .............
 % \begin{align}
 % \label{eq:periodic_potential}
@@ -589,6 +635,7 @@ Introducing the stationarity condition we obtain the weak form for the Dirichlet
 % \begin{align}
 %  \Lambda^{\Dirichlet\prime}_{\Box,\ta v^\fluct} (\bar{\ta d}_\dev, \bar{p};\ta v^\fluct, p, \bar{e}; \delta\ta v^\fluct) = 0 \forall \delta v^\fluct \in \set{V}_\Box^0
 % \end{align}
+\begin{subequations}\label{eq:rve_dirichlet}
 \begin{alignat}{4}
  &a_\Box(\bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}] + \ta v^\fluct; \delta\ta v^\fluct) + b_\Box(p,\delta\ta v^\fluct) &&= l_\Box(\delta\ta v^\fluct)
 &\quad &\forall\;\delta\ta v^\fluct &&\in \set{V}_\Box^0
@@ -599,6 +646,7 @@ Introducing the stationarity condition we obtain the weak form for the Dirichlet
  &b_\Box(p, \ta x_\mean) \delta\bar{e} &&= [l_\Box(\ta x_\mean) - \bar p]\delta\bar{e} 
 &\quad &\forall\;\delta\bar{e}&&\in\set{R}
 \end{alignat}
+\end{subequations}
 where the abstract forms are as given in \eqref{eq:rve_a}, \eqref{eq:rve_b}, \eqref{eq:rve_l}.
 % \begin{alignat}{2}
 %  a_\Box(\ta v; \delta\ta v) &\defeq \phantom{-}\volume \int_{\Omega_\Box^\particle} \ts\sigma_\dev\dprod[\delta\ta v\outerp\diff] \dif V  \\
@@ -625,7 +673,7 @@ We can obtain the Neumann boundary condition by restricting the space for $\ta t
  \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) &\defeq
     \inf_{\ta v \in \set V_\Box} \;
     \sup_{\substack{p\in \set P_\Box \\ \ta t \in \set T_\Box^\Neumann}} \;
-    \inf_{ \bar{e} \in R }
+    \inf_{ \bar{e} \in \set{R} }
     \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \ta t, \bar{e})
 \label{eq:neumann_potential}
 \end{align}
@@ -638,7 +686,7 @@ Simplifying \eqref{eq:neumann_potential} we obtain
  \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) &\defeq
     \inf_{ \ta v \in \set V_\Box } \;
     \sup_{\substack{p\in \set P_\Box \\ \hat{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3} \\ \hat{p}\in \set{R} }} \;
-    \inf_{ \bar{e} \in R }
+    \inf_{ \bar{e} \in \set{R} }
     \Lambda_\Box(\bar{\ts d}_\dev, \bar p; \ta v, p, \hat{\ts\sigma}_\dev\cdot\ta n - \hat{p}\;\ta n, \bar{e})
 \intertext{ \{ $\hat{\ts\sigma}_\dev = \bar{\ts\sigma}_\dev$ and $\hat{p} = \bar{p}$ only possible maximum due to $\inf\;\bar{e}$ \} }
     &=
