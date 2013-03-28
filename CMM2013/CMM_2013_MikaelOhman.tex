@@ -40,7 +40,7 @@
   \usepackage{unicode-math}
   %\setmathfont[math-style=ISO]{xits-math.otf}
   %\setmathfont[math-style=ISO]{Asana-Math.otf}
-  \setmathfont[math-style=ISO]{latinmodernmath-regular.otf}
+1  \setmathfont[math-style=ISO]{latinmodernmath-regular.otf}
   %\setmathfont[math-style=ISO]{texgyretermes-regular.otf}
   \renewcommand{\ta}[1]{\mathbfit{#1}}
   \renewcommand{\ts}[1]{\mathbfit{#1}}
@@ -138,10 +138,10 @@ In this contribution, we will compare the use of Dirichlet and Neumann boundary 
 In particular, we aim at establishing bounds of a characteristic RVE-potential based on the choice of boundary conditions.
 
 \section{Macroscale problem}
-With a mixed velocity-pressure formulation,
+In order to deal with the transition to incompressibility a mixed velocity-pressure formulation is necessary on the macroscopic level.
 %As shown in Ref.~\cite{Ohman2013a}, 
 % TODO
-the macroscale problem can be written as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
+It can be shown that the macroscale problem can be written as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:macro}
 \begin{alignat}{3}
@@ -171,22 +171,25 @@ Here the deviatoric and volumetric rate of deformation gradient, $\bar{\ts d}_\d
 % \end{subequations}
 
 
-\subsection{RVE potential}
+\subsection{RVE problem}
+To derive the equations for each type of boundary condition it is convenient to construct a potential from which the Dirichlet and Neumann boundary conditions can be defined as $\inf$-$\sup$ problems.
+
+For an RVE with surface tension and pores, as shown in \figref{fig:initial_rve}, one can show that the suitable RVE potential can be expressed as an implicit function of the macroscopic control variables $\bar{\ts d}_\dev$ and $\bar{p}$:
 % TODO
 %In order to show the Neumann-type boundary condition we shall first revisit the Dirichlet type boundary condition shown in \cite{Ohman2013a} but expressed as a minimization problem.
-The subscale fluid is still subject to incompressibility constraint
-\begin{gather}
- \diff \cdot \ta v = 0
-\end{gather}
-and the choice of homogenization of the deviatoric strain rate
-\begin{align}
- \bar{\ts d}_\dev = \volume\int_{\Gamma_\Box} [\ta v \outerp \ta n]_\dev \dif A
-\end{align}
+% The subscale fluid is still subject to incompressibility constraint
+% \begin{gather}
+%  \diff \cdot \ta v = 0
+% \end{gather}
+% and the choice of homogenization of the deviatoric strain rate
+% \begin{align}
+%  \bar{\ts d}_\dev = \volume\int_{\Gamma_\Box} [\ta v \outerp \ta n]_\dev \dif A
+% \end{align}
 % In the Dirichlet type boundary condition introduced in \cite{Ohman_etal2012b} the velocity on the boundary was controlled by the prolongated macroscopic deviatoric gradient, $\bar{\ts d}_\dev$, but now we introduce an additional constraint
 % \begin{gather}
 %  \volume \int_{\Gamma_\Box}[\ta v\outerp\ta n]_\dev \dif A = \bar{\ts d}_\dev
 % \end{gather}
-which leads to the suitable general RVE-potential
+% which leads to the suitable general RVE-potential
 \begin{multline}
  \Lambda_\Box(\bar{\ts d}_\dev, \bar{p}; \ta v, p, \ta t, \bar{e}) \defeq
      \volume\int_{\Omega_\Box^\particle} \!\!\!\!\![\Psi(\ta v\outerp\diff) - p\;[\ta v\cdot\diff]] \dif V
@@ -201,12 +204,14 @@ which leads to the suitable general RVE-potential
   + \volume \int_{\Gamma_\Box^+} \ta t \cdot \jump{[\bar{\ts d}_\dev + \frac13\bar{e}\ts I]\cdot[\ta x - \bar{\ta x}] - \ta v}\dif A
 %   + \volume\int_{\Gamma_\Box}[\ta v\cdot \ta n]\dif A\;\bar{p}
 %   - \left[\volume \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev\dif A - \bar{\ts d}_\dev\right]\dprod \bar{\ts\sigma}_\dev
+\label{eq:rve_potential}
 \end{multline}
 where $\Psi$ is the bulk potential, $\gamma_\surf$ is the surface tension and $\hat{\diff}$ is the surface gradient operator.
+The additional field $\ta t$ is the Lagrange multiplier associated with the fluctuations of the velocity on the boundaries of the RVE.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dirichlet boundary condition}
-We can express the Dirichlet boundary condition by restricting the space for $\ta v$:
+We can then express the Dirichlet boundary condition as an $\inf$-$\sup$ problem of Eqn.~\eqref{eq:rve_potential} by restricting the space for $\ta v$:
 \begin{align}
 \label{eq:dirichlet_potential}
  \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
@@ -221,10 +226,11 @@ where
 \nonumber\\
   & \ta v = \hat{\ts d}_\dev\cdot[\ta x - \bar{\ta x}] + \bar{e}\;\frac13 [\ta x - \bar{\ta x}] \text{ on }\Gamma_\Box \}
 \end{align}
+In the Dirichlet boundary condition we solve the sought for volumetric rate of deformation, $\bar{e}$, directly as an unknown in the finite element problem, while the deviatoric stress, $\bar{\ts\sigma}_\dev$ is post-process by homogenization.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Neumann boundary condition}
-We can obtain the Neumann boundary condition by restricting the space for $\ta t$:
+Similarly, the Neumann boundary condition can be expressed by restricting the space for $\ta t$:
 \begin{align}
  \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
     \inf_{\ta v \in \set V_\Box } \;
@@ -236,8 +242,7 @@ where
 \begin{align}
  \set T_\Box^\Neumann = \{ \ta t : \exists\; (\bar{\ts\sigma}_\dev, \hat{p}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \ta t = \bar{\ts\sigma}_\dev\cdot\ta n - \hat{p}\;\ta n \}
 \end{align}
-
-
+As opposed to the Dirichlet, the deviatoric stress is now solved for directly as an unknown, and the volumetric rate of deformation is post-processed.
 
 
 
@@ -303,8 +308,8 @@ We can see in \figref{fig:porosity} that we obtain a tighter bound for the poros
     xmax=1, xmin=0, ymin=-0.01,
     cycle list name=linestyles,
     yticklabel style={font=\small}, xticklabel style={font=\small},
-    scaled y ticks=manual:{}{\pgfmathparse{#1*100}}, % Scale for percentage
-    scaled x ticks=manual:{}{\pgfmathparse{#1*1000}}, % Scale for percentage
+    %scaled y ticks=manual:{}{\pgfmathparse{#1*100}}, % Scale for percentage
+    %scaled x ticks=manual:{}{\pgfmathparse{#1*1000}}, % Scale for percentage
     ]
   \addplot[very thick,densely dashed] table {figures/porosity_dirichlet.txt};
   \addlegendentry {Dirichlet}
