@@ -1,0 +1,90 @@
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+%\usepackage{times}
+\usepackage{graphicx}
+%\usepackage[dvips]{graphicx}
+\usepackage{multicol}
+\usepackage{here}
+
+%\usepackage[latin2]{inputenc}
+
+%-----------------------------------------------------------------------------
+%\usepackage{psfig}
+%\newcommand{\PSFIG}[1]{\psfig{#1}}
+%\newcommand{\PSFIG}[1]{}
+%-----------------------------------------------------------------------------
+
+\topmargin=-10mm \headsep=5mm \evensidemargin=-12mm
+\oddsidemargin=-6mm \textwidth=170mm \textheight=242mm
+\columnsep=6mm
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.1pt}
+\fancyhf{} \fancyhead{ {\textbf{CMM-2013} -- Computer Methods
+in Mechanics \hfill  27--31 August 2013, Poznan, Poland} }
+\fancypagestyle{plain}
+
+\setlength{\arrayrulewidth}{0.1pt}
+\setlength{\parindent}{0.5cm}
+\mathindent0cm
+
+\makeatletter
+\renewcommand{\@seccntformat }[1]{\csname the#1\endcsname.\quad}
+\renewcommand\section{\@startsection {section}{1}
+{-\parindent}{3ex \@plus -1ex \@minus -.2ex}
+{3ex \@plus -1ex \@minus -.2ex}{\textbf}}
+\renewcommand\subsection{\@startsection {subsection}{2}
+{-\parindent}{1.5ex \@plus -1ex \@minus -.2ex}
+{1.5ex \@plus -1ex \@minus -.2ex}{\textit}}
+
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1: #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\box\@tempboxa}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\renewcommand\maketitle{\par
+  \begingroup
+    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+    \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+    \long\def\@makefntext##1{\parindent 1em\noindent
+%            \hb@xt@1.8em{%
+            \hb@xt@0.5em{%
+                \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+    \if@twocolumn
+      \ifnum \col@number=\@ne
+        \@maketitle
+      \else
+        \twocolumn[\@maketitle]%
+      \fi
+    \else
+      \newpage
+      \global\@topnum\z@   % Prevents figures from going at top of page.
+      \@maketitle
+    \fi
+    \thispagestyle{plain}\@thanks
+  \endgroup
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+\makeatother
+
+\renewcommand{\footnoterule}
+  {\noindent\rule{\textwidth}{0.1pt}\vspace{1mm}}
+\renewcommand{\baselinestretch}{0.913}
