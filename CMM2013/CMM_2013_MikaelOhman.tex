@@ -72,7 +72,7 @@
 
 
 \title{\bfseries
-On the formulation of a computational homogenization scheme with seamless transition from compressible to incompressible microstructures.
+On the formulation of a computational homogenization scheme with seamless transition from compressible to incompressible microstructures
 %Boundary conditions and bounds for computational homogenization of incompressible microstructures
 }
 
@@ -108,11 +108,11 @@ Abstract\\
 
 \noindent 
 % The abstract (max. 10 lines) !!!!
-In this work, we show the classical boundary conditions in computational homogenization, Dirichlet and Neumann, applied to the case of incompressible microstructures.
+In this paper, we discuss how the classical Dirichlet and Neumann boundary conditions in computational homogenization are applied to incompressible microstructures.
 We adopt a macroscale mixed velocity-pressure formulation that seamlessly handles the transition from compressible to incompressible microstructures.
-The application is that of liquid phase sintering, where the microstructure is modeled as a quasistatic mixture of incompressible fluids with pores and surface tension. 
-In the case of sintering, the Representative Volume Elements (RVEs) evolves from a porous ``green body'' to a completely dense, and incompressible, microstructure.
-The numerical example shows a comparison between the Dirichlet and Neumann type boundary conditions on a single unit cell RVE.
+As a prototype problem, we consider liquid phase sintering, whereby the microstructure within a Representative Volume Element (RVE) is modeled as incompressible fluid particles with empty pores and with surface tension as the densifying mechanism. 
+A porous ``green body'' thus evolves to a completely dense, and incompressible, microstructure.
+The example shows a numerical comparison between for a single RVE.
 \vspace{1ex}
 
 \noindent {\em 
@@ -125,23 +125,21 @@ FE2; Multiscale; Neumann boundary conditions; Stokes' flow; Incompressibility; S
 
 \section{Introduction}
 
-For many materials with heterogeneous microstructures, computational homogenization has shown to be an effective tool to use.
-A prime example of such materials is the so-called ``green body'', a cold compacted metal powder subsequently heated. The surface tension then leads to compaction of the metal particles. 
+For many materials with heterogeneous microstructure, computational homogenization has shown to be an effective tool in obtaining the macroscale mechanical response.
+A prime example of such materials is the so-called ``green body'', representing a cold-compacted metal powder, which is subsequently heated.
+The surface tension then leads to compaction of the porous body. 
 
-In Ref.~\cite{Ohman2012a}, we showed how computational homogenization can capture the complex phenomena of compacting particles using Stokes' flow.
+In Ref.~\cite{Ohman2012a}, we showed how computational homogenization can capture the complex densifying process using the Stokes' flow model.
 However, with traditional homogenization schemes, numerical problems arise when the shear and bulk stiffness differ greatly.
 The extreme case is that of an incompressible RVE, which leads to a singular macroscopic problem when formulated in standard fashion.
-This problem can be avoided by introducing a weak statement for the volumetric rate of deformation. 
-% TODO
-%, as shown in Ref.~\cite{Ohman2013a}.
-In this contribution, we will compare the use of Dirichlet and Neumann boundary conditions for this new format.
-In particular, we aim at establishing bounds of a characteristic RVE-potential based on the choice of boundary conditions.
+This can be avoided by introducing a weak statement for the volumetric rate-of-deformation. 
+In this contribution, we compare the use of Dirichlet and Neumann boundary conditions for this new format.
 
 \section{Macroscale problem}
-In order to deal with the transition to incompressibility a mixed velocity-pressure formulation is necessary on the macroscopic level.
+In order to deal with the transition to incompressibility, a mixed velocity-pressure formulation is required on the macroscopic level.
 %As shown in Ref.~\cite{Ohman2013a}, 
 % TODO
-It can be shown that the macroscale problem can be written as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
+It can be shown that the macroscale problem can reads as follows: Find $(\bar{\ta v},\bar p) \in\bar{\set V}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:macro}
 \begin{alignat}{3}
@@ -155,8 +153,9 @@ It can be shown that the macroscale problem can be written as follows: Find $(\b
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------
-where $\bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar p\}$ and $\bar{e}\{\bar{\ts d}_\dev,\bar p\}$ are responses from the RVE-problem in each integration point.
-Here the deviatoric and volumetric rate of deformation gradient, $\bar{\ts d}_\dev \defeq \left[\bar{\ta v}\outerp \diff\right]^\sym_\dev$ is introduced.
+where $\bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar p\}$ and $\bar{e}\{\bar{\ts d}_\dev,\bar p\}$ are responses from the RVE-problem in each point in an FE\textsuperscript{2}-procedure.
+
+Here, $\bar{\ts d}_\dev\!\defeq \left[\bar{\ta v}\outerp \diff\right]^\sym_\dev$ and $\bar{p}$ are the deviatoric part of the macroscale rate-of-deformation tensor and the macroscale pressure, respectively.
 %----------------------------------------------------------------------------
 % The formulation in Eqn. \eqref{eq:macro} allows for seamless transition from macroscopic compressible to incompressible by letting $\bar{c} \to 0$.
 % Newton iterations for solving the system in Eqns. \eqref{eq:macro} employ the algorithmic tangents
@@ -171,10 +170,10 @@ Here the deviatoric and volumetric rate of deformation gradient, $\bar{\ts d}_\d
 % \end{subequations}
 
 
-\section{RVE problem}
-To derive the equations for each type of boundary condition it is convenient to construct a potential from which the Dirichlet and Neumann boundary conditions can be defined as $\inf$-$\sup$ problems.
+\section{RVE-problem}
+To derive the RVE-problem with the Dirichlet or Neumann boundary conditions, it is convenient to construct a potential from which the pertinent equations can be defined as $\inf$-$\sup$ problems.
 
-For an RVE with surface tension and pores, as shown in \figref{fig:initial_rve}, one can show that the suitable RVE potential can be expressed as an implicit function of the macroscopic control variables $\bar{\ts d}_\dev$ and $\bar{p}$:
+In the presence of surface tension and pores, as shown in \figref{fig:initial_rve}, the suitable RVE-potential can be expressed as an implicit function of the macroscopic control variables $\bar{\ts d}_\dev$ and $\bar{p}$:
 % TODO
 %In order to show the Neumann-type boundary condition we shall first revisit the Dirichlet type boundary condition shown in \cite{Ohman2013a} but expressed as a minimization problem.
 % The subscale fluid is still subject to incompressibility constraint
@@ -207,11 +206,11 @@ For an RVE with surface tension and pores, as shown in \figref{fig:initial_rve},
 \label{eq:rve_potential}
 \end{multline}
 where $\Psi$ is the bulk potential, $\gamma_\surf$ is the surface tension and $\hat{\diff}$ is the surface gradient operator.
-The additional field $\ta t$ is the Lagrange multiplier associated with the fluctuations of the velocity on the boundaries of the RVE.
+The additional (traction) field $\ta t$ is the Lagrange multiplier associated with the jump, $\jump{\bullet} \defeq \bullet^+ - \bullet^-$, of the velocity fluctuations on the boundary of the RVE.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dirichlet boundary condition}
-We can then express the Dirichlet boundary condition as an $\inf$-$\sup$ problem of Eqn.~\eqref{eq:rve_potential} by restricting the space for $\ta v$:
+The RVE-problem with Dirichlet boundary condition is expressed as an $\inf$-$\sup$ problem for $\Lambda_\Box$ in Eqn.~\eqref{eq:rve_potential} by restricting the space for $\ta v$:
 \begin{align}
 \label{eq:dirichlet_potential}
  \Psi^\Dirichlet_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
@@ -222,15 +221,15 @@ We can then express the Dirichlet boundary condition as an $\inf$-$\sup$ problem
 \end{align}
 where
 \begin{align}
- \set{V}_\Box^\Dirichlet =& \{ \ta v \in \set{V}_\Box : \exists\; (\hat{\ts d}_\dev,\bar{e}) \in \set{R}^{3\times 3}_\dev \times \set{R} :
+ \set{V}_\Box^\Dirichlet = \{ &\ta v \in \set{V}_\Box : \exists\; (\hat{\ts d}_\dev,\bar{e}) \in \set{R}^{3\times 3}_\dev \times \set{R} :
 \nonumber\\
   & \ta v = \hat{\ts d}_\dev\cdot[\ta x - \bar{\ta x}] + \bar{e}\;\frac13 [\ta x - \bar{\ta x}] \text{ on }\Gamma_\Box \}
 \end{align}
-In the Dirichlet boundary condition we solve the sought for volumetric rate of deformation, $\bar{e}$, directly as an unknown in the finite element problem, while the deviatoric stress, $\bar{\ts\sigma}_\dev$ is post-process by homogenization.
+The sought volumetric part of the rate-of-deformation, $\bar{e}$, occurs as an unknown in the RVE-problem, while the deviatoric stress, $\bar{\ts\sigma}_\dev$, is post-processed by homogenization.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Neumann boundary condition}
-Similarly, the Neumann boundary condition can be expressed by restricting the space for $\ta t$:
+The problem with Neumann boundary condition can be expressed by restricting the space for $\ta t$:
 \begin{align}
  \Psi^\Neumann_\Box(\bar{\ts d}_\dev, \bar{p} ) \defeq
     \inf_{\ta v \in \set V_\Box } \;
@@ -240,9 +239,11 @@ Similarly, the Neumann boundary condition can be expressed by restricting the sp
 \end{align}
 where
 \begin{align}
- \set T_\Box^\Neumann = \{ \ta t : \exists\; (\bar{\ts\sigma}_\dev, \hat{p}) \in \set{R}^{3\times 3}_\dev \times \set{R} : \ta t = \bar{\ts\sigma}_\dev\cdot\ta n - \hat{p}\;\ta n \}
+ \set T_\Box^\Neumann = \{ &\ta t \in \set{T}_\Box: \exists\; (\bar{\ts\sigma}_\dev, \hat{p}) \in \set{R}^{3\times 3}_\dev \times \set{R} :
+\nonumber\\
+ & \ta t = \bar{\ts\sigma}_\dev\cdot\ta n - \hat{p}\;\ta n \}
 \end{align}
-As opposed to the Dirichlet, the deviatoric stress is now solved for directly as an unknown, and the volumetric rate of deformation is post-processed.
+In this case, $\bar{\ts\sigma}_\dev$ is an unknown in the RVE-problem, whereas $\bar{e}$ is post-processed.
 
 
 
@@ -266,37 +267,38 @@ As opposed to the Dirichlet, the deviatoric stress is now solved for directly as
 
 \section{Numerical examples}
 
-The numerical example shows a comparison of the Dirichlet and Neumann type boundary condition (upper and lower bounds respectively) on a single unit cell RVE.
-The unit cell contains 4 particles surrounded by melted binder as seen in \figref{fig:initial_rve}.
-The free pore surface is subject to surface tension, which acts as the sole driving force for the simulation, which stops when the pore has vanished.
-The RVE's are themselves subject the macroscopic fields $\bar{\ts d}_\dev = \ts 0$ and $\bar{p} = 0$.
+The numerical example shows a comparison of the Dirichlet and Neumann type boundary conditions on a single RVE.
+The unit cell contains 4 particles surrounded by the melted binder, as seen in \figref{fig:initial_rve}.
+The free pore surface is subjected to surface tension, which acts as the sole driving force for the simulation, which stops when the pore has vanished.
+The RVEs are subjected to the macroscopic fields $\bar{\ts d}_\dev = \ts 0$ and $\bar{p} = 0$.
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale=0.25]{figures/initial_rve}
- \caption{Initial state of the RVE with one unit-cell containing stiff particles with soft binder}
+ \caption{Initial state of unit-cell RVE containing stiff particles surrounded by soft (melt) binder.}
  \label{fig:initial_rve}
 \end{figure}
 
-In the RVE subject to the Dirichlet boundary condition in \figref{fig:final_dirichlet} we can see a uniform shrinkage on the boundary, as no fluctuations are allowed. 
-With the Neumann boundary condition in \figref{fig:final_neumann} we see fluctuations on the boundary where the soft binder, and the hard particles can maintain the initial shape.
+For the Dirichlet boundary condition in \figref{fig:final_dirichlet}, we can see a uniform shrinkage on the boundary, as no fluctuations are allowed. 
+With the Neumann boundary condition in \figref{fig:final_neumann}, we see fluctuations on the boundary where the soft binder protrudes and the hard particles can maintain the initial shape.
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale=0.25]{figures/final_dirichlet}
- \caption{Final state of RVE subject to Dirichlet boundary condition}
+ \caption{Final state of RVE subjected to Dirichlet boundary condition.}
  \label{fig:final_dirichlet}
 \end{figure}
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale=0.25]{figures/final_neumann}
- \caption{Final state of RVE subject to Neumann boundary condition}
+ \caption{Final state of RVE subjected to Neumann boundary condition.}
  \label{fig:final_neumann}
 \end{figure}
 
-In \figref{fig:porosity} the stiffer solution obtained from the Dirichlet boundary condition shows a clearly slower shrinkage of the RVE, where the pore vanishes after 850 time steps, compared to 715 time steps for the Neumann boundary condition.
-We can see in \figref{fig:porosity} that we obtain a tighter bound for the porosity when we increase the RVE size to include multiple unit-cells.
+In \figref{fig:porosity} the stiffer solution obtained from the Dirichlet boundary condition clearly shows a slower shrinkage of the RVE.
+The pore vanishes completely after 850 time steps, compared to 715 time steps for the Neumann boundary condition.
+In \figref{fig:porosity} we can see that the influence of the boundary conditions decreases for larger RVE size.
 
 \begin{figure}[H]
  \centering
@@ -304,17 +306,17 @@ We can see in \figref{fig:porosity} that we obtain a tighter bound for the poros
  \begin{axis}[
     width=1.051\linewidth,
     height=0.7\linewidth,
-    ylabel={Porosity [\%]},xlabel={Time steps},
+    ylabel={Porosity [\%]},xlabel={No. of time steps},
     xmax=1, xmin=0, ymin=-0.01,
     cycle list name=linestyles,
     yticklabel style={font=\small}, xticklabel style={font=\small},
-    %scaled y ticks=manual:{}{\pgfmathparse{#1*100}}, % Scale for percentage
-    %scaled x ticks=manual:{}{\pgfmathparse{#1*1000}}, % Scale for percentage
+    scaled y ticks=manual:{}{\pgfmathparse{#1*100}}, % Scale for percentage
+    scaled x ticks=manual:{}{\pgfmathparse{#1*1000}}, % Scale for percentage
     ]
   \addplot[very thick,densely dashed] table {figures/porosity_dirichlet.txt};
-  \addlegendentry {Dirichlet}
+  \addlegendentry {Dirichlet 1$\times$1}
   \addplot[thick] table {figures/porosity_neumann.txt};
-  \addlegendentry {Neumann}
+  \addlegendentry {Neumann 1$\times$1}
 
   \addplot[densely dashed] table {figures/porosity_2_dirichlet.txt};
   \addlegendentry {Dirichlet 2$\times$2}
@@ -323,7 +325,7 @@ We can see in \figref{fig:porosity} that we obtain a tighter bound for the poros
 
  \end{axis}
 \end{tikzpicture}
- \caption{Porosity over time for a single and 2$\times$2 unit-cell RVE subject to zero macroscopic pressure, $\bar{p} = 0$}
+ \caption{Evolution of porosity with time for a 1$\times$1 and 2$\times$2 unit-cell RVE subjected to zero macroscopic pressure, $\bar{p} = 0$.}
  \label{fig:porosity}
 \end{figure}
 
