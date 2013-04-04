@@ -1,0 +1,192 @@
+\documentclass[11pt]{beamer} % mathserif for normal math fonts.
+\usefonttheme[onlymath]{serif}
+\usepackage[utf8]{inputenc}
+\usepackage[swedish,english]{babel}
+\usepackage{microtype}
+\usepackage{calc}
+\usepackage{amsmath,mathtools,dsfont}
+\usepackage{contmech}
+%\usepackage{siunitx}
+%\usepackage{movie15}
+\usepackage{multimedia}
+\usepackage{grffile}
+\usepackage{tikz}
+\usepackage{pgfplots}
+%\usepackage{subfig}
+\usepackage{wasysym}
+
+%\usepgfplotslibrary{patchplots}
+%\usepgfplotslibrary{groupplots}
+%\pgfplotsset{compat=1.3}
+
+\newcommand{\roughcite}[1]{\textsc{#1}}
+\renewcommand{\alert}[1]{\textbf{#1}}
+
+\setbeamersize{text margin left=.3cm,text margin right=.3cm}
+
+\usetheme[titleflower=false]{chalmers}
+\title{Topics for discussion for future OOFEM development}
+\author[Mikael \"Ohman]{Mikael \"Ohman}
+\institute{Department of Applied Mechanics\\ Chalmers University of Technology}
+%\titlepageextra{2012}% session: Multiple-scale physics and computation
+\date{2012-09-12}
+%\footer{\insertshortauthor\ 2\textsuperscript{nd} ICMM}
+\titlepagelogofile{Avancez_black}
+
+% Bibliography
+%\bibliography{references_extended}
+
+% Speeds up compilation.
+% \usetikzlibrary{external}
+% \tikzexternalize
+
+\begin{document}
+
+\section{Title page}
+\begin{frame}[plain]
+ \titlepage
+\end{frame}
+
+\section{Maintenance}
+\begin{frame}
+ \frametitle{OOFEM for new developers}
+\begin{itemize}
+ \item[\smiley] DVCS + Hierarchy of trust = Easier to get started
+ \item[\smiley] CMake seems to be working quite well cross-platform
+ \item[\smiley] Fairly decent documentation
+ \item[\smiley] High abstraction layer
+ \item[\smiley] Division of Material and Computational Mechanics at Chalmers is starting to use OOFEM increasingly (new PhD students incoming)
+ \item[?] License
+\end{itemize}
+\begin{itemize}
+ \item[\frownie] Need to de-mystify code
+ \item[\frownie] Need to reduce the amount of code
+ \item[\frownie] Not modular enough
+ \item[\frownie] Better test coverage
+ \item[\frownie] No info on who works on what until code is published
+ \item[\frownie] Require author names on new code. Avoid commit-and-run
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Increasing code size}
+\begin{itemize}
+ \item Mostly just base structures that matter
+ \item Continuous evolving core design.
+  \begin{itemize}
+    \item Impossible to get everything right on the first try
+    \item Old code needs some overhaul
+    \item Rethink strategy if it comes down to cluttering base structure with specialized code
+    \item Discuss with other developers for ideas
+  \end{itemize}
+ \item Try to play nice with existing code
+ \item Keep it modular - Overwhelming size less of an issue
+ \item If tests are unfeasible, then at least include an easy-to-run demo.
+\end{itemize}
+\end{frame}
+
+\section{Selected issues}
+\begin{frame}
+ \frametitle{Questionable design patterns}
+\begin{itemize}
+ \item[\frownie] Common function + Enum + Switch-case
+  \begin{itemize}
+   \item Often completely unnecessary. Just write the direct function instead.
+   \item To many obscure enum values
+   \item Enum-blends; e.g. CharType mixed vectors and matrices.
+   \item Design copy-pasted into new code unnecessarily
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+% \begin{frame}
+%  \frametitle{Parallel communication}
+% \begin{itemize}
+%  \item[\frownie] Too many classes!
+%   \begin{itemize}
+%    \item 
+%   \end{itemize}
+%  \itemize save/restoreContext and 
+% \end{itemize}
+% \end{frame}
+
+\begin{frame}
+ \frametitle{Too many engineering models}
+\begin{itemize}
+ \item[!] Always solve as nonlinear (linear converges in 0 or 1 iterations)
+ \item Replace in SM-module;
+  \begin{itemize}
+   \item[-] DEIDynamic, DIIDynamic, IncrementalLinearStatic, LinearStatic, NonlinearStatic, NLDEIDynamic, NonLinearDynamic
+   \item[+] Static, Dynamic (possibly separate ExplicitDynamic)
+  \end{itemize}
+ \item Replace in TM-module
+  \begin{itemize}
+   \item[-] Stationary, NonStationary, NLTransient
+   \item[+] Stationary, Transient (possible separate ExplicitTransient)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Making life easier for pre-processors}
+
+\begin{frame}
+ \frametitle{Sets and boundary conditions}
+\begin{itemize}
+ \item Introduce sets, e.g. PointSet, BulkSet, BoundarySet, EdgeSet ...
+ \item Sets contain lists of elements/nodes/edges
+ \item Boundary condition applies to 1 (or more) set(s).
+ \item Elements/nodes do \textbf{not} keep a list of BCs
+ \item Essentially the way the ActiveBCs currently do it
+ \item Assembly Neumann b.cs: Loop over BCs, loop over sets, loop over active elements only.
+ \item Dirichlet b.c.s require inverse mapping for the dofs.
+\end{itemize}
+\begin{itemize}
+ \item[+] Much easier for adaptivity/remeshing
+ \item[+] No need for dofidmask in nodes, can be autodetected.
+ \item[+] Easier for pre-processors
+ \item[+] No need for the domain type record
+ \item[+] Only affected elements are requested for load assembly.
+ \item[+] Computations inside BC or inside Element can be optional
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Made up example}
+ \texttt{\footnotesize
+  testset.out\\
+  Test sets\\
+  LinearStatic nsteps 1\\
+  OutputManager tstep\_all dofman\_all element\_all\\
+  ndofman 3 nelem 2 ncrosssect 1 nmat 1 nbc 2 nic 0 nltf 1 nsets 2\\
+  Node 1 coords 2 0. 0.\\
+  Node 2 coords 2 2. 0.\\
+  Node 3 coords 2 1. 1.\\
+  Truss2d 1 nodes 2 1 2 mat 1 crossSect 1\\
+  Truss2d 2 nodes 2 2 3 mat 1 crossSect 1\\
+  SimpleCS 1 thick 0.1 width 10.0\\
+  IsoLE 1  tAlpha 0.000012  d 1.0  E 1.0  n 0.2 \\
+  NodeSet 1 nodes 2 1 2\\
+  NodeSet 2 nodes 1 3\\
+  BoundaryCondition 1 TimeFunction 1 Set 1 d 2 0. 0. Dofs 2 D\_u D\_v\\
+  Force 2 TimeFunction 1 Set 2 f 2 -1. 0.\\
+  ConstantFunction 1 f(t) 1.0\\
+}
+\end{frame}
+
+\section{The future}
+\begin{frame}
+ \frametitle{Post-processing}
+ \begin{itemize}
+  \item Replace Elixir with VTK.
+   \begin{itemize}
+    \item[\smiley] Can do much more than what UnstructuredGrid allows (IGA, XFEM, deformed gradient/beam elements).
+    \item[\smiley] VTK already in use when writing binary VTU-files.
+    \item[\smiley] Can use context files as output files.
+    \item[\smiley] Plot solution while iterating
+    \item[\frownie] Context files will almost always break when you have a slightly newer version of OOFEM
+    \item[\frownie] A lot of work (but it can be added gradually)
+   \end{itemize}
+ \end{itemize}
+\end{frame}
+
+\end{document}
