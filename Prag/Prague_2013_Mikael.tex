@@ -400,6 +400,7 @@ Find $\ta v\in \set V, p\in \set P$
 \begin{itemize}
  \item Can be obtained by switching control of $\bar{e} \leftrightarrow \bar{p}$ or by deriving the variationally consistent forms by splitting both fields:\\ $\ta v = \ta v^\macro + \ta v^\fluct$, $p = p^\macro + p^\fluct$
  \item Straightforward implementation in OOFEM: Simply extend fluid materials: $\ts\sigma_\dev = f(\ts d_\dev) \rightarrow [\ts\sigma_\dev,\bar{e}] = f(\ts d_\dev, p)$.
+ \item Uses standard Taylor-Hood interpolation
 \end{itemize}
 
 
@@ -430,7 +431,7 @@ Find $\ta v\in \set V, p\in \set P$
  \end{itemize}
 
  \begin{itemize}
-  \item Valid for seamless transition from compressible to incompressible macroscale response.
+  \item Valid for seamless transition from compressible to incompressible macroscale response ($\bar{e}\to 0$ instead of $\bar{p}\to\infty$).
  \end{itemize}
 \end{frame}
 
@@ -530,7 +531,7 @@ Find $\ta v\in \set V, p\in \set P$
 \section{Implementation}
 \begin{frame}
  \frametitle{Dirichlet b.c. implementation --- Issues}
- \begin{enumerate}
+ \begin{itemize}
   \item Inconvenient equation of $\bar{e}$. Unknown is global to the RVE problem (single unknown on the entire boundary). Where should it belong?
   \item Velocity fluctuations $\ta v^\fluct$ would require an alternative Stokes' flow-formulation.
   \item How should one deal with 
@@ -541,7 +542,7 @@ Find $\ta v\in \set V, p\in \set P$
     \quad \forall\; \delta\bar{e} \in \set{R}
 \end{equation*}
   which connects elements to this global test-function $\delta\bar{e}$ ? 
- \end{enumerate}
+ \end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{Dirichlet b.c. implementation --- Solutions}
@@ -550,14 +551,63 @@ Find $\ta v\in \set V, p\in \set P$
   \item OOFEM already support slave DOFs! Simply use 
   \begin{equation*}
    \ta v = \overbrace{\underbrace{\bar{\ts d}_\dev}_{\text{Prescribed}} \cdot \underbrace{[\ta x - \bar{\ta x}]}_{\text{Weights}}}^{\ta v^\macro_\dev} + 
-           \overbrace{\underbrace{\bar{e}}_{\text{Unknown}} \underbrace{\frac13 [\ta x - \bar{\ta x}]}_{\text{Weight}}}^{\ta v^\macro_\vol}  \text{ on } \Gamma_\Box
+           \overbrace{\underbrace{\bar{e}}_{\text{Unknown}} \underbrace{\frac13 [\ta x - \bar{\ta x}]}_{\text{Weight}}}^{\ta v^\macro_\vol}  \quad\text{on } \Gamma_\Box
   \end{equation*}
   ( only boundary matters, internal DOFs can left alone )
   \item Nothing else to do. OOFEMs slave DOF transformations takes care of the third equation.
-  \item Better yet, stress is obtained trivially as the reaction-forces associated with the prescribed DOFs $\bar{\ts d}_\dev$!
+  \item Better yet, $\bar{\ts\sigma}_\dev$ is obtained trivially as the reaction-forces associated with the prescribed $\bar{\ts d}_\dev$-DOFs!
   \item Implemented in \texttt{MixedGradientPressureDirichlet}
  \end{itemize}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Neumann b.c. implementation --- Issues}
+ \begin{itemize}
+  \item Where should the new global DOFs for $\bar{\ts\sigma}_\dev$ be stored?
+  \item How should $c_\Box(\bullet,\bullet)$ be computed?
+ \end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Neumann b.c. implementation --- Solutions}
+ \begin{itemize}
+  \item Store $\bar{\ts\sigma}_{\dev}$ as internal DOFs in the boundary condition.
+  \item Introduce \texttt{ActiveBoundaryCondition}: Boundary condition assembles contributions to residual and tangent matrices itself.
+  \item Active b.c. stores a list of element boundaries
+  \item Common interface with Dirichlet b.c; $(\bar{\ts d}_\dev, \bar{p}) \to (\bar{\ts\sigma}_\dev,\bar{e})$
+  \item Implemented in \texttt{MixedGradientPressureNeumann}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{FE\textsuperscript{2} Implementation}
+ \begin{itemize}
+  \item \texttt{FE2FluidMaterial} solves RVE-problem in each integration point.
+  \item Benefit from OO-design:\\
+ \begin{center}
+ \includegraphics[width=0.7\linewidth]{figures/mixedgradientpressurebc.png}
+  \end{center}
+  \item Expects first boundary condition on RVE to be of the type \texttt{MixedGradientPressureBC}
+  \item Also implemented are the necessary tangents (4 of them!)
+  \begin{align*}
+   \pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev} \qquad
+   \pd{\bar{\ts\sigma}_\dev}{\bar{p}} \qquad
+   \pd{\bar{e}}{\bar{\ts d}_\dev} \qquad
+   \pd{\bar{e}}{\bar{p}}
+  \end{align*}
+ \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Remeshing}
+ \begin{itemize}
+  \item Large toplogical changes requires remeshing
+  \item Added Triangle bindings (\roughcite{J. Schewchuck})
+  \item Topology-tracker: Points tracking surface geometry
+  \item Mesh quality ``error''-estimator to determine when to re-mesh.
+ \end{itemize}
+\end{frame}
 
 \end{document}

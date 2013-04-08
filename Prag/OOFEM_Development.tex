@@ -65,6 +65,7 @@
  \item[\frownie] Better test coverage
  \item[\frownie] No info on who works on what until code is published
  \item[\frownie] Require author names on new code. Avoid commit-and-run
+ \item[?] Getting started: Simple example classes
 \end{itemize}
 \end{frame}
 
@@ -182,12 +183,33 @@
 }
 \end{frame}
 
+\begin{frame}
+ \frametitle{Challenges}
+\begin{itemize}
+ \item What about controlling dof type for slave nodes?
+  \begin{itemize}
+    \item Interleaved. Order of dofs should remain arbitrary\\
+ \texttt{\footnotesize SlaveNode 1 coords 2 0. 0. doftype 4 D\_u 0 D\_v 2 ...}
+  \end{itemize}
+ \item Parallellization? Load balancing?
+  \begin{itemize}
+    \item Not sure.
+  \end{itemize}
+ \item Backwards compatibility?
+  \begin{itemize}
+    \item Unlikely. Conversion scripts more likely.
+    \item At least add sets for use with active boundary conditions.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
 \section{The future}
 \begin{frame}
  \frametitle{Post-processing}
  \begin{itemize}
-  \item Replace Elixir with VTK.
+  \item Replace Elixir with VTK (or something else?)
    \begin{itemize}
+    \item[\smiley] vtkGenericAdaptorCell for complex elements
     \item[\smiley] Can do much more than what UnstructuredGrid allows (IGA, XFEM, deformed gradient/beam elements).
     \item[\smiley] VTK already in use when writing binary VTU-files.
     \item[\smiley] Can use context files as output files.
@@ -197,5 +219,6 @@
    \end{itemize}
  \end{itemize}
 \end{frame}
+
 
 \end{document}
