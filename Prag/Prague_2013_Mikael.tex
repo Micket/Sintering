@@ -1,0 +1,523 @@
+\documentclass[11pt]{beamer} % mathserif for normal math fonts.
+\usefonttheme[onlymath]{serif}
+\usepackage[utf8]{inputenc}
+\usepackage[swedish,english]{babel}
+\usepackage{microtype}
+\usepackage{calc}
+\usepackage{amsmath,mathtools,dsfont}
+\usepackage{contmech}
+%\usepackage{siunitx}
+%\usepackage{movie15}
+\usepackage{multimedia}
+\usepackage{grffile}
+\usepackage{tikz}
+\usepackage{pgfplots}
+%\usepackage{subfig}
+\usepackage{wasysym}
+
+\DeclarePairedDelimiter{\homogenized}{\langle}{\rangle}
+\newcommand{\pore}{\mathrm{pore}}
+\newcommand{\particle}{\mathrm{part}}
+\newcommand{\surf}{\mathrm{s}}
+\newcommand{\prescribed}{\mathrm{p}}
+\newcommand{\contact}{\mathrm{cont}}
+\newcommand{\external}{\mathrm{ext}}
+%\newcommand{\on}{\mid}
+\newcommand{\surfdiff}{\tilde{\ts\nabla}}
+\newcommand{\ded}{\mathrm{d}}
+\newcommand{\dep}{\mathrm{p}}
+%\usepgfplotslibrary{patchplots}
+%\usepgfplotslibrary{groupplots}
+%\pgfplotsset{compat=1.3}
+
+\newcommand{\roughcite}[1]{\textsc{#1}}
+\renewcommand{\alert}[1]{\textbf{#1}}
+
+\setbeamersize{text margin left=.3cm,text margin right=.3cm}
+
+\usetheme[titleflower=true]{chalmers}
+\title{
+On the formulation of a computational homogenization scheme with seamless transition from compressible to incompressible microstructures
+}
+\author[Mikael \"Ohman]{Mikael \"Ohman}
+\institute{Department of Applied Mechanics\\ Chalmers University of Technology\\
+mikael.ohman@chalmers.se
+}
+%\titlepageextra{2012}% session: Multiple-scale physics and computation
+\date{2013-04-11}
+%\footer{\insertshortauthor\ 2\textsuperscript{nd} ICMM}
+\titlepagelogofile{Avancez_black}
+
+% Bibliography
+%\bibliography{references_extended}
+
+% Speeds up compilation.
+% \usetikzlibrary{external}
+% \tikzexternalize
+
+\begin{document}
+
+\section{Title page}
+\begin{frame}[plain]
+ \titlepage
+\end{frame}
+
+\section{But first...}
+\begin{frame}
+\frametitle{Chalmers University of Technology}
+ \begin{itemize}
+  \item Division of Material and Computational Mechanics
+  \begin{itemize}
+   \item \emph{Computational homogenization (FE\textsuperscript{2})}, Railway steels, Composites
+   \item $\sim$14 PhD students (3 using OOFEM)
+   \item Will be adopting OOFEM as a common development platform for new PhD students
+  \end{itemize}
+  \item Using OOFEM as part of my PhD project
+  \item Active developer since 2010
+  \item Currently managing the OOFEM contributions from Chalmers
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Jim Brozoulis (Postdoc)}
+ \begin{itemize}
+  \item Work carried out within the \includegraphics[height=0.3cm, trim=0 0.5cm 0 0]{figures/matisse.jpg}-project
+  \item Large deformation of composite shells
+  \item XFEM delamination (and cracks)
+ \end{itemize}
+ \includegraphics[width=0.5\linewidth]{figures/delam1.png}
+ \includegraphics[width=0.5\linewidth]{figures/delam2.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Carl Sandström (PhD student)}
+ \begin{itemize}
+  \item Computational homogenization
+  \item From Stokes' Flow to Darcy Flow
+ \end{itemize}
+ \begin{center}
+ \includegraphics[width=0.8\linewidth]{figures/Bild1-crop.pdf}
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Carl Sandström (PhD student)}
+ \includegraphics[width=1\linewidth]{figures/FrontPage-crop.pdf}
+\end{frame}
+
+\section{Outline}
+\begin{frame}
+ \frametitle{Outline}
+
+\begin{itemize}
+ \item Motivation
+ \item Subscale modeling
+ \item Transition to macroscopic incompressibility
+ \item Examples
+ \item OOFEM implementation
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background}
+\subsection{Process}
+\begin{frame}
+ \frametitle{Motivation --- Sintering of hardmetal}
+
+% The sintering phenomenon on the mesoscale is driven by surface tension on the melted binder, and
+% the homogenized effect of the surface tension is the so-called sintering stress.
+% From the macroscopic perspective, the specimen (green body) shrinks due to this volumetric sintering stress. In the case of inhomogeneous
+% initial density in the green body, the sintering can result in unwanted final deformations.
+
+ \begin{enumerate}
+  \item WC-particles in Co-matrix (binder metal)
+  \item Precompaction $\rightarrow$ inhomogeneous ``green body'', porosity $\phi_0\approx$ 0.2--0.4
+  \item Heating $\rightarrow$ thermal expansion, sintering driven by surface tension in melted Co, i.e. ``liquid phase sintering'' $\rightarrow$
+        Fully dense final product $\phi=0$.
+ \end{enumerate}
+\alert{Note:} Inhomogeneous initial density may lead to defect product:\\ \textsuperscript{(i)}remaining porosity, \textsuperscript{(ii)}shape imperfection\\
+\alert{Note:} Macroscopic compressibility despite \underline{assumed} intrinsic incompressibility of constituents until $\phi = 0$.
+\begin{center}
+ \begin{columns}
+ \column{0.25\textwidth}\centering
+ \begin{tikzpicture}
+   %\node at (0,0) {\includegraphics[width=\textwidth]{figures/sinter_1-crop.pdf}};
+   \draw[red,thick,<-] (1,1) -- (1.5,1) node[right,black] {WC};
+   \draw[red,thick,<-] (0.5,0.7) -- (1.5,0.5) node[right,black] {Co};
+   \draw[red,thick,<-] (0.7,-0.3) -- (1.5,0) node[right,black] {pore};
+ \end{tikzpicture}
+ \column{0.05\textwidth}\centering
+ $\xrightarrow{\text{idealized}}$
+ \column{0.25\textwidth}\centering
+ %\includegraphics[width=\textwidth]{figures/sinter_2-crop.pdf}
+ \end{columns}
+ %\includegraphics[width=0.6\textwidth]{figures/fig081.jpeg}
+\end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Comparison}
+\begin{frame}
+ \frametitle{Constitutive modeling}
+ Macroscopic modeling of sintering
+ \begin{itemize}
+  \item Typically porosity as an internal variable
+  \item Complex model structure, requires many parameters --- calibration problem very ill-posed
+  \item Selected references: \roughcite{Svoboda \& Riedel (1996)}, \roughcite{Mähler, Ekh \& Runesson (1999)}
+ \end{itemize}
+
+Mesoscale modeling of sintering - surface/interface tension
+ \begin{itemize}
+ \item Modeling of \textsuperscript{(i)}solid WC, \textsuperscript{(ii)}melt Co and \textsuperscript{(iii)}surface tension\\
+  Note: Constitutive modeling refers to subscale constituents
+  \item Selected references: \roughcite{Jagota \& Dawson (1988)}, \roughcite{Xu \& Mehrabadi (1997)}, \roughcite{Zhou \& Derby (1998)}, \roughcite{Peric \& coworkers (2006-)}, \roughcite{Steinmann (2008)}, \roughcite{Javili \& Steinmann (2009)}
+ \end{itemize}
+
+Computational homogenization - FE\textsuperscript{2}
+\begin{itemize}
+  \item Selected references:  \roughcite{Geers \& al.},  \roughcite{Fish \& al.},
+ \roughcite{Miehe \& al.}, \roughcite{Larsson \& Runesson [adaptive multiscale]}
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Theory}
+\begin{frame}
+ \frametitle{Surface tension on free surface and interfaces}
+\small
+ \vspace{-1em}
+ \begin{center}
+  \scalebox{0.75}{\input{figures/sintering_rve.tikz}}
+  \hspace{0.5em}
+  \scalebox{0.75}{\input{figures/surface_stress_plane.tikz}}
+ \end{center}
+\vspace{-1em}
+\begin{itemize}
+ \item Equilibrium for tractions on smooth surface/interface segments
+\vspace{-0.7em}
+\begin{align*}
+ \ta t^+ + \ta t^- + \ta t_\surf = \ta 0 \text{ on } \Gamma_i^{\mathrm{pore}} \text{ or } \Gamma_j^{\mathrm{cont}},\quad \ta t_\surf \defeq \hat{\ts\sigma}\cdot\hat{\ta\nabla}
+\end{align*}
+$\hat{\ts\sigma} =$ ``surface stress'' (in tangent plane), $\hat{\ta\nabla} =$ ``surface \rlap{gradient''}
+ \item Particle/pore boundaries $\Gamma_i^{\mathrm{pore}}:\;\;\ta t\defeq \ts\sigma^-\cdot\ta n = \ta t_\surf$
+\item Special case: Isotropic homogeneous surface tension: $\hat{\ts\sigma}=\gamma_\surf \hat{\ta I}$, $\hat{\ts I}\defeq\ts I-\ta n\outerp\ta n$ \vspace{-0.5em}
+\begin{align*}
+ \implies\quad \ta t_\surf = - \kappa \gamma_s \ta n,\quad \kappa \defeq \ta n \cdot \hat{\ta\nabla} \text{ (curvature)}
+\end{align*}
+ %\item \roughcite{Steinmann, Javili \& Steinmann (2009-)}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Subscale constitutive modeling}
+ \begin{itemize}
+  \item Co-binder: Incompressible, viscous flow $\leadsto$ Stokes' flow.
+  \begin{gather*}
+   \ts\sigma_\dev = \mu^{\mathrm{Co}} {\ts d}_\dev\\
+   \ts\sigma_\dev = \ts\sigma + p\ts I,\quad \ts d_\dev = [\ts v\outerp \diff]_\dev^\sym
+  \end{gather*}
+  \item WC-particles: ``Rigid'' $\to$ incompressible, approximated as Newtonian flow with ``large'' viscosity
+  \begin{align*}
+   \mu^{\mathrm{WC}} \gg \mu^{\mathrm{Co}}
+  \end{align*}
+  \item Quasistatic motion of viscoplastic particles, spatial setting:
+  \begin{align*}
+   -\ts\sigma(\ts d)\cdot\ta\nabla = \ta 0 \text{ in } \Omega^\particle,\quad \ta v\cdot\ta\nabla = 0 \text{ in } \Omega^\particle,\quad \Omega^\particle = \cup_\alpha \Omega_\alpha^\particle
+  \end{align*}
+  %\alert{Note}: Tangent ``stiffness'' $\tf E_{\mathrm{T},\dev}$ from $\dif\ts\sigma_\dev = \tf E_{\mathrm{T},\dev}\dprod \dif\ts d$ used in Newton iterations on subscale (RVE-problem)
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Weak form of ``fine-scale'' problem}
+%\footnotesize
+ \begin{itemize}
+  \item Sintering particles occupying domain $\Omega^\particle$ with internal boundary $\Gamma^\pore \defeq (\cup_i \Gamma_i^\pore) \cup (\cup_j \Gamma_j^\contact)$:
+Find $\ta v\in \set V, p\in \set P$
+
+ such that
+\begin{align*}
+  \int_{\mathrlap{\Omega^\particle}} \;\ts\sigma\dprod[\delta\ta v\outerp\ta\nabla]\dif v &=
+   \int_{\mathrlap{\Gamma^\pore}} \;\hat{\ts\sigma}\dprod[\delta\ta v\outerp\hat{\ta\nabla}] \dif a +
+   \int_{\mathrlap{\Gamma_N^\external}} \;\ta t_p\cdot\delta\ta v\dif a \; && \forall \delta \ta v\in \set V^0 \\
+  \int_{\mathrlap{\Omega^\particle}} \;[\ta v\cdot\ta\nabla]\delta p\dif v &= 0 && \forall \delta p\in \set P
+\end{align*}
+\alert{Note}: Obtained via use of surface divergence theorem + equilibrium for singular curves $C_i$
+
+ \item \alert{Special case}: Isotropic surface tension (may be state-dependent and/or inhomogeneous along $\Gamma^\pore$)
+ \begin{align*}
+  \int_{\mathrlap{\Gamma^\pore}} \;\hat{\ts\sigma}\dprod[\delta\ta v\outerp\hat{\ta\nabla}] \dif a =
+  \int_{\mathrlap{\Gamma^\pore}} \;\gamma_\surf[\delta\ta v\cdot\hat{\ta\nabla}] \dif a
+ \end{align*}
+
+ \end{itemize}
+
+\end{frame}
+
+
+\subsection{Homogenization}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{RVE-problem}
+\begin{itemize}
+ \item Homogenization on Representative Volume Element (RVE) occupying bulk volume $\Omega_\Box$ with external boundary $\Gamma_\Box$
+ \begin{align*}
+  \int_{\Omega^{\mathrm{part}}} f \dif v \stackrel{\text{replaced by}}{\to} \int_\Omega \langle f\rangle_\Box \dif \bar{v}, \quad \langle f\rangle_\Box \defeq \frac1{|\Omega_\Box|} \int_{\Omega_\Box^{\mathrm{part}}} f \dif v
+ \end{align*}
+ \item Unit cell in 2D with particles in a perfect square lattice \textcolor{blue}{(present state!)}. Contact surfaces are initially flattened from precompaction.
+\end{itemize}
+ \begin{center}
+  \begin{columns}
+   \column{0.2\textwidth}
+   \column{0.3\textwidth}\centering
+    \resizebox{!}{0.8\textwidth}{\input{figures/4particle_rve.tikz}}
+   %\column{0.3\textwidth}\centering
+   % \resizebox{!}{0.8\textwidth}{\input{figures/4particles_deformed.tikz}}
+   \column{0.2\textwidth}
+  \end{columns}
+ \end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Homogenization of only momentum balance}
+ \begin{itemize}
+    \item RVE-problem with Dirichlet b.c., ``driven'' by macroscale
+    rate-of-deformation $\bar{\ts d} \defeq [\ta v\outerp\diff]^\sym\rightarrow$ subscale velocity:
+    $\ta{v}=\ta{v}^\macro(\bar{\ts d})+\ta{v}^\fluct$, whereas pressure $p = p^\fluct$\\
+    For given $\bar{\ts d}$, solve for $(\ta{v}^\fluct\in,p) \set V_{\Box}^{\Dirichlet}\times\in\set P_{\Box}$:
+   \vspace{-2.5truemm}
+ \end{itemize}
+\begin{alignat*}{3}
+    a_{\Box}(\ta{v}^\macro(\bar{\ts d})+\ta{v}^\fluct;\delta \ta{v}^\fluct) +  b_{\Box}(p,\delta\ta{v}^\fluct)
+    & = 
+    l_{\Box}(\delta \ta{v}^\fluct)
+    & \quad & \forall \delta \ta{v}^\fluct &&\in\set V_{\Box}^{\Dirichlet},
+    \\
+    b_{\Box}(\delta p,\ta{v}^\macro(\bar{\ts d})+\ta{v}^\fluct)
+    & = 
+    0
+    & \quad & \forall \delta p &&\in\set P_{\Box}.
+\end{alignat*}
+   \vspace{-2.5truemm}
+%----------------------------------------------------------------------------
+\begin{align*}
+    a_\Box(\ta{v};\delta \ta{v})
+    & \defeq
+    \langle\ta{\sigma}_\dev(\ta{d}) : \delta \ta{d}\rangle_{\Box} =
+    \frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} \ta{\sigma}_\dev(\ta{d}) \dprod \left[\delta \ta{v} \outerp \diff\right] \dif v
+\\
+    b_\Box(p, \ta{v})
+    & \defeq
+    - \langle p\ta{I} \dprod \ta{d}\rangle_{\Box} =
+    - \frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} p\;\ta{v}\cdot \ta{\nabla} \dif v
+\\
+    l_\Box(\delta \ta{v})
+    & \defeq
+    \frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore} \hat{\ts\sigma}\dprod\left[\delta\ta{v}\outerp\hat{\diff}\right] \dif a =
+    \frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore}
+  \gamma_\surf\left[\delta\ta{v}\cdot\hat{\ta\nabla}\right] \dif a
+\end{align*}
+%----------------------------------------------------------------------------
+% \vspace{-2.5truemm}
+%     $l_{\Box}(\delta \ta{v}^\fluct)$: loading by surface tension tractions on ${\Gamma}^\pore_{\Box}$
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Macroscale problem}
+ \begin{itemize}
+
+    \item Macroscale momentum balance for ``free sintering'' (no external loading) obtained from variationally consistent homogenization
+    \vspace{-1em}
+    \begin{align*}
+    \bar{a}(\bar{\ta v}; \delta \bar{\ta v}) \defeq
+    \int_{\Omega} \bar{\ts \sigma}\{\bar{\ts d}\} \dprod [\delta\bar{\ta v}\outerp\diff]^\sym
+    \dif v = 0 \quad \forall\delta\bar{\ta v} \in \bar{\set{V}}^\Dirichlet
+    \end{align*}
+    Macroscale stress:
+    \vspace{-2.5truemm}
+    \begin{align*}
+    \bar{\ts\sigma} = \homogenized{\ts\sigma}_\Box =\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}}
+    \ta{t}\outerp[\ta{x}-\bar{\ta x}] \dif a, \,\,\bar{\ta x}= \mbox{ center of RVE}
+    \end{align*}
+    \textbf{Note}: Variational format valid only for macroscale compressibility (before porosity has vanished locally)
+
+    \item Algorithmic features for macroscale problem
+ \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{FE\textsuperscript{2} format: Standard (velocity-based) macroscale equation}
+ \begin{itemize}
+  \item Only Dirichlet b.c. shown
+  \item Validity is restricted to macroscopically compressible response ($\bar{e} \defeq \bar{\ts d} \dprod \ts I = \bar{\ta v}\cdot \diff\neq 0$)
+ \end{itemize}
+ \begin{itemize}
+  \item Macroscale-problem
+  \begin{itemize}
+   \item Fields: $\bar{\ta v}$%, solved from \eqref{eq:macro_problem_old}
+  \end{itemize}
+  \item RVE-problem: $\bar{\ts d}_\dev, \bar{e} \longrightarrow \bar{\ts\sigma}_\dev, \bar{p}$
+  \begin{itemize}
+   \item Input: $\bar{\ts d}$ (or $\bar{\ts d}_\dev, \bar{e}$)
+   \item Fields: $\ta v^\fluct$, $p$%, solved from \eqref{eq:rve_problem_old}
+   \item Output: $\bar{\ts\sigma}$ (or $\longrightarrow \bar{\ts\sigma}_\dev, \bar{p}$) (post-processed)
+  \end{itemize}
+ \end{itemize}
+
+ \begin{itemize}
+   \item \roughcite{\"Ohman et al. (2012) Tech. Mechanik}
+ \end{itemize}
+
+%  \begin{itemize}
+%   \item[-] No free surfaces (zero porosity) $\leadsto$ Unknown subscale pressure field; singular tangent, $\ts I\dprod \bar{\tf E}\dprod \ts I\to \infty$
+%   \item[-] Requires new macroscopic formulation
+%  \end{itemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mixed formulation}
+\begin{frame}
+ \frametitle{Mixed macroscale problem}
+\begin{itemize}
+ \item Macroscale equations representing momentum balance and weak format of $\bar{e} = \bar{\ta v}\cdot\diff$
+ \item Macroscale pressure $\bar{p}$ is a Lagrange multiplier
+ \item Solve for $(\bar{\ta v}, \bar{p}) \in \bar{\set{V}}\times\bar{\set{P}}$ that solve the system
+\end{itemize}
+\begin{alignat*}{3}
+ &\int_\Omega {\color{blue}\bar{\ts\sigma}_\dev\{\bar{\ts d}_\dev,\bar{p}\}} \dprod [\delta\bar{\ta v}\outerp \diff] \dif v + \int_\Omega -\bar{p}\;[\delta\bar{\ta v}\cdot\diff]\dif v &&= 0 &\quad& \forall \delta\bar{\ta v}\in \bar{\set{V}}^\Dirichlet\\
+ &\int_\Omega \left[ {\color{blue}\bar{e}\{\bar{\ts d}_\dev,\bar{p}\}} - \bar{\ta v}\cdot\diff\right]\delta\bar{p} \dif v &&= 0&\quad& \forall \delta\bar{p}\in \bar{\set{P}}
+\end{alignat*}
+\begin{itemize}
+ \item Can be obtained by switching control of $\bar{e} \leftrightarrow \bar{p}$ or by deriving the variationally consistent forms by splitting both fields:\\ $\ta v = \ta v^\macro + \ta v^\fluct$, $p = p^\macro + p^\fluct$
+ \item Straightforward implementation in OOFEM: Simply extend fluid materials: $\ts\sigma_\dev = f(\ts d_\dev) \rightarrow [\ts\sigma_\dev,\bar{e}] = f(\ts d_\dev, p)$.
+\end{itemize}
+
+
+% \begin{align*}
+%  \bar{\ts\sigma}_\dev = \frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} \ta t \outerp [\ta x - \bar{\ta x}]\dif v + \bar{p}\ts I
+% \end{align*}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{FE\textsuperscript{2} format: Mixed macroscale equation}
+ \begin{itemize}
+  \item Introduce macroscale pressure $\bar{p}$ as independent variable, impose identity $\bar{e} = \bar{\ta v}\cdot \diff$ in a weak sense
+ \end{itemize}
+
+ \begin{itemize}
+  \item Macroscale-problem (mixed format)
+  \begin{itemize}
+   \item Fields: $\bar{\ta v}$, $\bar{p}$%, solved from  \eqref{eq:new_macro}
+  \end{itemize}
+  \item RVE-problem: $\bar{\ts d}_\dev, \bar{p} \longrightarrow \bar{\ts\sigma}_\dev, \bar{e}$
+  \begin{itemize}
+   \item Input: $\bar{\ts d}_\dev$, $\bar{p}$
+   \item Fields: $\ta v^\fluct$, $p$, $\bar{e}$%, solved from \eqref{eq:rve_problem_new}
+   \item Output: $\bar{\ts\sigma}_\dev$ (post-processed), $\bar{e}$
+  \end{itemize}
+ \end{itemize}
+
+ \begin{itemize}
+  \item Valid for seamless transition from compressible to incompressible macroscale response.
+ \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{RVE-problem for mixed control: Dirichlet b.c.}
+ \begin{itemize}
+  \item Dirichlet b.c: $\ta v^\fluct = \ta 0$ on $\Gamma_\Box$ with $\ta v = \ta v^\macro_\dev + \ta v^\macro_\vol + \ta v^\fluct$ )
+  \item For given macroscale variables $\bar{\ts d}_\dev$ and $\bar p$, find ($\ta v^\fluct,p,\bar{e})\in\set{V}_\Box^{\Dirichlet}\times\set{P}_\Box\times\set{R}$ that solve the system
+ \end{itemize}
+\vspace{-2truemm}
+\begin{alignat*}{4}
+    & a_\Box(\ta{v};\delta \ta{v}^\fluct) +  b_\Box(p,\delta\ta{v}^\fluct)
+    && =
+    l^\pore_\Box(\delta \ta{v}^\fluct)
+    &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{\Dirichlet}
+ \\
+    &b_\Box(\delta p, \ta{v})
+    && =
+    0
+    && \forall\; \delta p &&\in \set{P}_\Box
+\\
+    &b_\Box(p,\ta{x}_\mean)\delta\bar{e}
+    && =
+    [l_\Box^\pore(\ta{x}_\mean) - \bar{p}]\delta\bar{e}
+    && \forall\; \delta\bar{e} &&\in \set{R}
+\end{alignat*}
+\vspace{-5truemm}
+\begin{align*}
+    a_\Box(\ta{v};\delta \ta{v})
+    & \defeq
+    %\langle\ta{\sigma}_\dev(\ta{d}) : \delta \ta{d}\rangle_{\Box} =
+    \frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} \ta{\sigma}_\dev(\ta{d}) \dprod \left[\delta \ta{v} \outerp \diff\right] \dif v
+\\
+    b_\Box(p, \ta{v})
+    & \defeq
+    %\langle -p\ta{I} \dprod \ta{d}\rangle_{\Box} =
+    \frac{1}{|\Omega_\Box|}\int_{\Omega^\particle_\Box} -p\;[\ta{v}\cdot \diff] \dif v
+\\
+    l_\Box(\delta \ta{v})
+    & \defeq
+    %\frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore} \hat{\ts\sigma}\dprod\left[\delta\ta{v}\outerp\hat{\diff}\right] \dif a =
+    \frac{1}{|\Omega_{\Box}|} \int_{\Gamma_{\Box}^\pore}
+  \gamma_\surf\left[\delta\ta{v}\cdot\hat{\ta\nabla}\right] \dif a
+\end{align*}
+\begin{gather*}
+ \ta v_\dev^\macro \defeq \bar{\ts d}_\dev \cdot[\ta x - \bar{\ta x}], \quad \ta v_\vol^\macro \defeq \bar{e}\,\ta x_\mean,\quad \ta{x}_\mean \defeq \frac13[\ta x-\bar{\ta x}], \quad \bar{\ta x} = \text{RVE center}
+\end{gather*}
+% \begin{itemize}
+%  \item \alert{Note}: Still a Dirichlet boundary condition; $\ta v^\fluct = \ta 0$ on $\Gamma_\Box$.
+% \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{RVE-problem for mixed control: Neumann b.c.}
+ \begin{itemize}
+  \item Neumann b.c: $\ts\sigma\cdot\ta n = \bar{\ts\sigma}\cdot\ta n$ on $\Gamma_\Box$
+  \item For given macroscale variables $\bar{\ts d}_\dev$ and $\bar p$, find ($\ta{v}^\fluct,p,\bar{\ts\sigma}_\dev)\in\times\set{V}_\Box^{\Dirichlet}\times\set{P}_\Box\times\set{R}_\dev^{3\times3}$ that solve the system
+ \end{itemize}
+\vspace{-2truemm}
+\begin{alignat*}{4}
+    & a_\Box(\ta{v};\delta \ta{v}^\fluct) +  b_\Box(p,\delta\ta{v}^\fluct)
+    && =
+    l^\pore_\Box(\delta \ta{v}^\fluct)
+    &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{\Dirichlet}
+ \\
+    &b_\Box(\delta p, \ta{v})
+    && =
+    0
+    && \forall\; \delta p &&\in \set{P}_\Box
+\\
+    &b_\Box(p,\ta{x}_\mean)\delta\bar{e}
+    && =
+    [l_\Box^\pore(\ta{x}_\mean) - \bar{p}]\delta\bar{e}
+    && \forall\; \delta\bar{e} &&\in \set{R}
+\end{alignat*}
+\vspace{-5truemm}
+\begin{align*}
+    a_\Box(\ta{v};\delta \ta{v})
+    & \defeq ...
+\end{align*}
+% \begin{itemize}
+%  \item \alert{Note}: Still a Dirichlet boundary condition; $\ta v^\fluct = \ta 0$ on $\Gamma_\Box$.
+% \end{itemize}
+\end{frame}
+
+\end{document}
