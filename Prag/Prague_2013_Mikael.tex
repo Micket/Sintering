@@ -182,7 +182,7 @@ Computational homogenization - FE\textsuperscript{2}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Theory}
+\section{Theory}
 \begin{frame}
  \frametitle{Surface tension on free surface and interfaces}
 \small
@@ -454,10 +454,10 @@ Find $\ta v\in \set V, p\in \set P$
     0
     && \forall\; \delta p &&\in \set{P}_\Box
 \\
-    &b_\Box(p,\ta{x}_\mean)\delta\bar{e}
-    && =
+    &\color{red}b_\Box(p,\ta{x}_\mean)\delta\bar{e}
+    &&\color{red} =
     [l_\Box^\pore(\ta{x}_\mean) - \bar{p}]\delta\bar{e}
-    && \forall\; \delta\bar{e} &&\in \set{R}
+    &&\color{red} \forall\; \delta\bar{e} &&\color{red}\in \set{R}
 \end{alignat*}
 \vspace{-5truemm}
 \begin{align*}
@@ -491,33 +491,73 @@ Find $\ta v\in \set V, p\in \set P$
 \frametitle{RVE-problem for mixed control: Neumann b.c.}
  \begin{itemize}
   \item Neumann b.c: $\ts\sigma\cdot\ta n = \bar{\ts\sigma}\cdot\ta n$ on $\Gamma_\Box$
-  \item For given macroscale variables $\bar{\ts d}_\dev$ and $\bar p$, find ($\ta{v}^\fluct,p,\bar{\ts\sigma}_\dev)\in\times\set{V}_\Box^{\Dirichlet}\times\set{P}_\Box\times\set{R}_\dev^{3\times3}$ that solve the system
+  \item For given macroscale variables $\bar{\ts d}_\dev$ and $\bar p$, find ($\ta{v},p,\bar{\ts\sigma}_\dev)\in\times\set{V}_\Box\times\set{P}_\Box\times\set{R}_\dev^{3\times3}$ that solve the system
  \end{itemize}
 \vspace{-2truemm}
 \begin{alignat*}{4}
-    & a_\Box(\ta{v};\delta \ta{v}^\fluct) +  b_\Box(p,\delta\ta{v}^\fluct)
+    & a_\Box(\ta{v};\delta \ta{v}) +  b_\Box(p,\delta\ta{v}) + {\color{red}c_\Box(\bar{\ts\sigma}_\dev, \delta\ta v)}
     && =
-    l^\pore_\Box(\delta \ta{v}^\fluct)
-    &\quad& \forall\; \delta \ta{v}^\fluct &&\in \set{V}_\Box^{\Dirichlet}
+    {\color{red}f_\Box(\bar{p},\delta\ta v)} + l^\pore_\Box(\delta \ta{v})
+    \;\forall\; \delta \ta{v} \in \set{V}_\Box^{\Dirichlet}
  \\
     &b_\Box(\delta p, \ta{v})
     && =
     0
-    && \forall\; \delta p &&\in \set{P}_\Box
+    \qquad\qquad\qquad\qquad\;\;\forall\; \delta p \in \set{P}_\Box
 \\
-    &b_\Box(p,\ta{x}_\mean)\delta\bar{e}
-    && =
-    [l_\Box^\pore(\ta{x}_\mean) - \bar{p}]\delta\bar{e}
-    && \forall\; \delta\bar{e} &&\in \set{R}
+    &\color{red}c_\Box(\delta\bar{\ts\sigma}_\dev, \ta v)
+    && \color{red}=
+    -\bar{\ts d}_\dev \dprod \delta\bar{\ts\sigma}_\dev
+    \;\;\;\forall\; \delta\bar{\ts\sigma}_\dev \in \set{R}^{3\times 3}_\dev
 \end{alignat*}
 \vspace{-5truemm}
+\begin{itemize}
+ \item Expressed in deviatoric base-dyads $\ts E_i$:
+\end{itemize}
+\begin{alignat*}{4}
+ &\color{red}c_\Box(\delta\bar{\sigma}_{\dev,i} \ts E_i, \ta v) &&\color{red}= -\bar{d}_{\dev,i} \delta\bar{\sigma}_{\dev,i}
+&\quad\quad& \color{red}\forall\; \delta\bar{\sigma}_{\dev,i} &&\color{red}\in \set{R}
+\end{alignat*}
 \begin{align*}
-    a_\Box(\ta{v};\delta \ta{v})
-    & \defeq ...
+    f_\Box(\bar{p};\ta{v}) & \defeq -\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} [\ta v\cdot\ta n]\dif A \,\bar{p}
+\\
+    c_\Box(\bar{\ts\sigma}_\dev, \ta v) & \defeq -\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev \dif A\dprod \bar{\ts\sigma}_\dev
 \end{align*}
-% \begin{itemize}
-%  \item \alert{Note}: Still a Dirichlet boundary condition; $\ta v^\fluct = \ta 0$ on $\Gamma_\Box$.
-% \end{itemize}
 \end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementation}
+\begin{frame}
+ \frametitle{Dirichlet b.c. implementation --- Issues}
+ \begin{enumerate}
+  \item Inconvenient equation of $\bar{e}$. Unknown is global to the RVE problem (single unknown on the entire boundary). Where should it belong?
+  \item Velocity fluctuations $\ta v^\fluct$ would require an alternative Stokes' flow-formulation.
+  \item How should one deal with 
+\begin{equation*}
+    b_\Box(p,\ta{x}_\mean)\delta\bar{e}
+     =
+    [l_\Box^\pore(\ta{x}_\mean) - \bar{p}]\delta\bar{e}
+    \quad \forall\; \delta\bar{e} \in \set{R}
+\end{equation*}
+  which connects elements to this global test-function $\delta\bar{e}$ ? 
+ \end{enumerate}
+\end{frame}
+\begin{frame}
+\frametitle{Dirichlet b.c. implementation --- Solutions}
+\begin{itemize}
+  \item Introduce internal DOFs into boundary conditions. OOFEM numbers them along with everything else.
+  \item OOFEM already support slave DOFs! Simply use 
+  \begin{equation*}
+   \ta v = \overbrace{\underbrace{\bar{\ts d}_\dev}_{\text{Prescribed}} \cdot \underbrace{[\ta x - \bar{\ta x}]}_{\text{Weights}}}^{\ta v^\macro_\dev} + 
+           \overbrace{\underbrace{\bar{e}}_{\text{Unknown}} \underbrace{\frac13 [\ta x - \bar{\ta x}]}_{\text{Weight}}}^{\ta v^\macro_\vol}  \text{ on } \Gamma_\Box
+  \end{equation*}
+  ( only boundary matters, internal DOFs can left alone )
+  \item Nothing else to do. OOFEMs slave DOF transformations takes care of the third equation.
+  \item Better yet, stress is obtained trivially as the reaction-forces associated with the prescribed DOFs $\bar{\ts d}_\dev$!
+  \item Implemented in \texttt{MixedGradientPressureDirichlet}
+ \end{itemize}
+\end{frame}
+
 
 \end{document}

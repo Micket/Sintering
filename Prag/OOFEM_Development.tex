@@ -28,8 +28,8 @@
 \title{Topics for discussion for future OOFEM development}
 \author[Mikael \"Ohman]{Mikael \"Ohman}
 \institute{Department of Applied Mechanics\\ Chalmers University of Technology}
-%\titlepageextra{2012}% session: Multiple-scale physics and computation
-\date{2012-09-12}
+\titlepageextra{Prague}% session: Multiple-scale physics and computation
+\date{2013-04-11}
 %\footer{\insertshortauthor\ 2\textsuperscript{nd} ICMM}
 \titlepagelogofile{Avancez_black}
 
@@ -69,7 +69,7 @@
 \end{frame}
 
 \begin{frame}
- \frametitle{Increasing code size}
+ \frametitle{230 000 lines of code}
 \begin{itemize}
  \item Mostly just base structures that matter
  \item Continuous evolving core design.
@@ -82,23 +82,18 @@
  \item Try to play nice with existing code
  \item Keep it modular - Overwhelming size less of an issue
  \item If tests are unfeasible, then at least include an easy-to-run demo.
+ \item Automatic tools are vital
+  \begin{itemize}
+   \item Test suite (+memcheck)
+   \item Compiler warnings (MSVC is awful)
+   \item CppCheck
+   \item Code coverage
+  \end{itemize}
+ \item Minimize conditional compilation 
 \end{itemize}
 \end{frame}
 
 \section{Selected issues}
-\begin{frame}
- \frametitle{Questionable design patterns}
-\begin{itemize}
- \item[\frownie] Common function + Enum + Switch-case
-  \begin{itemize}
-   \item Often completely unnecessary. Just write the direct function instead.
-   \item To many obscure enum values
-   \item Enum-blends; e.g. CharType mixed vectors and matrices.
-   \item Design copy-pasted into new code unnecessarily
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
 % \begin{frame}
 %  \frametitle{Parallel communication}
 % \begin{itemize}
@@ -127,6 +122,20 @@
 \end{itemize}
 \end{frame}
 
+
+\begin{frame}
+ \frametitle{Questionable design patterns}
+\begin{itemize}
+ \item[\frownie] Common function + Enum + Switch-case
+  \begin{itemize}
+   \item Often completely unnecessary. Just write the direct function instead.
+   \item To many obscure enum values
+   \item Enum-blends; e.g. CharType mixed vectors and matrices.
+   \item Design copy-pasted into new code unnecessarily
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
 \section{Making life easier for pre-processors}
 
 \begin{frame}
@@ -141,12 +150,12 @@
  \item Dirichlet b.c.s require inverse mapping for the dofs.
 \end{itemize}
 \begin{itemize}
- \item[+] Much easier for adaptivity/remeshing
- \item[+] No need for dofidmask in nodes, can be autodetected.
- \item[+] Easier for pre-processors
- \item[+] No need for the domain type record
- \item[+] Only affected elements are requested for load assembly.
- \item[+] Computations inside BC or inside Element can be optional
+ \item[\smiley] Much easier for adaptivity/remeshing
+ \item[\smiley] No need for dofidmask in nodes, can be autodetected.
+ \item[\smiley] Easier for pre-processors
+ \item[\smiley] No need for the domain type record
+ \item[\smiley] Only affected elements are requested for load assembly.
+ \item[\smiley] Computations inside BC or inside Element can be optional
 \end{itemize}
 \end{frame}
 
