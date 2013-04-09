@@ -113,6 +113,7 @@ mikael.ohman@chalmers.se
 
 \begin{itemize}
  \item Motivation
+ \item Surface tension
  \item Subscale modeling
  \item Transition to macroscopic incompressibility
  \item Examples
@@ -120,8 +121,19 @@ mikael.ohman@chalmers.se
 \end{itemize}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Background}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Research project}
+ \begin{itemize}
+  \item PhD project funded by the Swedish research council
+  \item Supervisors Prof. Kenneth Runesson and Prof. Fredrik Larsson
+  \item Expected to be finished in 2014
+ \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Process}
 \begin{frame}
  \frametitle{Motivation --- Sintering of hardmetal}
@@ -181,7 +193,6 @@ Computational homogenization - FE\textsuperscript{2}
  \roughcite{Miehe \& al.}, \roughcite{Larsson \& Runesson [adaptive multiscale]}
 \end{itemize}
 \end{frame}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Theory}
@@ -684,12 +695,15 @@ Find $(\ta v,p)\in \set V \times \set P$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Remeshing}
+\frametitle{The final pieces}
  \begin{itemize}
   \item Large toplogical changes requires remeshing
+  \begin{itemize}
   \item Added Triangle bindings (\roughcite{J. Schewchuck})
   \item Topology-tracker: Points tracking surface geometry
   \item Mesh quality ``error''-estimator to determine when to re-mesh.
+  \end{itemize}
+ \item Surface tension loading implemented as an active boundary condition (should work automatically for all standard elements).
  \end{itemize}
 \end{frame}
 
