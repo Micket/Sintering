@@ -6,14 +6,16 @@
 \usepackage{calc}
 \usepackage{amsmath,mathtools,dsfont}
 \usepackage{contmech}
+%\usepackage{subfig}
 %\usepackage{siunitx}
 %\usepackage{movie15}
+\usepackage{wasysym}
 \usepackage{multimedia}
 \usepackage{grffile}
 \usepackage{tikz}
 \usepackage{pgfplots}
-%\usepackage{subfig}
-\usepackage{wasysym}
+
+\pgfplotsset{compat=newest}
 
 \DeclarePairedDelimiter{\homogenized}{\langle}{\rangle}
 \newcommand{\pore}{\mathrm{pore}}
@@ -216,9 +218,9 @@ $\hat{\ts\sigma} =$ ``surface stress'' (in tangent plane), $\hat{\ta\nabla} =$ `
   \item Co-binder: Incompressible, viscous flow $\leadsto$ Stokes' flow.
   \begin{gather*}
    \ts\sigma_\dev = \mu^{\mathrm{Co}} {\ts d}_\dev\\
-   \ts\sigma_\dev = \ts\sigma + p\ts I,\quad \ts d_\dev = [\ts v\outerp \diff]_\dev^\sym
+   \ts\sigma_\dev = \ts\sigma + p\ts I,\quad \ts d_\dev \defeq [\ts v\outerp \diff]_\dev^\sym
   \end{gather*}
-  \item WC-particles: ``Rigid'' $\to$ incompressible, approximated as Newtonian flow with ``large'' viscosity
+  \item WC-particles: Approximated as incompressible viscous flow with large viscosity
   \begin{align*}
    \mu^{\mathrm{WC}} \gg \mu^{\mathrm{Co}}
   \end{align*}
@@ -531,11 +533,57 @@ Find $(\ta v,p)\in \set V \times \set P$
 \begin{frame}
  \frametitle{FE\textsuperscript{2} -- Dirichlet b.c.}
  \movie[width=\linewidth,poster]{\includegraphics[width=\linewidth]{figures/macro_fe2_0000}}{macro_fe2_slow.wmv}
+ %\includegraphics[width=\linewidth]{figures/macro_fe2_0000}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
- \frametitle{Bounds}
+ \frametitle{RVE behavior -- Free sintering}
+ \begin{tikzpicture}
+  \node at (0,0) {\includegraphics[scale=0.15]{figures/initial_rve}};
+  \node at (4,2) {\includegraphics[scale=0.15]{figures/final_dirichlet}};
+  \node at (4,-2) {\includegraphics[scale=0.15]{figures/final_neumann}};
+  \node at (0,1.5) {Initial};
+  \node at (4,3.5) {Dirichlet};
+  \node at (4,-0.5) {Neumann};
+  \draw[-latex] (1.5,0.5) -- (2.5,1);
+  \draw[-latex] (1.5,-0.5) -- (2.5,-1);
+  \node at (8,2) {\includegraphics[scale=0.2]{figures/rve_dirichlet_2}};
+  \node at (8,-2) {\includegraphics[scale=0.2]{figures/rve_neumann_2}};
+ \end{tikzpicture}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{tikzpicture}
+ \frametitle{Macroscopic response -- Free sintering}
+ \begin{axis}[
+    width=1.0\linewidth,
+    height=0.7\linewidth,
+    ylabel={Relative density [\%]},xlabel={Time (scaled)},
+    xmax=1, xmin=0, ymax=1.01, ymin=0.83,
+    cycle list name=linestyles,
+    yticklabel style={font=\tiny}, xticklabel style={font=\tiny},
+%     scaled y ticks=manual:{}{\pgfmathparse{#1*100}}, % Scale for percentage
+%     scaled x ticks=manual:{}{\pgfmathparse{#1*1000}}, % Scale for percentage
+    legend style={draw=black,rounded corners=3pt,font=\footnotesize},
+    legend pos=south east
+    ]
+  \addplot[blue ,densely dashed] table[y index=2] {figures/macro_3_dirichlet_x.out.matdata};
+  \addlegendentry {Dirichlet 3$\times$3}
+  \addplot[red  ,densely dashed] table[y index=2] {figures/macro_2_dirichlet_x.out.matdata};
+  \addlegendentry {Dirichlet 2$\times$2}
+  \addplot[black,densely dashed] table[y index=2] {figures/macro_1_dirichlet_x.out.matdata};
+  \addlegendentry {Dirichlet 1$\times$1}
+
+  \addplot[blue ] table[y index=2] {figures/macro_3_neumann_x.out.matdata};
+  \addlegendentry {Neumann 3$\times$3}
+  \addplot[red  ] table[y index=2] {figures/macro_2_neumann_x.out.matdata};
+  \addlegendentry {Neumann 2$\times$2}
+  \addplot[black] table[y index=2] {figures/macro_1_neumann_x.out.matdata};
+  \addlegendentry {Neumann 1$\times$1}
+ \end{axis}
+\end{tikzpicture}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -549,7 +597,7 @@ Find $(\ta v,p)\in \set V \times \set P$
    \end{itemize}
   \item Dirichlet b.c.
    \begin{itemize}
-    \item Strong effect on RVE-boundary
+    \item Only proportional deformation along RVE-boundary
    \end{itemize}
   \item Periodic b.c.
    \begin{itemize}
@@ -628,7 +676,9 @@ Find $(\ta v,p)\in \set V \times \set P$
    \pd{\bar{e}}{\bar{\ts d}_\dev} \qquad
    \pd{\bar{e}}{\bar{p}}
   \end{align*}
+ \item Fluid material with memory; have to track integration points.
  \end{itemize}
+
 \end{frame}
 
 
