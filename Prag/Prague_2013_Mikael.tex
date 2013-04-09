@@ -141,7 +141,7 @@ mikael.ohman@chalmers.se
  \begin{columns}
  \column{0.25\textwidth}\centering
  \begin{tikzpicture}
-   %\node at (0,0) {\includegraphics[width=\textwidth]{figures/sinter_1-crop.pdf}};
+   \node at (0,0) {\includegraphics[width=\textwidth]{figures/sinter_1-crop.pdf}};
    \draw[red,thick,<-] (1,1) -- (1.5,1) node[right,black] {WC};
    \draw[red,thick,<-] (0.5,0.7) -- (1.5,0.5) node[right,black] {Co};
    \draw[red,thick,<-] (0.7,-0.3) -- (1.5,0) node[right,black] {pore};
@@ -149,7 +149,7 @@ mikael.ohman@chalmers.se
  \column{0.05\textwidth}\centering
  $\xrightarrow{\text{idealized}}$
  \column{0.25\textwidth}\centering
- %\includegraphics[width=\textwidth]{figures/sinter_2-crop.pdf}
+ \includegraphics[width=\textwidth]{figures/sinter_2-crop.pdf}
  \end{columns}
  %\includegraphics[width=0.6\textwidth]{figures/fig081.jpeg}
 \end{center}
@@ -235,13 +235,13 @@ $\hat{\ts\sigma} =$ ``surface stress'' (in tangent plane), $\hat{\ta\nabla} =$ `
 %\footnotesize
  \begin{itemize}
   \item Sintering particles occupying domain $\Omega^\particle$ with internal boundary $\Gamma^\pore \defeq (\cup_i \Gamma_i^\pore) \cup (\cup_j \Gamma_j^\contact)$:
-Find $\ta v\in \set V, p\in \set P$
+Find $(\ta v,p)\in \set V \times \set P$
 
  such that
 \begin{align*}
   \int_{\mathrlap{\Omega^\particle}} \;\ts\sigma\dprod[\delta\ta v\outerp\ta\nabla]\dif v &=
    \int_{\mathrlap{\Gamma^\pore}} \;\hat{\ts\sigma}\dprod[\delta\ta v\outerp\hat{\ta\nabla}] \dif a +
-   \int_{\mathrlap{\Gamma_N^\external}} \;\ta t_p\cdot\delta\ta v\dif a \; && \forall \delta \ta v\in \set V^0 \\
+   \int_{\mathrlap{\Gamma_N^\external}} \;\ta t_p\cdot\delta\ta v\dif a \; && \forall \delta \ta v\in \set V^\Dirichlet\\
   \int_{\mathrlap{\Omega^\particle}} \;[\ta v\cdot\ta\nabla]\delta p\dif v &= 0 && \forall \delta p\in \set P
 \end{align*}
 \alert{Note}: Obtained via use of surface divergence theorem + equilibrium for singular curves $C_i$
@@ -524,6 +524,39 @@ Find $\ta v\in \set V, p\in \set P$
 \\
     c_\Box(\bar{\ts\sigma}_\dev, \ta v) & \defeq -\frac{1}{|\Omega_\Box|} \int_{\Gamma_\Box} [\ta v\outerp\ta n]_\dev \dif A\dprod \bar{\ts\sigma}_\dev
 \end{align*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+\begin{frame}
+ \frametitle{FE\textsuperscript{2} -- Dirichlet b.c.}
+ \movie[width=\linewidth,poster]{\includegraphics[width=\linewidth]{figures/macro_fe2_0000}}{macro_fe2_slow.wmv}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Bounds}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Limitations of boundary conditions}
+ \begin{itemize}
+  \item Neumann b.c.
+   \begin{itemize}
+     \item Can't handle pores on RVE-boundary
+     \item Can't handle surface tension on RVE-boundary
+   \end{itemize}
+  \item Dirichlet b.c.
+   \begin{itemize}
+    \item Strong effect on RVE-boundary
+   \end{itemize}
+  \item Periodic b.c.
+   \begin{itemize}
+    \item Strong periodicity is harder to mesh.
+    \item Weak periodicity will not work in transient problems.
+   \end{itemize}
+ \end{itemize}
 \end{frame}
 
 
