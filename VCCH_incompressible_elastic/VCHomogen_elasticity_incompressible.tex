@@ -1041,7 +1041,7 @@ In summary, the solution fields can be parameterized as
 %\label{eq53b}
 %\end{eqnarray}
 %%---------------------------------------------------------------------------------------------------------------------
-
+\todo{Missing word: can? has? }
 It be shown that the solution to this ``canonical'' problem contains, in fact, the solution to the original ``variationally consistent'' problem in \cref{eq31}; however, without the apparent drawback that is associated with that format.
 In other words, it can be shown that the fluctuations $\ta{u}^\fluct,p^\fluct,\ta{t}^\fluct$ are, in fact, identical to ($\ta{u}^\fluct,p^\fluct,\ta{t}^\fluct)\in\set{U}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system \cref{eq31}.
 Details of the analysis are given in the Appendix.
@@ -1265,20 +1265,20 @@ We now define the ``effective'' SVE-energy as the value of $\Pi_\rve$ at the fol
 %----------------------------------------------------------------------------------------------------------------------
 A stationary point of $\Pi_\rve$ is defined by the relations
 %----------------------------------------------------------------------------
-\begin{subequations}\label{eq84}
+\begin{subequations}\label{eq:rveStat}
 \begin{alignat}{4}
     &(\Pi_\rve)'_u(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\ta{t},\bar{e};\delta\ta{u}) &&= 0
     & \quad & \forall \delta\ta{u} &&\in\set{U}_\rve
-\label{eq84a} \\
+\label{eq:rveStata} \\
     &(\Pi_\rve)'_p(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\ta{t},\bar{e};\delta p) &&= 0
     & \quad & \forall \delta p &&\in\set{P}_\rve
-\label{eq84b} \\
+\label{eq:rveStatb} \\
     &(\Pi_\rve)'_t(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\ta{t},\bar{e};\delta\ta{t}) &&= 0
     & \quad & \forall \delta\ta{t} &&\in\set{T}_\rve
-\label{eq84c} \\
+\label{eq:rveStatc} \\
     &(\Pi_\rve)'_{\bar{e}}(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\ta{t},\bar{e};\delta \bar{e}) &&= 0
     & \quad & \forall \delta \bar{e} &&\in\set{R}
-\label{eq84d}
+\label{eq:rveStatd}
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------
@@ -1287,23 +1287,23 @@ A stationary point of $\Pi_\rve$ is defined by the relations
 %\begin{array}{rcll}
 %    (\Pi_\rve)_u(\bar{\ts\epsilon}_\dev,\bar{p};\tilde{\ta{u}},\tilde{p},\tilde{\ta{t}},\tilde{\bar{e}};\delta\ta{u}) &=& 0
 %    \quad & \forall \delta\ta{u} \in\set{U}_\rve
-%%\label{eq84a} \\
+%%\label{eq:rveStata} \\
 %    \\
 %    (\Pi_\rve)_p(\bar{\ts\epsilon}_\dev,\bar{p};\tilde{\ta{u}},\tilde{p},\tilde{\ta{t}},\tilde{\bar{e}};\delta p) &=& 0
 %    \quad & \forall \delta p \in\set{P}_\rve
-%%\label{eq84b} \\
+%%\label{eq:rveStatb} \\
 %    \\
 %    (\Pi_\rve)_t(\bar{\ts\epsilon}_\dev,\bar{p};\tilde{\ta{u}},\tilde{p},\tilde{\ta{t}},\tilde{\bar{e}};\delta\ta{t}) &=& 0
 %        \quad & \forall \delta\ta{t} \in\set{T}_\rve
-%%\label{eq84c}
+%%\label{eq:rveStatc}
 %    \\
 %    (\Pi_\rve)_{\bar{e}}(\bar{\ts\epsilon}_\dev,\bar{p};\tilde{\ta{u}},\tilde{p},\tilde{\ta{t}},\tilde{\bar{e}};\delta \tilde{\bar{e}}) &=& 0
 %    \quad & \forall \delta \tilde{\bar{e}} \in\set{R}
 %\end{array}
-%\label{eq84}
+%\label{eq:rveStat}
 %\end{equation}
 %%----------------------------------------------------------------------------
-It is readily seen that the system in \cref{eq84} is precisely that of \cref{eq51}, and we may parameterize its solution as
+It is readily seen that the system in \cref{eq:rveStat} is precisely that of \cref{eq51}, and we may parameterize its solution as
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \ta{u}=\ta{u}\{\bar{\ts\epsilon}_\dev,\bar{p}\}, \,\,
@@ -1313,7 +1313,7 @@ It is readily seen that the system in \cref{eq84} is precisely that of \cref{eq5
 \label{eq85}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-At the stationary point, we use the result in \cref{eq84}$_3$ to conclude that
+At the stationary point, we use the result in \cref{eq:rveStatc} to conclude that
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     d_\rve(\ta{t}\{\bar{\ts\epsilon}_\dev,\bar{p}\},\ta{u}\{\bar{\ts\epsilon}_\dev,\bar{p}\}-\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]-\bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\}\,\ta{x}_\mean) = 0
@@ -1336,10 +1336,7 @@ Upon differentiating the expression for $\bar{\psi}_\rve$ in \cref{eq87}, we may
 \label{eq88}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-\todo{I don't agree with this.}
-In order to obtain this result, all the relations in \cref{eq84} defining the stationary point were used, whereby sensitivities were used as test functions.
-For example, we adopted $\delta\ta{u}=\dif \ta{u}\{\bar{\ts\epsilon}_\dev,\bar{p}\}=(\ta{u})'_{\epsilon_d}\{\bar{\ts\epsilon}_\dev,\bar{p};\dif\bar{\ts\epsilon}_\dev\}+(\ta{u})'_{p}\{\bar{\ts\epsilon}_\dev,\bar{p};\dif \bar{p}\}$.
-\textbf{Appendix??}
+Details are left in \cref{appendix:macroEnergy}.
 
 \subsection{Variational properties for Dirichlet boundary conditions}
 
@@ -1864,6 +1861,29 @@ Inserting into (\ref{eq:A11}), we obtain
     \underbrace{\frac{1}{\Omega_\rve}\int_{\Gamma_\rve^+} \jmp{\ta{u}^\fluct}\otimes\ta{n} \dif\Gamma}_{\ta{0} \mbox{ since } \delta\ta{u}^\fluct \in \set{U}_\rve^\fluct} ] = 0
 \label{eq:A12}
 \end{equation}
+
+\subsection{Effective macroscale energy}
+\label{appendix:macroEnergy}
+\textbf{not sure how to introduce this section}\todo{todo}
+%----------------------------------------------------------------------------------------------------------------
+\begin{equation}
+    \bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \frac{\partial \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev,\bar{p}\}}{\partial \bar{\ts\epsilon}_\dev}, \quad
+     \bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \frac{\partial \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev,\bar{p}\}}{\partial \bar{p}}
+\label{eq88}
+\end{equation}
+%----------------------------------------------------------------------------------------------------------------------
+
+\begin{multline}
+  \bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\} = a_\rve(\ta u; (\ta u)'_{\epsilon_\dev}) + b_\rve(p, (\ta u)'_{\epsilon_\dev}) + d_\rve(\ta t, (\ta u)_{\epsilon_\dev}') + b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_{\epsilon_\dev}') + 
+\\ + \bar{e} + \bar{p}\,(\bar{e})_{\epsilon_\dev}' - d_\rve(\ta t, (\bar{e})_{\epsilon_\dev}'\ta x_\mean) + d_\rve((\ta t)_{\epsilon_\dev}', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean) = \bar{e}
+\end{multline}
+and
+\begin{multline}
+  \bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = a_\rve(\ta u; (\ta u)'_p) + b_\rve(p, (\ta u)'_p) + d_\rve(\ta t, (\ta u)_p') + b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_p') + 
+\\ + \bar{e} + \bar{p}\,(\bar{e})_p' - d_\rve(\ta t, (\bar{e})_p'\ta x_\mean) + d_\rve((\ta t)_p', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean) = \bar{e}
+\end{multline}
+where we have used the equilibrium state in \cref{eq:rveStat} by choosing the test functions correspondingly; e.g. $\delta\ta u = (\ta u)_{\epsilon_\dev}'$.
+
 %----------------------------------------------------------------------------
 
 %The purpose is to show that the consistency condition \cref{eq22} is satisfied a priori for the proposed functionals in \cref{eq23}.To this end, for $\ta{u}^\macro$ given in \cref{eq12}, we obtain
