@@ -86,6 +86,7 @@ mikael.ohman@chalmers.se
   \item Work carried out within the \includegraphics[height=0.3cm, trim=0 0.5cm 0 0]{figures/matisse.jpg}-project
   \item Large deformation of composite shells
   \item XFEM delamination (and cracks)
+  \item Currently working cohesive zones and crack propagation
  \end{itemize}
  \includegraphics[width=0.5\linewidth]{figures/delam1.png}
  \includegraphics[width=0.5\linewidth]{figures/delam2.png}
@@ -96,6 +97,7 @@ mikael.ohman@chalmers.se
  \begin{itemize}
   \item Computational homogenization
   \item From Stokes' Flow to Darcy Flow
+  \item Weak periodicity
  \end{itemize}
  \begin{center}
  \includegraphics[width=0.8\linewidth]{figures/Bild1-crop.pdf}
@@ -115,6 +117,7 @@ mikael.ohman@chalmers.se
  \item Motivation
  \item Surface tension
  \item Subscale modeling
+ \item Classic homogenization
  \item Transition to macroscopic incompressibility
  \item Examples
  \item OOFEM implementation
@@ -128,7 +131,7 @@ mikael.ohman@chalmers.se
  \frametitle{Research project}
  \begin{itemize}
   \item PhD project funded by the Swedish research council
-  \item Supervisors Prof. Kenneth Runesson and Prof. Fredrik Larsson
+  \item Supervisors: Prof. Kenneth Runesson and Prof. Fredrik Larsson
   \item Expected to be finished in 2014
  \end{itemize}
 \end{frame}
@@ -413,7 +416,7 @@ Find $(\ta v,p)\in \set V \times \set P$
 \begin{itemize}
  \item Can be obtained by switching control of $\bar{e} \leftrightarrow \bar{p}$ or by deriving the variationally consistent forms by splitting both fields:\\ $\ta v = \ta v^\macro + \ta v^\fluct$, $p = p^\macro + p^\fluct$
  \item Straightforward implementation in OOFEM: Simply extend fluid materials: $\ts\sigma_\dev = f(\ts d_\dev) \rightarrow [\ts\sigma_\dev,\bar{e}] = f(\ts d_\dev, p)$.
- \item Uses standard Taylor-Hood interpolation
+ \item Needs Taylor-Hood interpolation
 \end{itemize}
 
 
