@@ -460,13 +460,13 @@ We can express the periodic boundary condition using the same RVE-potential
 Introducing the stationarity condition we obtain the weak form for the Periodic type boundary condition: Find $(\ta v, p, \ta t, \bar{e}) \in\set{V}_\Box\times\set{P}_\Box\times\set{T}_\Box\times\set{R}$ such that
 \begin{subequations}\label{eq:rve_weakperiodicity}
 \begin{alignat}{4}
- &a_\Box(\ta v; \delta\ta v) + b_\Box(p,\delta\ta v) + t_\Box(\ta t,\delta\ta v) &&= l_\Box(\delta\ta v)
+ &a_\Box(\ta v; \delta\ta v) + b_\Box(p,\delta\ta v) - t_\Box(\ta t,\delta\ta v) &&= l_\Box(\delta\ta v)
 &\quad &\forall\;\delta\ta v &&\in \set{V}_\Box
 \\
- &b_\Box(\delta p, \bar{e}\; \ta v) &&= 0
+ &b_\Box(\delta p, \ta v) &&= 0
 &\quad &\forall\;\delta p&&\in\set{P}_\Box
 \\
- &t_\Box(\delta\ta t, \bar{e}\;\ta x_\mean - \ta v) &&= t_\Box(\delta\ta t, \bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}])
+ &t_\Box(\delta\ta t, \bar{e}\;\ta x_\mean - \ta v) &&= -t_\Box(\delta\ta t, \bar{\ts d}_\dev\cdot[\ta x-\bar{\ta x}])
 &\quad &\forall\;\delta\ta t&&\in\set{T}_\Box
 \\
  &t_\Box(\ta t, \ta x_\mean) \delta\bar{e} &&= - \bar p\;\delta\bar{e} 
@@ -694,7 +694,7 @@ Simplifying \eqref{eq:neumann_potential} we obtain
     &=
     \inf_{\ta v \in \set V_\Box} \;
     \sup_{\substack{p\in \set P_\Box \\ \bar{\ts\sigma}_\dev\in \set{R}_\dev^{3\times 3}}}
-    \!\!\Lambda_\Box^\particle(\bar{\ts d}_\dev, \bar p; \ta v, p) + 
+    \!\!\Lambda_\Box^\particle(\ta v, p) + 
     \left[\bar{\ts d}_\dev - \volume\int_{\Gamma_\Box} [\ta v\outerp\ta n] \dif A\right]\dprod \bar{\ts\sigma}_\dev.
 \end{align}
 
