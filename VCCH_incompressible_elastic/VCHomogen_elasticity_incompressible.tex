@@ -1872,17 +1872,21 @@ Inserting into (\ref{eq:A11}), we obtain
 \label{eq88}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-
+where we can explicitly express each component of the macroscale deviatoric stress tensor such that $\bar{\sigma}_{\dev,i} \defeq \bar{\ts\sigma}_\dev \dprod \ts E_{\dev,i}$
 \begin{multline}
-  \bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\} = a_\rve(\ta u; (\ta u)'_{\epsilon_\dev}) + b_\rve(p, (\ta u)'_{\epsilon_\dev}) + d_\rve(\ta t, (\ta u)_{\epsilon_\dev}') + b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_{\epsilon_\dev}') + 
-\\ + \bar{e} + \bar{p}\,(\bar{e})_{\epsilon_\dev}' - d_\rve(\ta t, (\bar{e})_{\epsilon_\dev}'\ta x_\mean) + d_\rve((\ta t)_{\epsilon_\dev}', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean) = \bar{e}
+  \bar{\sigma}_{\dev,i}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \underbrace{a_\rve(\ta u; (\ta u)'_{\epsilon_{\dev,i}}) + b_\rve(p, (\ta u)'_{\epsilon_{\dev,i}}) + d_\rve(\ta t, (\ta u)_{\epsilon_{\dev,i}}')}_{=0} + \underbrace{b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_{\epsilon_{\dev,i}}')}_{=0}
+\\
++ \underbrace{\bar{p}\,(\bar{e})_{\epsilon_{\dev,i}}' - d_\rve(\ta t, (\bar{e})_{\epsilon_{\dev,i}}'\ta x_\mean)}_{=0} + \underbrace{d_\rve((\ta t)_{\epsilon_{\dev,i}}', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean)}_{=0}
+\\
+ - d_\rve(\ta t, \ts E_{\dev,i}\cdot[\ta x - \bar{\ta x}]_\dev) = - d_\rve(\ta t, \ts E_{\dev,i}\cdot[\ta x - \bar{\ta x}]) = a_\rve(\ta u, \ts E_{\dev,i}\cdot[\ta x - \bar{\ta x}])
 \end{multline}
 and
 \begin{multline}
-  \bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = a_\rve(\ta u; (\ta u)'_p) + b_\rve(p, (\ta u)'_p) + d_\rve(\ta t, (\ta u)_p') + b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_p') + 
-\\ + \bar{e} + \bar{p}\,(\bar{e})_p' - d_\rve(\ta t, (\bar{e})_p'\ta x_\mean) + d_\rve((\ta t)_p', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean) = \bar{e}
+  \bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \underbrace{a_\rve(\ta u; (\ta u)'_p) + b_\rve(p, (\ta u)'_p) + d_\rve(\ta t, (\ta u)_p')}_{=0} + \underbrace{b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_p')}_{=0}
+\\
+ + \underbrace{\bar{p}\,(\bar{e})_p' - d_\rve(\ta t, (\bar{e})_p'\ta x_\mean)}_{=0} + \underbrace{d_\rve((\ta t)_p', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean)}_{=0} + \bar{e} = \bar{e}
 \end{multline}
-where we have used the equilibrium state in \cref{eq:rveStat} by choosing the test functions correspondingly; e.g. $\delta\ta u = (\ta u)_{\epsilon_\dev}'$.
+where we have used the equilibrium state in \cref{eq:rveStat} by choosing the test functions correspondingly; e.g. $\delta\ta u = (\ta u)_{pz}'$.
 
 %----------------------------------------------------------------------------
 
