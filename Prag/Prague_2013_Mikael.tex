@@ -86,7 +86,7 @@ mikael.ohman@chalmers.se
   \item Work carried out within the \includegraphics[height=0.3cm, trim=0 0.5cm 0 0]{figures/matisse.jpg}-project
   \item Large deformation of composite shells
   \item XFEM delamination (and cracks)
-  \item Currently working cohesive zones and crack propagation
+  \item Currently working on cohesive zones and crack propagation
  \end{itemize}
  \includegraphics[width=0.5\linewidth]{figures/delam1.png}
  \includegraphics[width=0.5\linewidth]{figures/delam2.png}
@@ -303,7 +303,7 @@ Find $(\ta v,p)\in \set V \times \set P$
     \item RVE-problem with Dirichlet b.c., ``driven'' by macroscale
     rate-of-deformation $\bar{\ts d} \defeq [\ta v\outerp\diff]^\sym\rightarrow$ subscale velocity:
     $\ta{v}=\ta{v}^\macro(\bar{\ts d})+\ta{v}^\fluct$, whereas pressure $p = p^\fluct$\\
-    For given $\bar{\ts d}$, solve for $(\ta{v}^\fluct\in,p) \set V_{\Box}^{\Dirichlet}\times\in\set P_{\Box}$:
+    For given $\bar{\ts d}$, solve for $(\ta{v}^\fluct,p) \in \set V_{\Box}^{\Dirichlet}\times\set P_{\Box}$:
    \vspace{-2.5truemm}
  \end{itemize}
 \begin{alignat*}{3}
@@ -359,7 +359,7 @@ Find $(\ta v,p)\in \set V \times \set P$
     \vspace{-2.5truemm}
     \begin{align*}
     \bar{\ts\sigma} = \homogenized{\ts\sigma}_\Box =\frac{1}{|\Omega_{\Box}|}\int_{\Gamma_{\Box}}
-    \ta{t}\outerp[\ta{x}-\bar{\ta x}] \dif a, \,\,\bar{\ta x}= \mbox{ center of RVE}
+    \ta{t}\outerp \ta n \dif a
     \end{align*}
     \textbf{Note}: Variational format valid only for macroscale compressibility (before porosity has vanished locally)
 
