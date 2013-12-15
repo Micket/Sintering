@@ -212,7 +212,7 @@ where\footnote{* in the notation $c^*(\bullet;\bullet)$ indicates ``complementar
 \label{eq3d}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
-The solution space $\set{U}$ and test space $\set{U}^0$ are defined in standard fashion.
+The solution space $\set{U}$ and the test space $\set{U}^0$ are defined in standard fashion.
 In particular, all $\ta{v}\in\set{U}$ are characterized by $\ta{v}=\ta{v}_\prescribed$ on $\Gamma_\Dirichlet$, whereas all $\ta{v}\in\set{U}^0$ satisfy $\ta{v}=\ta{0}$ on $\Gamma_\Dirichlet$.
 The pressure space $\set{P}$ does not satisfy any boundary conditions.
 
@@ -329,6 +329,7 @@ Moreover, we assume that it is possible solve for the fluctuation fields $\ta{u}
 \end{alignat}
 \end{subequations}
 %------------------------------------------------------------------------------------------------------------
+where curly brackets indicate an implicit function.
 In addition, the test function $\delta\ta{u}\in\set{U}^{0}$ in \cref{eq2a} is replaced by $\delta\ta{u}^\macro\in\set{U}^{\macro,0}$, whereas $\delta p\in\set{P}$ in \cref{eq2b} is replaced by $\delta p^\macro\in\set{P}^{\macro}$.
 Altogether, these assumptions infer that $\ta{u}^\macro\in\set{U}^\macro$ and $p^\macro\in\set{P}^\macro$ can be solved from the homogenized problem
 %----------------------------------------------------------------------------------------------------------------
@@ -526,12 +527,12 @@ We thus obtain
 \label{eq14b}
 \end{align}
 %----------------------------------------------------------------------------
-We can now establish the model assumption for the displacement and pressure fields in each SVE
+We can now establish that the displacement and pressure fields within each SVE are implicit functions of the values $\bar{\ta u}$, $\bar{\ts h}$, $\bar{p}$, such that 
 \begin{subequations}
 \begin{align}
- \ta u = \tilde{\ta u}\{\ta u^\macro, p^\macro\} = \tilde{\ta u}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}
+ \ta u = \tilde{\ta u}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}
 \\
- p = \tilde{p}\{\ta u^\macro, p^\macro\} = \tilde{p}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}
+ p = \tilde{p}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}
 \end{align}
 \end{subequations}
 %----------------------------------------------------------------------------
@@ -567,7 +568,7 @@ Finally, we are in the position to compute the homogenized quantities that enter
 \label{eq15f}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
-Variationally consistent macroscale flux variables are thus obtained as follows by homogenization of the constitutive functions
+whereby the variationally consistent macroscale flux variables are obtained from homogenization of the constitutive functions as follows:
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq16}
 \begin{align}
@@ -577,8 +578,7 @@ Variationally consistent macroscale flux variables are thus obtained as follows 
 \label{eq16b}
 \end{align}
 \end{subequations}
-By combining \eqref{eq4} with \eqref{eq12} we note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$.
-
+By combining \eqref{eq4} with \eqref{eq12} we note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered SVE.
 %---------------------------------------------------------------------------------------------------------------------
 Moreover, in \cref{eq15b,eq15c} we used the identities
 %----------------------------------------------------------------------------------------------------------------
@@ -606,20 +606,21 @@ where
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     \bar{a}(\bar{\ta{u}},\bar{p};\bar{\ta w}) &\defeq
-    \int_{\Omega}  \ts{\epsilon}_\dev[\bar{\ta w}]\dprod\bar{\ts\sigma}_\dev \dif V
+    \int_{\Omega}  \ts{\epsilon}_\dev[\bar{\ta w}]\dprod\bar{\ts\sigma}_\dev(\bar{\ta u}, \bar{p}) \dif V
 \label{eq18a} \\
     \bar{b}(\bar{q},\bar{\ta u}) &\defeq
     - \int_{\Omega}  \bar{q}\,e[\bar{\ta u}] \dif V
 \label{eq18b} \\
     \bar{c}^*(\bar{\ta{u}},\bar{p};\bar{r}) &\defeq
-    \int_{\Omega}  \bar{r}\,\bar{e} \dif V
+    \int_{\Omega}  \bar{r}\,\bar{e}(\bar{\ta u}, \bar{p}) \dif V
 \label{eq18c} \\
     \bar{l}(\bar{\ta u}) &\defeq  \int_{\Omega}  \bar{\ta u}\cdot\bar{\ta f} + [\bar{\ta u}\outerp\diff]\dprod \bar{\bar{\ta f}} \dif V +
     \int_{\Gamma^\Neumann} \bar{\ta u}\cdot\bar{\ta t}_\prescribed \dif S
 \label{eq18d}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
-The macroscale spaces $\bar{\set{U}}$ and $\bar{\set{P}}$ are chosen as the standard ones for the fine-scale problem, i.e.
+If we consider the macroscale fields, $\bar{\ts\sigma}_\dev$ and $\bar{e}$,  we conclude that they are implicit functions of the fields $\bar{\ta u}$ and $\bar{p}$.
+The macroscale spaces $\bar{\set{U}}$ and $\bar{\set{P}}$ are chosen as the standard ones for the fine-scale problem.
 
 \section{Canonical formulation of RVE-problem}
 
@@ -774,7 +775,7 @@ In order to establish the most straightforward formulation of the RVE-problem, b
 We remark, in particular, that $\set{T}_\rve^\fluct$ is restricted to such tractions that are self-equilibrating, i.e. they correspond to vanishing macroscale stress.
 \textbf{This is shown as follows: ??????? }.
 
-We are now in the position to establish the subscale problem: For \emph{given} values $\bar{\ta{u}}$, $\bar{\ts{h}}\defeq\bar{\ta{u}}\outerp\diff$, and $\bar{p}$, that represent the macroscale fields (and which solve the macroscale problem), we first make the unique decomposition:
+We are now in the position to establish the subscale problem: For \emph{given} values $\bar{\ta{u}}$, $\bar{\ts{h}}$, and $\bar{p}$, that represent the macroscale fields (and which solve the macroscale problem), we first make the unique decomposition:
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq29}
 \begin{alignat}{2}
@@ -788,15 +789,14 @@ We are now in the position to establish the subscale problem: For \emph{given} v
 \end{subequations}
 %----------------------------------------------------------------------------
 %$\bar{\ts{h}}\defeq\bar{\ts\epsilon}_\dev+\frac{1}{3}\bar{e}\ts{I}+\bar{\ts{h}}^\skw$,
-The motivation for the decomposition of tractions in \cref{eq29c} is the observation whereby \cref{eq27a} can be restricted to test functions in $\Pi_\rve^\fluct$, such that the stress quantity $\bar{\ts\tau}$ is not part of the RVE-problem
+The motivation for the decomposition of tractions in \cref{eq29c} is the observation that
 %----------------------------------------------------------------------------
 \begin{equation}
     d_\rve(\bar{\ts{\tau}}\cdot\ts{n},\ta{u}^\fluct) = 0, \quad
     \forall \bar{\ts{\tau}}\in\set{R}^{3\times3}, \,\,\forall \ts{u}^\fluct\in\set{U}_\rve^\fluct
 \label{eq27b}
 \end{equation}
-
-
+hence, \cref{eq27a} can be restricted to test functions in $\Pi_\rve^\fluct$, such that the stress quantity $\bar{\ts\tau}$ is not part of the RVE-problem.
 As a consequence, the RVE-problem is reduced to finding the subscale fluctuations $\ta{u}^\fluct,p^\fluct,\ta{t}^\fluct\in\set{U}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq31}
@@ -834,7 +834,7 @@ where the SVE-functionals were introduced in \cref{eq8a,eq8b,eq8c,eq27}.
 %\end{eqnarray}
 %%----------------------------------------------------------------------------
 By inspecting the system in \cref{eq31}, we note (in particular) that it is not the entire $\bar{\ts{h}}$ that is used as input to the RVE-problem.
-In fact, it is readily concluded that $\bar{\ts\epsilon}_\dev=(\bar{\ts{h}})^\sym_\dev$ and $\bar{p}$ are the macroscale variables that are used as ``data'' to the RVE-problem; hence, the solution of \cref{eq31} is parameterized as $\ta{u}^\fluct=\ta{u}^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$, $p^\fluct=p^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$, and $\ta{t}^\fluct=\ta{t}^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$
+In fact, it is readily concluded that $\bar{\ts\epsilon}_\dev=(\bar{\ts{h}})^\sym_\dev$ and $\bar{p}$ are the macroscale variables that are used as ``data'' to the RVE-problem; hence, the solution of \cref{eq31} is parameterized as $\ta{u}^\fluct=\ta{u}^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$, $p^\fluct=p^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$, and $\ta{t}^\fluct=\ta{t}^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$.
 %----------------------------------------------------------------------------
 It is noted that neither the volumetric part $\bar{h}_\vol\defeq\bar{\ts{h}}\dprod\ts{I}$, nor the skew-symmetric part $\bar{\ts{h}}^\skw=\frac{1}{2}[\bar{\ts{h}}-\bar{\ts{h}}^\majorT]$ will affect the SVE-solution. %----------------------------------------------------------------------------
 
@@ -851,7 +851,7 @@ From \cref{eq16}, we conclude that the homogenized ``fluxes'' can be represented
 \label{eq33b}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
-Note that $\bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\}\neq\bar{h}_\vol$ in general! In fact, part from the conventional situation that $\bar{\ta u}$ and $\bar{\ts h}^\skw$ do not affect the subscale solution, we note that $\bar{h}_\vol$ does not affect the solution either.
+Note that $\bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\}\neq\bar{h}_\vol$ in general! In fact, in addition to the conventional situation that $\bar{\ta u}$ and $\bar{\ts h}^\skw$ do not affect the subscale solution, $\bar{h}_\vol$ does not affect the solution either.
 
 However, there is a problem associated with the presented ``consistent'' format in the sense that the strong form of the continuity equation does not (necessarily) represent that one of the fine scale.
 The reason is that the formulation \cref{eq31b} ``filters out'' any imposed \emph{constant} volumetric strain $\bar{\lambda}$ in the sense that the strong format reads
@@ -979,12 +979,11 @@ We are now in the position to establish the alternative, subsequently denoted \e
 \end{subequations}
 %----------------------------------------------------------------------------
 where $\ta{x}_\mean\defeq\frac{1}{3}[\ta{x}-\bar{\ta{x}}]$.
-It follows from \cref{eq51} that the variable $\bar{e}$ still obtains the value $\bar{e}\{\bar{\ts\epsilon}_\dev, \bar{p}\} \defeq \homgen{\hat{e}(p)}$
-\todo{last step? wrong $\delta$}
+It follows from \cref{eq51} that the variable $\bar{e}$ still obtains the value $\bar{e} = \homgen{\hat{e}(p)}$
 \begin{align}
- \bar{e}\{\bar{\ts\epsilon}_\dev, \bar{p}\}\,\delta\bar{p} = \homgen{\hat{e}(p)}\,\delta\bar{p} = b_\rve(\delta\bar{p}, \ta u) = d_\rve(\delta\bar{p}\,\ta n, \ta u) = d_\rve(\delta\bar{p}\,\ta n, \bar{e}\,\ta x_\mean) = \delta\bar{p}\,\bar{e}
+ \homgen{\hat{e}(p)} = b_\rve(1, \ta u) = d_\rve(\ta n, \ta u) = d_\rve(\ta n, \bar{e}\,\ta x_\mean) = d_\rve(\ta n, \ta x_\mean)\bar{e} = b_\rve(1, \ta x_\mean)\bar{e} = \bar{e}
 \end{align}
-where the divergence theorem was used in the step $b_\rve(\delta\bar{p}, \ta u) = d_\rve(\delta\bar{p}\,\ta n, \ta u)$.
+where the divergence theorem was used in the steps $b_\rve(1, \bullet) = d_\rve(\ta n, \bullet)$.
 
 % \textbf{Remark}: The new variable $\bar{e}$, which represents the volumetric strain, is not necessarily identical to the macroscopic volumetric strain $\bar{h}_\vol=\bar{\ts{h}}\dprod\ts{I}=\bar{\ta{u}}\cdot\diff$.
 % 
@@ -1007,11 +1006,11 @@ The solution to this ``canonical'' problem contains, in fact, the solution to th
 %----------------------------------------------------------------------------
 \begin{subequations}
 \begin{align}
-    \ta u^\fluct &= \ta u - \bar{\ts\epsilon}_\dev \cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean
+    \ta u^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\} &= \ta u\{\bar{\ts\epsilon}_\dev, \bar{p}\} - \bar{\ts\epsilon}_\dev \cdot[\ta x - \bar{\ta x}] - \bar{e}\{\bar{\ts\epsilon}_\dev, \bar{p}\}\,\ta x_\mean
 \label{eq52a} \\
-    p^\fluct &= p - \bar{p}
+    p^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\} &= p\{\bar{\ts\epsilon}_\dev, \bar{p}\} - \bar{p}
 \label{eq52b} \\
-    \ta t^\fluct &= \ta t - [\bar{\ts\sigma}_\dev - \bar{p}\ts I]\cdot \ta n
+    \ta t^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\} &= \ta t\{\bar{\ts\epsilon}_\dev, \bar{p}\} - [\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev, \bar{p}\} - \bar{p}\ts I]\cdot \ta n
 \label{eq52c}
 \end{align}
 \end{subequations}
