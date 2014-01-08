@@ -1,0 +1,54 @@
+\begin{tikzpicture}[node distance = 2cm, auto,scale=0.6, transform shape]
+    %\small
+    %\tikzstyle{every node}=[font=\footnotesize]
+    \tikzstyle{group}    = [rectangle, draw, thick, dashed, text width=6em, text centered, rounded corners]
+    \tikzstyle{decision} = [diamond,   draw, fill=white, text width=6em, text centered, node distance=2.5cm, inner sep=0pt]
+    \tikzstyle{block}    = [rectangle, draw, fill=white, text width=6em, text centered, rounded corners]
+    \tikzstyle{line}     = [draw, -latex']
+
+    \draw [thick, dashed, fill=blue!10, rounded corners] (-1.8,-0.5) rectangle (10.05,-5);
+    \draw [thick, dashed, fill=red!10,  rounded corners] (10.2,-0.5) rectangle (13.7,-3.7);
+    \draw [thick, dashed, fill=green!10,  rounded corners] (6.0,-0.5) rectangle (10.05,-3.0);
+    \node [below right, inner sep=10pt] at (2.5,-0.4) { \textbf{\large EngngModel} };
+    \node [below left,  inner sep=10pt] at (13.3,-0.4) { \textbf{\large Element} };
+    \node [below left,  inner sep=10pt] at (9.0,-0.4) { \textbf{\large Parallel} };
+
+    % Place nodes
+    % Engineering model:
+    \node [block, text width=7em] (init) {Instanciation};
+    \node [block, below of=init, text width=7em, node distance=1.5cm] (solve) {solveYourself};
+    \node [block, right of=solve, text width=8em, node distance=4.0cm] (solveAt) {solveYourselfAt};
+    \node [block, right of=solveAt, text width=8em, node distance=4.0cm] (assembleVector) {assembleVector};
+    \node [block, below of=assembleVector, text width=8em, node distance=0.8cm] (assembleMatrix) {assembleMatrix};
+    \node [block, below of=solveAt, text width=8em, node distance=1.6cm] (update) {updateYourself};
+    \node [block, below of=update, text width=8em, node distance=1.4cm] (terminate) {terminate};
+
+   % Element
+   \node [block, right of=assembleVector, text width=7em, node distance=4.0cm] (giveVector) {give***Vector};
+   \node [block, right of=assembleMatrix, text width=7em, node distance=4.0cm] (giveMatrix) {give***Matrix};
+   \node [block, below of=giveMatrix, text width=7em, node distance=0.8cm] (elementUpdate) {updateYourself};
+
+   % Other
+   \node [block, right of=giveVector, text width=5em, node distance=3.2cm] (loads) {Loads};
+   \node [block, right of=giveMatrix, text width=5em, node distance=3.2cm] (material) {Material};
+   \node [block, below of=elementUpdate, text width=7em, node distance=1.4cm] (export) {ExportModule};
+
+
+   \path [line] (init) -- (solve);
+   \path [line] (solve) -- (solveAt);
+   \path [line] (solveAt) -- (update);
+   \path [line] (update) -- (terminate);
+   \path [line] (terminate) -- (export);
+   \path [line,latex'-latex'] (solveAt.east) -- (assembleVector.west);
+   \path [line,latex'-latex'] (solveAt.east) -- (assembleMatrix.west);
+   \path [line,latex'-latex'] (assembleVector) -- (giveVector);
+   \path [line,latex'-latex'] (assembleMatrix) -- (giveMatrix);
+
+   \path [line,-latex'] (update.east) -- (elementUpdate.west);
+   \path [line,latex'-latex'] (giveVector.east) -- (material.west);
+   \path [line,latex'-latex'] (giveVector.east) -- (loads.west);
+   \path [line,latex'-latex'] (giveMatrix.east) -- (material.west);
+   \path [line,latex'-latex'] (giveMatrix.east) -- (loads.west);
+
+   \path [line,-latex'] (elementUpdate.east) -| (material.south);
+\end{tikzpicture}
