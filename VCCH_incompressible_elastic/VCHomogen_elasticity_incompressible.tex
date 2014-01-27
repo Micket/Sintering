@@ -287,7 +287,7 @@ The appropriate variational setting of the homogenized problem is obtained upon 
 %----------------------------------------------------------------------------
 representing a smoothing approximation on a Statistical Volume Element (SVE).
 In practice, the SVE's are finite-sized and occupies the subscale region $\Omega_\rve(\bar{\ta{x}})$ with boundary $\Gamma_\rve$\footnote{Henceforth, the argument $\bar{\ta{x}}$ is suppressed unless there is a risk of confusion}.
-The typical dimension of an SVE is $L_\Box=\volume^{1/3}$.
+The typical dimension of an SVE is $L_\rve=\volume^{1/3}$.
 The SVE is centered at the macroscale position $\bar{\ta{x}}\defeq\frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{x}\dif S$ for any given $\bar{\ta{x}}\in\Omega$.
 
 Boundary integrals can be homogenized in similar fashion, by considering Statistical Surface Elements $\gamma_\rve$
@@ -1420,6 +1420,12 @@ We may deduce that $\bar{\psi}_\rve$ serves as the ``effective'' energy for $\ba
 %----------------------------------------------------------------------------------------------------------------------
 Details are given in \cref{appendix:macroEnergy}.
 
+From the analysis $\bar{e}$ is obtained directly as a primary variable. The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
+\begin{align}
+ \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
+\end{align}
+
+
 \subsection{Variational properties for Dirichlet boundary conditions}
 
 In order to establish a suitable variational setting we introduce the solution space $\set{U}_\rve^\Dirichlet\subseteq\set{U}_\rve$ and test space $\set{U}_\rve^{\Dirichlet,0}$
@@ -1536,7 +1542,7 @@ A stationary point of $\Pi_\rve^\Dirichlet$ is defined by the relations
 %----------------------------------------------------------------------------
 and this system of equations takes the explicit form: For given values $\bar{\ts\epsilon}_\dev, \bar{p}$, find the subscale fields $(\ta{u}^\fluct,p,\bar{e})\in\set{U}_\rve^{\Dirichlet,0}\times\set{P}_\rve\times\set{R}$ that solve the system
 %----------------------------------------------------------------------------
-\begin{subequations}
+\begin{subequations}\label{eq:weak_form_dirichlet}
 \begin{alignat}{3}
     a_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) + b_\rve(p,\delta\ta{u}^\fluct) &= 0
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,0}
@@ -1559,8 +1565,17 @@ Finally, the effective energy at the stationary point becomes
 \label{eq95}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-\textbf{Comment on VCMC??
-}
+
+From the analysis $\bar{e}$ is obtained directly as a primary variable. The deviatoric stress $\bar{\ts\sigma}_\dev$ can be obtained by post-processing:
+\begin{align}
+ \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
+\end{align}
+though in practice, $\bar{\ts\sigma}_\dev$ is obtained as the reaction forces associated with the prescribed $\bar{\ts\epsilon}_\dev$.
+
+\todo{check $\bar{p}$}
+
+
+\textbf{Comment on VCMC??}
 \subsection{Variational properties for Neumann boundary conditions}
 
 The problem defined by Neumann boundary conditions is obtained from the
@@ -1704,7 +1719,7 @@ and this system of equations takes the explicit form: For given values $\bar{\ts
 In order to obtain the RHS of \cref{eq67a}, we used the identity
 %----------------------------------------------------------------------------
 \begin{equation}
-    d'_\rve(\ts{I},\delta\ta{u}) = - \frac{1}{\volume}\int_{\Gamma_\rve^+} \jmp{\delta\ta{u}}\outerp\ta{n} \dif S =
+    d'_\rve(\ts{I},\delta\ta{u}) = - \frac{1}{\volume}\int_{\Gamma_\rve} \delta\ta{u}\outerp\ta{n} \dif S =
     \homgen{\delta\ta{u}\cdot\diff }
 \label{eq68}
 \end{equation}
@@ -1717,13 +1732,19 @@ Finally, we obtain the effective energy density as
 \label{eq105}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
+
 \textbf{Remark}: The Neumann condition represents the weakest possible way of enforcing the micro-periodicity condition.
-Here it is considered as a \emph{model assumption}; however, it is also possible to view this choice as a (crude) FE-approximation of the traction field. $\Box$
+Here it is considered as a \emph{model assumption}; however, it is also possible to view this choice as a (crude) FE-approximation of the deviatoric traction field. $\Box$
 
 \textbf{Remark}: Choosing $\delta\ta{u}=\delta\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]$ in \cref{eq67a} for all possible $\delta\bar{\ts\epsilon}_\dev\in\set{R}^{3\times 3}_\dev$, we identify the macroscopic deviatoric stress as $\tilde{\bar{\ts\sigma}}_\dev$, i.e.\ $\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\} \defeq
 \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}\{\bar{\ts\epsilon}_\dev,\bar{p}\}]) } = \tilde{\bar{\ts\sigma}}_\dev$. $\Box$
 
 \textbf{Remark}: The RVE-functional $\bar{\psi}_\rve^\Neumann$ in \cref{eq67a} does not contain $\bar{e}$ as an independent variable; however, it is still possible to compute $\bar{e}$ from its definition.
+
+From the analysis $\bar{\ts\sigma}_\dev$ is obtained directly as a primary variable. The volumetric strain $\bar{e}$ is obtained by post-processing:
+\begin{align}
+ \bar{e} = \homgen{\ta u\cdot\diff} = \frac{1}{\volume} \int_{\Gamma_\rve} \ta u \cdot \ta n\dif S.
+\end{align}
 
 \textbf{Comment on VCMC???} \todo{Why?}
 
@@ -1814,8 +1835,8 @@ size d_mean d_var
 4.000000   1.243507   0.002562
 5.000000   1.235669   0.000874
 6.000000   1.224925   0.000534
-7.000000   1.209255   0.000262
-8.000000   1.198353   0.000295
+7.000000   1.213449   0.000258
+8.000000   1.202848   0.000205
 9.000000   1.204560   0.000033
   };
  \addlegendentry{Dirichlet}
@@ -1827,9 +1848,9 @@ size n_mean n_var
 4.000000   1.147371   0.001132
 5.000000   1.152570   0.000572
 6.000000   1.156771   0.000293
-7.000000   1.158713   0.000184
-8.000000   1.150297   0.000113
-9.000000   1.158993   0.000039                                                                                                            
+7.000000   1.158645   0.000139
+8.000000   1.153319   0.000129
+9.000000   1.158993   0.000039
   };
 \addlegendentry{Neumann}
   \end{axis}
@@ -1837,13 +1858,16 @@ size n_mean n_var
 \begin{tikzpicture}
   \begin{axis}[ width=0.45\linewidth,  xlabel=SVE size, ylabel=$\mathop{\mathrm{var}}(\bar{G})/G_\mathrm{mat}$]
   \addplot table[color=blue,x=size,y=d_var] {
-size d_mean d_var                                                                                                                                                                         
-1.000000   1.586624   0.489829                                                                                                                                                            
-2.000000   1.299371   0.029517                                                                                                                                                            
-3.000000   1.269267   0.007279                                                                                                                                                            
-4.000000   1.243507   0.002562                                                                                                                                                            
-5.000000   1.235669   0.000874                                                                                                                                                            
+size d_mean d_var
+1.000000   1.586624   0.489829
+2.000000   1.299371   0.029517
+3.000000   1.269267   0.007279
+4.000000   1.243507   0.002562
+5.000000   1.235669   0.000874
 6.000000   1.224925   0.000534
+7.000000   1.213449   0.000258
+8.000000   1.202848   0.000205
+9.000000   1.204560   0.000033
   };
 \addlegendentry{Dirichlet}
   \addplot table[color=red,x=size,y=n_var] {
@@ -1854,6 +1878,9 @@ size n_mean n_var
 4.000000   1.147371   0.001132
 5.000000   1.152570   0.000572
 6.000000   1.156771   0.000293
+7.000000   1.158645   0.000139
+8.000000   1.153319   0.000129
+9.000000   1.158993   0.000039
   };
 \addlegendentry{Neumann}
   \end{axis}
@@ -2177,7 +2204,7 @@ We need to show that these sensitivities truly are the derivatives. We do so for
 
 
 \subsubsection{Periodic boundary condition}
-Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq:?????} at equilibrium we obtain
+Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq51} at equilibrium we obtain
 \begin{subequations}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u};\delta\ta{u},\Delta\ta u) + b_\rve(\Delta p,\delta\ta{u}) + d_\rve(\Delta\ta{t},\delta\ta{u}) &= 0
@@ -2198,7 +2225,7 @@ which must hold for any given $\dif\bar{\ts\epsilon}_{\dev}$ and $\dif\bar{p}$. 
 \begin{enumerate}
  \item[1] $\dif\bar{\epsilon}_{\dev,k} = 1$, $\dif\bar{\epsilon}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta u}_\ded^{(k)}$, $\hat{p}_\ded^{(k)}$, $\hat{\ta t}_{\ded}^{(k)}$, $\hat{\bar{e}}_\ded^{(k)}$ from the system 
 \end{enumerate}
-\begin{subequations}\label{eq:sensitivities_d}
+\begin{subequations}\label{eq:p_sensitivities_d}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u};\delta\ta{u},\hat{\ta u}_\ded^{(k)}) + b_\rve(\hat{p}_\ded^{(k)},\delta\ta{u}) + d_\rve(\hat{\ta t}_{\ded}^{(k)},\delta\ta{u}) &= 0
     &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
@@ -2216,7 +2243,7 @@ which must hold for any given $\dif\bar{\ts\epsilon}_{\dev}$ and $\dif\bar{p}$. 
 \begin{enumerate}
 \item[2] $\dif\bar{p} = 1$ while $\dif\bar{\epsilon}_{\dev,k} = 0$: Solve the sensitivities $\hat{\ta u}_\dep$, $\hat{p}_\dep$, $\hat{\ta t}_\dep$, $\hat{\bar{e}}_\dep$ from the system 
 \end{enumerate}
-\begin{subequations}\label{eq:sensitivities_p}
+\begin{subequations}\label{eq:p_sensitivities_p}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u};\delta\ta{u},\hat{\ta u}_\dep) + b_\rve(\hat{p}_\dep,\delta\ta{u}) + d_\rve(\hat{\ta t}_\dep,\delta\ta{u}) &= 0
     &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
@@ -2234,14 +2261,14 @@ which must hold for any given $\dif\bar{\ts\epsilon}_{\dev}$ and $\dif\bar{p}$. 
 \end{subequations}
 The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, is solved for directly, and the deviatoric stress is post-processed as
 \begin{align}
- \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\Box} \hat{\ta t}_{\ded}^{(k)} \outerp \ta n\dif S\\
- \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\Box} \hat{\ta t}_{\dep} \outerp \ta n\dif S
+ \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp \ta n\dif S + \bar{p}\ts I\\
+ \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp \ta n\dif S + \bar{p}\ts I
 \end{align}
-\todo{check}
+\todo{check $\bar{p}$ here}
 
 
 \subsubsection{Neumann boundary condition}
-Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq:?????} at equilibrium we obtain
+Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq67} at equilibrium we obtain
 \begin{subequations}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u};\delta\ta{u}, \Delta\ta u) + b_\rve(\Delta p,\delta\ta{u}) +  d'_\rve(\Delta\hat{\bar{\ts\sigma}}_\dev,\delta\ta{u}) &= - \dif\bar{p}\,\homgen{\delta\ta{u}\cdot\diff }
@@ -2258,7 +2285,7 @@ which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. W
 \begin{enumerate}
  \item[1] $\dif\bar{\epsilon}_{\dev,k} = 1$, $\dif\bar{\epsilon}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta u}_\ded^{(k)}$, $\hat{p}_\ded^{(k)}$, $\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}$ from the system 
 \end{enumerate}
-\begin{subequations}\label{eq:sensitivities_d}
+\begin{subequations}\label{eq:n_sensitivities_d}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u};\delta\ta{u}, \hat{\ta u}_\dev^{(k)}) + b_\rve(\hat{p}_\dev^{(k)},\delta\ta{u}) +  d'_\rve(\hat{\bar{\sigma}}_{\dev,i,\dev}^{(k)}\ts E_i,\delta\ta{u}) &= 0
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
@@ -2273,7 +2300,7 @@ which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. W
 \begin{enumerate}
 \item[2] $\dif\bar{p} = 1$ while $\dif\bar{\epsilon}_{\dev,k} = 0$: Solve the sensitivities $\hat{\ta u}_\dep$, $\hat{p}_\dep$, $\hat{\bar\sigma}_{\dev,i,\dep}$ from the system 
 \end{enumerate}
-\begin{subequations}\label{eq:sensitivities_p}
+\begin{subequations}\label{eq:n_sensitivities_p}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u};\delta\ta{u}, \hat{\ta u}_\dep) + b_\rve(\hat{p}_\dep,\delta\ta{u}) +  d'_\rve(\hat{\bar\sigma}_{\dev,i,\dep}\ts E_i,\delta\ta{u}) &= -\homgen{\delta\ta{u}\cdot\diff }
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
@@ -2293,7 +2320,7 @@ The deviatoric stresses, $\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}$ and $\hat{\bar
 
 \newpage
 \subsubsection{Dirichlet boundary condition}
-Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq:?????} at equilibrium we obtain
+Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq:weak_form_dirichlet} at equilibrium we obtain
 \begin{subequations}
 \begin{alignat}{3}
     (a_\rve)'(\dif\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct, \Delta\ta{u}^\fluct) + b_\rve(\Delta p,\delta\ta{u}^\fluct) &= 0
@@ -2311,7 +2338,7 @@ which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. W
 \begin{enumerate}
  \item[1] $\dif\bar{\epsilon}_{\dev,k} = 1$, $\dif\bar{\epsilon}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta u}_\ded^{\fluct(k)}$, $\hat{p}_\ded^{(k)}$, $\hat{\bar{e}}_{\ded}^{(k)}$ from the system 
 \end{enumerate}
-\begin{subequations}\label{eq:sensitivities_d}
+\begin{subequations}\label{eq:d_sensitivities_d}
 \begin{alignat}{3}
     (a_\rve)'(\ts E_k\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct, \hat{\ta u}_\ded^{\fluct(k)}) + b_\rve(\hat{p}_\ded^{(k)},\delta\ta{u}^\fluct) &= 0
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,0}
@@ -2326,7 +2353,7 @@ which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. W
 \begin{enumerate}
 \item[2] $\dif\bar{p} = 1$ while $\dif\bar{\epsilon}_{\dev,k} = 0$: Solve the sensitivities $\hat{\ta u}_\dep^\fluct$, $\hat{p}_\dep$, $\hat{\bar e}_{\dep}$ from the system 
 \end{enumerate}
-\begin{subequations}\label{eq:sensitivities_p}
+\begin{subequations}\label{eq:d_sensitivities_p}
 \begin{alignat}{3}
     (a_\rve)'(\ta{u}^\fluct;\delta\ta{u}^\fluct, \hat{\ta u}_\dep^\fluct) + b_\rve(\hat{p}_\dep,\delta\ta{u}^\fluct) &= 0
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,0}
@@ -2340,8 +2367,8 @@ which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. W
 \end{subequations}
 The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, is solved for directly, and the deviatoric stress is post-processed as
 \begin{align}
- \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\Box} \hat{\ta t}_{\ded}^{(k)} \outerp \ta n\dif S\\
- \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\Box} \hat{\ta t}_{\dep} \outerp \ta n\dif S
+ \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp \ta n\dif S\\
+ \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp \ta n\dif S
 \end{align}
 \todo{check}
 
