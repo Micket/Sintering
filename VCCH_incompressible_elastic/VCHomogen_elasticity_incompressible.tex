@@ -324,7 +324,7 @@ where the SVE-functionals in \crefrange{eq7a}{eq7d} are defined as
     l_\rve(\ta{v}) &\defeq
     \homgen{ \ta{v}\cdot\ta{f} }, \quad
     l_\parallel(\ta{v}) \defeq
-    \frac{1}{|\gamma_\rve|}\int_{\gamma_\rve} \ta{v}\cdot \ta t_\prescribed \dif S
+    \langle \ta{v}\cdot \ta t_\prescribed \rangle_{||}
 \label{eq8d}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
@@ -1420,7 +1420,8 @@ We may deduce that $\bar{\psi}_\rve$ serves as the ``effective'' energy for $\ba
 %----------------------------------------------------------------------------------------------------------------------
 Details are given in \cref{appendix:macroEnergy}.
 
-From the analysis $\bar{e}$ is obtained directly as a primary variable. The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
+From the analysis $\bar{e}$ is obtained directly as a primary variable.
+The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \begin{align}
  \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
 \end{align}
@@ -1566,13 +1567,12 @@ Finally, the effective energy at the stationary point becomes
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
 
-From the analysis $\bar{e}$ is obtained directly as a primary variable. The deviatoric stress $\bar{\ts\sigma}_\dev$ can be obtained by post-processing:
+From the analysis $\bar{e}$ is obtained directly as a primary variable.
+The deviatoric stress $\bar{\ts\sigma}_\dev$ can be obtained by post-processing:
 \begin{align}
  \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
 \end{align}
 though in practice, $\bar{\ts\sigma}_\dev$ is obtained as the reaction forces associated with the prescribed $\bar{\ts\epsilon}_\dev$.
-
-\todo{check $\bar{p}$}
 
 
 \textbf{Comment on VCMC??}
@@ -1741,7 +1741,8 @@ Here it is considered as a \emph{model assumption}; however, it is also possible
 
 \textbf{Remark}: The RVE-functional $\bar{\psi}_\rve^\Neumann$ in \cref{eq67a} does not contain $\bar{e}$ as an independent variable; however, it is still possible to compute $\bar{e}$ from its definition.
 
-From the analysis $\bar{\ts\sigma}_\dev$ is obtained directly as a primary variable. The volumetric strain $\bar{e}$ is obtained by post-processing:
+From the analysis $\bar{\ts\sigma}_\dev$ is obtained directly as a primary variable.
+The volumetric strain $\bar{e}$ is obtained by post-processing:
 \begin{align}
  \bar{e} = \homgen{\ta u\cdot\diff} = \frac{1}{\volume} \int_{\Gamma_\rve} \ta u \cdot \ta n\dif S.
 \end{align}
@@ -1897,10 +1898,14 @@ size n_mean n_var
 
 
 \section{Conclusions and outlook}
-In this paper we have ...
+In this paper we have introduced a variationally consistent homogenization scheme for macroscopically incompressible micro structures.
+We have shown the bounds for the periodic SVE by deriving the Dirichlet and Neumann boundary conditions.
+The method is suitable whenever an SVE exhibit near or complete incompressibility, and works seamlessly if an SVE transitions from compressible to incompressible response.
+
+The computational cost of the Neumann boundary condition is equivalent to that of the classical, compressible, Neumann boundary condition.
+The Dirichlet boundary condition requires an additional, global, unknown to relax the volumetric deformation, which has a noticeable computational cost compared to the classical, compressible, Dirichlet boundary condition.
 %\clearpage
 %\printbibliography
-\section{References}
 
 \bibliography{Boundary_representation,Boundary_potentials,Multiscale,FEM_Software,Sintering,Mesh}
 \bibliographystyle{plain}
@@ -2155,12 +2160,11 @@ TA BORT:
 \begin{align}
     \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = 0, \quad
     \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V = \ta{0} \}
-\label{eq28a} \\
+\\
     \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume}\int_{\Omega_\rve} q \dif V = 0 \}
-\label{eq28b} \\
+\\
     \set{T}_\rve^\fluct &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \,| \quad \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S
     = \ta{0} \}
-\label{eq28c}
 \end{align}
 
 \subsection{Sensitivity problem}
@@ -2200,7 +2204,8 @@ These derivatives are obtained by doing computing the homogenized sensitivities 
 \end{align}
 from the perturbed sensitivities fields from the linearized form at equilibrium.
 \todo{show?}
-We need to show that these sensitivities truly are the derivatives. We do so for Dirichlet in paper 2!\textbf{??????}.
+We need to show that these sensitivities truly are the derivatives.
+We do so for Dirichlet in paper 2!\textbf{??????}.
 
 
 \subsubsection{Periodic boundary condition}
@@ -2221,7 +2226,8 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
-which must hold for any given $\dif\bar{\ts\epsilon}_{\dev}$ and $\dif\bar{p}$. We thus consider the cases
+which must hold for any given $\dif\bar{\ts\epsilon}_{\dev}$ and $\dif\bar{p}$.
+We thus consider the cases
 \begin{enumerate}
  \item[1] $\dif\bar{\epsilon}_{\dev,k} = 1$, $\dif\bar{\epsilon}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta u}_\ded^{(k)}$, $\hat{p}_\ded^{(k)}$, $\hat{\ta t}_{\ded}^{(k)}$, $\hat{\bar{e}}_\ded^{(k)}$ from the system 
 \end{enumerate}
@@ -2281,7 +2287,8 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
     & \quad & \forall \delta\tilde{\bar{\ts\sigma}}_\dev &&\in\set{R}^{3\times3}_\dev
 \end{alignat}
 \end{subequations}
-which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. We thus consider the cases
+which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$.
+We thus consider the cases
 \begin{enumerate}
  \item[1] $\dif\bar{\epsilon}_{\dev,k} = 1$, $\dif\bar{\epsilon}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta u}_\ded^{(k)}$, $\hat{p}_\ded^{(k)}$, $\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}$ from the system 
 \end{enumerate}
@@ -2334,7 +2341,8 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
-which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$. We thus consider the cases
+which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$.
+We thus consider the cases
 \begin{enumerate}
  \item[1] $\dif\bar{\epsilon}_{\dev,k} = 1$, $\dif\bar{\epsilon}_{\dev,j} = 0$ for $j\neq k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, n_\mathrm{b}$, solve the sensitivities $\hat{\ta u}_\ded^{\fluct(k)}$, $\hat{p}_\ded^{(k)}$, $\hat{\bar{e}}_{\ded}^{(k)}$ from the system 
 \end{enumerate}
