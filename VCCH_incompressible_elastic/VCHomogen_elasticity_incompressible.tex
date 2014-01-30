@@ -2267,10 +2267,9 @@ We thus consider the cases
 \end{subequations}
 The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, is solved for directly, and the deviatoric stress is post-processed as
 \begin{align}
- \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp \ta n\dif S + \bar{p}\ts I\\
- \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp \ta n\dif S + \bar{p}\ts I
+ \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp [\ta x - \bar{\ta x}]\dif S + \bar{p}\ts I\\
+ \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp [\ta x - \bar{\ta x}]\dif S + \bar{p}\ts I
 \end{align}
-\todo{check $\bar{p}$ here}
 
 
 \subsubsection{Neumann boundary condition}
@@ -2375,8 +2374,8 @@ We thus consider the cases
 \end{subequations}
 The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, is solved for directly, and the deviatoric stress is post-processed as
 \begin{align}
- \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp \ta n\dif S\\
- \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp \ta n\dif S
+ \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp [\ta x-\bar{\ta x}]\dif S\\
+ \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp [\ta x-\bar{\ta x}]\dif S
 \end{align}
 \todo{check}
 
