@@ -2110,13 +2110,13 @@ With the introduced approximation $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}
      \bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \frac{\partial \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev,\bar{p}\}}{\partial \bar{p}}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-where we can explicitly express each component of the macroscale deviatoric stress tensor such that $\bar{\sigma}_{\dev,i} \defeq \bar{\ts\sigma}_\dev \dprod \ts E_{\dev,i}$
+where we can explicitly express each component of the macroscale deviatoric stress tensor such that $\bar{\sigma}_{\dev,i} \defeq \bar{\ts\sigma}_\dev \dprod \ts E_{i}$
 \begin{multline}
   \bar{\sigma}_{\dev,i}\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \underbrace{a_\rve(\ta u; (\ta u)'_{\epsilon_{\dev,i}}) + b_\rve(p, (\ta u)'_{\epsilon_{\dev,i}}) + d_\rve(\ta t, (\ta u)_{\epsilon_{\dev,i}}')}_{=0} + \underbrace{b_\rve((p)_p', \ta u) + c_\rve^*(p; (p)_{\epsilon_{\dev,i}}')}_{=0}
 \\
 + \underbrace{\bar{p}\,(\bar{e})_{\epsilon_{\dev,i}}' - d_\rve(\ta t, (\bar{e})_{\epsilon_{\dev,i}}'\ta x_\mean)}_{=0} + \underbrace{d_\rve((\ta t)_{\epsilon_{\dev,i}}', \ta u - \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] - \bar{e}\,\ta x_\mean)}_{=0}
 \\
- - d_\rve(\ta t, \ts E_{\dev,i}\cdot[\ta x - \bar{\ta x}]_\dev) = - d_\rve(\ta t, \ts E_{\dev,i}\cdot[\ta x - \bar{\ta x}]) = a_\rve(\ta u, \ts E_{\dev,i}\cdot[\ta x - \bar{\ta x}])
+ - d_\rve(\ta t, \ts E_{i}\cdot[\ta x - \bar{\ta x}]_\dev) = - d_\rve(\ta t, \ts E_{i}\cdot[\ta x - \bar{\ta x}]) = a_\rve(\ta u, \ts E_{i}\cdot[\ta x - \bar{\ta x}])
 \end{multline}
 and
 \begin{multline}
@@ -2203,12 +2203,10 @@ These derivatives are obtained by doing computing the homogenized sensitivities 
  \bar{\tf E}_\ded &= \sum_{i,j=1}^{n_\mathrm{b}} \hat{\bar{\sigma}}_{\dev,i,\ded}^{(j)}\;\ts E_i \outerp \ts E_j
 \end{align}
 from the perturbed sensitivities fields from the linearized form at equilibrium.
-\todo{show?}
-We need to show that these sensitivities truly are the derivatives.
-We do so for Dirichlet in paper 2!\textbf{??????}.
 
 
 \subsubsection{Periodic boundary condition}
+\todo{show fields?}
 Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq51} at equilibrium we obtain
 \begin{subequations}
 \begin{alignat}{3}
@@ -2273,6 +2271,7 @@ The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, 
 
 
 \subsubsection{Neumann boundary condition}
+\todo{show fields?}
 Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq67} at equilibrium we obtain
 \begin{subequations}
 \begin{alignat}{3}
@@ -2326,13 +2325,36 @@ The deviatoric stresses, $\hat{\bar{\sigma}}_{\dev,i,\ded}^{(k)}$ and $\hat{\bar
 
 \newpage
 \subsubsection{Dirichlet boundary condition}
+
+Upon using the identity $\bar{\ts\sigma}=\frac{1}{\volume} \int_{\Gamma_\Box} \ts t \outerp [\ta x - \bar{\ta x}]\dif S$, we deduce the component representation
+%---------------------------------------------------------------------------------------
+\begin{align}
+    \dif\bar{\sigma}_{\dev,i}
+    & =
+    \dif\bar{\ts\sigma}\dprod \ts E_i
+    =
+    \dif\left[\frac{1}{\volume} \int_{\Gamma_\Box} \ts t \cdot \ts E_i \cdot [\ta x - \bar{\ta x}]\dif S\right]
+    = (a_\Box)'(\ta{u}; \hat{\ta{u}}^{\macro(i)}_\dev,\dif\ta{u})
+\nonumber \\
+    & =
+    \sum_j \underbrace{(a_\Box)'(\ta{u};\hat{\ta{u}}^{\macro(i)}_\dev,\hat{\ta{u}}^{\macro(j)}_\dev +
+    \hat{\ta{u}}^{\fluct(j)}_\ded)}_{\displaystyle \hat{\bar{\sigma}}_{\dev,i,\ded}^{(j)}}
+    \dif\bar{d}_{\dev,j}
+% Second term
+    + \underbrace{(a_\Box)'(\ta{u};\hat{\ta{u}}^{\macro(i)}_\dev, \hat{\ta{u}}^{\fluct}_\dep)}_{\displaystyle \hat{\bar{\sigma}}_{\dev,i,\dep}}
+    \dif\bar{p}.
+    \label{eq219}
+\end{align}
+%---------------------------------------------------------------------------------------
+where $\hat{\ta u}^{\macro(i)}_\dev = \ts E_i \cdot[\ta x - \bar{\ta x}]$.
+
 Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq:weak_form_dirichlet} at equilibrium we obtain
 \begin{subequations}
 \begin{alignat}{3}
-    (a_\rve)'(\dif\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct, \Delta\ta{u}^\fluct) + b_\rve(\Delta p,\delta\ta{u}^\fluct) &= 0
+    (a_\rve)'(\ta u;\delta\ta{u}^\fluct, \dif \bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}] + \Delta\ta{u}^\fluct) + b_\rve(\Delta p, \delta\ta{u}^\fluct) &= 0
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,0}
 \\
-    b_\rve(\delta p,\Delta\ta{u}^\fluct) + b_\rve(\delta p,\Delta\bar{e}\,\ta{x}_\mean) + (c^*_\rve)'(p;\delta p,\Delta p) &= 0
+    b_\rve(\delta p,\Delta\ta{u}^\fluct + \Delta\bar{e}\,\ta{x}_\mean) + (c^*_\rve)'(p;\delta p,\Delta p) &= 0
     &\quad& \forall \delta p &&\in \set{P}_\rve
 \\
     b_\rve(\Delta p,\delta\bar{e}\,\ta{x}_\mean) &=
@@ -2347,10 +2369,10 @@ We thus consider the cases
 \end{enumerate}
 \begin{subequations}\label{eq:d_sensitivities_d}
 \begin{alignat}{3}
-    (a_\rve)'(\ts E_k\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct, \hat{\ta u}_\ded^{\fluct(k)}) + b_\rve(\hat{p}_\ded^{(k)},\delta\ta{u}^\fluct) &= 0
+    (a_\rve)'(\ta{u};\delta\ta{u}^\fluct, \hat{\ta u}_\ded^{\fluct(k)}) + b_\rve(\hat{p}_\ded^{(k)},\delta\ta{u}^\fluct) &= -(a_\rve)'(\ta{u};\delta\ta{u}^\fluct, \hat{\ta{u}}^{\macro(k)}_\dev)
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,0}
 \\
-    b_\rve(\delta p,\hat{\ta u}_\ded^{\fluct(k)}) + b_\rve(\delta p,\hat{\bar{e}}_{\ded}^{(k)}\,\ta{x}_\mean) + (c^*_\rve)'(p;\delta p,\hat{p}_\ded^{(k)}) &= 0
+    b_\rve(\delta p,\hat{\ta u}_\ded^{\fluct(k)} + \hat{\bar{e}}_{\ded}^{(k)}\,\ta{x}_\mean) + (c^*_\rve)'(p;\delta p,\hat{p}_\ded^{(k)}) &= 0
     &\quad& \forall \delta p &&\in \set{P}_\rve
 \\
     b_\rve(\Delta p,\delta\bar{e}\,\ta{x}_\mean) &= 0
@@ -2362,7 +2384,7 @@ We thus consider the cases
 \end{enumerate}
 \begin{subequations}\label{eq:d_sensitivities_p}
 \begin{alignat}{3}
-    (a_\rve)'(\ta{u}^\fluct;\delta\ta{u}^\fluct, \hat{\ta u}_\dep^\fluct) + b_\rve(\hat{p}_\dep,\delta\ta{u}^\fluct) &= 0
+    (a_\rve)'(\ta{u}^\macro + \ta{u}^\fluct;\delta\ta{u}^\fluct, \hat{\ta u}_\dep^\fluct) + b_\rve(\hat{p}_\dep,\delta\ta{u}^\fluct) &= 0
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,0}
 \\
     b_\rve(\delta p,\hat{\ta u}_\dep^\fluct) + b_\rve(\delta p,\hat{\bar e}_{\dep}\,\ta{x}_\mean) + (c^*_\rve)'(p;\delta p,\hat{p}_\dep) &= 0
@@ -2372,11 +2394,10 @@ We thus consider the cases
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
-The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, is solved for directly, and the deviatoric stress is post-processed as
-\begin{align}
- \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp [\ta x-\bar{\ta x}]\dif S\\
- \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp [\ta x-\bar{\ta x}]\dif S
-\end{align}
-\todo{check}
+% The volumetric strain, $\hat{\bar{e}}_{\ded}^{(k)}$ and $\hat{\bar{e}}_{\dep}$, is solved for directly, and the deviatoric stress is post-processed as
+% \begin{align}
+%  \hat{\bar{\ts\sigma}}_{\dev,\ded}^{(k)} &=  \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\ded}^{(k)} \outerp [\ta x-\bar{\ta x}]\dif S\\
+%  \hat{\bar{\ts\sigma}}_{\dev,\dep} &= \frac{1}{\volume} \int_{\Gamma_\rve} \hat{\ta t}_{\dep} \outerp [\ta x-\bar{\ta x}]\dif S
+% \end{align}
 
 \end{document}
