@@ -784,7 +784,7 @@ A weak statement of the micro-periodicity constraint, given in strong form in \c
 where the space of test functions that ``live'' only on the image boundary $\Gamma_\rve^+$ is given as:
 %----------------------------------------------------------------------------
 \begin{equation}
-    \set{T}_\rve = \{\ta{t}\in [L_2(\Gamma_\rve^+)]^{3}\}
+    \set{T}_\rve = [L_2(\Gamma_\rve^+)]^{3}
 \label{eq25a}
 \end{equation}
 %----------------------------------------------------------------------------
@@ -809,7 +809,7 @@ whereby the constraint \cref{eq26} is expressed as
 In order to establish the most straightforward formulation of the RVE-problem, based on micro-periodicity, we introduce the following spaces for the fluctuation fields:
 %----------------------------------------------------------------------------
 \begin{align}
-    \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = 0, \quad
+    \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
     \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V = \ta{0} \}
 \label{eq28a} \\
     \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume}\int_{\Omega_\rve} q \dif V = 0 \}
@@ -2155,58 +2155,60 @@ where we have used the equilibrium state in \cref{eq:rveStat} by choosing the te
 % \\
 %  \set R^{3\times3} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} \ta s \outerp \jmp{\ta x - \bar{\ta x}} \dif S \,|\quad \ta s \in [L_2(\Gamma_\rve^+)]^3 \}
 % \end{align} 
-We can rewrite the sets
+We can rewrite the function spaces for the macroscopic parts as
 \begin{align}
-\{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} &= \{ \ts s \,|\quad \}
+R^3 &= \{ \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta v \dif S \,|\quad \ta v \in [H^1(\Omega_\rve)]^3 \}
 \\
-\{ \ta u \,|\quad \ta u \in \set R^3\} &= \{ \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta v \dif S \,|\quad \ta v \in [H^1(\Omega_\rve)]^3 \}
+\{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} &= \{ \frac{1}{\volume}\int_{\Omega_\rve} \ta v \outerp \diff \dif V \cdot [\ta x - \bar{\ta x}] \,|\quad \ta v \in H^1(\Omega_\rve)]^{3}  \}
 \\
-\{ p \,|\quad p\in \set{R}\} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} q \dif V \,|\quad q \in L_2(\Omega_\rve) \}
+\set{R} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} q \dif V \,|\quad q \in L_2(\Omega_\rve) \}
 \\
-\{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\} &= \{ \,|\quad \}
+\{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\} &= \{ \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S\cdot \ta n \,|\quad \ta{s}\in [L_2(\Gamma_\rve^+)]^{3}  \}
 \end{align}
-and it follows that
-% Orthogonality of the constant parts and the fluctuation spaces $\set{U}_\rve^\fluct$, $\set{T}_\rve^\fluct$, $\set{P}_\rve^\fluct$.
-% ???????
-% In \cref{eq28c} $\set{T}_\rve^\fluct$ has a restriction $\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ta{0}$ and we can directly see that $\ta s = \ts\tau \cdot \ta n$ leads to $\ts\tau\cdot \int_{\Gamma_\rve^+} \ta n \outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ts\tau$.
-% It remains to show that the same function spaces are spanned, i.e.
+and the fluctuations as
 \begin{align}
-\set{U}_\rve &= \set{U}_\rve^\fluct \cup \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\}  \cup \{ \ta u \,|\quad \ta u = \set R^3\}
+  \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
+    \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V = \ta{0} \}
+\nonumber\\
+      &= \{\ta v - \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S - \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V\cdot [\ta x - \bar{\ta x}]\,|\quad \ta{v} \in [H^1(\Omega_\rve)]^{3} \}
 \\
-\set{P}_\rve &= \set{P}_\rve^\fluct \cup \{ p \,|\quad p\in \set{R}\}
+  \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume}\int_{\Omega_\rve} q \dif V = 0 \}
+\nonumber\\
+      &= \{ q - \frac{1}{\volume}\int_{\Omega_\rve} q \dif V  \,| \quad q\in L_2(\Omega_\rve)\}
 \\
-\set{T}_\rve &= \set{T}_\rve^\fluct \cup \{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\}
+  \set{T}_\rve^\fluct &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \,| \quad \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ta{0} \}
+\nonumber\\
+      &= \{\ta s - \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S\cdot \ta n \,|\quad \ta{s}\in [L_2(\Gamma_\rve^+)]^{3}\}
 \end{align}
-and that
+by combining these, it follows that
+\begin{align}
+[H^1(\Omega_\rve)]^{3} &= \set{U}_\rve^\fluct \oplus \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\}  \oplus \set R^3
+\\
+L_2(\Omega_\rve) &= \set{P}_\rve^\fluct \oplus \set{R}
+\\
+[L_2(\Gamma_\rve^+)]^{3} &= \set{T}_\rve^\fluct \oplus \{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\}
+\end{align}
+and
 \begin{align}
 \{\ta 0\} &= \set{U}_\rve^\fluct \cap \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\}
 \\
-\{\ta 0\} &= \set{U}_\rve^\fluct \cap \{ \ta u \,|\quad \ta u = \set R^3\}
+\{\ta 0\} &= \set{U}_\rve^\fluct \cap \set R^3
 \\
-\{\ta 0\} &= \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} \cap \{ \ta u \,|\quad \ta u = \set R^3\}
+\{\ta 0\} &= \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} \cap \set R^3
 \\
-\{0\} &= \set{P}_\rve^\fluct \cap \{ p \,|\quad p\in \set{R}\}
+\{0\} &= \set{P}_\rve^\fluct \cap \set{R}
 \\
 \{\ta 0\} &= \set{T}_\rve^\fluct \cap \{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\}
 \end{align}
 
-To be removed:
-\begin{align}
-    \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = 0, \quad
-    \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V = \ta{0} \}
-\\
-    \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume}\int_{\Omega_\rve} q \dif V = 0 \}
-\\
-    \set{T}_\rve^\fluct &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \,| \quad \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S
-    = \ta{0} \}
-\end{align}
-\begin{align}
-    \set{U}_\rve &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = 0 \}
-\\
-    \set{P}_\rve &= \{q\in L_2(\Omega_\rve) \}
-\\
-    \set{T}_\rve &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \}
-\end{align}
+% To be removed (just to remember the definitions):
+% \begin{align}
+%     \set{U}_\rve &= [H^1(\Omega_\rve)]^{3}
+% \\
+%     \set{P}_\rve &= L_2(\Omega_\rve)
+% \\
+%     \set{T}_\rve &= [L_2(\Gamma_\rve^+)]^{3}
+% \end{align}
 
 
 \newpage
