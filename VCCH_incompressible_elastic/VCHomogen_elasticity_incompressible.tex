@@ -2145,34 +2145,50 @@ where we have used the equilibrium state in \cref{eq:rveStat} by choosing the te
 \newpage
 \subsection{Unique decomposition}
 \label{appendix:unique_decomposition}
-Using the identities
+% Using the identities
+% \begin{align}
+%  \set R^{3\times3} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} \ta v \outerp \diff \dif V \,|\quad \ta v \in[H^1(\Omega_\rve)]^3 \}
+% \\
+%  \set R^3 &= \{ \frac{1}{\volume} \int_{\Gamma_\rve} \ta v \dif V \,|\quad \ta v \in L_2(\Omega_\rve) \}
+% \\
+%  \set R &= \{ \frac{1}{\volume} \int_{\Omega_\rve} q \dif V \,|\quad q \in L_2(\Omega_\rve) \}
+% \\
+%  \set R^{3\times3} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} \ta s \outerp \jmp{\ta x - \bar{\ta x}} \dif S \,|\quad \ta s \in [L_2(\Gamma_\rve^+)]^3 \}
+% \end{align} 
+We can rewrite the sets
 \begin{align}
- \set R^{3\times3} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} \ta v \outerp \diff \dif V \,|\quad \ta v \in[H^1(\Omega_\rve)]^3 \}
+\{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} &= \{ \ts s \,|\quad \}
 \\
- \set R^3 &= \{ \frac{1}{\volume} \int_{\Gamma_\rve} \ta v \dif V \,|\quad \ta v \in L_2(\Omega_\rve) \}
+\{ \ta u \,|\quad \ta u \in \set R^3\} &= \{ \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta v \dif S \,|\quad \ta v \in [H^1(\Omega_\rve)]^3 \}
 \\
- \set R &= \{ \frac{1}{\volume} \int_{\Omega_\rve} q \dif V \,|\quad q \in L_2(\Omega_\rve) \}
+\{ p \,|\quad p\in \set{R}\} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} q \dif V \,|\quad q \in L_2(\Omega_\rve) \}
 \\
- \set R^{3\times3} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} \ta s \outerp \jmp{\ta x - \bar{\ta x}} \dif S \,|\quad \ta s \in [L_2(\Gamma_\rve^+)]^3 \}
+\{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\} &= \{ \,|\quad \}
 \end{align}
-we can obtain
-\begin{align}
- 
-\end{align}
-
-
+and it follows that
 % Orthogonality of the constant parts and the fluctuation spaces $\set{U}_\rve^\fluct$, $\set{T}_\rve^\fluct$, $\set{P}_\rve^\fluct$.
 % ???????
 % In \cref{eq28c} $\set{T}_\rve^\fluct$ has a restriction $\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ta{0}$ and we can directly see that $\ta s = \ts\tau \cdot \ta n$ leads to $\ts\tau\cdot \int_{\Gamma_\rve^+} \ta n \outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ts\tau$.
 % It remains to show that the same function spaces are spanned, i.e.
 \begin{align}
-\set{U}_\rve &= \set{U}_\rve^\fluct \cup \{ \ta u = \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\}
+\set{U}_\rve &= \set{U}_\rve^\fluct \cup \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\}  \cup \{ \ta u \,|\quad \ta u = \set R^3\}
 \\
-\set{P}_\rve &= \set{P}_\rve^\fluct \cup \{ p = q \,|\quad q\in \set{R}\}
+\set{P}_\rve &= \set{P}_\rve^\fluct \cup \{ p \,|\quad p\in \set{R}\}
 \\
-\set{T}_\rve &= \set{T}_\rve^\fluct \cup \{ \ta s = \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\}
+\set{T}_\rve &= \set{T}_\rve^\fluct \cup \{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\}
 \end{align}
-
+and that
+\begin{align}
+\{\ta 0\} &= \set{U}_\rve^\fluct \cap \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\}
+\\
+\{\ta 0\} &= \set{U}_\rve^\fluct \cap \{ \ta u \,|\quad \ta u = \set R^3\}
+\\
+\{\ta 0\} &= \{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} \cap \{ \ta u \,|\quad \ta u = \set R^3\}
+\\
+\{0\} &= \set{P}_\rve^\fluct \cap \{ p \,|\quad p\in \set{R}\}
+\\
+\{\ta 0\} &= \set{T}_\rve^\fluct \cap \{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\}
+\end{align}
 
 To be removed:
 \begin{align}
