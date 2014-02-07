@@ -936,8 +936,46 @@ It is only when the macroscale solution represents incompressible response, i.e.
 In conclusion, the RVE-problem is able to provide an ``incompressible solution'' even in the case that the macroscale solution represents compressible response.
 This anomaly is the main motivation for establishing an alternative format of the problem, which is discussed next. $\Box$
 
-\todo{fix}
-Macro-homogeneity condition satisfied, since $R(\bullet;\delta\ta u^\fluct, \delta p^\fluct, \delta\ta t^\fluct) = 0$.
+\subsubsection{Macro homogeneity condition}
+The macro homogeneity condition requires that $R(z, (z^\fluct)'\{z^\macro;\delta z^\macro\}) = 0$, which in this problem will be expanded to
+\begin{subequations}\label{eq:macro_homogeneity_original}
+\begin{alignat}{3}
+    a_\rve(\ta u^\macro+\ta{u}^\fluct;\delta\ta{u}^\fluct) +
+    b_\rve(p^\macro+p^\fluct,\delta\ta{u}^\fluct) &= 0
+    &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro)
+\\
+    b_\rve(\delta p^\fluct,\delta\ta{u}^\fluct) + c^*_\rve(p^\macro+p^\fluct;\delta p^\fluct) &= 0
+    &\quad& \forall \delta p^\fluct &&\in \set{P}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro)
+\end{alignat}
+\end{subequations}
+where we identify that
+\begin{subequations}\label{eq:UP_subset}
+\begin{align}
+ \set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro) \subseteq \set{U}_\rve^\fluct
+\\
+ \set{P}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro) \subseteq \set{P}_\rve^\fluct
+\end{align}
+\end{subequations}
+The tangent problem at equilibrium with a perturbation of the macroscopic fields $\ta u^\macro$ and $p^\macro$
+\begin{subequations}
+\begin{alignat}{3}
+    (a_\rve)'(\ta u^\macro + \ta{u}^\fluct;\delta\ta{u}^\fluct, \dif \ta u^\macro + \dif\ta {u}^\fluct) +
+    b_\rve(\dif p^\macro+\dif p^\fluct,\delta\ta{u}^\fluct) +
+    d_\rve(\dif \ta{t}^\fluct,\delta\ta{u}^\fluct) &= 0
+    &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^\fluct
+\\
+    b_\rve(\delta p^\fluct,\dif \ta{u}^\fluct) + (c^*_\rve)'(\bar{p}+p^\fluct;\delta p^\fluct, \dif p^\macro + \dif p^\fluct) &= 0
+    &\quad& \forall \delta p^\fluct &&\in \set{P}_\rve^\fluct
+\\
+    d_\rve(\delta\ta{t}^\fluct,\dif\ta{u}^\fluct) &= 0
+    &\quad& \forall \delta t^\fluct &&\in \set{T}_\rve^\fluct
+\label{eq:vanishing_traction}
+\end{alignat}
+\end{subequations}
+where the sensitivity field $(\ta u^\fluct)'\{\ta u^\macro, p^\macro;\delta \ta u^\macro, \delta p^\macro\}$ is defined as the solution to be the solution $\dif\ta u^\fluct$.
+Upon combining \cref{eq:UP_subset} and \cref{eq:vanishing_traction} with \cref{eq31} we can see that \cref{eq:macro_homogeneity_original} is fulfilled.
+
+
 
 %\subsection{RVE-problem -- Consistent weak format of type I}
 %
@@ -2157,28 +2195,28 @@ where we have used the equilibrium state in \cref{eq:rveStat} by choosing the te
 % \end{align} 
 We can rewrite the function spaces for the macroscopic parts as
 \begin{align}
-R^3 &= \{ \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta v \dif S \,|\quad \ta v \in [H^1(\Omega_\rve)]^3 \}
+\set R^3 &= \{ \bar{v} \,|\quad \bar{q} = \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta v \dif S,\quad \ta v \in [H^1(\Omega_\rve)]^3 \}
 \\
-\{ \ts H \cdot [\ta x - \bar{\ta x}] \,|\quad \ts H \in \set{R}^{3\times 3}\} &= \{ \frac{1}{\volume}\int_{\Omega_\rve} \ta v \outerp \diff \dif V \cdot [\ta x - \bar{\ta x}] \,|\quad \ta v \in [H^1(\Omega_\rve)]^{3}  \}
+\set{R}^{3\times 3} &= \{ \bar{\ts H} \,|\quad \bar{\ts H} = \frac{1}{\volume}\int_{\Omega_\rve} \ta v \outerp \diff \dif V \cdot [\ta x - \bar{\ta x}], \quad \ta v \in [H^1(\Omega_\rve)]^{3}  \}
 \\
-\set{R} &= \{ \frac{1}{\volume} \int_{\Omega_\rve} q \dif V \,|\quad q \in L_2(\Omega_\rve) \}
+\set{R} &= \{ \bar{q} \,|\quad \bar{q} = \frac{1}{\volume} \int_{\Omega_\rve} q \dif V, \quad q \in L_2(\Omega_\rve) \}
 \\
-\{ \ts \tau \cdot \ta n \,|\quad \ts\tau \in \set{R}^{3\times 3}\} &= \{ \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S\cdot \ta n \,|\quad \ta{s}\in [L_2(\Gamma_\rve^+)]^{3}  \}
+\set{R}^{3\times 3} &= \{ \bar{\ts\tau} \,|\quad \bar{\ts\tau} = \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S\cdot \ta n, \quad \ta{s}\in [L_2(\Gamma_\rve^+)]^{3}  \}
 \end{align}
 and the fluctuations as
 \begin{align}
   \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
-    \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V = \ta{0} \}
+    \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V = \ts{0} \}
 \nonumber\\
-      &= \{\ta v - \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S - \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V\cdot [\ta x - \bar{\ta x}]\,|\quad \ta{v} \in [H^1(\Omega_\rve)]^{3} \}
+      &= \{\ta v^\fluct \,|\quad \ta v^\fluct = \ta v - \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S - \frac{1}{\volume}\int_{\Omega_\rve} \ta{v}\outerp\diff \dif V\cdot [\ta x - \bar{\ta x}], \quad \ta{v} \in [H^1(\Omega_\rve)]^{3} \}
 \\
   \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume}\int_{\Omega_\rve} q \dif V = 0 \}
 \nonumber\\
-      &= \{ q - \frac{1}{\volume}\int_{\Omega_\rve} q \dif V  \,| \quad q\in L_2(\Omega_\rve)\}
+      &= \{ q^\fluct \,|\quad q^\fluct = q - \frac{1}{\volume}\int_{\Omega_\rve} q \dif V, \quad q\in L_2(\Omega_\rve)\}
 \\
   \set{T}_\rve^\fluct &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \,| \quad \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ta{0} \}
 \nonumber\\
-      &= \{\ta s - \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S\cdot \ta n \,|\quad \ta{s}\in [L_2(\Gamma_\rve^+)]^{3}\}
+      &= \{\ta s^\fluct \,|\quad \ta s^\fluct = \ta s - \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S\cdot \ta n, \quad \ta{s}\in [L_2(\Gamma_\rve^+)]^{3}\}
 \end{align}
 by combining these, it follows that
 \begin{align}
