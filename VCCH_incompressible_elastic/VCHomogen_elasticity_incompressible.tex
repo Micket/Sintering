@@ -936,8 +936,9 @@ It is only when the macroscale solution represents incompressible response, i.e.
 In conclusion, the RVE-problem is able to provide an ``incompressible solution'' even in the case that the macroscale solution represents compressible response.
 This anomaly is the main motivation for establishing an alternative format of the problem, which is discussed next. $\Box$
 
-\subsubsection{Macro homogeneity condition}
-The macro homogeneity condition requires that $R(z, (z^\fluct)'\{z^\macro;\delta z^\macro\}) = 0$, which in this problem will be expanded to
+\subsubsection{Macro-homogeneity condition}
+\todo{new}
+As shown in appendix \cref{appendix:1}, the VCMC is satisfied is $R_\rve(z, (z^\fluct)'\{z^\macro;\delta z^\macro\}) = 0$. In this case, the VCMC is
 \begin{subequations}\label{eq:macro_homogeneity_original}
 \begin{alignat}{3}
     a_\rve(\ta u^\macro+\ta{u}^\fluct;\delta\ta{u}^\fluct) +
@@ -948,7 +949,7 @@ The macro homogeneity condition requires that $R(z, (z^\fluct)'\{z^\macro;\delta
     &\quad& \forall \delta p^\fluct &&\in \set{P}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro)
 \end{alignat}
 \end{subequations}
-where we identify that
+In order to show that this condition indeed is satisfied, we start by identifying that
 \begin{subequations}\label{eq:UP_subset}
 \begin{align}
  \set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro) \subseteq \set{U}_\rve^\fluct
@@ -956,7 +957,7 @@ where we identify that
  \set{P}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro) \subseteq \set{P}_\rve^\fluct
 \end{align}
 \end{subequations}
-The tangent problem at equilibrium with a perturbation of the macroscopic fields $\ta u^\macro$ and $p^\macro$
+We will also need to make use the tangent problem of \cref{eq31} at equilibrium with a perturbation of the macroscopic fields $\ta u^\macro$ and $p^\macro$ which yields
 \begin{subequations}
 \begin{alignat}{3}
     (a_\rve)'(\ta u^\macro + \ta{u}^\fluct;\delta\ta{u}^\fluct, \dif \ta u^\macro + \dif\ta {u}^\fluct) +
@@ -972,8 +973,9 @@ The tangent problem at equilibrium with a perturbation of the macroscopic fields
 \label{eq:vanishing_traction}
 \end{alignat}
 \end{subequations}
-where the sensitivity field $(\ta u^\fluct)'\{\ta u^\macro, p^\macro;\delta \ta u^\macro, \delta p^\macro\}$ is defined as the solution to be the solution $\dif\ta u^\fluct$.
-Upon combining \cref{eq:UP_subset} and \cref{eq:vanishing_traction} with \cref{eq31} we can see that \cref{eq:macro_homogeneity_original} is fulfilled.
+where the sensitivity field $(\ta u^\fluct)'\{\ta u^\macro, p^\macro;\delta \ta u^\macro, \delta p^\macro\}$ is defined as the solutions $\dif\ta u^\fluct$.
+Note that \cref{eq31} also implies that $d_\rve(\ta t^\fluct, \dif \ta u^\fluct) = 0$.
+Upon combining \cref{eq:UP_subset} and \cref{eq:vanishing_traction} with \cref{eq31} we can see that \cref{eq:macro_homogeneity_original} is fulfilled and thus the VCMC is satisfied.
 
 
 
@@ -1067,6 +1069,10 @@ Secondly, the fine-scale fields within an RVE are decomposed as
 \end{subequations}
 %----------------------------------------------------------------------------
 where $\ta{x}_\mean\defeq\frac{1}{3}[\ta{x}-\bar{\ta{x}}]$, and where $\bar{e}$ is an additional scalar quantity which, at the outset, does not depend on the macroscale field(s).
+
+\textbf{Remark}: The rigid body motion $\bar{\ta u}$ will not influence the homogenized variables so it has been subtracted, but for simplicity and brevity the notation for the displacement is kept as $\ta u$ and the corresponding solution space is denoted $\set U_\rve$.
+\todo{new}
+
 
 We are now in the position to establish the alternative, subsequently denoted \emph{canonical}, formulation of the RVE-problem as follows: For given values $\bar{\ts\epsilon}_\dev$, $ \bar{p}$, that represent the macroscale fields (which solve the macroscale problem), find the subscale fields ($\ta{u},p,\ta{t},\bar{e})\in\set{U}_\rve\times\set{P}_\rve\times\set{T}_\rve\times\set{R}$ that solve the system
 %%----------------------------------------------------------------------------
@@ -1667,27 +1673,6 @@ where
 \label{eq96b}
 \end{multline}
 %----------------------------------------------------------------------------------------------------------------------
-Upon introducing the auxiliary variational form $d'_\rve$ via the identity
-%----------------------------------------------------------------------------
-\begin{equation}
-    d'_\rve(\bar{\ts\tau},\ta{v}) \defeq  d_\rve(\bar{\ts\tau}\cdot\ta{n},\ta{v}) =
-%    \hat{\bar{\ts\tau}} : \homgen{ \ts{\epsilon} }
-    - \bar{\ts\tau} : \frac{1}{\volume}\int_{\Gamma_\rve^+} \jmp{\ta{v}}\outerp\ta{n} \dif S
-\label{eq66}
-\end{equation}
-%----------------------------------------------------------------------------
-for $\bar{\ts\tau}\in\set{R}^{3\times3}$, we may rephrase \cref{eq96b} as
-%----------------------------------------------------------------------------------------------------------------
-\begin{multline}
-    \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\left[\tilde{\bar{\ts\sigma}}_\dev-\tilde{\bar{p}}\ts{I}\right]\cdot\ta{n},\hat{\bar{e}})
-    =
-\\
-    \Lambda_\rve(\hat{\ta{u}},\hat{p}) + \bar{p}\,\hat{\bar{e}} +
-    d'_\rve(\tilde{\bar{\ts\sigma}}_\dev-\tilde{\bar{p}}\ts{I},\hat{\ta{u}}-\bar{\ts\epsilon}_\dev\cdot
-    [\ta{x}-\bar{\ta{x}}]-\hat{\bar{e}}\,\ta{x}_\mean)
-\label{eq96c}
-\end{multline}
-%----------------------------------------------------------------------------------------------------------------------
 The only possibility to obtain a finite value of $\bar{\psi}_\rve^\Neumann$ while evaluating the $\inf$ over $\hat{\bar{e}}\in\set{R}$ is to set
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
@@ -1718,7 +1703,7 @@ where
 \begin{equation}
     \Pi_\rve^\Neumann(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\tilde{\bar{\ts\sigma}}_\dev)
     = \Lambda_\rve(\hat{\ta{u}},\hat{p}) +
-    d'_\rve(\tilde{\bar{\ts\sigma}}_\dev-\bar{p}\ts{I},\hat{\ta{u}}-\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}])
+    d_\rve(\tilde{[\bar{\ts\sigma}}_\dev-\bar{p}\ts{I}]\cdot\ta n,\hat{\ta{u}}-\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}])
 \label{eq98b}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
@@ -1739,10 +1724,11 @@ A stationary point of $\Pi_\rve^\Neumann$ is defined by the relations
 \end{subequations}
 %----------------------------------------------------------------------------
 and this system of equations takes the explicit form: For given values $\bar{\ts\epsilon}_\dev, \bar{p}$, find the subscale fields $\ta{u},p,\tilde{\bar{\ts\sigma}}_\dev\in\set{U}_\rve\times\set{P}_\rve\times\set{R}^{3\times 3}_\dev$ that solve the system
+\todo{new}
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq67}
 \begin{alignat}{3}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) +  d'_\rve(\tilde{\bar{\ts\sigma}}_\dev,\delta\ta{u}) &= - \bar{p}\,\homgen{\delta\ta{u}\cdot\diff }
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) +  d_\rve(\tilde{\bar{\ts\sigma}}_\dev\cdot,\delta\ta{u}) &= d_\rve(\bar{p}\,\ta n,\delta\ta u)
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
 \label{eq67a} \\
     b_\rve(\delta p,\ta{u}) + c^*_\rve(p;\delta p) &= 0
@@ -1754,14 +1740,6 @@ and this system of equations takes the explicit form: For given values $\bar{\ts
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------
-In order to obtain the RHS of \cref{eq67a}, we used the identity
-%----------------------------------------------------------------------------
-\begin{equation}
-    d'_\rve(\ts{I},\delta\ta{u}) = - \frac{1}{\volume}\int_{\Gamma_\rve} \delta\ta{u}\outerp\ta{n} \dif S =
-    \homgen{\delta\ta{u}\cdot\diff }
-\label{eq68}
-\end{equation}
-%---------------------------------------------------------------------------
 Finally, we obtain the effective energy density as
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
@@ -1965,6 +1943,7 @@ The Dirichlet boundary condition requires an additional, global, unknown to rela
 \section{Appendix}
 
 \subsection{Variationally Consistent Homogenization (VCH)}
+\label{appendix:1}
 
 \textbf{Skriv om utg\aa{}ende fr\aa{}n paper Statistical Bounds ...}
 
@@ -2182,6 +2161,7 @@ where we have used the equilibrium state in \cref{eq:rveStat} by choosing the te
 
 \newpage
 \subsection{Unique decomposition}
+\todo{new}
 \label{appendix:unique_decomposition}
 % Using the identities
 % \begin{align}
@@ -2379,15 +2359,16 @@ For the sensitivities of the volumetric strain, we have
 \end{align}
 
 Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}$ and $\bar{p} + \dif\bar{p}$ in the linearized form of \cref{eq67} at equilibrium we obtain
+\todo{new}
 \begin{subequations}
 \begin{alignat}{3}
-    (a_\rve)'(\ta{u};\delta\ta{u}, \Delta\ta u) + b_\rve(\Delta p,\delta\ta{u}) +  d'_\rve(\Delta\bar{\ts\sigma}_\dev,\delta\ta{u}) &= - \dif\bar{p}\,\homgen{\delta\ta{u}\cdot\diff }
+    (a_\rve)'(\ta{u};\delta\ta{u}, \Delta\ta u) + b_\rve(\Delta p,\delta\ta{u}) +  d_\rve(\Delta\bar{\ts\sigma}_\dev\cdot\ta n,\delta\ta{u}) &= d_\rve(\dif\bar{p}\,\ta n, \delta\ta u)
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
 \\
     b_\rve(\delta p,\Delta\ta{u}) + (c^*_\rve)'(p;\delta p, \Delta p) &= 0
     & \quad & \forall \delta p &&\in \set{P}_\rve
 \\
-    d'_\rve(\delta\bar{\ts\sigma}_\dev,\Delta\ta{u}) &= - \dif\bar{\ts\epsilon}_\dev\dprod\delta\bar{\ts\sigma}_\dev
+    d_\rve(\delta\bar{\ts\sigma}_\dev\cdot\ta n,\Delta\ta{u}) &= - \dif\bar{\ts\epsilon}_\dev\dprod\delta\bar{\ts\sigma}_\dev
     & \quad & \forall \delta\bar{\ts\sigma}_\dev &&\in\set{R}^{3\times3}_\dev
 \end{alignat}
 \end{subequations}
@@ -2398,13 +2379,13 @@ We thus consider the cases
 \end{itemize}
 \begin{subequations}\label{eq:n_sensitivities_d}
 \begin{alignat}{3}
-    (a_\rve)'(\ta{u};\delta\ta{u}, \ta u_\dev^{(k)}) + b_\rve(p_\dev^{(k)},\delta\ta{u}) +  d'_\rve(\bar{\sigma}_{\dev,i,\dev}^{(k)}\ts E_i,\delta\ta{u}) &= 0
+    (a_\rve)'(\ta{u};\delta\ta{u}, \ta u_\dev^{(k)}) + b_\rve(p_\dev^{(k)},\delta\ta{u}) +  d_\rve(\bar{\sigma}_{\dev,i,\dev}^{(k)}\ts E_i\cdot\ta n,\delta\ta{u}) &= 0
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
 \\
     b_\rve(\delta p,\ta u_\dev^{(k)}) + (c^*_\rve)'(p;\delta p, p_\dev^{(k)}) &= 0
     & \quad & \forall \delta p &&\in \set{P}_\rve
 \\
-    d'_\rve(\delta\bar{\sigma}_{\dev,i} \ts E_i,\ta u_\dev^{(k)}) &= - \delta_{ik}\;\delta\bar{\sigma}_{\dev,i}
+    d_\rve(\delta\bar{\sigma}_{\dev,i} \ts E_i\cdot\ta n,\ta u_\dev^{(k)}) &= - \delta_{ik}\;\delta\bar{\sigma}_{\dev,i}
     & \quad & \forall \delta\bar{\sigma}_{\dev,i} &&\in\set{R}
 \end{alignat}
 \end{subequations}
@@ -2413,13 +2394,13 @@ We thus consider the cases
 \end{itemize}
 \begin{subequations}\label{eq:n_sensitivities_p}
 \begin{alignat}{3}
-    (a_\rve)'(\ta{u};\delta\ta{u}, \ta u_\dep) + b_\rve(p_\dep,\delta\ta{u}) +  d'_\rve(\bar\sigma_{\dev,i,\dep}\ts E_i,\delta\ta{u}) &= -\homgen{\delta\ta{u}\cdot\diff }
+    (a_\rve)'(\ta{u};\delta\ta{u}, \ta u_\dep) + b_\rve(p_\dep,\delta\ta{u}) +  d_\rve(\bar\sigma_{\dev,i,\dep}\ts E_i\cdot\ta n,\delta\ta{u}) &= d_\rve(\ta n, \delta\ta u)
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
 \\
     b_\rve(\delta p,\ta u_\dep) + (c^*_\rve)'(p;\delta p, p_\dep) &= 0
     & \quad & \forall \delta p &&\in \set{P}_\rve
 \\
-    d'_\rve(\delta\bar{\sigma}_{\dev,i}\ts E_i,\ta u_\dep) &= 0
+    d_\rve(\delta\bar{\sigma}_{\dev,i}\ts E_i\cdot\ta n,\ta u_\dep) &= 0
     & \quad & \forall \delta\bar{\sigma}_{\dev,i} &&\in\set{R}
 \end{alignat}
 \end{subequations}
