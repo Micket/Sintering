@@ -19,7 +19,7 @@
  \draw[] (-0.654469, -0.611173) -- (0.388827, -0.345531) -- (0.654469, 0.611173) -- (-0.388827, 0.345531) -- (-0.654469, -0.611173);
  \node (A) at (0,2.5) {$\bar{\ta u}, \bar{\ts h}, \bar p$};
  \node (B) at (0,1.5) {$\bar{\ts \epsilon}_\dev = \bar{\ts h}_\dev^\sym, \bar{p}$};
- \node[anchor=west] at (1.5,1.5) {($\bar{\ts h^\skw}, \bar{h}_\vol, \bar{\ta u}$ are void)};
+ \node[anchor=west] at (1.5,1.5) {($\bar{\ts h}^\skw, \bar{h}_\vol, \bar{\ta u}$ are void)};
  \node at (3,0) {$\begin{cases} \bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev, \bar{p}\} \\ \bar{e}\{\bar{\ts\epsilon}_\dev, \bar{p}\}\end{cases}$};
  \draw[->] (A.south) -- (B.north);
  \draw[->] (B.south) -- +(0,-0.5);
