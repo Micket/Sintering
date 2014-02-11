@@ -109,7 +109,7 @@ Chalmers University of Technology}
 \begin{document}
 \maketitle
 \begin{abstract}
-The framework for Variationally Consistent Computational (VCH) homogenization of (near-)incompressible solids is discussed.
+The framework for Variationally Consistent Computational (VCH) homogenization of (near) incompressible solids is discussed.
 To focus on the important issues, a model problem of nonlinear (hyper)elasticity and linear kinematics is considered.
 A canonical formulation of the RVE-problem is established, whereby complete macroscale incompressibility is obtained straightforwardly as the limit situation.
 The framework is sufficiently general to allow for the classical boundary conditions on the RVE as well as the generalized situation of weakly periodic boundary conditions.
@@ -983,7 +983,6 @@ We will also need the tangent problem of \cref{eq31} at equilibrium with a pertu
 \end{alignat}
 \end{subequations}
 where the sensitivity field $(\ta u^\fluct)'\{\ta u^\macro, p^\macro;\dif \ta u^\macro, \dif p^\macro\}$ is defined as the solutions $\dif\ta u^\fluct$.
-\todo{$\delta\ta u^\macro$ or $\dif\ta u^\macro$}
 Note that \cref{eq31} also implies that $d_\rve(\ta t^\fluct, \dif \ta u^\fluct) = 0$.
 Upon combining \cref{eq:UP_subset} and \cref{eq:vanishing_traction} with \cref{eq31} we can see that \cref{eq:macro_homogeneity_original} is fulfilled and thus the VCMC is satisfied.
 
@@ -1175,7 +1174,49 @@ The fluctuations
 % \end{align}
 %----------------------------------------------------------------------------
 are identical to ($\ta{u}^\fluct,p^\fluct,\ta{t}^\fluct)\in\set{U}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system \cref{eq31}.
-\todo{todo}
+This can be shown by introducing the unique split of the unknowns
+\begin{align}
+ \ta u &= \check{\ts h}\cdot[\ta x - \bar{\ta x}] + \ta u^\fluct, & \delta\ta u &= \delta\check{\ts h}\cdot[\ta x - \bar{\ta x}] + \delta\ta u^\fluct,
+ & \check{\ts h}, \delta\check{\ts h} &\in \set{R}^{3\times 3}, & \ta u^\fluct, \delta\ta u^\fluct &\in \set{U}_\rve^\fluct
+\\
+ p &= \check{p} + p^\fluct, & \delta p &= \delta\check{p} + \delta p^\fluct,
+ & \check{p}, \delta\check{p} &\in \set{R},
+ & p^\fluct, \delta p^\fluct &\in \set{P}_\rve^\fluct
+\\
+ \ta t &= \check{\ts \tau}\cdot\ta n + \ta t^\fluct, & \delta\ta t &= \delta\check{\ts \tau}\cdot\ta n + \delta\ta t^\fluct,
+ & \check{\ts\tau}, \delta\check{\ts\tau} &\in \set{R}^{3\times 3}, & \ta t^\fluct, \delta\ta t^\fluct &\in \set{T}_\rve^\fluct
+\end{align}
+and inserting them into \cref{eq51c} and testing with $\delta\check{\ts\tau}$ we obtain
+\begin{gather}
+    d_\rve(\delta\check{\ts\tau}\cdot\ta{n},\check{\ts h}\cdot[\ta x - \bar{\ta x}]) - d_\rve(\delta\check{\ts\tau}\cdot\ta{n},\bar{e}\,\ta{x}_\mean) = d_\rve(\delta\check{\ts\tau}\cdot\ta{n},\bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])
+    \quad \forall \delta\check{\ts\tau} \in \set{R}^{3\times 3}
+\\
+\implies\quad
+    \delta\check{\ts\tau}\dprod[\check{\ts h} - \bar{\ts\epsilon}_\dev - \frac13\bar{e}\ts I] = 0 \quad \forall \delta\check{\ts\tau} \in \set{R}^{3\times 3}
+\quad\implies\quad
+\check{\ts h} = \bar{\ts\epsilon}_\dev + \frac13 \bar{e}\,\ts I.
+\end{gather}
+Next, testing \cref{eq51a} with $\delta\check{\ts h}$ we obtain
+\begin{gather}
+    a_\rve(\ta{u};\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) + 
+    b_\rve(\check{p},\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) + 
+    d_\rve(\check{\ts \tau}\cdot\ta n,\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) = 0
+    \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
+\\
+\implies\quad
+    \delta\check{\ts h} \dprod[\bar{\ts\sigma}_\dev - \check{p} \ts I - \check{\ts\tau}] = 0
+    \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
+\quad\implies\quad
+\check{\ts\tau} = \bar{\ts\sigma}_\dev - \check{p} \ts I.
+\end{gather}
+Lastly, from \cref{eq51d} we obtain
+\begin{alignat}{3}
+    - d_\rve(\check{\ts\tau}\cdot\ta n,\delta\bar{e}\,\ta{x}_\mean) &=
+    - \bar{p}\,\delta\bar{e}
+    &\quad& \forall \delta\bar{e} &&\in \set{R}
+\end{alignat}
+which implies that $\bar{p} = -\frac13 \check{\ts\tau}\dprod\ts I = \check{p}$.
+Using these identities and testing \cref{eq51a,eq51b,eq51c} with the fluctuations $\delta\ta u^\fluct$, $\delta p^\fluct$, and $\delta\ta t^\fluct$ respectively, we obtain exactly the original system in \cref{eq31}.
 Since the macroscopic response variables are identical, VCMC is still fulfilled.
 
 \begin{figure}[!htpb]
