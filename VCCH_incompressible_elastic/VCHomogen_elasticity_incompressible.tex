@@ -960,7 +960,7 @@ It is only when the macroscale solution represents incompressible response, i.e.
 In conclusion, the RVE-problem is able to provide an ``incompressible solution'' even in the case that the macroscale solution represents compressible response.
 This anomaly is the main motivation for establishing an alternative format of the problem, which is discussed next. $\Box$
 
-\subsubsection{Macro-homogeneity condition}
+\subsection{Macro-homogeneity condition}
 The macro-homogeneity (or generalized Hill-Mandel) condition is reviewed in \Cref{appendix:1}.
 In order to establish its localized form for the present problem, we first identify the tangent spaces
 \begin{subequations}
@@ -987,13 +987,13 @@ The macro-homogeneity condition is satisfied if, for any given state $\ta u^\mac
 In order to show that this condition  is, indeed, satisfied automatically by the solution of the RVE-problem as defined in \cref{eq31}, it suffices to consider \cref{eq31c}.
 Upon differentiating this relation w.r.t.\ $\ta u^\macro$ and $p^\macro$, we obtain 
 \begin{align}
- d_\rve(\delta t^\fluct, \dif\ta u^\fluct) = 0\quad \forall \delta t^\fluct \in \set{T}_\rve^\fluct
+ d_\rve(\delta \ta t^\fluct, \dif\ta u^\fluct) = 0\quad \forall \delta \ta t^\fluct \in \set{T}_\rve^\fluct
 \label{eq:d_macro_sens}
 \end{align}
 for any $\dif\ta u^\fluct \in \set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro)$.
 Now choosing $\delta\ta t^\fluct = \ta t^\fluct$ in \cref{eq:d_macro_sens}, we obtain 
 \begin{align}
- d_\rve(\ta t^\fluct, \dif\ta u^\fluct) = 0\quad \forall\dif\ta u^\fluct\in\set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro) \subset
+ d_\rve(\ta t^\fluct, \dif\ta u^\fluct) = 0\quad \forall\dif\ta u^\fluct\in\set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro) \subseteq \set{U}_\rve^\fluct
 \label{eq:d_macro_sens2}
 \end{align}
 
@@ -1003,7 +1003,8 @@ $\delta p^\fluct = \dif p^\fluct \in \set{P}_\rve^{\prime\fluct} \subseteq \set{
 
 \textbf{Remark}:
 In the present case there is, obviously, no need to compute the sensitivities $\dif\ta u^\fluct = (\ta u^\fluct)'$ and $\dif p^\fluct = (p^\fluct)'$ explicitly.
-However, it is always possible to compute the sensitivities of all the fluctuation fields, $\bar{\ta u}^\fluct$, $p^\fluct$, and $\ta t^\fluct$ from the (linear) system obtained by linearizing \cref{eq31}.
+\todo{***}
+However, it is always possible to compute the sensitivities of all the fluctuation fields, $\ta u^\fluct$, $p^\fluct$, and $\ta t^\fluct$ from the (linear) system obtained by linearizing \cref{eq31}.
 This system is closely related to the sensitivity problem that must be established as part of computing the pertinent macroscale tangent tensors exploited in Newton iterations on the macroscale problem.
 The explicit format of such sensitivity problem is discussed in \Cref{appendix:sensitivity} for the Canonical format of the RVE-problem that is introduced subsequently. $\Box$
 
