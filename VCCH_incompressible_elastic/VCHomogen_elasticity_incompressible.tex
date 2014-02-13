@@ -109,7 +109,7 @@ Chalmers University of Technology}
 \begin{document}
 \maketitle
 \begin{abstract}
-The framework for Variationally Consistent Computational (VCH) homogenization of (near) incompressible solids is discussed.
+The framework for Variationally Consistent computational Homogenization (VCH) of (near) incompressible solids is discussed.
 To focus on the important issues, a model problem of nonlinear (hyper)elasticity and linear kinematics is considered.
 A canonical formulation of the RVE-problem is established, whereby complete macroscale incompressibility is obtained straightforwardly as the limit situation.
 The framework is sufficiently general to allow for the classical boundary conditions on the RVE as well as the generalized situation of weakly periodic boundary conditions.
@@ -123,17 +123,21 @@ Such an approach can be applied to the situation when the intrinsic material pro
 It can also be applied to the more complex situation when the subscale properties are nonlinear and/or the subscale problem is inherently transient, whereby it is necessary to resort to nested macro-subscale computation (FE\textsuperscript{2}).
 Since the literature on classical as well as computational homogenization is abundant, it is not possible to give a comprehensive account.
 Among the seminal work on computational homogenization, we mention \textsc{Miehe (2000)} \cite{Miehe2000}, \textsc{Miehe (2000)} \cite{Miehe2000}, \textsc{Zohdi \& Wriggers (2002)}, ......
-Despite the extensive developments, there are still unresolved fundamental issues regarding, for example, (i) variational consistency and the macrohomogeneity condition, (ii) selective homogenization (in particular, for multi-field problems), (iii) how to establish bounds on the effective properties within a given confidence interval, and (iv) rigid inclusions (or pores) in a deformable matrix, for which the classical Dirichlet and Neumann conditions may break down, c.f.\  \textsc{Larsson (2013)} \cite{Lar2013} USNCCM.
+Despite the extensive developments, there are still unresolved fundamental issues regarding, for example, (i) variational consistency and the macrohomogeneity condition, (ii) selective homogenization (in particular, for multi-field problems), (iii) how to establish bounds on the effective properties within a given confidence interval, and (iv) rigid inclusions (or pores) in a deformable matrix, for which the classical Dirichlet and Neumann conditions may break down, cf.\  \textsc{Larsson (2013)} \cite{Lar2013} USNCCM.
 
 The particular aspect considered in this paper, which represents an unresolved issue even in the simplest case of elastic response, is that of Variationally Consistent Homogenization (VCH) in the limit of incompressible micro-constituents.
 This situation is encountered when the micro-constituents of a composite are intrinsically incompressible (or nearly incompressible), which infers macroscale incompressibility as well.
 An example is when a composite of metallic particles (or fibers) embedded in an elastomer matrix is subjected to stresses that are sufficiently large to cause significant plastic deformations in the particles.
 Another class of problems is characterized by an initially compressible macroscale response, which may become incompressible as the result of the deformation process.
 An important example is the evolving porous microstructure of a PM-product during the process of sintering, whereby the effective response is compressible until the porosity vanishes inferring incompressible macroscale response.
-This process is thus characterized by a transition from the compressible to incompressible regimes that should be handled within the same variational framework, c.f.\  \textsc{Öhman et al.\ (2013)}.
+This process is thus characterized by a transition from the compressible to incompressible regimes that should be handled within the same variational framework, cf.\  \textsc{Öhman et al.\ (2013)}.
 
-The paper is outlined as follows: The appropriate variational setting of the fine-scale elasticity problem in a mixed format is given in Section 2.
-The corresponding VCH framework is outlined in Section 3. .....
+The paper is outlined as follows:
+The appropriate variational setting of the fine-scale elasticity problem in a mixed format is given in Section 2.
+The corresponding VCH framework and macroscale problem is outlined in Section 3.
+The canonical form of the RVE-problem w.r.t\ is established in Section 4.
+Dirichlet and Neumann type boundary conditions are derived in Section 5.
+Numerical examples are shown in Section 6, followed by conclusions in Section 7.
 
 
 \section{Subscale modeling of isotropic elasticity allowing for the incompressible limit}
@@ -559,8 +563,7 @@ which leads to the constraints
 \end{align}
 \end{subequations}
 %----------------------------------------------------------------------------
-As a result, the hierarchical split $\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$ is guaranteed.
-\todo{???}
+As a result, the hierarchical split ($\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$) is guaranteed.
 %----------------------------------------------------------------------------
 We can thus establish at the outset, before any further analysis, that the displacement and pressure fields within each SVE are implicit functions of the values $\bar{\ta u}$, $\bar{\ts h}$, $\bar{p}$, such that $\ta u = \tilde{\ta u}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}$ and $p = \tilde{p}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}$.
 
@@ -693,7 +696,7 @@ or, more explicitly,
 %----------------------------------------------------------------------------
 which is supposed to hold true for all possible $\delta\ta{u}, \delta p$ in suitable function spaces (as discussed below).
 However, this problem is not solvable without further specification of the solution fields $\ta{u}, p, \ta{t}$.
-In this paper we adopt a recently proposed variational framework allowing for \emph{weak satisfaction of micro-periodicity}, c.f.\  Larsson et al.\ \cite{Larsson2010}, and this framework will be briefly summarized in what follows.
+In this paper we adopt a recently proposed variational framework allowing for \emph{weak satisfaction of micro-periodicity}, cf.\  Larsson et al.\ \cite{Larsson2010}, and this framework will be briefly summarized in what follows.
 We then \emph{assume} that the subscale fluctuation field $\ta{u}^\fluct$ is periodic across the SVE boundaries w.r.t.\ the chosen local coordinate axes.
 This model assumption, which may be termed ``micro-periodicity'', is a key ingredient (and frequently adopted) in the literature on mathematical homogenization and can be viewed as an approximation between the stiffer Dirichlet and the weaker Neumann boundary conditions.
 Indeed, both these cases can be obtained as special cases of the most general variational format of periodicity (as will be discussed further below).
@@ -1989,7 +1992,7 @@ The Dirichlet boundary condition requires an additional, global, unknown to rela
 
 \subsubsection{VMS-approach -- Scale separation and homogenization}
 
-Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), c.f.\ \cite{Hughesetal1998}, \cite{LarsonMalqvist2007}.
+Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), cf.\ \cite{Hughesetal1998}, \cite{LarsonMalqvist2007}.
 We introduce the abbreviated notation $z = (\ta u, p) \in \set{Z} = \set U \times \set P$, where $\set Z$ represents the space of fine-scale (non-homogenized) solutions to the system \cref{eq2},
 which may conveniently be abbreviated in abstract form as the residual equation\footnote{Henceforth in this Appendix, we consider the abstract formulation of a multifield problem based on a given set of balance (or constraint) equations.
 No explicit reference to the specific character of the underlying problem is made.}
