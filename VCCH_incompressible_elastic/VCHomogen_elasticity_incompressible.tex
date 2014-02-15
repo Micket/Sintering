@@ -146,8 +146,8 @@ Numerical examples are shown in Section 6, followed by conclusions in Section 7.
 \subsection{A mixed displacement-pressure weak format}
 
 We consider a generic micro-heterogeneous, i.e.\ polycrystalline, material in a given body whose macroscopic configuration occupies the region $\Omega$ in space with (presumed smooth) boundary $\Gamma$.
-We are then lead to defining a Statistical Volume Element (SVE), that represents the topology of the micro-heterogeneous microstructure, as shown in \Cref{Figure1}.
-The total domain occupied by the cubic SVE is denoted $\Omega_\rve$ with external boundary $\Gamma_\rve$.
+We are then lead to defining a Representative Volume Element (RVE), that represents the topology of the micro-heterogeneous microstructure, as shown in \Cref{Figure1}.
+The total domain occupied by the cubic RVE is denoted $\Omega_\rve$ with external boundary $\Gamma_\rve$.
 
 %-----------------------------------------------------------------------------------------------------------------------------
 \begin{figure}
@@ -289,11 +289,11 @@ The appropriate variational setting of the homogenized problem is obtained upon 
     \label{eq16ba}
 \end{equation}
 %----------------------------------------------------------------------------
-representing a smoothing approximation on a Statistical Volume Element (SVE).
-In practice, the SVE's are finite-sized and occupies the subscale region $\Omega_\rve$ with boundary $\Gamma_\rve$.
-The typical dimension of an SVE is $L_\rve=\volume^{1/3}$.
-The SVE is centered at the macroscale position $\bar{\ta{x}}\defeq\frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{x}\dif S$ for any given $\bar{\ta{x}}\in\Omega$.
-Boundary integrals can be homogenized in similar fashion, by considering Statistical Surface Elements $\gamma_\rve$
+representing a smoothing approximation on a RVE.
+In practice, the RVE's are finite-sized and occupies the subscale region $\Omega_\rve$ with boundary $\Gamma_\rve$.
+The typical dimension of an RVE is $L_\rve=\volume^{1/3}$.
+The RVE is centered at the macroscale position $\bar{\ta{x}}\defeq\frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{x}\dif S$ for any given $\bar{\ta{x}}\in\Omega$.
+Boundary integrals can be homogenized in similar fashion, by considering Representative Surface Elements $\gamma_\rve$
 \begin{align}
  y \to \langle y \rangle_{\#} \defeq \frac{1}{|\gamma_\#|} \int_{\gamma_\#} y \dif S
 \end{align}
@@ -312,7 +312,7 @@ The weak forms in \crefrange{eq3a}{eq3d} are thus approximated as
 \label{eq7d}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
-where the SVE-functionals in \crefrange{eq7a}{eq7d} are defined as
+where the RVE-functionals in \crefrange{eq7a}{eq7d} are defined as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     a_\rve(\ta{v};\ta{w}) &\defeq
@@ -338,7 +338,7 @@ Likewise, we homogenize the volumetric energy potential $\Lambda(\ta{u},p)$:
 \label{eq222}
 \end{align}
 %----------------------------------------------------------------------------
-where the SVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
+where the RVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 %----------------------------------------------------------------------------
 \begin{align}
     \Lambda_\rve(\ta{v},q) &\defeq
@@ -348,12 +348,12 @@ where the SVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 \end{align}
 %----------------------------------------------------------------------------
 
-In the spirit of the Variational MultiScale method (VMS), we introduce the \emph{ansatz} that the fields $\ta{u}\in\set{U}$ and $p\in\set{P}$ can be decomposed into macroscale (smooth) and subscale (fluctuating) parts inside each SVE via the unique orthogonal split $\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$.
+In the spirit of the Variational MultiScale method (VMS), we introduce the \emph{ansatz} that the fields $\ta{u}\in\set{U}$ and $p\in\set{P}$ can be decomposed into macroscale (smooth) and subscale (fluctuating) parts inside each RVE via the unique orthogonal split $\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$.
 In practice, the scales are linked  by expressing $\ta{u}^\macro(\bar{\ta{x}},{\ta{x}})$\footnote{Double arguments, i.e.\ $\ta{u}(\bar{\ta{x}},\ta{x})$, are used to explicitly point out the underlying scale separation.} using Taylor series expansions of suitable order for $\bar{\ta{x}}\in\Omega$ and $\ta{x}\in\Omega_\rve(\bar{\ta{x}})$
 in terms of the macroscale solution $\bar{\ta{u}}(\bar{\ta{x}})$ in an explicit fashion and defining the \emph{approximate} solution $\ta{u}^\fluct=\ta{u}^\fluct\{\bar{\ta{u}}\}$\footnote{Curly brackets $\{(\bullet)\}$ indicate implicit and/or nonlocal functional dependence on $(\bullet)$.} for given $\bar{\ta{u}}$.
 This (implicit) relation allows for computing the homogenized quantities.
 
-As a result, we may assume that it is possible solve for the fluctuation fields $\ta{u}^\fluct\in\set{U}^\fluct$ and $p^\fluct\in\set{P}^\fluct$ as ``local approximations'' on each SVE for given macroscale solutions $\ta{u}^\macro\in\set{U}^\macro$ and $p^\macro\in\set{P}^\macro$, i.e.\ we construct the complete solution on each SVE as\footnote{Curly brackets indicate implicit function}.
+As a result, we may assume that it is possible solve for the fluctuation fields $\ta{u}^\fluct\in\set{U}^\fluct$ and $p^\fluct\in\set{P}^\fluct$ as ``local approximations'' on each RVE for given macroscale solutions $\ta{u}^\macro\in\set{U}^\macro$ and $p^\macro\in\set{P}^\macro$, i.e.\ we construct the complete solution on each RVE as\footnote{Curly brackets indicate implicit function}.
 %------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq4}
 \begin{alignat}{2}
@@ -502,8 +502,8 @@ Altogether, these assumptions infer that $\ta{u}^\macro\in\set{U}^\macro$ and $p
 %\end{subequations}
 %%----------------------------------------------------------------------------------------------------------------------
 %
-%\textbf{Remark}: The partial sensitivities $(\tilde{\ta{u}}^\fluct)'_u, (\tilde{p}^\fluct)'_u$ for a given $\dif\ta{u}^\macro\in \set{U}^{\macro,0}$ and $(\tilde{\ta{u}}^\fluct)'_p, (\tilde{p}^\fluct)'_p$ for a given $\dif p^\macro\in \set{P}^{\macro}$ can be solved from ``tangent problems'' that represent the linearization of the appropriately formulated subscale problem to be solved on each SVE.
-%It is then clear that \cref{eq115} represent the weakest possible form of the VCMC when this condition is localized to each SVE.
+%\textbf{Remark}: The partial sensitivities $(\tilde{\ta{u}}^\fluct)'_u, (\tilde{p}^\fluct)'_u$ for a given $\dif\ta{u}^\macro\in \set{U}^{\macro,0}$ and $(\tilde{\ta{u}}^\fluct)'_p, (\tilde{p}^\fluct)'_p$ for a given $\dif p^\macro\in \set{P}^{\macro}$ can be solved from ``tangent problems'' that represent the linearization of the appropriately formulated subscale problem to be solved on each RVE.
+%It is then clear that \cref{eq115} represent the weakest possible form of the VCMC when this condition is localized to each RVE.
 %However, it is common procedure to establish the boundary conditions for the actual RVE-problem in such a fashion that the equations in \cref{eq115} are satisfied for a larger class of test functions than those in the tangent spaces, see below. $\Box$
 %%%----------------------------------------------------------------------------------------------------------------
 %%\begin{equation}
@@ -527,7 +527,7 @@ Altogether, these assumptions infer that $\ta{u}^\macro\in\set{U}^\macro$ and $p
 
 \subsection{Explicit format of macroscale (homogenized) problem}
 
-We shall consider the homogenization properties on a given SVE and introduce the macroscale fields $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ such that the macroscale solutions $\ta{u}^\macro, p^\macro$ inside each SVE are expanded as follows:
+We shall consider the homogenization properties on a given RVE and introduce the macroscale fields $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ such that the macroscale solutions $\ta{u}^\macro, p^\macro$ inside each RVE are expanded as follows:
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq12}
 \begin{align}
@@ -565,7 +565,7 @@ which leads to the constraints
 %----------------------------------------------------------------------------
 As a result, the hierarchical split ($\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$) is guaranteed.
 %----------------------------------------------------------------------------
-We can thus establish at the outset, before any further analysis, that the displacement and pressure fields within each SVE are implicit functions of the values $\bar{\ta u}$, $\bar{\ts h}$, $\bar{p}$, such that $\ta u = \tilde{\ta u}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}$ and $p = \tilde{p}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}$.
+We can thus establish at the outset, before any further analysis, that the displacement and pressure fields within each RVE are implicit functions of the values $\bar{\ta u}$, $\bar{\ts h}$, $\bar{p}$, such that $\ta u = \tilde{\ta u}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}$ and $p = \tilde{p}\{\bar{\ta u}, \bar{\ts h}, \bar{p}\}$.
 
 %%----------------------------------------------------------------------------
 %\begin{subequations}
@@ -628,7 +628,7 @@ The variationally consistent macroscale ``flux'' variables $\bar{\ts{\sigma}}_\d
 \label{eq16}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------
-By combining \cref{eq4} with \cref{eq12} we note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered SVE.
+By combining \cref{eq4} with \cref{eq12} we note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered RVE.
 
 Finally, upon inserting \crefrange{eq15a}{eq15f} into the system \cref{eq6}, we obtain the macroscale problem:
 Find $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ that solve
@@ -697,11 +697,11 @@ or, more explicitly,
 which is supposed to hold true for all possible $\delta\ta{u}, \delta p$ in suitable function spaces (as discussed below).
 However, this problem is not solvable without further specification of the solution fields $\ta{u}, p, \ta{t}$.
 In this paper we adopt a recently proposed variational framework allowing for \emph{weak satisfaction of micro-periodicity}, cf.\  Larsson et al.\ \cite{Larsson2010}, and this framework will be briefly summarized in what follows.
-We then \emph{assume} that the subscale fluctuation field $\ta{u}^\fluct$ is periodic across the SVE boundaries w.r.t.\ the chosen local coordinate axes.
+We then \emph{assume} that the subscale fluctuation field $\ta{u}^\fluct$ is periodic across the RVE boundaries w.r.t.\ the chosen local coordinate axes.
 This model assumption, which may be termed ``micro-periodicity'', is a key ingredient (and frequently adopted) in the literature on mathematical homogenization and can be viewed as an approximation between the stiffer Dirichlet and the weaker Neumann boundary conditions.
 Indeed, both these cases can be obtained as special cases of the most general variational format of periodicity (as will be discussed further below).
 
-In order to formulate the conditions on micro-periodicity, we consider the SVE in \cref{Figure2}, where the boundary $\Gamma_\rve$ has been split into two parts: $\Gamma_\rve=\Gamma_\rve^- \cup \Gamma_\rve^+$.
+In order to formulate the conditions on micro-periodicity, we consider the RVE in \cref{Figure2}, where the boundary $\Gamma_\rve$ has been split into two parts: $\Gamma_\rve=\Gamma_\rve^- \cup \Gamma_\rve^+$.
 Here, $\Gamma_\rve^+$ is the \emph{image boundary} (later chosen as the computational domain for boundary integration), whereas $\Gamma^-$ is the \emph{mirror boundary}.
 We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma^+ \rightarrow \Gamma^-$ such that any point $\ta{x}^+\in\Gamma_\rve^+$ is mirrored in a self-similar fashion to the corresponding point $\ta{x}^-\in\Gamma_\rve^-$; hence, $\ta{x}^-=\ta{\varphi}_\per(\ta{x}^+)$.
 %---------------------------------------------------------------------------------
@@ -719,7 +719,7 @@ We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma^+ \rightarro
 \draw[<-, line width=.6mm] (0.0,2.4) to[out=15,in=165] (5.0,2.4) node[right]{$\ta{\varphi}_\per$} ;
 %\draw[<-, line width=.4mm] (4.6,1.7) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,1.0) node[right=1pt,black,text width=3cm,text badly ragged]{$\partial\Omega_{\rve,i}^\text{p}$};
 \end{tikzpicture}
-\caption{SVE in 2D with ``image'' and ``mirror'' boundaries.}
+\caption{RVE in 2D with ``image'' and ``mirror'' boundaries.}
 \label{Figure2}
 \end{figure}
 %--------------------------------------------------------------------------------
@@ -908,7 +908,7 @@ For \emph{given} values $\bar{\ta{u}}$, $\bar{\ts{h}}$, and $\bar{p}$, that repr
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------
-where the SVE-functionals were introduced in \cref{eq8a,eq8b,eq8c,eq27}.
+where the RVE-functionals were introduced in \cref{eq8a,eq8b,eq8c,eq27}.
 %%----------------------------------------------------------------------------
 %\begin{eqnarray}
 %    \frac{1}{\volume}\int_{\Omega_\rve} \ts{\epsilon}_\dev[\delta\ta{u}^\fluct]\dprod \hat{\ts{\sigma}}_\dev(\bar{\ts\epsilon}_\dev+\ts{\epsilon}_\dev[\ta{u}^\fluct]) \dif V
@@ -929,7 +929,7 @@ where the SVE-functionals were introduced in \cref{eq8a,eq8b,eq8c,eq27}.
 
 By inspecting the system in \cref{eq31}, we note that it is not the entire $\bar{\ts{h}}$ that is used as input to the RVE-problem.
 In fact, it is readily concluded that it is only the deviatoric part $\bar{\ts\epsilon}_\dev=\bar{\ts{h}}^\sym_\dev$ that enters as ``data'' to the RVE-problem.
-In other words, neither $\bar{\ta{u}}$, the volumetric part $\bar{h}_\vol\defeq\bar{\ts{h}}\dprod\ts{I}$, nor the skew-symmetric part $\bar{\ts{h}}^\skw=\frac{1}{2}[\bar{\ts{h}}-\bar{\ts{h}}^\majorT]$ will affect the SVE-solution.
+In other words, neither $\bar{\ta{u}}$, the volumetric part $\bar{h}_\vol\defeq\bar{\ts{h}}\dprod\ts{I}$, nor the skew-symmetric part $\bar{\ts{h}}^\skw=\frac{1}{2}[\bar{\ts{h}}-\bar{\ts{h}}^\majorT]$ will affect the RVE-solution.
 In conclusion, ($\bar{\ts\epsilon}_\dev,\bar{p})$ are the macroscale variables that are used as data for the RVE-problem; hence, the solution of \cref{eq31} is parameterized as $\ta{u}^\fluct=\ta{u}^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$, $p^\fluct=p^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$, and $\ta{t}^\fluct=\ta{t}^\fluct\{\bar{\ts\epsilon}_\dev,\bar{p}\}$.
 In a postprocessing step the homogenized ``fluxes'' can be represented as
 %----------------------------------------------------------------------------------------------------------------
@@ -1124,7 +1124,7 @@ Using these identities together with \cref{eq51b}, \cref{eq51c}, we deduce
 \begin{multline}
  \homgen{\hat{e}(p)} = c_\rve^*(p; 1) = -b_\rve(1, \ta u) = d_\rve(\ta n, \ta u) = \bar{e}\;d_\rve(\ta n, \ta x_\mean) + d_\rve(\ta{n}, \bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}]) 
 \\
-= - \bar{e}\,b_\rve(1, \ta x_\mean) + \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta n \outerp \jmp{\ta x - \bar{\ta x}}\dif S \dprod \bar{\ts\epsilon}_\dev 
+= \bar{e} + \left[\frac{1}{\volume}\int_{\Gamma_\rve^+} \ta n \outerp \jmp{\ta x - \bar{\ta x}}\dif S\right] \dprod \bar{\ts\epsilon}_\dev 
 = \bar{e} + \ts I \dprod \bar{\ts\epsilon}_\dev = \bar{e}.
 \end{multline}
 
@@ -1328,7 +1328,7 @@ In practice, there is (of course) no need to establish \cref{eq251} as a separat
 %%\end{equation}
 %%%---------------------------------------------------------------------------
 %%while $\set{U}_\rve^\Neumann=\set{U}_\rve$ and $\set{P}_\rve^\Neumann=\set{P}_\rve$ are left unrestricted.
-%Clearly, the choice of $\set{T}_\rve^\Neumann$ restricts the tractions to become piecewise constant on each of the three positive boundary faces of the SVE-cube.
+%Clearly, the choice of $\set{T}_\rve^\Neumann$ restricts the tractions to become piecewise constant on each of the three positive boundary faces of the RVE-cube.
 %
 %Firstly, upon inserting the \emph{ansatz} for $\ta{t}\in\set{T}_\rve^\Neumann$ into \cref{eq51d}, we directly obtain the identity $\check{p}=\bar{p}$.
 %Secondly, we introduce the auxiliary variational form $d'_\rve$ via the identity
@@ -1398,11 +1398,11 @@ In practice, there is (of course) no need to establish \cref{eq251} as a separat
 %
 
 
-\section{Variational properties of the RVE-problem -- Energy bounds from SVE-functional}
+\section{Variational properties of the RVE-problem -- Energy bounds from RVE-functional}
 
 \subsection{Variational properties for the canonical formulation of the RVE-problem -- The RVE-potential}
 
-In order to establish bounds on the effective properties based on the results from the Dirichlet and Neumann problems, we shall introduce an appropriate ``SVE-potential'' as follows:
+In order to establish bounds on the effective properties based on the results from the Dirichlet and Neumann problems, we shall introduce an appropriate ``RVE-potential'' as follows:
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\ta{t},\bar{e}) =
@@ -1431,7 +1431,7 @@ where $\Lambda_\rve(\ta{u},p)$ is the ``intrinsic'' energy potential that was de
 %\end{align}
 %%----------------------------------------------------------------------------
 
-We now define the ``effective'' SVE-energy as the value of $\Pi_\rve$ at the following generalized saddle-point:
+We now define the ``effective'' RVE-energy as the value of $\Pi_\rve$ at the following generalized saddle-point:
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev,\bar{p}\} =
@@ -1507,7 +1507,7 @@ whereby the energy at the stationary point is deduced to become
 \label{eq87}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-We may deduce that $\bar{\psi}_\rve$ serves as the ``effective energy density'' for $\bar{\ts\sigma}_\dev$ and $\bar{e}$ in the sense that we have the macroscale constitutive relations
+We now deduce that $\bar{\psi}_\rve$ serves as the ``effective energy density'' for $\bar{\ts\sigma}_\dev$ and $\bar{e}$ in the sense that we have the macroscale constitutive relations
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\} = \frac{\partial \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev,\bar{p}\}}{\partial \bar{\ts\epsilon}_\dev}, \quad
@@ -1521,6 +1521,7 @@ From the solution of the RVE-problem, $\bar{e}$ is obtained directly as a primar
 The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \begin{align}
  \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
+\label{eq:weak_periodic_sigma_dev}
 \end{align}
 
 
@@ -1530,7 +1531,9 @@ In order to establish a suitable variational setting we introduce the solution s
 %----------------------------------------------------------------------------
 \begin{align}
     \set{U}_\rve^\Dirichlet &= \{\ta{v}\in \set{U}_\rve \,|\,\, \exists(\check{\ts\epsilon}_\dev,\check{e})\in\set{R}^{3\times3}_\dev \times\set{R} \text{ s.t. }
-    \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct \text{ with } \ta{v}^\fluct=\ta{0} \text{ on } \Gamma_\rve \}
+    \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct,\; \ta{v}^\fluct=\ta{0} \text{ on } \Gamma_\rve \}
+%     \set{U}_\rve^\Dirichlet &= \{\ta{v} \,|\,\, \exists(\check{\ts\epsilon}_\dev,\check{e})\in\set{R}^{3\times3}_\dev \times\set{R} \text{ s.t. }
+%     \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct, \ta{v}^\fluct \in \set{U}_\rve^\fluct, \ta{v}^\fluct = \ta 0\text{ on } \Gamma_\rve \}
 \label{eq61a} \\
     \set{U}_\rve^{\Dirichlet,0} &= \{\ta{v}\in \set{U}_\rve \,|\,\, \ta{v}=\ta{0} \text{ on } \Gamma_\rve \}
 \label{eq61b}
@@ -1658,13 +1661,13 @@ Finally, the effective energy at the stationary point becomes
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
 
-From the analysis $\bar{e}$ is obtained directly as a primary variable.
-The deviatoric stress $\bar{\ts\sigma}_\dev$ can be obtained by post-processing:
+From the RVE-problem in \cref{eq:weak_form_dirichlet}, $\bar{e}$ is obtained directly as a primary variable.
+The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \begin{align}
  \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
-\label{eq:weak_periodic_sigma_dev}
+\label{eq:weak_dirichlet_sigma_dev}
 \end{align}
-though in practice, $\bar{\ts\sigma}_\dev$ is obtained as the reaction forces associated with the prescribed $\bar{\ts\epsilon}_\dev$.
+However in practice $\bar{\ts\sigma}_\dev$ is conveniently obtained as the reaction forces associated with the prescribed $\bar{\ts\epsilon}_\dev$.
 
 \textbf{Remark}:
 The VMCM in \cref{eq:macro_homogeneity_original} is still valid for the restricted space $\set{U}_\rve^{\Dirichlet,0}\subset \set{U}_\rve^\fluct$.
@@ -1673,7 +1676,7 @@ Since $d_\rve(\delta\ta t^\fluct, \ta u^\fluct) = 0\;\forall\,\ta u^\fluct \in \
 \subsection{Variational properties for Neumann boundary conditions}
 The Neumann condition represents the weakest possible way of enforcing the micro-periodicity condition.
 Here it is considered as a \emph{model assumption}; however, it is also possible to view this choice as a (crude) FE-approximation of the deviatoric traction field.
-The pertinent SVE-problem is obtained from the general format upon restricting the space $\set{T}_\rve$, i.e.\ introducing $\set{T}_\rve^\Neumann\subseteq\set{T}_\rve$ defined as
+The pertinent RVE-problem is obtained from the general format upon restricting the space $\set{T}_\rve$, i.e.\ introducing $\set{T}_\rve^\Neumann\subseteq\set{T}_\rve$ defined as
 %----------------------------------------------------------------------------
 \begin{equation}
     \set{T}_\rve^\Neumann =
@@ -1693,7 +1696,7 @@ The generalized saddle-point problem \cref{eq:periodic_energy} can then be rephr
     }
     \sup_{\substack{
     \hat{p}\in\set{P}_\rve \\
-    \check{\ts\sigma}\in\set{R}^{3\times3}_\dev \\
+    \check{\ts\sigma}_\dev\in\set{R}^{3\times3}_\dev \\
     \check{p}\in\set{R}
     }}
     \inf_{
@@ -1723,8 +1726,9 @@ where
 \end{multline}
 %----------------------------------------------------------------------------------------------------------------------
 The only possibility to obtain a finite value of $\bar{\psi}_\rve^\Neumann$ while evaluating the $\inf$ over $\hat{\bar{e}}\in\set{R}$ is to set $\check{p} = \bar{p}$.
-From \cref{eq:weak_periodic_sigma_dev} we can see that for the restricted tractions $\ta t \in \set T_\rve^\Neumann$ we obtain the macroscopic deviatoric stress as $\check{\ts\sigma}_\dev$, i.e.\ $\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\} \defeq
-\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}\{\bar{\ts\epsilon}_\dev,\bar{p}\}]) } = \check{\ts\sigma}_\dev$.
+As a direct consequence the variable $\hat{\bar{e}}$ disappears in the resulting expression \cref{eq98b}.
+Moreover, from \cref{eq:weak_periodic_sigma_dev} we can see that for the restricted tractions $\ta t \in \set T_\rve^\Neumann$ we obtain $\check{\ts\sigma}_\dev
+= \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}\{\bar{\ts\epsilon}_\dev,\bar{p}\}]) } = \bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\}$.
 %----------------------------------------------------------------------------------------------------------------------
 Hence, we replace the saddle-point problem by
 %----------------------------------------------------------------------------------------------------------------
@@ -1757,7 +1761,7 @@ A stationary point of $\Pi_\rve^\Neumann$ is defined by the relations
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq104}
 \begin{alignat}{4}
-    &(\Pi_\rve^\Neumann)'_u(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\bar{\ts\sigma}_\dev;\delta\ta{u}^\fluct) &&= 0
+    &(\Pi_\rve^\Neumann)'_u(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\bar{\ts\sigma}_\dev;\delta\ta{u}) &&= 0
     &\quad & \forall \delta\ta{u} &&\in\set{U}_\rve
 \label{eq104a} \\
     &(\Pi_\rve^\Neumann)'_p(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\bar{\ts\sigma}_\dev;\delta p) &&= 0
@@ -1794,7 +1798,7 @@ Finally, we obtain the effective energy density as
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
 
-From the analysis $\bar{\ts\sigma}_\dev$ is obtained directly as a primary variable.
+From the RVE-problem in \cref{eq67}, $\bar{\ts\sigma}_\dev$ is obtained directly as a primary variable.
 The volumetric strain $\bar{e}$ is obtained by post-processing:
 \begin{align}
  \bar{e} = \homgen{\ta u\cdot\diff} = \frac{1}{\volume} \int_{\Gamma_\rve} \ta u \cdot \ta n\dif S.
@@ -1806,8 +1810,8 @@ Since $d_\rve(\ta 0, \bullet) = 0$, \cref{eq:macro_homogeneity_original_a} is va
 
 
 \subsection{Tangent relations}
-In order to perform FE\textsuperscript{2} simulations, we need to obtain the following tangent relations for each SVE.
-In total, we have for 
+In order to perform a priori upscaling of the elastic response of an RVE, or Newton-iterations for FE\textsuperscript{2} simulations, we need to obtain the macroscopic tangent relations of the homogenized variables $\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\}$ and $\bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\}$ w.r.t.\ the input variables $\bar{\ts\epsilon}_\dev$ and $\bar{p}$.
+We thus need four macroscale tangents
 \begin{subequations}
 \label{eq:macro_tangents}
 \begin{align}
@@ -1817,6 +1821,7 @@ In total, we have for
  \bar{C}_\dep \defeq \pd{\bar{e}}{\bar{p}}
 \end{align}
 \end{subequations}
+where, in the case of total incompressibility, the tangents $\bar{C}_\dep$, $\bar{\ta C}_\ded$, and $\bar{\ta E}_\ded$ will be zero.
 The tangents are obtained by solving several sensitivity problems on the RVE-problem and homogenizing the results.
 Details of deriving the tangent problems for the periodic, Dirichlet, and Neumann boundary conditions are shown in \cref{appendix:sensitivity}.
 
@@ -1836,7 +1841,7 @@ it follows from \cref{eq:dirichlet_energy}, \cref{eq:neumann_energy}, and \cref{
 \end{align}
 which means that the Dirichlet and Neumann boundary conditions are upper and lower bounds correspondingly for the periodic response.
 
-In the case is linear elasticity, we obtain
+In the case of linear elasticity, we obtain
 \begin{alignat}{4}
  &\bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, 0\} &&= \frac12 \bar{\ts\epsilon}_\dev \dprod \bar{\tf E}_{\ded}\dprod \bar{\ts\epsilon}_\dev %+ \bar{\ts\sigma}_{\dev,0} \dprod \bar{\ts\epsilon}_\dev 
 &\quad&\forall\;\bar{\ts\epsilon}_\dev &&\implies
@@ -1985,8 +1990,6 @@ The Dirichlet boundary condition requires an additional (global) unknown to rela
 \subsection{Variationally Consistent Homogenization (VCH)}
 \label{appendix:1}
 
-\textbf{Skriv om utg\aa{}ende fr\aa{}n paper Statistical Bounds ...}
-
 \subsubsection{VMS-approach -- Scale separation and homogenization}
 
 Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), cf.\ \cite{Hughesetal1998}, \cite{LarsonMalqvist2007}.
@@ -2016,14 +2019,14 @@ Without introducing further assumptions (approximations), the dimension of the o
 In order to reduce the problem dimension based on homogenization (via the assumption of scale separation), we introduce the following key assumptions:
 
 \begin{itemize}
-\item The integrand in the volume integrals is replaced by a running volume average on SVE's of the type
+\item The integrands in the pertinent volume integrals are replaced by a running volume average on RVE's of the type introduced in \cref{eq16ba}.
 %----------------------------------------------------------------------------------------------------------------
-\begin{equation}
-    \homgen{f}(\ta{x}') \defeq \frac{1}{|\Omega_\rve(\ta{x}')|} \int_{\Omega_\rve(\ta{x}')} f \dif V, \quad \ta{x}'\in\Omega
-\label{eq:A105}
-\end{equation}
+% \begin{equation}
+%     \homgen{f}(\ta{x}') \defeq \frac{1}{|\Omega_\rve(\ta{x}')|} \int_{\Omega_\rve(\ta{x}')} f \dif V, \quad \ta{x}'\in\Omega
+% \label{eq:A105}
+% \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-such that, typically, the residual in \cref{eq:A2a} can be rewritten in terms of the contributions defined on each SVE as
+such that, typically, the residual in \cref{eq:A2a} can be rewritten in terms of the contributions defined on each RVE as
 %--------------------------------------------------------------------------------------------------------------------------
 \begin{align}
 \label{eq:A106} R_\Omega(z;\delta z) = \int_\Omega R_\rve(z;\delta z)(\bar{\ta x})\dif\Omega
@@ -2032,11 +2035,12 @@ such that, typically, the residual in \cref{eq:A2a} can be rewritten in terms of
 where $R_\rve$ is the RVE-residual that is localized to the Representative Volume Element (RVE).
 In practice (in FE-analysis), quadrature is used such that the evaluation of $R_\rve$ is carried out only in the Gauss points.
 
-Furthermore, we assume smoothness of boundary terms, such that $R_\Gamma(z; \delta z^\macro) \approx R_\Gamma(z^\macro;\delta z^\macro)$, i.e.\ no boundary homogenization.
+Furthermore, for the sake of simplicity we assume smoothness of boundary terms, such that $R_\Gamma(z; \delta z^\macro) \approx R_\Gamma(z^\macro;\delta z^\macro)$, i.e.\ no boundary homogenization is necessary.
 
-\item Introduce local approximations for the fluctuation field $z^\fluct$ in the spirit of VMS.
+\item Local approximations for the fluctuation field $z^\fluct$ are introduced in the spirit of VMS.
 This means that $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}\in\set{Z}_\rve^{\fluct}$ is the \emph{approximate} solution\footnote{Curly brackets $\{\bullet\}$ indicate implicit function.} of the fine-scale 
 equation \cref{eq:A2b} for given $z^\macro$, i.e.\ \cref{eq:A2b} is replaced by ``closed'' RVE-problems (in the macroscale quadrature points) associated with a particular choice of boundary conditions on $\Omega_\rve$.
+In this paper we obtain such ``closed'' RVE-problems by choosing  weakly periodic boundary conditions.
 %    Find $\tilde z^\fluct\in\set{Z}_\rve^{\fluct}$ that solve
 %%---------------------------------------------------------------------------------------------------------------------------------------------
 %\begin{align}
@@ -2076,10 +2080,10 @@ Hence, the choice of test function in \cref{eq:A5} is restricted as compared to 
 Moreover, and most importantly, \cref{eq:A5} is completely equivalent to the homogenized problem \cref{eq:A3} if it is possible, for any given $z^\macro\in\set Z^{\macro}$, to satisfy the constraint
 %---------------------------------------------------------------------------------------------------------------------------------------------
 \begin{align}
-\label{eq:A6a} R(z^\macro + \tilde z^\fluct\{z^\macro\}; (\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}) = 0\quad \forall\;\delta z^\macro\in\set Z^{\macro,0}(z^\macro)
+\label{eq:A6a} R(z^\macro + \tilde z^\fluct\{z^\macro\}; (\tilde{z}^\fluct)'\{z^\macro;\dif z^\macro\}) = 0\quad \forall\;\dif z^\macro\in\set Z^{\macro,0}(z^\macro)
 \end{align}
 %-------------------------------------------------------------------------------------------------------------------------------------------------
-or, equivalently, \marginpar{solution space $\tilde{\set Z}$??}
+or, equivalently,
 %---------------------------------------------------------------------------------------------------------------------------------------------
 \begin{align}
 \label{eq:A6b} R(z^\macro + \tilde z^\fluct\{z^\macro\}; \delta\tilde{z}^\fluct) = 0\quad \forall\;\delta \tilde{z}^\fluct\in\tilde{\set Z}'^{\fluct}(z^\macro)
@@ -2093,7 +2097,7 @@ where the test space $\tilde{\set Z}'^{\fluct}(z^\macro)$, which is the tangent 
 \label{eq:A6c}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
-Hence, $\dif \tilde{z}^\fluct\in\tilde{\set{Z}}'^{\fluct}(z^\macro)$ is the sensitivity of the fluctuation field $\tilde{z}^\fluct$ for differential changes of the macroscale field $z^\macro$ within the considered SVE.
+Hence, any $\dif \tilde{z}^\fluct\in\tilde{\set{Z}}'^{\fluct}(z^\macro)$ is a sensitivity of the fluctuation field $\tilde{z}^\fluct$ for a differential change of the macroscale field $z^\macro$ within the considered RVE.
 It is computed from the tangent problem that is associated with the RVE-problem.
 %as follows: \textbf{Galerkin property: $\tilde{\set{Z}}'^{\fluct}$ versus $\set{Z}_\rve^{\fluct}$ ?????}
 %%---------------------------------------------------------------------------------------------------------------------------------------------
@@ -2114,7 +2118,7 @@ It is computed from the tangent problem that is associated with the RVE-problem.
 %\forall\;\delta z^\fluct\in\set{Z}_\rve^{\fluct}
 %\end{align}
 %%-------------------------------------------------------------------------------------------------------------------------------------------------
-We refer to \cref{eq:A6a} or \cref{eq:A6b} as a ``variationally consistent (generalized) macrohomogeneity condition'' (VCMC).
+We refer to \cref{eq:A6a} or \cref{eq:A6b} as a ``Variationally Consistent (generalized) Macrohomogeneity Condition'' (VCMC).
 Obviously, a sufficient condition for these identities to hold true is to require the RVE-residual to vanish on each RVE (in each quadrature point), i.e.\ to ensure that
 %--------------------------------------------------------------------------------------------------------------------------------------
 \begin{align}
@@ -2158,7 +2162,7 @@ With the introduced approximation $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}
 % \label{eq:A12}
 % \end{equation}
 
-\subsection{Effective macroscale energy UPDATE}
+\subsection{Effective macroscale energy}
 \label{appendix:macroEnergy}
 
 \newcommand{\epspargs}{\{{\bar{\ts\epsilon}}_\dev, \bar{p}\}}
@@ -2167,7 +2171,7 @@ In order to show that $\bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\}$ serve
 \begin{align}
  \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\} = \Pi_\rve(\bar{\ts\epsilon}_\dev, \bar{p}; \ta u\epspargs, p\epspargs, \ta t\epspargs, \bar{e}\epspargs)
 \end{align}
-where the SVE-potential $\Pi_\rve$ was defined in \cref{eq81}.
+where the RVE-potential $\Pi_\rve$ was defined in \cref{eq81}.
 Working out the total differential w.r.t.\ $\bar{\ts\epsilon}_\dev$ and $\bar{p}$ at equilibrium, we obtain
 \begin{align}
  \dif\bar{\psi}_\rve\epspargs = 
@@ -2206,7 +2210,7 @@ Now, we may use \cref{eq:rveStata} and choose $\delta\ta u = \dif\bar{\ts\epsilo
  -d_\rve(\ta t\epspargs, \dif\bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}]) = 
   a_\rve(\ta u\epspargs, \dif\bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}]) + b_\rve(p\epspargs, \dif\bar{\ts\epsilon}_\dev\cdot[\ta x - \bar{\ta x}]) 
 \nonumber\\
-  = \homgen{\ts\sigma_\dev\dprod\dif\bar{\ts\epsilon}_\dev} + \underbrace{\homgen{p\,\dif\bar{\ts\epsilon}_\dev\dprod \ts I}}_{=0} 
+  = \homgen{\ts\sigma_\dev}\dprod\dif\bar{\ts\epsilon}_\dev + \homgen{p }\,\underbrace{\dif\bar{\ts\epsilon}_\dev\dprod \ts I}_{=0}
   = \bar{\ts\sigma}_\dev\epspargs \dprod\dif\bar{\ts\epsilon}_\dev
 \end{align}
 Finally, combining this result with \cref{eq:macro_potential_dif_simple}, we obtain
