@@ -1114,7 +1114,7 @@ We now propose the alternative, subsequently denoted \emph{canonical}, formulati
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------
-If follows from \cref{eq51} that the new variable $\bar{e}$ obtains the value $\bar{e} = \homgen{\hat{e}(p)}$.
+If follows from \cref{eq51} that the new variable $\bar{e}$ correctly obtains the value $\bar{e} = \homgen{\hat{e}(p)}$ in accordance with \cref{eq33b}.
 To show this result, we first use the divergence theorem to obtain the identities
 %--------------------------------------------------------------------------------------------------------
 \begin{align}
@@ -1532,11 +1532,15 @@ The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 In order to establish a suitable variational setting we replace the solution space $\set{U}_\rve$ with $\set{U}_\rve^\Dirichlet\subseteq\set{U}_\rve$ defined as
 %----------------------------------------------------------------------------
 \begin{align}
-    \set{U}_\rve^\Dirichlet &= \{\ta{v}\in \set{U}_\rve \,|\,\, \exists(\check{\ts\epsilon}_\dev,\check{e}, \ta v^\fluct)\in\set{R}^{3\times3}_\dev \times\set{R}\times\set{U}_\rve^{\Dirichlet,\fluct} \text{ s.t. }
-    \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct \}
+    \set{U}_\rve^\Dirichlet &= \{\ta{v} \,|\,\, \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct, (\check{\ts\epsilon}_\dev,\check{e}, \ta v^\fluct)\in\set{R}^{3\times3}_\dev \times\set{R}\times\set{U}_\rve^{\Dirichlet,\fluct} \}
+% %
+%     \set{U}_\rve^\Dirichlet &= \{\ta{v}\in \set{U}_\rve \,|\,\, \exists(\check{\ts\epsilon}_\dev,\check{e}, \ta v^\fluct)\in\set{R}^{3\times3}_\dev \times\set{R}\times\set{U}_\rve^{\Dirichlet,\fluct} \text{ s.t. }
+%     \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct \}
+% %
 %     \set{U}_\rve^\Dirichlet &= \{\ta{v} \,|\,\, \exists(\check{\ts\epsilon}_\dev,\check{e})\in\set{R}^{3\times3}_\dev \times\set{R} \text{ s.t. }
 %     \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct, \ta{v}^\fluct \in \set{U}_\rve^\fluct, \ta{v}^\fluct = \ta 0\text{ on } \Gamma_\rve \}
 \label{eq61a} \\
+\intertext{where}
     \set{U}_\rve^{\Dirichlet,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \ta{v}=\ta{0} \text{ on } \Gamma_\rve \}
 \label{eq61b}
 \end{align}
@@ -1812,7 +1816,7 @@ Since $d_\rve(\ta 0, \bullet) = 0$, \cref{eq:macro_homogeneity_original_a} is va
 
 
 \subsection{Macroscale tangent relations}
-In order to solve the (generally nonlinear) macroscale problem \cref{eq17} in the FE\textsuperscript{2}-setting using Newton iterations, we need the pertinent tangent tensors.
+In order to solve the (generally nonlinear) macroscale problem \cref{eq17} in the FE\textsuperscript{2}-setting using Newton iterations, we need the pertinent tangent operators.
 Linearizing the implicit relations $\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev,\bar{p}\}$ and $\bar{e}\{\bar{\ts\epsilon}_\dev,\bar{p}\}$ we obtain
 \begin{align}
  \dif\bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \dif\bar{\ts\epsilon}_\dev + \bar{\ts E}\, \dif\bar{p},
@@ -1821,12 +1825,11 @@ Linearizing the implicit relations $\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev
 \label{eq:periodic_difsigma}
 \end{align}
 thereby defining the tangents $\bar{\tf E}$ (4th order), $\bar{\ts E}$ (2nd order), $\bar{\ts C}$ (2nd order), and $\bar{C}$ (scalar).
+Since a potential exists, it follows that $\bar{\tf {E}}$ is symmetric and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{Ohman2013a}.
 
 In order to compute the tangent operators, it is necessary to first compute the relevant sensitivity fields w.r.t.\ changes of the macroscale variables $\bar{\ts\epsilon}_\dev$ and $\bar{p}$, and they are solved from the pertinent tangent problem.
-On should then note that the particular sensitivity fields that are actually exploited (and needed) and the corresponding explicit formulation of the tangent problem depend on the chosen formulation of the RVE-problem of the RVE-problem (in terms of the boundary conditions: Weakly Periodic, Dirichlet, Neumann). 
+On should then note that the particular sensitivity fields that are actually exploited (and needed) and the corresponding explicit formulation of the tangent problem depend on the chosen formulation of the RVE-problem (in terms of the boundary conditions: Weakly Periodic, Dirichlet, Neumann). 
 Here, we shall give details only on the ``generic'' choice of the weakly periodic conditions.
-
-\textbf{Remark}: It can be shown that the tangents must be symmetric, and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{Ohman2013a}. $\Box$
 
 \textbf{Remark}: In the case of macroscale incompressibility, $\bar{\ts C}$ and $\bar{C}$ will vanish. $\Box$
 
@@ -1864,13 +1867,13 @@ Examples of such (generally unsymmetric) dyads with Cartesian components, are
 \end{gathered}
 \end{equation}
 with respect to this basis, we have the representation
-\begin{align}
+\begin{gather}
  \ts\epsilon_\dev = \sum_k (\ts\epsilon_\dev)_k \, \ts G_k,\quad 
- \ts\sigma_\dev = \sum_k (\ts\sigma_\dev)_k \, \ts G_k
+ (\ts\epsilon_\dev)_k = \ts G_k \dprod \ts\epsilon_\dev
 \\
- (\ts\epsilon_\dev)_k = \ts G_k \dprod \ts\epsilon_\dev,\quad
+ \ts\sigma_\dev = \sum_k (\ts\sigma_\dev)_k \, \ts G_k,\quad
  (\ts\sigma_\dev)_k = \ts G_k \dprod \ts\sigma_\dev
-\end{align}
+\end{gather}
 % Hence, the component form of \cref{eq:periodic_difsigma} becomes
 % \begin{align}
 %  (\dif\ts\sigma_\dev)_i = \sum_k (\bar{\tf E})_{ik} (\dif\bar{\ts\epsilon}_\dev)_k + (\bar{\ts E})_i\dif\bar{p}
@@ -1896,7 +1899,7 @@ Next, we express the pertinent sensitivities via the representations
 \end{subequations}
 We thus obtain the following sets of tangent problems:
 \begin{itemize}
- \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, 8$, solve the sensitivities $\ta{u}_\ded^{(k)}$, $p_\ded^{(k)}$, $\ta{t}_{\ded}^{(k)}$, $\bar{e}_\ded^{(k)}$ from the system 
+ \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, 8$, solve for the sensitivities $\ta{u}_\ded^{(k)}$, $p_\ded^{(k)}$, $\ta{t}_{\ded}^{(k)}$, $\bar{e}_\ded^{(k)}$ from the system 
 \end{itemize}
 \begin{subequations}\label{eq:p_sensitivities_d}
 \begin{alignat}{3}
@@ -1914,7 +1917,7 @@ We thus obtain the following sets of tangent problems:
 \end{alignat}
 \end{subequations}
 \begin{itemize}
-\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve the sensitivities $\ta{u}_\dep$, $p_\dep$, $\ta{t}_\dep$, $\bar{e}_\dep$ from the system 
+\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve for the sensitivities $\ta{u}_\dep$, $p_\dep$, $\ta{t}_\dep$, $\bar{e}_\dep$ from the system 
 \end{itemize}
 \begin{subequations}\label{eq:p_sensitivities_p}
 \begin{alignat}{3}
@@ -1932,14 +1935,14 @@ We thus obtain the following sets of tangent problems:
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
-Now, upon linearizing \cref{eq:weak_periodic_sigma_dev} and using the representation for $\dif\ta t$ in \cref{eq:periodic_dif_t} to obtain
+Now, upon linearizing \cref{eq:weak_periodic_sigma_dev} and using the representation for $\dif\ta t$ in \cref{eq:periodic_dif_t} we obtain
 \begin{align}
     \dif\bar{\ts\sigma}_{\dev}
     & =
     \frac{1}{\volume} \int_{\Gamma_\Box^+} \dif\ts t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \dif\bar{p}\ts I
 \\
     &= 
-    \underbrace{\frac{1}{\volume} \int_{\Gamma_\Box^+} \ts t_\ded^{(k)} \outerp \jmp{\ta x - \bar{\ta x}}\dif S\outerp \ts G_k}_{\bar{\tf E}}\dprod\dif\bar{\ts\epsilon}_\dev + 
+    \underbrace{\sum_k \frac{1}{\volume} \int_{\Gamma_\Box^+} \ts t_\ded^{(k)} \outerp \jmp{\ta x - \bar{\ta x}}\dif S\outerp \ts G_k}_{\bar{\tf E}}\dprod\dif\bar{\ts\epsilon}_\dev + 
     \underbrace{\left[\frac{1}{\volume} \int_{\Gamma_\Box^+} \ts t_\dep \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \ts I \right]}_{\bar{\ts E}}\dif\bar{p}
 \end{align}
 Directly from \cref{eq:periodic_dif_ebar}, we obtain
@@ -1949,23 +1952,20 @@ Directly from \cref{eq:periodic_dif_ebar}, we obtain
 
 Macroscale tangent relations for the Dirichlet and Neumann boundary conditions are detailed in \Cref{appendix:sensitivity}.
 
-\subsection{Bounds on the effective energy density}
+\subsection{Bounds on the homogenized energy density}
 
 Since we have derived the Dirichlet and Neumann problems by respectively restricting the solution spaces as
 \begin{align}
- \set{V}_\rve^\Dirichlet \subset \set{V}_\rve,\quad \set{T}_\rve^\Neumann \subset \set{T}_\rve
+ \set{U}_\rve^\Dirichlet \subset \set{U}_\rve,\quad \set{T}_\rve^\Neumann \subset \set{T}_\rve
 \end{align}
 it follows from \cref{eq:dirichlet_energy}, \cref{eq:neumann_energy}, and \cref{eq:periodic_energy} that
 \begin{align}
  \bar\psi^\Dirichlet_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\} \geq \bar\psi\{\bar{\ts\epsilon}_\dev, \bar {p}\} \geq \bar\psi^\Neumann\{\bar{\ts\epsilon}_\dev, \bar {p}\}.
 \end{align}
 In other words, the Dirichlet and Neumann boundary conditions represent upper and lower bounds
-on the effective energy density for any given realization of the RVE and a given macroscale state $(\bar{\ts\epsilon}_\dev, \bar{p})$.
+on the homogenized energy density that is obtained with periodic boundary conditions for any given realization of the RVE and a given macroscale state $(\bar{\ts\epsilon}_\dev, \bar{p})$.
 
-{\color{red}\textbf{!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! it is only bounds for the periodic b.c.!}}
-
-
-In the case of linear elasticity, the tangent operators represent the consistent upscaled effective operators in the representations
+In the case of linear elasticity, the tangent operators represent the upscaled (=homogenized) constant operators in the representations
 \begin{align}
  \bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \bar{\ts\epsilon}_\dev + \bar{\ts E}\, \bar{p}, \quad \bar{e} = \bar{\ts C}\dprod\bar{\ts\epsilon}_\dev + \bar{C}\,\bar{p}
 \end{align}
@@ -2463,10 +2463,10 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
-which must hold for any given $(\dif\bar{\ts\epsilon}_\dev)_k$ and $\dif\bar{p}$.
+which must hold for any given $\dif\bar{\ts\epsilon}_\dev$ and $\dif\bar{p}$.
 We thus consider the cases
 \begin{itemize}
- \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$ (with $\ta u^{\macro(k)}_\dev \defeq \ts G_k \cdot[\ta x - \bar{\ta x}]$): For $k = 1, \ldots, 8$, solve the sensitivities $\ta u_\ded^{\fluct(k)}$, $p_\ded^{(k)}$, $\bar{e}_{\ded}^{(k)}$ from the system 
+ \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$ (with $\ta u^{\macro(k)}_\dev \defeq \ts G_k \cdot[\ta x - \bar{\ta x}]$): For $k = 1, \ldots, 8$, solve for the sensitivities $\ta u_\ded^{\fluct(k)}$, $p_\ded^{(k)}$, $\bar{e}_{\ded}^{(k)}$ from the system 
 \end{itemize}
 \begin{subequations}\label{eq:d_sensitivities_d}
 \begin{alignat}{3}
@@ -2482,7 +2482,7 @@ We thus consider the cases
 \end{subequations}
 
 \begin{itemize}
-\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve the sensitivities $\ta u_\dep^\fluct$, $p_\dep$, $\bar{e}_{\dep}$ from the system 
+\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve for the sensitivities $\ta u_\dep^\fluct$, $p_\dep$, $\bar{e}_{\dep}$ from the system 
 \end{itemize}
 \begin{subequations}\label{eq:d_sensitivities_p}
 \begin{alignat}{3}
@@ -2497,7 +2497,7 @@ We thus consider the cases
 \end{alignat}
 \end{subequations}
 
-Upon using the identity $\bar{\ts\sigma}=\frac{1}{\volume} \int_{\Gamma_\Box} \ts t \outerp [\ta x - \bar{\ta x}]\dif S$, we deduce the component sensitivity
+Upon using the identity $\bar{\ts\sigma}=\frac{1}{\volume} \int_{\Gamma_\Box} \ts t \outerp [\ta x - \bar{\ta x}]\dif S$, we deduce the tangent operators from
 %---------------------------------------------------------------------------------------
 \begin{align}
     \dif\bar{\ts\sigma}_\dev
@@ -2517,7 +2517,7 @@ Upon using the identity $\bar{\ts\sigma}=\frac{1}{\volume} \int_{\Gamma_\Box} \t
     \dif\bar{p}
 \end{align}
 %---------------------------------------------------------------------------------------
-Sensitivities for the volumetric strain are obtain directly from sensitivity analysis
+Tangent operators associated with $\bar{e}$ are obtained directly from sensitivity analysis
 \begin{align}
  \dif\bar{e} = \underbrace{\sum_k \bar{e}_\ded^{(k)} \ts G_k}_{\bar{\ts C}} \dprod \dif\bar{\ts\epsilon}_\dev + \underbrace{\bar{e}_\dep}_{\bar{C}} \dif\bar{p}
 \end{align}
@@ -2537,10 +2537,10 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
     & \quad & \forall \delta\bar{\ts\sigma}_\dev &&\in\set{R}^{3\times3}_\dev
 \end{alignat}
 \end{subequations}
-which must hold for any given $\dif\bar{\epsilon}_{\dev,i}$ and $\dif\bar{p}$.
+which must hold for any given $\bar{\ts\epsilon}_\dev$ and $\dif\bar{p}$.
 We thus consider the cases
 \begin{itemize}
- \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, 8$, solve the sensitivities $\ta u_\ded^{(k)}$, $p_\ded^{(k)}$, $\bar{\ts\sigma}_{\dev,\ded}^{(k)}$ from the system 
+ \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, 8$, solve for the sensitivities $\ta u_\ded^{(k)}$, $p_\ded^{(k)}$, $\bar{\ts\sigma}_{\dev,\ded}^{(k)}$ from the system 
 \end{itemize}
 \begin{subequations}\label{eq:n_sensitivities_d}
 \begin{alignat}{3}
@@ -2555,7 +2555,7 @@ We thus consider the cases
 \end{alignat}
 \end{subequations}
 \begin{itemize}
-\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve the sensitivities $\ta u_\dep$, $p_\dep$, $\bar{\ts\sigma}_{\dev,\dep}$ from the system 
+\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve for the sensitivities $\ta u_\dep$, $p_\dep$, $\bar{\ts\sigma}_{\dev,\dep}$ from the system 
 \end{itemize}
 \begin{subequations}\label{eq:n_sensitivities_p}
 \begin{alignat}{3}
@@ -2570,12 +2570,12 @@ We thus consider the cases
 \end{alignat}
 \end{subequations}
 
-Sensitivities for stress are obtained directly from the solution
+Directly from the solution we obtain tangent operators associated with $\bar{\ts\sigma}_\dev$:
 \begin{align}
  \dif\bar{\ts\sigma}_\dev = \underbrace{\sum_k \bar{\ts\sigma}_{\dev,\ded}^{(k)} \outerp \ts G_k }_{\bar{\tf E}}\dprod \dif\bar{\ts\epsilon}_\dev + \underbrace{\bar{\ts\sigma}_{\dev,\dep}}_{\bar{\ts E}} \dif\bar{p}
 \end{align}
 
-For the sensitivities of the volumetric strain, we have
+For tangent operators associated with $\bar{e}$, we obtain
 %---------------------------------------------------------------------------------------
 \begin{align}
     \dif\bar{e}
