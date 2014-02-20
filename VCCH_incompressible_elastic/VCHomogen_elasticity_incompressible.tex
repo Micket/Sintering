@@ -124,17 +124,26 @@ Computational homogenization is a well-established approach in material modeling
 Such an approach can be applied to the situation when the intrinsic material properties are linear, leading to direct ``upscaling''.
 It can also be applied to the more complex situation when the subscale properties are nonlinear and/or the subscale problem is inherently transient, whereby it is necessary to resort to nested macro-subscale computation (FE\textsuperscript{2}).
 Since the literature on classical as well as computational homogenization is abundant, it is not possible to give a comprehensive account.
-Among the seminal work on computational homogenization, we mention \textsc{Miehe et al. (1999)} \cite{Mieheetal1999}, 
+Among the seminal work on computational homogenization, we mention early work by
+\textsc{Namet-Nasser \& Hori (1993)} \cite{NametNasserHori1993}, 
+\textsc{Miehe et al. (1999)} \cite{Mieheetal1999}, 
+\textsc{Hazanov \& Huet (1994)} \cite{Hazanovetal1994},
+\textsc{Fish et al. (1997,2006)} \cite{Fishetal1997}, \cite{Fish2006},
 %\textsc{Zohdi \& Wriggers (2005)} \cite{ZohdiWriggers2005},
-\cite{Fillepetal2013a},
-\cite{Larsson_etal2011},
-\cite{Fish2006}, \cite{Fishetal1997},
-\cite{Geersetal2009},\cite{Ozdemiretal2008},
-\cite{Hazanovetal1994},
-\cite{Klinge2012},
-\cite{Lindfeldt???}
-.
-Despite the extensive developments, there are still unresolved fundamental issues regarding, for example, (i) variational consistency and the macrohomogeneity condition, (ii) selective homogenization (in particular, for multi-field problems), (iii) how to establish bounds on the effective properties within a given confidence interval, and (iv) rigid inclusions (or pores) in a deformable matrix, for which the classical Dirichlet and Neumann conditions may break down, cf.\  \textsc{Larsson (2013)} \cite{Lar2013} USNCCM.
+and more recent work by
+\textsc{Fillep et al. (2013)} \cite{Fillepetal2013a},
+\textsc{Larsson et al. (2008,2011)} \cite{Larsson_etal2011} \cite{FLKR_2011},
+\textsc{Geers et al. (2009)} \cite{Geersetal2009},
+\textsc{\"Ozdemir et al. (2008)} \cite{Ozdemiretal2008},
+\textsc{Klinge et al. (2012)} \cite{Klinge2012},
+\textsc{Lindfeldt et al. (2013)} \cite{Lindfeldt???},
+\textsc{Ostoja (2006)} \cite{Ostoja2006},
+\textsc{Temizer et al. (2008)} \cite{TemizerWriggers2008},
+\textsc{Fish \& Yuan (2008)} \cite{FishYuan2007}.
+
+Despite the extensive developments, there are still unresolved fundamental issues regarding, for example, (i) variational consistency and the macrohomogeneity condition,
+(ii) selective homogenization (in particular, for multi-field problems) (cf. \cite{Sandstrom_2012}),
+(iii) how to establish bounds on the effective properties within a given confidence interval, and (iv) high contrast material properties of the constituents (e.g. rigid inclusions or pores) in a for which the classical Dirichlet and Neumann conditions give poor results.
 
 The particular aspect considered in this paper, which represents an unresolved issue even in the simplest case of elastic response, is that of Variationally Consistent Homogenization (VCH) in the limit of incompressible micro-constituents.
 This situation is encountered when the micro-constituents of a composite are intrinsically incompressible (or nearly incompressible), which infers macroscale incompressibility as well.
@@ -342,7 +351,7 @@ where the RVE-functionals in \crefrange{eq7a}{eq7d} are defined as
 \label{eq8d}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
-Likewise, we homogenize the volumetric energy potential $\Lambda(\ta{u},p)$:
+Likewise, we homogenize the volume-specific energy potential $\Lambda(\ta{u},p)$:
 %----------------------------------------------------------------------------
 \begin{align}
     \Lambda(\ta{v},q) &\approx \int_\Omega \Lambda_\rve(\ta{v},q) \dif V
@@ -375,7 +384,7 @@ As a result, we may assume that it is possible solve for the fluctuation fields 
 \end{alignat}
 \end{subequations}
 %------------------------------------------------------------------------------------------------------------
-On the boundary of the macroscale domain, $\Gamma$, we assume smooth variation of $\ta{u}$ defined as by the explicit relations $\ta u = \ta u^\macro$, $p = p^\macro$ on $\gamma_\rve$.
+On the boundary of the macroscale domain, $\Gamma$, we assume smooth variation of $\ta{u}$ defined by the explicit relations $\ta u = \ta u^\macro$, $p = p^\macro$ on $\gamma_\rve$.
 
 
 In addition, the test function $\delta\ta{u}\in\set{U}^{0}$ in \cref{eq2a} is replaced by $\delta\ta{u}^\macro\in\set{U}^{\macro,0}$, whereas $\delta p\in\set{P}$ in \cref{eq2b} is replaced by $\delta p^\macro\in\set{P}^{\macro}$.
@@ -1620,9 +1629,6 @@ Hence, we replace the saddle-point problem by
     \hat{\bar{e}}\in\set{R}
     }
     \Pi_\rve^\Dirichlet(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}}^\fluct,\hat{p},\hat{\bar{e}})
-%\nonumber \\
-%    &=& \inf_{\hat{\ta{u}}^\fluct\in\set{U}^{\Dirichlet,\fluct}} \sup_{\hat{p}\in\set{P} \hat{\ta{t}}\in\set{T}} \inf_{\hat{\bar{e}}\in\set{R}}
-%    \left[\Lambda_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\hat{\bar{e}}\ta{x}_\mean+\hat{\ta{u}}^\fluct,\hat{p}) - \bar{p}\,\hat{\bar{e}}\right]
 \label{eq93a}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
@@ -1718,13 +1724,6 @@ The generalized saddle-point problem \cref{eq:periodic_energy} can then be rephr
     \hat{\bar{e}}\in\set{R}
     }
     \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\left[\check{\ts\sigma}_\dev-\check{p}\ts{I}\right]\cdot\ta{n},\hat{\bar{e}})
-%\nonumber \\
-%    &=& \inf_{\tilde{\ta{u}}\in\set{U}_\rve} \sup_{\tilde{p}\in\set{P} \tilde{\ta{t}}\in\set{T}} \inf_{\check{e}\in\set{R}}
-%    \left[\Lambda_\rve(\tilde{\ta{u}},\tilde{p}) - \bar{p}\,\check{e} +\right.
-%\nonumber \\
-%    && \left.
-%    d_\rve(\left[\check{\ts\sigma}_\dev-\check{p}\ts{I}\right]\cdot\ta{n},\tilde{\ta{u}}-\bar{\ts\epsilon}_\dev\cdot
-%    [\ta{x}-\bar{\ta{x}}]-\check{e}\ta{x}_\mean)\right]
 \label{eq:neumann_energy}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
@@ -1834,7 +1833,7 @@ Linearizing the implicit relations $\bar{\ts\sigma}_\dev\{\bar{\ts\epsilon}_\dev
 \label{eq:periodic_difsigma}
 \end{align}
 thereby defining the tangents $\bar{\tf E}$ (4th order), $\bar{\ts E}$ (2nd order), $\bar{\ts C}$ (2nd order), and $\bar{C}$ (scalar).
-Since a potential exists, it follows that $\bar{\tf {E}}$ is symmetric and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{Ohman2013a}.
+Since a potential exists, it follows that $\bar{\tf {E}}$ possesses major symmetry and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{Ohman2013a}.
 
 In order to compute the tangent operators, it is necessary to first compute the relevant sensitivity fields w.r.t.\ changes of the macroscale variables $\bar{\ts\epsilon}_\dev$ and $\bar{p}$, and they are solved from the pertinent tangent problem.
 On should then note that the particular sensitivity fields that are actually exploited (and needed) and the corresponding explicit formulation of the tangent problem depend on the chosen formulation of the RVE-problem (in terms of the boundary conditions: Weakly Periodic, Dirichlet, Neumann). 
@@ -1944,7 +1943,7 @@ We thus obtain the following sets of tangent problems:
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \end{alignat}
 \end{subequations}
-Now, upon linearizing \cref{eq:weak_periodic_sigma_dev} and using the representation for $\dif\ta t$ in \cref{eq:periodic_dif_t} we obtain
+Now, upon linearizing \cref{eq:weak_periodic_sigma_dev} and using the representation for $\dif\ta t$ in \cref{eq:periodic_dif_t}, we obtain
 \begin{align}
     \dif\bar{\ts\sigma}_{\dev}
     & =
@@ -1972,7 +1971,7 @@ it follows from \cref{eq:dirichlet_energy}, \cref{eq:neumann_energy}, and \cref{
  \bar\psi^\Dirichlet_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\} \geq \bar\psi\{\bar{\ts\epsilon}_\dev, \bar {p}\} \geq \bar\psi^\Neumann\{\bar{\ts\epsilon}_\dev, \bar {p}\}.
 \end{align}
 In other words, the Dirichlet and Neumann boundary conditions represent upper and lower bounds
-on the homogenized energy density that is obtained with periodic boundary conditions for any given realization of the RVE and a given macroscale state $(\bar{\ts\epsilon}_\dev, \bar{p})$.
+on the homogenized energy density that is obtained with periodic boundary conditions for any given realization of the RVE and for a given macroscale state $(\bar{\ts\epsilon}_\dev, \bar{p})$.
 
 In the case of linear elasticity, the tangent operators represent the upscaled (=homogenized) constant operators in the representations
 \begin{align}
@@ -2292,10 +2291,10 @@ With the introduced approximation $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}
 % \label{eq:A12}
 % \end{equation}
 
-\subsection{Effective macroscale energy}
+\subsection{Homogenized macroscale energy}
 \label{appendix:macroEnergy}
 
-In order to show that $\bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\}$ serves as the ``effective energy density'' for $\bar{\ts\sigma}_\dev$ and $\bar{e}$, expressed by the relations \cref{eq88}, we first recall the identity
+In order to show that $\bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\}$ serves as the ``homogenized energy density'' for $\bar{\ts\sigma}_\dev$ and $\bar{e}$, expressed by the relations \cref{eq88}, we first recall the identity
 \begin{align}
  \bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\} = \Pi_\rve(\bar{\ts\epsilon}_\dev, \bar{p}; \ta u\epspargs, p\epspargs, \ta t\epspargs, \bar{e}\epspargs)
 \end{align}
@@ -2473,7 +2472,7 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
 \end{alignat}
 \end{subequations}
 which must hold for any given $\dif\bar{\ts\epsilon}_\dev$ and $\dif\bar{p}$.
-We thus consider the cases
+We thus consider the cases:
 \begin{itemize}
  \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$ (with $\ta u^{\macro(k)}_\dev \defeq \ts G_k \cdot[\ta x - \bar{\ta x}]$): For $k = 1, \ldots, 8$, solve for the sensitivities $\ta u_\ded^{\fluct(k)}$, $p_\ded^{(k)}$, $\bar{e}_{\ded}^{(k)}$ from the system 
 \end{itemize}
@@ -2526,7 +2525,7 @@ Upon using the identity $\bar{\ts\sigma}=\frac{1}{\volume} \int_{\Gamma_\Box} \t
     \dif\bar{p}
 \end{align}
 %---------------------------------------------------------------------------------------
-Tangent operators associated with $\bar{e}$ are obtained directly from sensitivity analysis
+Tangent operators associated with $\bar{e}$ are obtained directly from the sensitivity analysis
 \begin{align}
  \dif\bar{e} = \underbrace{\sum_k \bar{e}_\ded^{(k)} \ts G_k}_{\bar{\ts C}} \dprod \dif\bar{\ts\epsilon}_\dev + \underbrace{\bar{e}_\dep}_{\bar{C}} \dif\bar{p}
 \end{align}
@@ -2547,7 +2546,7 @@ Using the perturbations $\bar{\ts\epsilon}_{\dev} + \dif\bar{\ts\epsilon}_{\dev}
 \end{alignat}
 \end{subequations}
 which must hold for any given $\bar{\ts\epsilon}_\dev$ and $\dif\bar{p}$.
-We thus consider the cases
+We thus consider the cases:
 \begin{itemize}
  \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, 8$, solve for the sensitivities $\ta u_\ded^{(k)}$, $p_\ded^{(k)}$, $\bar{\ts\sigma}_{\dev,\ded}^{(k)}$ from the system 
 \end{itemize}
