@@ -47,7 +47,7 @@
 
 \usepackage{tikz, pgfplots}
 \usetikzlibrary{arrows}
-
+\pgfplotsset{compat=1.9}
 % \renewcommand{\vec}[1]{\mathds{#1}}
 % \renewcommand{\mat}[1]{\mathds{#1}}
 
@@ -89,6 +89,7 @@
 \newcommand{\volume}{|\Omega_\rve|}
 \newcommand{\ded}{\mathrm{d}}
 \newcommand{\dep}{\mathrm{p}}
+\newcommand{\Periodic}{\mathrm{P}}
 
 \newcommand{\epspargs}{\{{\bar{\ts\epsilon}}_\dev, \bar{p}\}}
 
@@ -681,11 +682,11 @@ $\bar{\ts\tau} = \homgen{\ts\tau}$.
 We also conclude that 
 \begin{align}
 d_\rve(\bar{\ts\tau}\cdot \ta n, \ta u^\fluct) = 0\quad \forall\ta u^\fluct\in\set{U}_\rve^\fluct,\;\bar{\ts\tau}\in\set{R}^{3\times3}.
+\label{eq:dtauu0}
 \end{align}
 As a direct consequence \cref{eq:t_average}, we may introduce the unique split
 \begin{align}
- \ta t = \bar{\ts\tau}[\ta t]\cdot\ta n + [\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n],\quad \ta t\in \set{T}_\rve
- \Leftrightarrow \ta t = \bar{\ts\tau}\cdot\ta n + \ta t^\fluct,\quad \bar{\ts\tau}\in \set{R}^{3\times3},\;\ta t^\fluct\in \set{T}_\rve^\fluct
+ \ta t = \bar{\ts\tau}\cdot\ta n + \ta t^\fluct,\quad \bar{\ts\tau}\in \set{R}^{3\times3},\;\ta t^\fluct\in \set{T}_\rve^\fluct
 \label{eq:t_split}
 \end{align}
 where $\set{T}_\rve^\fluct$ is the space of the traction fluctuations that are self-equilibrating and thus defined as
@@ -693,9 +694,25 @@ where $\set{T}_\rve^\fluct$ is the space of the traction fluctuations that are s
  \set{T}_\rve^\fluct &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \,| \quad \bar{\ts\tau}[\ta s] = \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ta{0} \}
  \label{eq28c}
 \end{align}
+% C1:
+Utilizing this split, we use the fact that 
+\begin{align}
+d_\rve(\ta t,\delta\ta u^\fluct) = d_\rve(\ta t^\fluct, \delta\ta u^\fluct)\quad \forall\delta\ta u^\fluct \in\set{U}_\rve^\fluct
+\end{align}
+following from \cref{eq:dtauu0}.
+% C2:
+The proof of the uniqueness of \cref{eq28c} follows from considering 
+\begin{align}
+\ta t = \bar{\ts\tau}[\ta t]\cdot\ta n + [\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n]
+\end{align}
+and the fact that
+\begin{align}
+ \bar{\ts\tau}[\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\ta t] = 0
+\end{align}
+Hence, $\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\rve^\fluct$ which concludes the proof.
 In order to obtain establish the RVE-problem, we shall also use the identity
 \begin{equation}
-    b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct), \,\,\forall \delta p^\fluct\in\set{P}_\rve^\fluct
+    b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct) \quad\forall \delta p^\fluct\in\set{P}_\rve^\fluct
 \label{eq27c}
 \end{equation}
 whereby it is noted that the macroscale part of $\ta{u}$ is ``filtered out''.
@@ -1581,14 +1598,15 @@ size n_mean n_var
 
 In the second example, we show how the homogenization scheme can seamlessly handle both compressible and incompressible materials.
 Here, incompressible spherical inclusions, defined by $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 10 G_\mathrm{mat}\ts\epsilon_\dev$ and $\hat{e}(p) = 0$, are embedded in a matrix material defined by $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 2 G_\mathrm{mat}\ts\epsilon_\dev$ and $\hat{e}(p) = - C_\mathrm{mat}\,p$.
-Results from varying the $C_\mathrm{mat}$ in a single RVE subject to  are shown in \cref{fig:RVE_compressibility}.
-When $C_\mathrm{mat} = 0$, macroscopic incompressibility is obtained which is reflected by $\bar{C} = 0$.
-We note that also the macroscale shear modulus $\bar{G}$ is effected.
-The RVE microstructure for \cref{fig:RVE_compressibility} is shown in \cref{fig:RVE_sample}.
+Results from varying the $C_\mathrm{mat}$ in a single RVE subject to Dirichlet boundary condition are shown in \cref{fig:RVE_compressibility}.
 Poisson's ratio can be computed from the parameters $G$ (shear elasticity modulus) and $C$ (bulk compliance modulus) according to
 \begin{align}
  \nu = \frac{3-2 C G}{6 + 2 C G}
 \end{align}
+where selected values have been been marked in \cref{fig:RVE_compressibility}.
+With $C_\mathrm{mat} = 0$ macroscopic incompressibility is also obtained (defined by $\bar{C} = 0$).
+We note that also the macroscale shear modulus $\bar{G}$ is effected.
+The microstructure for the RVE in \cref{fig:RVE_compressibility} is shown in \cref{fig:RVE_sample}.
 
 The homogenization scheme seamlessly handles the transition from $C_\mathrm{mat} = 0$ to $C_\mathrm{mat} > 0$ without having to perform any other changes than the material parameter.
 
@@ -1596,25 +1614,41 @@ The homogenization scheme seamlessly handles the transition from $C_\mathrm{mat}
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-  \begin{axis}[ width=0.45\linewidth, height=0.3\linewidth, xlabel=$C_\mathrm{mat}\times G_\mathrm{mat}$, ylabel=$\bar{C}\times G_\mathrm{mat}$,
-    extra x ticks={1.0,0.8, 0.5,0.3,0.1},
+  \begin{axis}[ width=0.45\linewidth, height=0.3\linewidth,
+    xlabel=$C_\mathrm{mat}\times G_\mathrm{mat}$,
+    ylabel=$\bar{C}\times G_\mathrm{mat}$,
+    extra x ticks={1.09091, 0.75000, 0.46154, 0.21429, 0.00000},
     extra x tick labels={0.1, 0.2, 0.3, 0.4, 0.5}, 
     every extra x tick/.style = {
         xticklabel style = {name=name label},
         xtick pos = right,
-        xticklabel pos = upper,
+        xticklabel pos = right,
         xtick align = outside
     }
     ]
   \addplot table[color=blue,x=M,y=C] {macro_k9.matdata};
   \end{axis}
+  \node at (2.8,4.4) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
 \begin{tikzpicture}
-  \begin{axis}[ width=0.45\linewidth, height=0.3\linewidth, xlabel=$C_\mathrm{mat}\times G_\mathrm{mat}$, ylabel=$\bar{G}/G_\mathrm{mat}$]
+  \begin{axis}[ width=0.45\linewidth, height=0.3\linewidth,
+    xlabel=$C_\mathrm{mat}\times G_\mathrm{mat}$,
+    ylabel=$\bar{G}/G_\mathrm{mat}$,
+    extra x ticks={1.09091, 0.75000, 0.46154, 0.21429, 0.00000},
+    extra x tick labels={0.1, 0.2, 0.3, 0.4, 0.5}, 
+    every extra x tick/.style = {
+        xticklabel style = {name=name label},
+        xtick pos = right,
+        xticklabel pos = right,
+        xtick align = outside
+    }
+    ]
   \addplot table[color=blue,x=M,y=G] {macro_k9.matdata};
+  \node at (0.5,0.5) { $\nu_\mathrm{mat}$ };
   \end{axis}
+  \node at (2.8,4.4) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
-\caption{Homogenized results from a single RVE subject to Dirichlet boundary condition and varying the matrix material compressibility ($C_\mathrm{mat}$).}
+\caption{Homogenized results from a single RVE subject to Dirichlet boundary condition and varying the matrix material compressibility ($C_\mathrm{mat}$) while keeping all other parameters fixed.}
 \label{fig:RVE_compressibility}
 \end{figure}
 
@@ -1622,7 +1656,7 @@ The homogenization scheme seamlessly handles the transition from $C_\mathrm{mat}
 \centering
  \includegraphics[width=0.45\linewidth]{rve9.png}
  \includegraphics[width=0.45\linewidth]{rve9_inc.png}
-\caption{RVE with incompressible inclusions in a compressible matrix.}
+\caption{RVE with dimensions $9\times9\times9$ with incompressible inclusions in a (in)compressible matrix.}
 \label{fig:RVE_sample}
 \end{figure}
 
@@ -1638,7 +1672,20 @@ The proposed method is required whenever an RVE exhibit near or complete incompr
 
 
 The computational cost of the Neumann boundary condition is equivalent to that of the classical (compressible) Neumann boundary condition.
-The Dirichlet boundary condition requires an additional (global) unknown to relax the volumetric deformation, which has a noticeable computational cost compared to the classical (compressible) Dirichlet boundary condition.
+The Dirichlet boundary condition requires a global unknown to relax the macroscopic volumetric deformation, which has a significant computational cost compared to the classical (compressible) Dirichlet boundary condition.
+The weakly periodic boundary condition has a has a large computational cost (depending heavily on the choice of discretization of $\set T_\rve$), so the bounds given by the Dirichlet and Neumann boundary condition is likely to be the most efficient solution for FE\textsuperscript{2} simulations.
+
+
+Due to the difficult procedure of constructing basis functions for $\set T_\rve$ for 3D geometries, the current implementation relies on global polynomials where the computational cost drastically increased with the order of the polynomials while only showing a marginal improvement compared to the Neumann boundary condition.
+As a possible alternative, it is straight forward to derive a strongly periodic boundary condition by replacing \cref{eq61b} with
+\begin{align}
+    \set{U}_\rve^{\Periodic,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \jmp{\ta{v}}=\ta{0} \text{ on } \Gamma_\rve \}
+\end{align}
+and performing the steps following up to \cref{eq:weak_form_dirichlet}.
+While such implemented wouldn't need costly Lagrange multipliers for $\set{T}_\rve$, it instead requires a meshing software capable of creating periodic meshes.
+
+The implementation of all three boundary conditions is available in the open source C++ code OOFEM (\texttt{www.oofem.org}) under the name \texttt{MixedGradientPressure}.
+
 %\clearpage
 %\printbibliography
 
