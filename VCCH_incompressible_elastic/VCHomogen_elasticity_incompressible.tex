@@ -47,7 +47,7 @@
 
 \usepackage{tikz, pgfplots}
 \usetikzlibrary{arrows}
-\pgfplotsset{compat=1.9}
+\pgfplotsset{compat=1.6}
 % \renewcommand{\vec}[1]{\mathds{#1}}
 % \renewcommand{\mat}[1]{\mathds{#1}}
 
@@ -125,33 +125,41 @@ Computational homogenization is a well-established approach in material modeling
 Such an approach can be applied to the situation when the intrinsic material properties are linear, leading to direct ``upscaling''.
 It can also be applied to the more complex situation when the subscale properties are nonlinear and/or the subscale problem is inherently transient, whereby it is necessary to resort to nested macro-subscale computation (FE\textsuperscript{2}).
 Since the literature on classical as well as computational homogenization is abundant, it is not possible to give a comprehensive account.
-Among the seminal work on computational homogenization, we mention early work by
-\textsc{Namet-Nasser \& Hori (1993)} \cite{NametNasserHori1993}, 
-\textsc{Miehe et al. (1999)} \cite{Mieheetal1999}, 
-\textsc{Hazanov \& Huet (1994)} \cite{Hazanovetal1994},
-\textsc{Fish et al. (1997,2006)} \cite{Fishetal1997}, \cite{Fish2006},
-%\textsc{Zohdi \& Wriggers (2005)} \cite{ZohdiWriggers2005},
-and more recent work by
-\textsc{Fillep et al. (2013)} \cite{Fillepetal2013a},
-\textsc{Larsson et al. (2008,2011)} \cite{Larsson_etal2011} \cite{FLKR_2011},
-\textsc{Geers et al. (2009)} \cite{Geersetal2009},
-\textsc{\"Ozdemir et al. (2008)} \cite{Ozdemiretal2008},
-\textsc{Klinge et al. (2012)} \cite{Klinge2012},
-\textsc{Lindfeldt et al. (2013)} \cite{Lindfeldt???},
-\textsc{Ostoja (2006)} \cite{Ostoja2006},
-\textsc{Temizer et al. (2008)} \cite{TemizerWriggers2008},
-\textsc{Fish \& Yuan (2008)} \cite{FishYuan2007}.
+
+Among the work on extending the types of boundary conditions for the microscale problem, we mention 
+\cite{coenen_multi-scale_2012,geers_multi-scale_2010,larsson_computational_2011,temizer_optimality_2013}, interfaces and shells \cite{mcbride_micro--macro_2012}
+**WRIGGERS?**
+**FILLEP?**
+There has also been a recent work the computational techniques in the multi-scale framework \cite{temizer_computation_2008} ?!?!
+
+
+% Among the seminal work on computational homogenization, we mention early work by
+% \textsc{Namet-Nasser \& Hori (1993)} \cite{NametNasserHori1993}, 
+% \textsc{Miehe et al. (1999)} \cite{Mieheetal1999}, 
+% \textsc{Hazanov \& Huet (1994)} \cite{Hazanovetal1994},
+% \textsc{Fish et al. (1997,2006)} \cite{Fishetal1997}, \cite{Fish2006},
+% %\textsc{Zohdi \& Wriggers (2005)} \cite{ZohdiWriggers2005},
+% and more recent work by
+% \textsc{Fillep et al. (2013)} \cite{Fillepetal2013a},
+% \textsc{Larsson et al. (2008,2011)} \cite{Larsson_etal2011} \cite{FLKR_2011},
+% 
+% \textsc{\"Ozdemir et al. (2008)} \cite{Ozdemiretal2008},
+% \textsc{Klinge et al. (2012)} \cite{Klinge2012},
+% \textsc{Lindfeldt et al. (2013)} \cite{Lindfeldt???},
+% \textsc{Ostoja (2006)} \cite{Ostoja2006},
+% \textsc{Temizer et al. (2008)} \cite{TemizerWriggers2008},
+% \textsc{Fish \& Yuan (2008)} \cite{FishYuan2007}.
 
 Despite the extensive developments, there are still unresolved fundamental issues regarding, for example, (i) variational consistency and the macrohomogeneity condition,
-(ii) selective homogenization (in particular, for multi-field problems) (cf. \cite{Sandstrom_2012}),
+(ii) selective homogenization (in particular, for multi-field problems) (cf. \cite{sandstrom_variationally_2012}),
 (iii) how to establish bounds on the effective properties within a given confidence interval, and (iv) high contrast material properties of the constituents (e.g. rigid inclusions or pores) in a for which the classical Dirichlet and Neumann conditions give poor results.
 
 The particular aspect considered in this paper, which represents an unresolved issue even in the simplest case of elastic response, is that of Variationally Consistent Homogenization (VCH) in the limit of incompressible micro-constituents.
 This situation is encountered when the micro-constituents of a composite are intrinsically incompressible (or nearly incompressible), which infers macroscale incompressibility as well.
 An example is when a composite of metallic particles (or fibers) embedded in an elastomer matrix is subjected to stresses that are sufficiently large to cause significant plastic deformations in the particles.
 Another class of problems is characterized by an initially compressible macroscale response, which may become incompressible as the result of the deformation process.
-An important example is the evolving porous microstructure of a PM-product during the process of sintering, whereby the homogenized response is compressible until the porosity vanishes inferring incompressible macroscale response.
-This process is thus characterized by a transition from the compressible to incompressible regimes that should be handled within the same variational framework, cf.\  \textsc{Öhman et al.\ (2013)} \cite{Ohman2013a}.
+An important example is the evolving porous microstructure of a PM-product during the process of sintering, whereby the homogenized response is compressible until the porosity vanishes inferring incompressible macroscale response, cf.\ \cite{olevsky_theory_1998}.
+This process is thus characterized by a transition from the compressible to incompressible regimes that should be handled within the same variational framework, cf.\  \textsc{Öhman et al.\ (2013)} \cite{ohman_computational_2013}.
 
 The paper is outlined as follows:
 The appropriate variational setting of the fine-scale elasticity problem in a mixed format is given in Section 2.
@@ -546,7 +554,7 @@ or, more explicitly,
 %----------------------------------------------------------------------------
 which is supposed to hold true for all possible $\delta\ta{u}, \delta p$ in suitable function spaces (as discussed below).
 However, this problem is not solvable without further specification of the solution fields $\ta{u}, p, \ta{t}$.
-In this paper we adopt a recently proposed variational framework allowing for \emph{weak satisfaction of micro-periodicity}, cf.\  Larsson et al.\ \cite{Larsson2010}, and this framework will be briefly summarized in what follows.
+In this paper we adopt a recently proposed variational framework allowing for \emph{weak satisfaction of micro-periodicity}, cf.\  Larsson et al.\ \cite{larsson_computational_2011}, and this framework will be briefly summarized in what follows.
 We then \emph{assume} that the subscale fluctuation field $\ta{u}^\fluct$ is periodic across the RVE boundaries w.r.t.\ the chosen local coordinate axes.
 This model assumption, which may be termed ``micro-periodicity'', is a key ingredient (and frequently adopted) in the literature on mathematical homogenization and can be viewed as an approximation between the stiffer Dirichlet and the weaker Neumann boundary conditions.
 Indeed, both these cases can be obtained as special cases of the most general variational format of periodicity (as will be discussed further below).
@@ -684,7 +692,7 @@ We also conclude that
 d_\rve(\bar{\ts\tau}\cdot \ta n, \ta u^\fluct) = 0\quad \forall\ta u^\fluct\in\set{U}_\rve^\fluct,\;\bar{\ts\tau}\in\set{R}^{3\times3}.
 \label{eq:dtauu0}
 \end{align}
-As a direct consequence \cref{eq:t_average}, we may introduce the unique split
+As a direct consequence of \cref{eq:t_average}, we may introduce the unique split
 \begin{align}
  \ta t = \bar{\ts\tau}\cdot\ta n + \ta t^\fluct,\quad \bar{\ts\tau}\in \set{R}^{3\times3},\;\ta t^\fluct\in \set{T}_\rve^\fluct
 \label{eq:t_split}
@@ -694,14 +702,8 @@ where $\set{T}_\rve^\fluct$ is the space of the traction fluctuations that are s
  \set{T}_\rve^\fluct &= \{\ta{s}\in [L_2(\Gamma_\rve^+)]^{3} \,| \quad \bar{\ts\tau}[\ta s] = \frac{1}{\volume}\int_{\Gamma_\rve^+} \ta{s}\outerp\jmp{\ta{x}-\bar{\ta{x}}} \dif S = \ta{0} \}
  \label{eq28c}
 \end{align}
-% C1:
-Utilizing this split, we use the fact that 
-\begin{align}
-d_\rve(\ta t,\delta\ta u^\fluct) = d_\rve(\ta t^\fluct, \delta\ta u^\fluct)\quad \forall\delta\ta u^\fluct \in\set{U}_\rve^\fluct
-\end{align}
-following from \cref{eq:dtauu0}.
 % C2:
-The proof of the uniqueness of \cref{eq28c} follows from considering 
+The proof of uniqueness of the split in \cref{eq:t_split} follows from the identity
 \begin{align}
 \ta t = \bar{\ts\tau}[\ta t]\cdot\ta n + [\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n]
 \end{align}
@@ -709,8 +711,14 @@ and the fact that
 \begin{align}
  \bar{\ts\tau}[\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\ta t] = 0
 \end{align}
-Hence, $\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\rve^\fluct$ which concludes the proof.
-In order to obtain establish the RVE-problem, we shall also use the identity
+Hence, $\ta t^\fluct \defeq \ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\rve^\fluct$. $\Box$
+
+As preliminaries for establishing the RVE-problem, we establish two identities:
+Firstly, from \cref{eq:dtauu0,eq:t_split} follows that
+\begin{align}
+d_\rve(\ta t,\delta\ta u^\fluct) = d_\rve(\ta t^\fluct, \delta\ta u^\fluct)\quad \forall\delta\ta u^\fluct \in\set{U}_\rve^\fluct
+\end{align}
+Secondly, it follows from \cref{eq12a} and the properties of $\set{P}_\rve^\fluct$ that
 \begin{equation}
     b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct) \quad\forall \delta p^\fluct\in\set{P}_\rve^\fluct
 \label{eq27c}
@@ -952,7 +960,7 @@ With \cref{eq:tau_check_result}, this result implies that $\check{p} = \bar{p}$.
 
 Now, testing \cref{eq51a,eq51b,eq51c} with the fluctuations $\delta\ta u^\fluct$, $\delta p^\fluct$, and $\delta\ta t^\fluct$ respectively, we obtain exactly the original system in \cref{eq31}.
 Hence, we compute the identical quantities $\ta u^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\}$ and $p^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\}$.
-Finally, adoption \cref{eq33a,eq33b}, the canonical form results in the identical responses $\bar{\ts\sigma}_\dev\epspargs$ and $\bar{e}\epspargs$ as the original form presented in \Cref{sec:original_rve}.
+Finally, the canonical form results in the identical responses $\bar{\ts\sigma}_\dev\epspargs$ and $\bar{e}\epspargs$ as expressed in \cref{eq33a,eq33b}.
 Since the macroscopic response variables are identical, the VCMC is still fulfilled.
 
 \begin{figure}[!htpb]
@@ -1335,7 +1343,7 @@ Linearizing the implicit relations $\bar{\ts\sigma}_\dev\epspargs$ and $\bar{e}\
 \label{eq:periodic_difsigma}
 \end{align}
 thereby defining the tangents $\bar{\tf E}$ (4th order), $\bar{\ts E}$ (2nd order), $\bar{\ts C}$ (2nd order), and $\bar{C}$ (scalar).
-Since a potential exists, it follows that $\bar{\tf {E}}$ possesses major symmetry and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{Ohman2013a}.
+Since a potential exists, it follows that $\bar{\tf {E}}$ possesses major symmetry and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{ohman_computational_2012}.
 
 In order to compute the tangent operators, it is necessary to first compute the relevant sensitivity fields w.r.t.\ changes of the macroscale variables $\bar{\ts\epsilon}_\dev$ and $\bar{p}$, and they are solved from the pertinent tangent problem.
 On should then note that the particular sensitivity fields that are actually exploited (and needed) and the corresponding explicit formulation of the tangent problem depend on the chosen formulation of the RVE-problem (in terms of the boundary conditions: Weakly Periodic, Dirichlet, Neumann). 
@@ -1493,6 +1501,8 @@ whereby we obtain
 
 
 \section{Numerical results}
+
+\subsection{Convergence of homogenized quantities}
 For the first numerical example, we have chosen a incompressible matrix with incompressible spherical inclusions.
 Both materials are isotropic and elastic, defined  by a shear modulus $G$ such that $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 2 G \ts\epsilon_\dev$ and $\hat{e}(p) = 0$.
 For the matrix material we have $G_\mathrm{mat}$ and for the inclusions we have $G_\mathrm{inc} = 5 G_\mathrm{mat}$.
@@ -1513,13 +1523,13 @@ From the numerical simulations, we compute the homogenized macroscale shear modu
 \begin{figure}[htpb!]
 \centering
  \includegraphics[width=0.6\linewidth]{rve6_def.png}
-\caption{A sample SVE subject to Neumann boundary conditions and macroscopic shear $\bar{\epsilon}_{\dev,ij} = 0.4(1 - \delta_{ij})$.}
+\caption{A sample RVE subject to Neumann boundary conditions and macroscopic shear $\bar{\epsilon}_{\dev,ij} = 0.4(1 - \delta_{ij})$.}
 \label{fig:def_rve6}
 \end{figure}
 
-The SVE contains on average 10\% spherical inclusions with a mean diameter of one length unit.
-A sample SVE is shown in \cref{fig:initial_rve6}.
-The elements are linear tetrahedrons with bubble function for the displacement.
+The Statistical Volume Element (SVE) is constructed from a series of randomly generated RVEs containing on average 10\% spherical inclusions with a mean diameter of one length unit.
+A sample RVE is shown in \cref{fig:initial_rve6}.
+The finite element discretization consist of tetrahedral Mini elements.
 A convergence study was performed for the Dirichlet and Neumann boundary conditions where and the results are show in \cref{fig:SVE_comp}.
 \begin{figure}[H]
 \centering
@@ -1594,8 +1604,7 @@ size n_mean n_var
 %[ 0.1107292   0.00643845  0.00225217  0.00113156  0.00057236  0.00029335]
 
 
-
-
+\subsection{Seamless transition from compressible to incompressible response}
 In the second example, we show how the homogenization scheme can seamlessly handle both compressible and incompressible materials.
 Here, incompressible spherical inclusions, defined by $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 10 G_\mathrm{mat}\ts\epsilon_\dev$ and $\hat{e}(p) = 0$, are embedded in a matrix material defined by $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 2 G_\mathrm{mat}\ts\epsilon_\dev$ and $\hat{e}(p) = - C_\mathrm{mat}\,p$.
 Results from varying the $C_\mathrm{mat}$ in a single RVE subject to Dirichlet boundary condition are shown in \cref{fig:RVE_compressibility}.
@@ -1667,7 +1676,7 @@ The homogenization scheme seamlessly handles the transition from $C_\mathrm{mat}
 
 \section{Conclusions and outlook}
 In this paper we have introduced a variationally consistent homogenization scheme for macroscopically incompressible micro structures.
-We have shown the bounds for the periodic boundary condition on an RVE by deriving the Dirichlet and Neumann boundary conditions. The numerical examples show the convergence of these bounds with increasing SVE-size.
+We have shown the bounds for the periodic boundary condition on an RVE by deriving the Dirichlet and Neumann boundary conditions.
 The proposed method is required whenever an RVE exhibit near or complete incompressibility, and works seamlessly if an RVE transitions from compressible to incompressible response.
 
 
@@ -1676,7 +1685,7 @@ The Dirichlet boundary condition requires a global unknown to relax the macrosco
 The weakly periodic boundary condition has a has a large computational cost (depending heavily on the choice of discretization of $\set T_\rve$), so the bounds given by the Dirichlet and Neumann boundary condition is likely to be the most efficient solution for FE\textsuperscript{2} simulations.
 
 
-Due to the difficult procedure of constructing basis functions for $\set T_\rve$ for 3D geometries, the current implementation relies on global polynomials where the computational cost drastically increased with the order of the polynomials while only showing a marginal improvement compared to the Neumann boundary condition.
+Due to the difficult procedure of constructing basis functions for $\set T_\rve$ for 3D geometries, the current implementation relies on global polynomials where the computational cost drastically increases with the order of the polynomials, while only showing a marginal improvement compared to the Neumann boundary condition.
 As a possible alternative, it is straight forward to derive a strongly periodic boundary condition by replacing \cref{eq61b} with
 \begin{align}
     \set{U}_\rve^{\Periodic,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \jmp{\ta{v}}=\ta{0} \text{ on } \Gamma_\rve \}
@@ -1684,12 +1693,12 @@ As a possible alternative, it is straight forward to derive a strongly periodic 
 and performing the steps following up to \cref{eq:weak_form_dirichlet}.
 While such implemented wouldn't need costly Lagrange multipliers for $\set{T}_\rve$, it instead requires a meshing software capable of creating periodic meshes.
 
-The implementation of all three boundary conditions is available in the open source C++ code OOFEM (\texttt{www.oofem.org}) under the name \texttt{MixedGradientPressure}.
+The implementation of all three boundary conditions is available in the open source C++ code OOFEM (\texttt{www.oofem.org}) \cite{patzak_design_2001} under the name \texttt{MixedGradientPressure}.
 
 %\clearpage
 %\printbibliography
 
-\bibliography{Boundary_representation,Boundary_potentials,Multiscale,FEM_Software,Sintering,Mesh}
+\bibliography{Multiscale,Sintering,FEM_Software,Mesh}
 \bibliographystyle{plain}
 
 %\bibliographystyle{elsarticle-num}
@@ -1707,7 +1716,7 @@ The implementation of all three boundary conditions is available in the open sou
 
 \subsubsection{VMS-approach -- Scale separation and homogenization}
 
-Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), cf.\ \cite{Hughesetal1998}, \cite{LarsonMalqvist2007}.
+Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), cf.\ \cite{hughes_variational_1998}, \cite{larson_adaptive_2007}.
 We introduce the abbreviated notation $z = (\ta u, p) \in \set{Z} = \set U \times \set P$, where $\set Z$ represents the space of fine-scale (non-homogenized) solutions to the system \cref{eq2},
 which may conveniently be abbreviated in abstract form as the residual equation\footnote{Henceforth in this Appendix, we consider the abstract formulation of a multifield problem based on a given set of balance (or constraint) equations.
 No explicit reference to the specific character of the underlying problem is made.}
