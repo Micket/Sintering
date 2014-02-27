@@ -1,0 +1,289 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plasmati Graduate CV
+% LaTeX Template
+% Version 1.0 (24/3/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Alessandro Plasmati (alessandro.plasmati@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template needs to be compiled with XeLaTeX.
+% The main document font is called Fontin and can be downloaded for free
+% from here: http://www.exljbris.com/fontin.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,10pt]{article} % Default font size and paper size
+
+\usepackage{fontspec} % For loading fonts
+\defaultfontfeatures{Mapping=tex-text}
+% \setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
+
+\usepackage{xunicode,url,parskip} % Formatting packages
+
+\usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
+
+\usepackage{fullpage}
+% \usepackage[big]{layaureo} % Margin formatting of the A4 page, an alternative to layaureo can be \usepackage{fullpage}
+% To reduce the height of the top margin uncomment: \addtolength{\voffset}{-1.3cm}
+
+\usepackage{hyperref} % Required for adding links	and customizing them
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+
+\begin{document}
+
+\pagestyle{empty} % Removes page numbering
+
+\font\fb=''[cmr10]'' % Change the font of the \LaTeX command under the skills section
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\par{\centering{\Huge Mikael \textsc{Öhman}}\bigskip\par} % Your name
+
+\section{Personal Data}
+
+\begin{tabular}{rl}
+\textsc{Place and Date of Birth:} & Sweden  | 19 April 1983 \\
+\textsc{Address:} & Motgången 307, Göteborg, Sweden \\
+\textsc{Phone:} & 073 6837674\\
+\textsc{email:} & \href{mailto:mikael.ohman@chalmers.se}{mikael.ohman@chalmers.se}
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\section{Education}
+
+\begin{tabular}{rl}
+
+%------------------------------------------------
+
+\textsc{June} 2014 & \textit{Planned} PhD-defense \\
+& \textbf{Chalmers University of Technology}, Göteborg\\
+& Thesis: ``....''\\
+& \small Opponent: Prof. Julia \textsc{Mergheim}\\
+&\\
+
+%------------------------------------------------
+
+\textsc{December} 2011 & Lic. of Eng. in \textsc{Solid and Structural Mechanics} \\
+& \textbf{Chalmers University of Technology}, Göteborg\\
+& Thesis: ``Computational Modeling of Liquid-Phase Sintering based on \\
+& Homogenization''\\
+& \small Discussion leader: Prof. Jörn \textsc{Mosler}\\
+&\\
+
+%------------------------------------------------
+
+\textsc{April} 2009 & MSc in \textsc{Solid and Fluid mechanics}\\
+& \textbf{Chalmers University of Technology}, Göteborg\\
+& Specialization: Structural Dynamics | Major: Mechanical Engineering\\
+& Thesis: ``Stability of High Speed Train under Aerodynamic Excitation''\\
+& \small Advisor: Prof. Viktor \textsc{Berbyuk}\\
+&\\
+
+%------------------------------------------------
+
+\textsc{June} 2007 & BSc in \textsc{Mechanical Engineering}\\
+& \textbf{Chalmers University of Technology}, Göteborg\\
+& Thesis: ``Modeling of a Wire Suspended Roof over Soccer Field''\\
+& \small Examiner: Peter \textsc{Möller}\\
+&\\
+
+%------------------------------------------------
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%   WORK EXPERIENCE 
+%----------------------------------------------------------------------------------------
+
+\section{Work Experience}
+
+\begin{tabular}{r|p{11cm}}
+\textsc{June-August 2009} & Assistant at division of Material \& Computational Mechanics, Chalmers University of Technology, Göteborg\\
+& \footnotesize{Developed code for automatic detection of local curvature of contact surfaces in wheel-rail interaction for the Innotrack project. Automated finite element analysis of plastic contact problems.}\\
+
+\textsc{2005--2009} & Teaching assistant, Chalmers University of Technology, Göteborg\\
+& \footnotesize{Courses listed below.}\\
+
+\textsc{December 2013} & Freelance work, LMAT Ltd, United Kingdom\\
+& \footnotesize{Developed code to perform finite element analysis of layered composites.}\\
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%   Teaching
+%----------------------------------------------------------------------------------------
+
+\section{Teaching Experience}
+
+\begin{tabular}{r|p{11cm}}
+\textsc{2014} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2013} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2012} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2011} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2010} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2009} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2008} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2007} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2006} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{2005} & \emph{Finite element method (BSc course)}\\ 
+& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%   INTERESTS AND ACTIVITIES
+%----------------------------------------------------------------------------------------
+
+\section{List of publications}
+
+
+
+%----------------------------------------------------------------------------------------
+%	INTERESTS AND ACTIVITIES
+%----------------------------------------------------------------------------------------
+
+\section{Interests}
+
+Technology, Open-Source software, Programming, Mathematics, Physics\\
+
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	GRADE TABLES
+%----------------------------------------------------------------------------------------
+
+\par{\centering\Large \hypertarget{grds}{Master of Science in \textsc{Solid and Fluid mechanics}}\par}\large{\centering Grades\par}\normalsize
+
+\begin{center}
+\begin{tabular}{lcc}
+
+\multicolumn{1}{c}{\textsc{BSc Courses}} & \textsc{Grade}\\
+\hline
+Material science and engineering, part A  & 3\\
+Material science and engineering, part B & 3\\
+Mechatronics & 4\\
+Programming & 5\\
+Industrial production \& organization & 3\\
+Machine elements & 4\\
+Integrated design and manufacturing & 4\\
+Mathematical statistics & 4\\
+Calculus in a single variable & 5\\
+Introductory course in mathematics & 4\\
+Calculus in several variables & 4\\
+Linear algebra & 4\\
+The finite element method & 4\\
+Transforms and differential equations & 5\\
+Bsc thesis & 4\\
+
+\multicolumn{1}{c}{\textsc{MSc Courses}} & \\
+\hline
+Rigid body dynamics & 4\\
+Mechanics of solids and fluids & 4\\
+Computations in mechanics & 4\\
+Project in applied mechanics & 5\\
+Applied structural dynamics & 5\\
+Vibration control & 4\\
+Advanced material mechanics & 5\\
+Finite element method --- applications & 5\\
+Material mechanics & 5\\
+Fatigue design & 4\\
+Fundamental structural dynamics & 5\\
+History of science & 4\\
+
+\multicolumn{1}{c}{\textsc{Voluntary courses}} & \\
+\hline
+Stochastic optimization algorithms & 3\\
+Algebra & 4\\
+Algorithms & 4\\
+Data structures & 3\\
+Advanced programming in C & 3\\
+Introduction to functional programming & 5\\
+Partial differential equations, first course & 3\\
+High performance computing & 4\\
+Markov theory & 4\\
+Finite automata theory and formal languages & 4\\
+
+\multicolumn{1}{c}{\textsc{PhD courses}} & \\
+\hline
+...
+\end{tabular}
+\end{center}
+\bigskip
+\hrule
+\bigskip
+
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
