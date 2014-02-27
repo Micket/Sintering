@@ -24,7 +24,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[a4paper,10pt]{article} % Default font size and paper size
-
+\usepackage[backend=biber,bibstyle=reading]{biblatex}
 \usepackage{fontspec} % For loading fonts
 \defaultfontfeatures{Mapping=tex-text}
 % \setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
@@ -44,6 +44,8 @@
 \usepackage{titlesec} % Used to customize the \section command
 \titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
 \titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+
+\addbibresource{publications.bib}
 
 \begin{document}
 
@@ -121,10 +123,10 @@
 \begin{tabular}{r|p{11cm}}
 \textsc{June-August 2009} & Assistant at division of Material \& Computational Mechanics, Chalmers University of Technology, Göteborg\\
 & \footnotesize{Developed code for automatic detection of local curvature of contact surfaces in wheel-rail interaction for the Innotrack project. Automated finite element analysis of plastic contact problems.}\\
-
+\multicolumn{2}{c}{} \\
 \textsc{2005--2009} & Teaching assistant, Chalmers University of Technology, Göteborg\\
-& \footnotesize{Courses listed below.}\\
-
+& \footnotesize{Courses listed subsequently.}\\
+\multicolumn{2}{c}{} \\
 \textsc{December 2013} & Freelance work, LMAT Ltd, United Kingdom\\
 & \footnotesize{Developed code to perform finite element analysis of layered composites.}\\
 
@@ -137,67 +139,73 @@
 \section{Teaching Experience}
 
 \begin{tabular}{r|p{11cm}}
-\textsc{2014} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2013} 
+              & \emph{Finite element method (BSc)}: \footnotesize{Tutoring computer labs, grading.}\\
+              & \emph{Mechanics of solids (BSc)}: \footnotesize{Problem solving sessions, computer labs, grading.}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2013} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2012} 
+              & \emph{Finite element method --- basics}: \footnotesize{Computer labs, grading.}\\
+              & \emph{Supervised bachelor thesis group}\\
+              & \emph{Statics \& solid of mechanics (BSc)}: \footnotesize{Computer labs, problem solving sessions, grading}\\
+              & \emph{Mechanics of solids (BSc)}: \footnotesize{Computer labs, problem solving sessions, grading}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2012} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2011} 
+              & \emph{Mechanics of solids (BSc)}: \footnotesize{Computer labs, correcting handins.}\\
+              & \emph{Advanced Material Mechanics}: \footnotesize{Tutoring and constructing computer labs, problem solving sessions, grading}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2011} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2010} 
+              & \emph{Statics ?????}: \footnotesize{Problem solving sessions, computer labs, grading.}\\
+              & \emph{Advanced Material Mechanics}: \footnotesize{Tutoring and constructing computer labs, problem solving sessions, grading}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2010} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2009} 
+              & \emph{Advanced Material Mechanics}: \footnotesize{Tutoring and constructing computer labs, problem solving sessions, grading}\\
+              & \emph{????}: \footnotesize{???}\\
+              & \emph{Mathematics (BSc)}: \footnotesize{Tutoring computer labs.}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2009} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2008} 
+              & \emph{???}: \footnotesize{???}\\
+              & \emph{Computer introduction??}: \footnotesize{Lectures and computer labs.}\\
+              & \emph{Computer introduction??}: \footnotesize{Lectures and computer labs.}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2008} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2007} 
+              & \emph{Programming in Matlab}: \footnotesize{Tutoring computer labs.}\\
+              & \emph{Computer introduction}: \footnotesize{Lectures and computer labs.}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2007} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2006} 
+              & \emph{Programming in Java (BSc)}: \footnotesize{Tutoring computer labs.}\\
+              & \emph{Programming in Java (BSc)}: \footnotesize{Tutoring computer labs. Correcting handins.}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
 
-\textsc{2006} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
+\textsc{2005} & \emph{Programming in Java (BSc)}: \footnotesize{Tutoring computer labs.}\\
 \multicolumn{2}{c}{} \\
 
 %------------------------------------------------
-
-\textsc{2005} & \emph{Finite element method (BSc course)}\\ 
-& \footnotesize{Tutoring computer labs. Correcting handins.}\\
-\multicolumn{2}{c}{} \\
-
-%------------------------------------------------
-
 \end{tabular}
+
+In addition, during my studies at Chalmers, I partook in the Supplemental Instruction (SI) initiative, and was helping students in the subjects of Mathematics, Mechanics of Solids, and Programming.
 
 %----------------------------------------------------------------------------------------
 %   INTERESTS AND ACTIVITIES
@@ -205,6 +213,19 @@
 
 \section{List of publications}
 
+\fullcite{ohman_computational_2013}
+
+\fullcite{ohman_formulation_2013}
+
+\fullcite{ohman_computational_2012}
+
+\fullcite{ohman_fe2_2012}
+
+\fullcite{ohman_computational_2011}
+
+\fullcite{ohman_multiscale_2010}
+
+\fullcite{ohman_stability_2009}
 
 
 %----------------------------------------------------------------------------------------
@@ -213,17 +234,17 @@
 
 \section{Interests}
 
-Technology, Open-Source software, Programming, Mathematics, Physics\\
+Technology, Open-Source software, Programming, Mathematics, Physics, Linux\\
 
-%----------------------------------------------------------------------------------------
-
-\newpage
 
 %----------------------------------------------------------------------------------------
 %	GRADE TABLES
 %----------------------------------------------------------------------------------------
 
-\par{\centering\Large \hypertarget{grds}{Master of Science in \textsc{Solid and Fluid mechanics}}\par}\large{\centering Grades\par}\normalsize
+\par{
+\centering\Large
+\hypertarget{grds}{Courses and Grades from Chalmers University of Technology}\par}
+\large{\centering Grades\par}\normalsize
 
 \begin{center}
 \begin{tabular}{lcc}
@@ -276,12 +297,13 @@ Finite automata theory and formal languages & 4\\
 
 \multicolumn{1}{c}{\textsc{PhD courses}} & \\
 \hline
-...
+Computational nonlinear mechanics & \\
+Finite element method --- solids & \\
+Functional analysis & \\
+Teaching learning \& evaluation & \\
+Ethics, science \& society & 
 \end{tabular}
 \end{center}
-\bigskip
-\hrule
-\bigskip
 
 
 %----------------------------------------------------------------------------------------
