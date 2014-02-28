@@ -1,14 +1,28 @@
 \documentclass{article}
+\usepackage{fontspec} % For loading fonts
+\defaultfontfeatures{Mapping=tex-text}
+
+
+\usepackage{xunicode,url,parskip} % Formatting packages
+
+
+\usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
+
+\usepackage{hyperref} % Required for adding links   and customizing them
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
 
 \begin{document}
 \section{Personal letter}
-My research interests are in advanced methodologies in finite element analysis, such as multiscale simulations.
+My research interests are in development of new methods in finite element analysis, such as multiscale simulations, particle FEM, isogeometric analysis, contact simulations, XFEM.
 
 I have worked as a very active developer of OOFEM for the past 4 years, accumulating over 1300 changes over 350 thousand lines of code (which is more than all other developers combined).
-Apart from developing 
-My main focus during that time has been to gradually improve the overall design of the infrastructure in order to simplify and generalize the code, as well as bringing in a series of performance improvements.
+Apart from developing the basis for my own research in multiscale simulations, my main focus during that time has been to gradually improve the overall design of the infrastructure in order to simplify and generalize the code, as well as bringing in a series of performance improvements.
 During this time I have also worked as the coordinator of the OOFEM development between Chalmers an the Czech Technical University in Prague.
-
 
 \section{Future research goals}
 The ever increasing complexity of numerical simulations poses major concerns for continued development.
@@ -21,6 +35,7 @@ I believe with this can be solved by introducing established software developmen
  \item Collaboration; Version control, code review
 \end{itemize}
 My hope is to have the opportunity to continue development in OOFEM, not only adding new features but also improving the core infrastructure in order to enable faster, easier, and safer programming environment for all developers.
+
 
 
 \end{document}
