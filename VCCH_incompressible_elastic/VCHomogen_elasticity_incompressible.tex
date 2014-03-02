@@ -113,10 +113,10 @@ Chalmers University of Technology}
 \maketitle
 \begin{abstract}
 The computational framework for Variationally Consistent Homogenization (VCH) of (near) incompressible solids is discussed.
-To focus on the important issues, a model problem of nonlinear (hyper)elasticity and linear kinematics is considered.
-A canonical formulation of the RVE-problem is established, whereby complete macroscale incompressibility is obtained straightforwardly as the limit situation.
+To focus on the important issues, a model problem is considered for a composite whose constituents are characterized by nonlinear (hyper)elasticity and linear kinematics.
+A canonical formulation of the subscale problem, pertinent to a Representative Volume Element (RVE), is established, whereby complete macroscale incompressibility is obtained straightforwardly as the limit situation when all constituents are incompressible.
 The framework is sufficiently general to allow for the classical boundary conditions on the RVE as well as the generalized situation of weakly periodic boundary conditions.
-Numerical results demonstrating the seamless character of the computational algorithm at the fully incompressible limit conclude the paper.
+Numerical results, demonstrating the seamless character of the computational algorithm at the fully incompressible, limit conclude the paper.
 \end{abstract}
 
 \section{Introduction}
@@ -124,13 +124,15 @@ Numerical results demonstrating the seamless character of the computational algo
 Computational homogenization is a well-established approach in material modeling with the purpose to account for strong micro-heterogeneity in an approximate, yet accurate, fashion without excessive computational cost.
 Such an approach can be applied to the situation when the intrinsic material properties are linear, leading to direct ``upscaling''.
 It can also be applied to the more complex situation when the subscale properties are nonlinear and/or the subscale problem is inherently transient, whereby it is necessary to resort to nested macro-subscale computation (FE\textsuperscript{2}).
-Since the literature on classical as well as computational homogenization is abundant, it is not possible to give a comprehensive account.
-For reference on the classical approaches, selected literature by \cite{fish_practical_2013, torquato_random_2006, zohdi_introduction_2004} gives a good overview.
+%
+Since the literature on classical as well as computational homogenization is abundant,
+it is neither necessary nor possible to give a comprehensive account.
+Selected references are \cite{torquato_random_2006, zohdi_introduction_2004,fish_practical_2013} addressing different aspects on homogenization and multiscale modeling.
+A particularly important issue is the choice of boundary conditions (and data) for the subscale RVE-problem.
+Selected references are \cite{geers_multi-scale_2010,larsson_computational_2011,temizer_optimality_2013}.
+In this regard, how to accommodate coalescence of \todo{?}????????????? and failure presents a special challenge, e.g.\ \cite{coenen_multi-scale_2012}. A quite general framework based on ``weakly periodicity'' was proposed in ???. How to incorporate interfaces and thing membranes are discussed in \cite{mcbride_micro--macro_2012, larsson_stress-resultant_2013}.
 
-Among the work on extending the types of boundary conditions for the microscale problem, we mention 
-\cite{coenen_multi-scale_2012,geers_multi-scale_2010,larsson_computational_2011,temizer_optimality_2013}, and work on interfaces and shells \cite{mcbride_micro--macro_2012, larsson_stress-resultant_2013}.
 %There has also been a recent work the computational techniques in the multi-scale framework \cite{temizer_computation_2008} ?!?!
-
 
 % Among the seminal work on computational homogenization, we mention early work by
 % \textsc{Namet-Nasser \& Hori (1993)} \cite{NametNasserHori1993}, 
@@ -158,7 +160,7 @@ This situation is encountered when the micro-constituents of a composite are int
 An example is when a composite of metallic particles (or fibers) embedded in an elastomer matrix is subjected to stresses that are sufficiently large to cause significant plastic deformations in the particles.
 Another class of problems is characterized by an initially compressible macroscale response, which may become incompressible as the result of the deformation process.
 An important example is the evolving porous microstructure of a PM-product during the process of sintering, whereby the homogenized response is compressible until the porosity vanishes inferring incompressible macroscale response, cf.\ \cite{olevsky_theory_1998}.
-This process is thus characterized by a transition from the compressible to incompressible regimes that should be handled within the same variational framework, cf.\  \textsc{Öhman et al.\ (2013)} \cite{ohman_computational_2013}.
+This process is thus characterized by a transition from the compressible to incompressible regimes that should be handled within the same variational framework in a seamless fashion, cf.\  \textsc{Öhman et al.} \cite{ohman_computational_2013}.
 
 The paper is outlined as follows:
 The appropriate variational setting of the fine-scale elasticity problem in a mixed format is given in Section 2.
@@ -1007,7 +1009,7 @@ In order to establish bounds on the homogenized properties based on the results 
 %----------------------------------------------------------------------------------------------------------------------
 where $\Lambda_\rve(\ta{u},p)$ is the ``intrinsic'' energy potential that was defined in \cref{eqRveBulkPotential}.
 
-We now define the volume-specific ``macroscale energy density''\footnote{$\bar{\psi}_\rve \to \psi_\rve$, the ``effective energy density'' for sufficiently large RVE. } as the value of $\Pi_\rve$ at the following generalized saddle-point:
+We now define the volume-specific ``macroscale energy density''\footnote{$\bar{\psi}_\rve \to \bar{\psi}$ the ``effective energy density'', for sufficiently large RVE. } as the value of $\Pi_\rve$ at the following generalized saddle-point:
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \bar{\psi}_\rve\epspargs =
@@ -1484,7 +1486,7 @@ on the macroscale energy density that is obtained with periodic boundary conditi
 
 In the case of linear elasticity, the tangent operators represent the upscaled (=homogenized) constant operators in the representations
 \begin{align}
- \bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \bar{\ts\epsilon}_\dev + \bar{\ts E}\, \bar{p}, \quad \bar{e} = \bar{\ts C}\dprod\bar{\ts\epsilon}_\dev + \bar{C}\,\bar{p}
+ \bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \bar{\ts\epsilon}_\dev + \bar{\ts E}\, \bar{p}, \quad \bar{e} = \bar{\ts C}\dprod\bar{\ts\epsilon}_\dev - \bar{C}\,\bar{p}
 \end{align}
 whereby we obtain
 \begin{alignat}{4}
@@ -1652,7 +1654,6 @@ The homogenization scheme seamlessly handles the transition from $C_\mathrm{mat}
     }
     ]
   \addplot table[color=blue,x=M,y=G] {macro_k9.matdata};
-  \node at (0.5,0.5) { $\nu_\mathrm{mat}$ };
   \end{axis}
   \node at (2.8,4.4) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
