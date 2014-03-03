@@ -5,7 +5,7 @@
 \usepackage{ifluatex}
 \ifluatex
   \usepackage{fontspec}
-  %\setmainfont[Ligatures=TeX]{xits}
+  \setmainfont[Ligatures=TeX]{xits}
   %\setmainfont[Ligatures=TeX]{Latin Modern Roman}
   %\fontspec[SmallCapsFeatures={Letters=SmallCaps}]{Latin Modern Roman}
   \setmainfont[
@@ -1535,11 +1535,7 @@ However, even for a smaller SVE-size, it is possible to compute an ``apparent'' 
 \begin{align}
  \bar{G} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}\bar{\tf E}_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
 \end{align}
-where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ could be expressed as
-\begin{align}
- \bar{\tf E}_{\mathrm{iso}} = 2 \bar{G} \tf I_\dev
-\end{align}
-in standard fashion.
+where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ could be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{G} \tf I_\dev$ in standard fashion.
 
 For the finite element analysis of the SVE-problems, tetrahedral elements with socalled Mini-element approximations are utilized.
 This type of element is defined by linear approximations plus bubble function for $\ta u$ and linear approximation for $p$, cf.\ \cite{arnold_stable_1984}.
@@ -1665,7 +1661,7 @@ which is also used in \cref{fig:RVE_compressibility}.
     ]
   \addplot table[color=blue,x=M,y=C] {macro_k9.matdata};
   \end{axis}
-  \node at (2.8,4.4) { $\nu_\mathrm{mat}$ };
+  \node at (2.8,4.3) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
 \begin{tikzpicture}
   \begin{axis}[ width=0.45\linewidth, height=0.28\linewidth,
@@ -1682,7 +1678,7 @@ which is also used in \cref{fig:RVE_compressibility}.
     ]
   \addplot table[color=blue,x=M,y=G] {macro_k9.matdata};
   \end{axis}
-  \node at (2.8,4.4) { $\nu_\mathrm{mat}$ };
+  \node at (2.8,4.3) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
 \caption{Homogenized results from a single RVE with Dirichlet boundary condition.
 Dependence of effective properties $\bar{C}$ and $\bar{G}$ on the matrix-bulk compliance $C_\mathrm{mat}$ for fixed values of $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$.}
