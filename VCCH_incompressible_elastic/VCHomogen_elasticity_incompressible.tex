@@ -129,8 +129,10 @@ Since the literature on classical as well as computational homogenization is abu
 it is neither necessary nor possible to give a comprehensive account.
 Selected references are \cite{torquato_random_2006, zohdi_introduction_2004,fish_practical_2013} addressing different aspects on homogenization and multiscale modeling.
 A particularly important issue is the choice of boundary conditions (and data) for the subscale RVE-problem.
-Selected references are \cite{geers_multi-scale_2010,larsson_computational_2011,temizer_optimality_2013}.
-In this regard, how to accommodate coalescence of \todo{?}????????????? and failure presents a special challenge, e.g.\ \cite{coenen_multi-scale_2012}. A quite general framework based on ``weakly periodicity'' was proposed in ???. How to incorporate interfaces and thing membranes are discussed in \cite{mcbride_micro--macro_2012, larsson_stress-resultant_2013}.
+Selected references are \cite{geers_multi-scale_2010,temizer_optimality_2013}.
+In particular, \cite{larsson_computational_2011} presents a quite general framework based on ``weak periodicity''.
+How to accommodate the coalescence of microcracks presents a special challenge, e.g.\ \cite{coenen_multi-scale_2012}.
+How to incorporate interfaces and thin membranes are discussed in \cite{mcbride_micro--macro_2012, larsson_stress-resultant_2013}.
 
 %There has also been a recent work the computational techniques in the multi-scale framework \cite{temizer_computation_2008} ?!?!
 
@@ -190,9 +192,9 @@ The total domain occupied by the cubic RVE is denoted $\Omega_\rve$ with externa
    \includegraphics[scale=.3]{SwissCheeseFig}
    };
 %\draw[<-, line width=.4mm] (1.6,5.0) .. controls +(up:0.5cm) and +(left:0.5cm) .. (2.5,5.7) node[right=1pt,black,text width=3cm,text badly ragged]{$\Gamma_\rve$};
-\draw[<-, line width=.4mm] (5.0,3.5) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,3.0) node[right=1pt,black,text width=3cm,text badly ragged]{$\Gamma_\rve$};
+\draw[<-, line width=.4mm] (5.0,3.5) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,3.0) node[right,black]{$\Gamma_\rve$};
 %\draw[-*, line width=.4mm] (-1.0,1.5) node[left=-2.0cm,black,text width=3cm,text badly ragged]{$\Omega_{\rve,i}^\mathrm{p}$} .. controls +(right:0.5cm) and +(left:1.cm) .. (0.6,1.1);
-\draw[-*, line width=.4mm] (-1.0,3.0) node[left=-2.1cm,black,text width=3cm,text badly ragged]{$\Omega_\rve$} .. controls +(right:0.5cm) and +(left:1.cm) .. (0.6,2.1);
+\draw[-*, line width=.4mm] (-1.0,3.0) node[left,black]{$\Omega_\rve$} .. controls +(right:0.5cm) and +(left:1.cm) .. (0.6,2.1);
 %\draw[<-, line width=.4mm] (4.6,1.7) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,1.0) node[right=1pt,black,text width=3cm,text badly ragged]{$\partial\Omega_{\rve,i}^\text{p}$};
 \end{tikzpicture}
 %}
@@ -1009,7 +1011,7 @@ In order to establish bounds on the homogenized properties based on the results 
 %----------------------------------------------------------------------------------------------------------------------
 where $\Lambda_\rve(\ta{u},p)$ is the ``intrinsic'' energy potential that was defined in \cref{eqRveBulkPotential}.
 
-We now define the volume-specific ``macroscale energy density''\footnote{$\bar{\psi}_\rve \to \bar{\psi}$ the ``effective energy density'', for sufficiently large RVE. } as the value of $\Pi_\rve$ at the following generalized saddle-point:
+We now define the volume-specific ``macroscale energy density''\footnote{$\bar{\psi}_\rve \to \bar{\psi}$, the ``effective energy density'', for sufficiently large RVE. } as the value of $\Pi_\rve$ at the following generalized saddle-point:
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \bar{\psi}_\rve\epspargs =
@@ -1506,13 +1508,13 @@ The intrinsic properties are thus defined by the free energy expressions
  \psi_\mathrm{u}(\ts\epsilon_\dev) = G |\ts\epsilon_\dev|^2,\quad \psi^*_{\mathrm{p}} = -\frac12 C\, p^2
 \end{align}
 where $G$ and $C$ ($=K^{-1}$) are the shear stiffness and bulk compliance respectively.
-This choice corresponds to the standard relation
+This choice corresponds to the standard relations
 $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 2 G\,\ts\epsilon_\dev$ and $\hat{e}(p) = -C\, p$.
 The parameter set associated with the matrix and particles are $(G_\mathrm{mat},C_\mathrm{mat})$ and $(G_\mathrm{part},C_\mathrm{part})$, respectively.
 
 All computational results were obtained for cubic Statistical Volume Elements (SVE:s).
-The target volume fraction of particles if 10\% and their size-distribution, in terms of diameter, is uniform distribution in the range $[\frac23 \;\;\frac43]$ with has a mean value of $1$.
-Two examples of realizations with SVE-size $L_\rve = 6$ and $L_\rve = 9$ are shown in \cref{fig:rve_sample6,fig:rve_sample9} respectively.
+The target volume fraction of particles if 10\% and their size-distribution, in terms of diameter, is uniform in the range $[\frac23 ,\frac43]$ thus with a mean value of $1$.
+Two examples of realizations with SVE-size $L_\rve = 6$ and $L_\rve = 9$ are shown in \Cref{fig:rve_sample6,fig:rve_sample9}, respectively.
 
 \begin{figure}[H]
 \centering
@@ -1538,21 +1540,21 @@ However, even for a smaller SVE-size, it is possible to compute an ``apparent'' 
 where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ could be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{G} \tf I_\dev$ in standard fashion.
 
 For the finite element analysis of the SVE-problems, tetrahedral elements with socalled Mini-element approximations are utilized.
-This type of element is defined by linear approximations plus bubble function for $\ta u$ and linear approximation for $p$, cf.\ \cite{arnold_stable_1984}.
+This type of element is defined by linear approximation plus a bubble function for $\ta u$ and linear approximation for $p$, cf.\ \cite{arnold_stable_1984}.
 
 
 
 \subsection{Homogenization of macroscopically incompressible response --- A convergence study}
 The first series of SVE-computations were carried out for macroscopically incompressible response, which is obtained when both matrix and particles are completely incompressible.
 Taking the shear modulus for the matrix, $G_\mathrm{mat}$, as the reference modulus, we choose $G_\mathrm{part} = 5\,G_\mathrm{mat}$, whereas $C_\mathrm{mat} = C_\mathrm{part} = 0$.
-Convergence results for the two extremes of Dirichlet and Neumann boundary conditions are shown in \cref{fig:SVE_comp}.
+Convergence results for the two extremes of Dirichlet and Neumann boundary conditions are shown in \Cref{fig:SVE_comp}.
 The mean value and variance of the homogenized shear modulus $\bar{G}$ are shown for increasing SVE-size, represented by $L_\rve$.
-Here, a fixed number of realizations are used for each value of $L_\rve$, starting with 200 realizations for the smallest SVE size ($L_\rve = 1$) and gradually decreases to only 4 realizations for the largest SVE-size ($L_\rve$). The larger SVE:s do not need as many realizations, since the variance is very small, as can be seen in \cref{fig:SVE_comp}.
+Here, a fixed number of realizations are used for each value of $L_\rve$, starting with 200 realizations for the smallest SVE size ($L_\rve = 1$) and gradually decreases to only 4 realizations for the largest SVE-size ($L_\rve$). The larger SVE:s do not need as many realizations, since the variance is very small, as can be seen in \Cref{fig:SVE_comp}.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-  \begin{axis}[ width=0.45\linewidth, height=0.28\linewidth, xlabel=SVE size, ylabel=$\mathop{\mathrm{mean}}(\bar{G})/G_\mathrm{mat}$]
+  \begin{axis}[ width=0.45\linewidth, height=0.28\linewidth, xlabel=SVE-size $L_\rve$, ylabel=$\mathop{\mathrm{mean}}(\bar{G})/G_\mathrm{mat}$]
   \addplot table[color=blue,x=size,y=d_mean] {
 size d_mean d_var
 1.000000   1.586624   0.489829
@@ -1582,7 +1584,7 @@ size n_mean n_var
   \end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}
-  \begin{axis}[ width=0.45\linewidth, height=0.28\linewidth, xlabel=SVE size, ylabel=$\mathop{\mathrm{var}}(\bar{G})/G_\mathrm{mat}$]
+  \begin{axis}[ width=0.45\linewidth, height=0.28\linewidth, xlabel=SVE-size $L_\rve$, ylabel=$\mathop{\mathrm{var}}(\bar{G})/G_\mathrm{mat}$]
   \addplot table[color=blue,x=size,y=d_var] {
 size d_mean d_var
 1.000000   1.586624   0.489829
@@ -1622,7 +1624,7 @@ size n_mean n_var
 %[ 0.1107292   0.00643845  0.00225217  0.00113156  0.00057236  0.00029335]
 
 
-The deformed shape for a typical sample SVE of size $L_\rve = 6$ with Neumann boundary condition is shown in \cref{fig:def_rve6}
+The deformed shape for a typical sample SVE of size $L_\rve = 6$ with Neumann boundary condition is shown in \Cref{fig:def_rve6}.
 
 \begin{figure}[htpb!]
 \centering
@@ -1637,12 +1639,12 @@ The deformed shape for a typical sample SVE of size $L_\rve = 6$ with Neumann bo
 In the second series of computations, we show how the homogenization scheme can seamlessly handle the transition from the macroscopically compressible to the incompressible response.
 Here, it is assumed that incompressible particles, defined by $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$ (as before), are embedded in a matrix material with $C_\mathrm{mat}\geq 0$.
 Only the situation with Dirichlet boundary conditions is considered (without affecting the generality of the main conclusion from the results).
-In \cref{fig:RVE_compressibility} it is shown how the homogenized properties are affected by the matrix compliance, $C_\mathrm{mat}$, for a given (fixed) realization and given SVE-size ($L_\rve = 9$, cf. \cref{fig:rve_sample9}).
+In \Cref{fig:RVE_compressibility} it is shown how the homogenized properties are affected by the matrix compliance, $C_\mathrm{mat}$, for a given (fixed) realization and given SVE-size ($L_\rve = 9$, cf. \Cref{fig:rve_sample9}).
 Clearly, rather than choosing $C_\mathrm{mat}$ as the variable material property, one may choose Poisson's ratio $\nu_\mathrm{mat}$ via the elementary relation
 \begin{align}
  \nu = \frac{3-2\,C\,G}{6 + 2\,C\,G}
 \end{align}
-which is also used in \cref{fig:RVE_compressibility}.
+which is also used in \Cref{fig:RVE_compressibility}.
 
 \begin{figure}[H]
 \centering
@@ -1661,7 +1663,7 @@ which is also used in \cref{fig:RVE_compressibility}.
     ]
   \addplot table[color=blue,x=M,y=C] {macro_k9.matdata};
   \end{axis}
-  \node at (2.8,4.3) { $\nu_\mathrm{mat}$ };
+  \node at (2.8,4.2) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
 \begin{tikzpicture}
   \begin{axis}[ width=0.45\linewidth, height=0.28\linewidth,
@@ -1678,17 +1680,20 @@ which is also used in \cref{fig:RVE_compressibility}.
     ]
   \addplot table[color=blue,x=M,y=G] {macro_k9.matdata};
   \end{axis}
-  \node at (2.8,4.3) { $\nu_\mathrm{mat}$ };
+  \node at (2.8,4.2) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
 \caption{Homogenized results from a single RVE with Dirichlet boundary condition.
 Dependence of effective properties $\bar{C}$ and $\bar{G}$ on the matrix-bulk compliance $C_\mathrm{mat}$ for fixed values of $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$.}
 \label{fig:RVE_compressibility}
 \end{figure}
 
+The computational results verify that the homogenization framework is able to handle the transition from macroscale compressibility to incompressibility when $C_\mathrm{mat}\to 0$ in a seamless fashion without any algorithmic changes.
+That macroscopical incompressibility is obtained is verified by the computed value $\bar{C} = 0$.
+It is also noted in \Cref{fig:RVE_compressibility} that the affect on $\bar{G}$ is more pronounced, however quite limited, when incompressibility is approached.
 
 \section{Conclusions and outlook}
 In this paper we have introduced a variationally consistent homogenization scheme for macroscopically incompressible micro structures.
-We have derived a canonical form of the RVE-problem which has the same strong form as the macroscale problem which still fulfills the macrohomogeneity condition.
+We have derived a canonical form of the RVE-problem which has the same strong form as the macroscale problem, while still satisfying the macrohomogeneity condition.
 This allows for straight forward finite element implementations, as both scales use the same standard $(\ta u,p)$-formulation.
 
 We have also shown the bounds for the periodic boundary condition on an RVE by deriving the Dirichlet and Neumann boundary conditions.
