@@ -1,0 +1,70 @@
+
+@article{arnold_stable_1984,
+	title = {A stable finite elemetn for the stokes equations},
+	volume = {21},
+	number = {4},
+	journal = {Calcolo},
+	author = {Arnold, D. N. and Brezzi, F. and Fortin, M.},
+	year = {1984},
+	pages = {337{\textendash}344}
+},
+
+@incollection{shewchuk_triangle:_1996,
+	series = {Lecture Notes in Computer Science},
+	title = {Triangle: Engineering a {2D} Quality Mesh Generator and Delaunay Triangulator},
+	volume = {1148},
+	url = {http://dx.doi.org/10.1007/BFb0014497},
+	abstract = {Triangle is a C program for two-dimensional mesh generation and construction of Delaunay triangulations, constrained Delaunay triangulations, and Voronoi diagrams. Triangle is fast, memory-efficient, and robust; it and constrained Delaunay triangulations exactly. Guaranteed-quality meshes (having no small angles) are generated using Ruppert's Delaunay refinement algorithm. Features include user-specified constraints on angles and triangle areas, user-specified holes and concavities, and the economical use of exact arithmetic to improve robustness. Triangle is freely available on the Web at from Netlib. This paper discusses many of the key implementation decisions, including the choice of triangulation algorithms and data structures, the steps taken to create and refine a mesh, a number of issues that arise in Ruppert's algorithm, and the use of exact arithmetic.},
+	booktitle = {Applied Computational Geometry: Towards Geometric Engineering},
+	publisher = {Springer Berlin / Heidelberg},
+	author = {Shewchuk, Jonathan Richard},
+	editor = {Lin, Ming C and Manocha, Dinesh},
+	month = may,
+	year = {1996},
+	pages = {203{\textendash}222}
+},
+
+@inproceedings{cheng_quality_2004,
+	title = {Quality meshing for polyhedra with small angles},
+	url = {http://portal.acm.org/citation.cfm?id=997817.997862},
+	abstract = {We present an algorithm to compute a Delaunay mech conforming to a polyhedron possibly with small input angles. The radius-edge ratio of most output tetrahedra are bounded by a constant, except possible those that are provably close to small angles. Furthermode, the mesh is not unnecessarily dense in the sense that the edge lengths are at least a constant fraction of the local feature sizes at the edge endpoints. This algorithm is simple to implement as it eliminates most of the computation of local feature sizes and explicit protective zones. Our experimental results validate that few skinny tetrahedra remain and they lie close to small acute input angles.},
+	booktitle = {Proceedings of the twentieth annual symposium on Computational geometry},
+	publisher = {{ACM}},
+	author = {Cheng, Siu-Wing and Dey, Tamal K. and Ramos, Edgar. A. and Ray, Tathagata},
+	year = {2004},
+	pages = {290{\textendash}299}
+},
+
+@phdthesis{persson_mesh_2004,
+	type = {{Ph.D.} dissertation},
+	title = {Mesh generation for implicit geometries},
+	url = {http://persson.berkeley.edu/thesis/persson-thesis.pdf},
+	abstract = {We present new techniques for generation of unstructured meshes for geometries spec- ified by implicit functions. An initial mesh is iteratively improved by solving for a force equilibrium in the element edges, and the boundary nodes are projected using the implicit geometry definition. Our algorithm generalizes to any dimension and it typically produces meshes of very high quality. We show a simplified version of the method in just one page of {MATLAB} code, and we describe how to improve and extend our implementation. Prior to generating the mesh we compute a mesh size function to specify the desired size of the elements. We have developed algorithms for automatic generation of size functions, adapted to the curvature and the feature size of the geometry. We propose a new method for limiting the gradients in the size function by solving a non-linear partial differential equation. We show that the solution to our gradient limiting equation is optimal for convex geometries, and we discuss efficient methods to solve it numerically. The iterative nature of the algorithm makes it particularly useful for moving meshes, and we show how to combine it with the level set method for applications in fluid dynamics, shape optimization, and structural deformations. It is also appropri- ate for numerical adaptation, where the previous mesh is used to represent the size function and as the initial mesh for the refinements. Finally, we show how to generate meshes for regions in images by using implicit representations.},
+	school = {Massachusetts Institute of Technology},
+	author = {Persson, Per-Olof},
+	year = {2004}
+},
+
+@article{hughes_isogeometric_2005,
+	title = {Isogeometric analysis: {CAD}, finite elements, {NURBS}, exact geometry and mesh refinement},
+	volume = {194},
+	issn = {00457825},
+	url = {http://linkinghub.elsevier.com/retrieve/pii/S0045782504005171},
+	doi = {10.1016/j.cma.2004.10.008},
+	abstract = {The concept of isogeometric analysis is proposed. Basis functions generated from {NURBS} (Non-Uniform Rational B-Splines) are employed to construct an exact geometric model. For purposes of analysis, the basis is refined and/or its order elevated without changing the geometry or its parameterization. Analogues of finite element h- and p-refinement schemes are presented and a new, more efficient, higher-order concept, k-refinement, is introduced. Refinements are easily implemented and exact geometry is maintained at all levels without the necessity of subsequent communication with a {CAD} (Computer Aided Design) description. In the context of structural mechanics, it is established that the basis functions are complete with respect to affine transformations, meaning that all rigid body motions and constant strain states are exactly represented. Standard patch tests are likewise satisfied. Numerical examples exhibit optimal rates of convergence for linear elasticity problems and convergence to thin elastic shell solutions. A k-refinement strategy is shown to converge toward monotone solutions for advection{\textendash}diffusion processes with sharp internal and boundary layers, a very surprising result. It is argued that isogeometric analysis is a viable alternative to standard, polynomial-based, finite element analysis and possesses several advantages.},
+	number = {39-41},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Hughes, Thomas J. R. and Cottrell, John Austin and Bazilevs, Yuri},
+	month = oct,
+	year = {2005},
+	keywords = {boundary, cad, convergence, finite element analysis, fluid dynamics, geometry, h-refinement, internal layers, k-refinement, layers, mesh refinement, nurbs, p-refinement, shells, structural analysis},
+	pages = {4135{\textendash}4195}
+},
+
+@unpublished{larsson_simple_2012,
+	title = {A Simple Anisotropic Mesh-Refinement Strategy for Triangular Elements in {2D}},
+	url = {http://www.hindawi.com/isrn/appmath/2012/134097/},
+	abstract = {A novel approach to anisotropic mesh-refinement of linear triangular elements in the finite element method is proposed. Using the method of solving a hierarchically refined dual problem in the a posteriori error analysis, indicators for edge refinement, rather than element refinement, can be obtained. A complete adaptive strategy is presented and illustrated by some numerical examples.},
+	author = {Larsson, Fredrik},
+	year = {2012}
+}
