@@ -464,23 +464,26 @@ We will also focus on the homogenization of $\bar{\ts\sigma}_\dev$ and $\bar{e}$
 \end{subequations}
 where we continue to manipulate \cref{eq:derived_macro_a} further
 \begin{align}
- [\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}] \dprod[\delta\bar{\ta{u}}\outerp\diff]
-  = [\homgen{ \ts{\sigma} } + \shomgen{ \gamma_\surf \hat{\ts I}}]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+ \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}
+  = \homgen{ \ts{\sigma} } + \shomgen{ \gamma_\surf \hat{\ts I}}
 \nonumber\\
-  = \frac{1}{\volume} \Big[ \int_{\Gamma_\rve \cup \Gamma_\rve^\pore } \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \shomgen{ \gamma_\surf \hat{\ts I}} \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+  = \frac{1}{\volume} \Big[ \int_{\Gamma_\rve \cup \Gamma_\rve^\pore } \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \shomgen{ \gamma_\surf \hat{\ts I}} \Big]
 \nonumber\\
-  = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\Gamma_\rve^\pore }  [\ta t_\surf \outerp[\ta x-\bar{\ta x}] + \gamma_\surf \hat{\ts I} ]\dif S \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+  = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\Gamma_\rve^\pore } [\ta t_\surf \outerp[\ta x-\bar{\ta x}] + \gamma_\surf \hat{\ts I} ]\dif S \Big]
 \nonumber\\
-  = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\Gamma_\rve^\pore }  [\gamma_\surf\hat{\ts I}\cdot\diff\outerp[\ta x-\bar{\ta x}] + \gamma_\surf \hat{\ts I} ]\dif S \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
-\nonumber\\
- ????????????? = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+  = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t}\outerp[\ta x - \bar{\ta x}]\dif C \Big]
+ \label{eq:derived_macro_a2}
+\end{align}
+which can be split into deviatoric and volumetric parts;
+\begin{align}
+  \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \cdot [\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t} \cdot [\ta x - \bar{\ta x}]\dif C \Big]
  \label{eq:derived_macro_a2}
 \end{align}
 \todo{??}
 where we now can identify the suitable definitions
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp [\ta x - \bar{\ta x}]\dif S \dprod \tf I_\dev, \, \quad
+    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t}\outerp[\ta x - \bar{\ta x}] \dif C \Big] \dprod \tf I_\dev, \, \quad
     \bar{e} \defeq \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}
 \label{eq16}
 \end{align}
