@@ -80,6 +80,7 @@
 
 % More specialized commands;
 \DeclarePairedDelimiter{\homgen}{\langle}{\rangle_\rve}
+\DeclarePairedDelimiter{\shomgen}{\langle\!\langle}{\rangle\!\rangle_\rve}
 \DeclarePairedDelimiter{\jmp}{[\![}{]\!]}
 \newcommand{\prescribed}{\mathrm{pre}}
 \newcommand{\on}{\quad\text{ on }}
@@ -212,7 +213,7 @@ where
     c^*(q;r) &\defeq
     \int_{\Omega}  r\,\hat{e}(q) \dif V
 \label{eq3c} \\
-    l_\surf(\ta{v}) &\defeq -\int_{\Gamma^\surf} \gamma_\surf \hat{\ta I} \dprod [\ta{v}\outerp\diff] \dif S 
+    l_\surf(\ta{v}) &\defeq -\int_{\Gamma^\pore} \gamma_\surf \hat{\ta I} \dprod [\ta{v}\outerp\diff] \dif S 
 \label{eq3d} \\
     l(\ta{v}) &\defeq \int_{\Omega} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
 \label{eq3d}
@@ -230,7 +231,6 @@ It is illuminating (although not necessary from an operational point of view) to
     \Lambda(\ta{u},p) \defeq \int_{\Omega} \left[\psi_\mathrm{u}(\ts{\epsilon}_\dev[\ta{u}]) - p\,\ta{u}\cdot\diff + \psi_\mathrm{p}^*(p)\right] \dif V
 \label{eq121}
 \end{align}
-\todo{surf?}
 %----------------------------------------------------------------------------
 where $\psi_u(\ts{\epsilon}_\dev)$ and $\psi_p^*(p)$ are constitutive energy densities\footnote{* indicates ``complementary energy''} such that
 %----------------------------------------------------------------------------
@@ -259,11 +259,15 @@ which are identical to the weak form in \cref{eq2}.
 
 The appropriate variational setting of the homogenized problem is obtained upon replacing the integrands in the weak forms in \crefrange{eq3a}{eq3d} by running averages of the type
 %----------------------------------------------------------------------------
-\begin{equation}
+\begin{align}
     y \mapsto
-    \homgen{y}\defeq \frac{1}{\volume}\int_{{\Omega}_\rve} y \dif V
+    \homgen{y} &\defeq \frac{1}{\volume}\int_{\Omega_\rve} y \dif V
     \label{eq16ba}
-\end{equation}
+\intertext{and for the internal surface $\Gamma^\pore$}
+    y \mapsto
+    \shomgen{ y } &\defeq \frac{1}{\volume}\int_{\Gamma^\pore\cap\Omega_\rve} y \dif S
+    \label{eq16ba}
+\end{align}
 %----------------------------------------------------------------------------
 representing a smoothing approximation on a RVE.
 In practice, the RVE's are finite-sized and occupies the subscale region $\Omega_\rve$ with boundary $\Gamma_\rve$.
@@ -278,15 +282,15 @@ Boundary integrals can be homogenized in similar fashion, by considering Represe
 The weak forms in \crefrange{eq3a}{eq3d} are thus approximated as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    a(\ta{v};\ta{w}) &\approx \int_\Omega [a_\rve(\ta{v};\ta{w}) - l_{\surf\rve\dev}(\ta w)] \dif V
+    a(\ta{v};\ta{w}) &\approx \int_\Omega a_\rve(\ta{v};\ta{w}) \dif V
 \label{eq7a} \\
-    b(q,\ta{v}) &\approx \int_\Omega [b_\rve(q,\ta{w}) - l_{\surf\rve\vol}(\ta w)] \dif V
+    b(q,\ta{v}) &\approx \int_\Omega b_\rve(q,\ta{v}) \dif V
 \label{eq7b} \\
     c^*(q;r) &\approx \int_\Omega c^*_\rve(q;r) \dif V
 \label{eq7c} \\
     l(\ta{v}) &\approx \int_\Omega l_\rve(\ta{v}) \dif V + \int_{\Gamma^\Neumann} l_\#(\ta{v}) \dif S
 \label{eq7d} \\
-    l_\surf(\ta{v}) &\approx 0
+    l_\surf(\ta{v}) &\approx \int_\Omega l_{\surf\rve}(\ta v) \dif V
 \label{eq7e}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
@@ -302,17 +306,14 @@ where the RVE-functionals in \crefrange{eq7a}{eq7d} are defined as
     c^*_\rve(q;r) &\defeq
     \homgen{ r\,\hat{e}(q) }
 \label{eq8c} \\
-    l_{\surf\rve\dev}(\ta{v}) &\defeq
-    \frac{1}{\volume} \int_{\Gamma_\rve^\pore} \gamma_\surf \hat{\ts I} \dprod [\ta{v}\outerp\diff]_\dev \dif S
+    l_{\surf\rve}(\ta{v}) &\defeq
+    \shomgen{ \gamma_\surf \hat{\ts I} \dprod [\ta{v}\outerp\diff] }
 \label{eq8d} \\
-    l_{\surf\rve\vol}(\ta{v}) &\defeq
-    \frac{1}{\volume} \int_{\Gamma_\rve^\pore} \gamma_\surf \hat{\ts I} \dprod [\ta{v}\outerp\diff]_\vol \dif S
-\label{eq8e} \\
     l_\rve(\ta{v}) &\defeq
     \homgen{ \ta{v}\cdot\ta{f} }, \quad
     l_\#(\ta{v}) \defeq
     \langle \ta{v}\cdot \ta t_\prescribed \rangle_\#
-\label{eq8f}
+\label{eq8e}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
 Likewise, we homogenize the volume-specific energy potential $\Lambda(\ta{u},p)$:
@@ -327,11 +328,10 @@ where the RVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 \begin{align}
     \Lambda_\rve(\ta{v},q) &\defeq
     \homgen{ \psi_u(\ts{\epsilon}_\dev[\ta{v}])}
-    + \homgen{ l_\surf(\ta{v}) } 
+    + l_{\surf\rve}(\ta{v}) 
     - \homgen{  p\,\ta{v}\cdot\diff } + \homgen{ \psi_p^*(q) }
 \label{eqRveBulkPotential}
 \end{align}
-\todo{surf?}
 %----------------------------------------------------------------------------
 Note in particular the treatment of the surface tension in \cref{eq7e}, which exists now only in the RVE-problem, and influences the macroscale problem only through \cref{eq7a, eq7b}.
 
@@ -391,7 +391,7 @@ Now, we require that
     \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta{u} \dif S = \bar{\ta{u}}, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u} \outerp \ta n \dif V = \bar{\ta{h}}
 \label{eq14a} \\
-    \frac{1}{\volume} \int_{\Gamma_\rve} \ta{t} \cdot [\ta x-\bar{\ta x}] \dif S = \bar{p}
+    \frac{1}{\volume} \int_{\Gamma_\rve} p\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = \bar{p}
 \label{eq14b}
 \end{gather}
 \end{subequations}
@@ -402,7 +402,7 @@ which leads to the constraints
     \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta{u}^\fluct \dif S = \ta 0, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u}^\fluct \outerp \ta n \dif V = \ts 0
 \label{eq14a} \\
-    \frac{1}{\volume} \int_{\Gamma_\rve} \ta{t}^\fluct \cdot [\ta x-\bar{\ta x}] \dif S = 0
+    \frac{1}{\volume} \int_{\Gamma_\rve} p^\fluct\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = 0
 \label{eq14b}
 \end{gather}
 \end{subequations}
@@ -416,28 +416,26 @@ With the representations in \cref{eq12} and the constraints in \cref{eq14,eq13},
 %\todo{$\delta u^\macro$ in RHS but not in LHS}
 \begin{align}
     a_\rve(\ta{u};\delta\ta{u}^\macro) &=
-%    \homgen{ \ts{\epsilon}_\dev[\delta\bar{\ta{u}}]\dprod \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) } =
-    \ts{\epsilon}_\dev[\delta\bar{\ta{u}}] \dprod \bar{\ts{\sigma}}_\dev
+    \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) } \dprod \ts{\epsilon}_\dev[\delta\bar{\ta{u}}] 
 \label{eq15a} \\
     b_\rve(p,\delta\ta{u}^\macro) &=
-%    -  \homgen{ p\,\delta\bar{\ta{u}}\cdot\diff } =
-    - \bar{p}\,\delta\bar{\ta{u}}\cdot\diff
+    -  \homgen{ p }\, \delta\bar{\ta{u}}\cdot\diff = - \bar{p}\, \delta\bar{\ta{u}}\cdot\diff - \shomgen{p\,\ta n\cdot[\ta x -\bar{\ta x}]}\, \delta\bar{\ta{u}}\cdot\diff
 \label{eq15b} \\
     b_\rve(\delta p^\macro,\ta{u}) &=
-%    -  \homgen{ \delta\bar{p}\,\ta{u}\cdot\diff } =
-    - \delta\bar{p}\,\bar{\ta{u}}\cdot\diff
+    - \delta\bar{p}\, \homgen{ \ta{u}\cdot\diff } = - \delta\bar{p} \, \bar{\ta u}\cdot\diff - \delta\bar{p}\,\shomgen{ \ta{u}\cdot\ta{n} }
 \label{eq15c} \\
     c^*_\rve(p;\delta p^\macro) &=
-%    \homgen{ \delta\bar{p}\,\hat{e}(p) } =
-    \delta\bar{p}\,\bar{e}
+    \delta\bar{p}\, \homgen{ \hat{e}(p) }
 \label{eq15d} \\
-    l_\rve(\delta\ta{u}^\macro) &=
-%    \homgen{ \delta\bar{\ta{u}}\cdot\ta{f} } + \homgen{[\delta\bar{\ta{u}}\outerp\diff]\dprod\left[\ta{f}\outerp[\ta{x}-\bar{\ta{x}}]\right] } =
-    \delta\bar{\ta{u}}\cdot \bar{\ta f} + [\delta\bar{\ta{u}}\outerp\diff]\dprod \bar{\bar{\ta f}}
+    l_{\surf\rve}(\delta\ta{u}^\macro) &=
+    -\shomgen{ \gamma_\surf \hat{\ts I} } \dprod [\delta\bar{\ta{u}}\outerp\diff]
 \label{eq15e} \\
+    l_\rve(\delta\ta{u}^\macro) &=
+    \delta\bar{\ta{u}}\cdot \bar{\ta f} + [\delta\bar{\ta{u}}\outerp\diff]\dprod \bar{\bar{\ta f}}
+\label{eq15f} \\
     l_\#(\delta\ta{u}^\macro) &=
     \delta\bar{\ta{u}} \cdot \bar{\ta t}_\prescribed + [\delta\bar{\ta u}\outerp\diff]\dprod \bar{\bar{\ta{t}}}_\prescribed
-\label{eq15f}
+\label{eq15g}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
 The applied macroscale loads $\bar{\ta f}$, $\bar{\ta t}_\prescribed$ and ``moments'' $\bar{\bar{\ta f}}$, $\bar{\bar{\ta t}}_\prescribed$ are defined as
@@ -454,11 +452,36 @@ The applied macroscale loads $\bar{\ta f}$, $\bar{\ta t}_\prescribed$ and ``mome
 \textbf{Remark:} Henceforth, we restrict to the situation when $\volume\to 0$ and $|\Gamma_\#|\to 0$; hence $\bar{\bar{\ta f}}$ and $\bar{\bar{\ta t}}_\prescribed$ will vanish.
 We will also focus on the homogenization of $\bar{\ts\sigma}_\dev$ and $\bar{e}$, so $\bar{\ta f}$ and $\bar{\ta t}_\prescribed$ are considered as given macroscopic quantities. $\Box$
 
-The variationally consistent macroscale ``flux'' variables $\bar{\ts{\sigma}}_\dev$ and $\bar{e}$ are obtained from homogenization of the constitutive functions as follows:
+\todo{?}Plugging \cref{eq15a,eq15b,eq15c,eq15d,eq15e,eq15f,eq15g} into \cref{eq6} weak form we get
+\begin{subequations}
+\begin{align}
+ \int_\Omega \underbrace{[\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}]}_{=\bar{\ts\sigma}} \dprod [\delta\bar{\ta{u}}\outerp\diff] \dif V = \ldots
+\label{eq:derived_macro_a}
+\\
+ \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{[\homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}]}_{\bar{e}} \Big]\dif V = 0
+\label{eq:derived_macro_b}
+\end{align}
+\end{subequations}
+where we continue to manipulate \cref{eq:derived_macro_a} further
+\begin{align}
+ [\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}] \dprod[\delta\bar{\ta{u}}\outerp\diff]
+  = [\homgen{ \ts{\sigma} } + \shomgen{ \gamma_\surf \hat{\ts I}}]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+\nonumber\\
+  = \frac{1}{\volume} \Big[ \int_{\Gamma_\rve \cup \Gamma_\rve^\pore } \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \shomgen{ \gamma_\surf \hat{\ts I}} \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+\nonumber\\
+  = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\Gamma_\rve^\pore }  [\ta t_\surf \outerp[\ta x-\bar{\ta x}] + \gamma_\surf \hat{\ts I} ]\dif S \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+\nonumber\\
+  = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\Gamma_\rve^\pore }  [\gamma_\surf\hat{\ts I}\cdot\diff\outerp[\ta x-\bar{\ta x}] + \gamma_\surf \hat{\ts I} ]\dif S \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+\nonumber\\
+ ????????????? = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \Big]\dprod[\delta\bar{\ta{u}}\outerp\diff]
+ \label{eq:derived_macro_a2}
+\end{align}
+\todo{??}
+where we now can identify the suitable definitions
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    \bar{\ts{\sigma}}_\dev \defeq \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) }, \quad
-    \bar{e} \defeq \homgen{ \hat{e}(p) }
+    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp [\ta x - \bar{\ta x}]\dif S \dprod \tf I_\dev, \, \quad
+    \bar{e} \defeq \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}
 \label{eq16}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------
@@ -507,7 +530,7 @@ As a preliminary for establishing the proper variational format of the RVE-probl
 %----------------------------------------------------------------------------
 \begin{subequations}
 \begin{align}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(\delta\ta{u},p) - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= 0
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(\delta\ta{u},p) - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= l_\rve(\delta\ta{u})
 \label{eq19a} \\
     b_\rve(\ta{u},\delta p) + c^*_\rve(p;\delta p) &= 0
 \label{eq19b}

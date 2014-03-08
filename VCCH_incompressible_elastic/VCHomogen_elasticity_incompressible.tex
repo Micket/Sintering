@@ -562,9 +562,9 @@ We then \emph{assume} that the subscale fluctuation field $\ta{u}^\fluct$ is per
 This model assumption, which may be termed ``micro-periodicity'', is a key ingredient (and frequently adopted) in the literature on mathematical homogenization and can be viewed as an approximation between the stiffer Dirichlet and the weaker Neumann boundary conditions.
 Indeed, both these cases can be obtained as special cases of the most general variational format of periodicity (as will be discussed further below).
 
-In order to formulate the conditions on micro-periodicity, we consider the RVE in \cref{Figure2}, where the boundary $\Gamma_\rve$ has been split into two parts: $\Gamma_\rve=\Gamma_\rve^- \cup \Gamma_\rve^+$.
-Here, $\Gamma_\rve^+$ is the \emph{image boundary} (later chosen as the computational domain for boundary integration), whereas $\Gamma^-$ is the \emph{mirror boundary}.
-We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma^+ \rightarrow \Gamma^-$ such that any point $\ta{x}^+\in\Gamma_\rve^+$ is mirrored in a self-similar fashion to the corresponding point $\ta{x}^-\in\Gamma_\rve^-$; hence, $\ta{x}^-=\ta{\varphi}_\per(\ta{x}^+)$.
+In order to formulate the conditions on micro-periodicity, we consider the RVE in \Cref{Figure2}, where the boundary $\Gamma_\rve$ has been split into two parts: $\Gamma_\rve=\Gamma_\rve^- \cup \Gamma_\rve^+$.
+Here, $\Gamma_\rve^+$ is the \emph{image boundary} (later chosen as the computational domain for boundary integration), whereas $\Gamma_\rve^-$ is the \emph{mirror boundary}.
+We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma_\rve^+ \rightarrow \Gamma_\rve^-$ such that any point $\ta{x}^+\in\Gamma_\rve^+$ is mirrored in a self-similar fashion to the corresponding point $\ta{x}^-\in\Gamma_\rve^-$; hence, $\ta{x}^-=\ta{\varphi}_\per(\ta{x}^+)$.
 %---------------------------------------------------------------------------------
 \begin{figure}[H]
 \centering
@@ -618,7 +618,7 @@ As an immediate consequence of this symmetry assumption, we obtain that the boun
 \label{eq24}
 \end{equation}
 %---------------------------------------------------------------------------
-as depicted in \cref{Figure2}.
+as depicted in \Cref{Figure2}.
 We now evaluate, upon using \cref{eq24}, the boundary term in
 \cref{eq19a,eq20a}, as follows:
 %----------------------------------------------------------------------------
@@ -712,7 +712,7 @@ The proof of uniqueness of the split in \cref{eq:t_split} follows from the ident
 \end{align}
 and the fact that
 \begin{align}
- \bar{\ts\tau}[\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\ta t] = 0
+ \bar{\ts\tau}[\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\ta t] = \ta 0
 \end{align}
 Hence, $\ta t^\fluct \defeq \ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\rve^\fluct$. $\Box$
 
@@ -1485,6 +1485,7 @@ it follows from \cref{eq:dirichlet_energy}, \cref{eq:neumann_energy}, and \cref{
 \end{align}
 In other words, the Dirichlet and Neumann boundary conditions represent upper and lower bounds
 on the macroscale energy density that is obtained with periodic boundary conditions for any given realization of the RVE and for a given macroscale state $(\bar{\ts\epsilon}_\dev, \bar{p})$.
+We note that choosing any discretization of $\set{T}_\rve$ in \cref{eq:periodic_energy} leads to a lower bound of $\bar{\psi}\epspargs$.
 
 In the case of linear elasticity, the tangent operators represent the upscaled (=homogenized) constant operators in the representations
 \begin{align}
@@ -1513,7 +1514,7 @@ $\hat{\ts\sigma}_\dev(\ts\epsilon_\dev) = 2 G\,\ts\epsilon_\dev$ and $\hat{e}(p)
 The parameter set associated with the matrix and particles are $(G_\mathrm{mat},C_\mathrm{mat})$ and $(G_\mathrm{part},C_\mathrm{part})$, respectively.
 
 All computational results were obtained for cubic Statistical Volume Elements (SVE:s).
-The target volume fraction of particles if 10\% and their size-distribution, in terms of diameter, is uniform in the range $[\frac23 ,\frac43]$ thus with a mean value of $1$.
+The target volume fraction of particles if 10\% and their size-distribution, in terms of diameter, is uniform in the range $[\frac23 ,\frac43]$, thus with a mean value of $1$.
 Two examples of realizations with SVE-size $L_\rve = 6$ and $L_\rve = 9$ are shown in \Cref{fig:rve_sample6,fig:rve_sample9}, respectively.
 
 \begin{figure}[H]
@@ -1533,15 +1534,19 @@ Two examples of realizations with SVE-size $L_\rve = 6$ and $L_\rve = 9$ are sho
 \end{figure}
 
 Now, for sufficiently large size of the SVE (for any given realization of a random composite), we may assume that the macroscale response is isotropic corresponding to the effective moduli $\bar{G}$ and $\bar{C}$ ($=\bar{K}^{-1}$).
-However, even for a smaller SVE-size, it is possible to compute an ``apparent'' value of $\bar{G}$ by the projection
+However, even for a smaller SVE-size, it is possible to compute an ``apparent'' value of $\bar{G}$ by the minimization
 \begin{align}
- \bar{G} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}\bar{\tf E}_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
+ \min \frac12 \sum_{ijkl} (\bar{\tf E} - 2 \bar{G} \tf I_\dev)_{ijkl}^2 \implies \bar{G} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}(\bar{\tf E})_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
 \end{align}
-where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ could be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{G} \tf I_\dev$ in standard fashion.
+where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ can be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{G} \tf I_\dev$ in standard fashion.
 
 For the finite element analysis of the SVE-problems, tetrahedral elements with socalled Mini-element approximations are utilized.
 This type of element is defined by linear approximation plus a bubble function for $\ta u$ and linear approximation for $p$, cf.\ \cite{arnold_stable_1984}.
 
+The RVE-problems with the different boundary conditions are implemented in the open source C++ code OOFEM (\texttt{www.oofem.org}) \cite{patzak_design_2001} and are available under the name \texttt{Mixed\-Gradient\-Pressure}.
+However, due to the difficulty of constructing $\set{T}_\rve$, the present implementation of the weakly periodic boundary conditions is based on global polynomials for discretizing $\set{T}_\rve$.
+Thus, only a lower bound for the true periodicity is obtained.
+Due to the high computational cost, only the Neumann and Dirichlet boundary conditions are used in the numerical examples in this paper.
 
 
 \subsection{Homogenization of macroscopically incompressible response --- A convergence study}
@@ -1549,7 +1554,10 @@ The first series of SVE-computations were carried out for macroscopically incomp
 Taking the shear modulus for the matrix, $G_\mathrm{mat}$, as the reference modulus, we choose $G_\mathrm{part} = 5\,G_\mathrm{mat}$, whereas $C_\mathrm{mat} = C_\mathrm{part} = 0$.
 Convergence results for the two extremes of Dirichlet and Neumann boundary conditions are shown in \Cref{fig:SVE_comp}.
 The mean value and variance of the homogenized shear modulus $\bar{G}$ are shown for increasing SVE-size, represented by $L_\rve$.
-Here, a fixed number of realizations are used for each value of $L_\rve$, starting with 200 realizations for the smallest SVE size ($L_\rve = 1$) and gradually decreases to only 4 realizations for the largest SVE-size ($L_\rve$). The larger SVE:s do not need as many realizations, since the variance is very small, as can be seen in \Cref{fig:SVE_comp}.
+Here, a certain number of realizations are used for each value of $L_\rve$, starting with 200 realizations for the smallest SVE size ($L_\rve = 1$) and ending up with only 4 realizations for the largest SVE-size ($L_\rve$).
+The larger SVE:s do not need as many realizations, which is verified by the small variance as can be seen in \Cref{fig:SVE_comp}.
+An RVE is obtained when the variance goes to zero, and the mean value converges, which is the case when the SVE-size is sufficiently large.
+In the present case, for engineering purposes, we consider $L_\rve=9$ sufficiently large to qualify as an RVE.
 
 \begin{figure}[H]
 \centering
@@ -1629,7 +1637,7 @@ The deformed shape for a typical sample SVE of size $L_\rve = 6$ with Neumann bo
 \begin{figure}[htpb!]
 \centering
  \includegraphics[width=0.5\linewidth]{rve6_def.png}
-\caption{A sample RVE subjected to macroscopic pure shear $(\bar{\ts\epsilon}_\dev)_{ij} = 0.4[1 - \delta_{ij}]$.}
+\caption{A sample SVE subjected to macroscopic pure shear $(\bar{\ts\epsilon}_\dev)_{ij} = 0.4[1 - \delta_{ij}]$.}
 \label{fig:def_rve6}
 \end{figure}
 
@@ -1639,7 +1647,7 @@ The deformed shape for a typical sample SVE of size $L_\rve = 6$ with Neumann bo
 In the second series of computations, we show how the homogenization scheme can seamlessly handle the transition from the macroscopically compressible to the incompressible response.
 Here, it is assumed that incompressible particles, defined by $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$ (as before), are embedded in a matrix material with $C_\mathrm{mat}\geq 0$.
 Only the situation with Dirichlet boundary conditions is considered (without affecting the generality of the main conclusion from the results).
-In \Cref{fig:RVE_compressibility} it is shown how the homogenized properties are affected by the matrix compliance, $C_\mathrm{mat}$, for a given (fixed) realization and given SVE-size ($L_\rve = 9$, cf. \Cref{fig:rve_sample9}).
+In \Cref{fig:RVE_compressibility} it is shown how the homogenized properties are affected by the matrix compliance, $C_\mathrm{mat}$, for a given (fixed) realization and given SVE-size ($L_\rve = 9$, cf. \Cref{fig:rve_sample9}),  thus defining an RVE.
 Clearly, rather than choosing $C_\mathrm{mat}$ as the variable material property, one may choose Poisson's ratio $\nu_\mathrm{mat}$ via the elementary relation
 \begin{align}
  \nu = \frac{3-2\,C\,G}{6 + 2\,C\,G}
@@ -1683,7 +1691,7 @@ which is also used in \Cref{fig:RVE_compressibility}.
   \node at (2.8,4.2) { $\nu_\mathrm{mat}$ };
 \end{tikzpicture}
 \caption{Homogenized results from a single RVE with Dirichlet boundary condition.
-Dependence of effective properties $\bar{C}$ and $\bar{G}$ on the matrix-bulk compliance $C_\mathrm{mat}$ for fixed values of $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$.}
+Dependence of effective properties $\bar{C}$ and $\bar{G}$ on the bulk compliance $C_\mathrm{mat}$ for fixed values of $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$.}
 \label{fig:RVE_compressibility}
 \end{figure}
 
@@ -1692,28 +1700,51 @@ That macroscopical incompressibility is obtained is verified by the computed val
 It is also noted in \Cref{fig:RVE_compressibility} that the affect on $\bar{G}$ is more pronounced, however quite limited, when incompressibility is approached.
 
 \section{Conclusions and outlook}
-In this paper we have introduced a variationally consistent homogenization scheme for macroscopically incompressible micro structures.
-We have derived a canonical form of the RVE-problem which has the same strong form as the macroscale problem, while still satisfying the macrohomogeneity condition.
-This allows for straight forward finite element implementations, as both scales use the same standard $(\ta u,p)$-formulation.
+In this paper we have introduced a variationally consistent homogenization scheme for heterogeneous solids, whose constituents may be incompressible in the extreme case.
+The transition from macroscopically compressible to incompressible states (which is the extreme result when all constituents are incompressible) is handled in a completely seamless fashion.
+Based on a mixed formulation on the fine scale, it has been demonstrated how the concept of variationally consistent homogenization can be adopted to derive the pertinent two-scale problem.
+The proposed canonical formulation of the problem on an underlying Representative Volume Element (RVE) is an extension of the formulation presented in Öhman et al. (2013), allowing for a general choice of boundary conditions.
+Moreover, the canonical formulation has been shown to satisfy the generalized macrohomogeneity condition.
+The FE-setting on both scales (macroscale and RVE) is based on the standard $(\ta{u},p)$-formulation, and the Mini-element approximation with a bubble function is adopted for the RVE-problem.
+All implementation and numerical results pertain to 3D-cubes.
 
-We have also shown the bounds for the periodic boundary condition on an RVE by deriving the Dirichlet and Neumann boundary conditions.
-The proposed method is required whenever an RVE exhibit near or complete incompressibility, and works seamlessly if an RVE transitions from compressible to incompressible response.
+It was shown that theoretical bounds on the ``homogenized energy density'' for weakly periodic boundary conditions on the RVE are obtained by imposing Dirichlet and Neumann boundary conditions.
+The computational results from a statistical analysis verify the convergence of these bounds with increasing SVE-size.
+As to the computational cost of solving the RVE-problem with the different types of boundary conditions for the standard compressible problem and the present (in)compressible one, it is concluded that the Neumann boundary condition is quite cost-neutral.
+However, applying the Dirichlet boundary condition to the canonical RVE-format means a noticeable additional cost, since the additional (global) variable $\bar{e}$ is required in order to account for the (possibly vanishing) macroscale volumetric deformation.
+In this context, we remark that imposing weak periodicity would infer a further increased computational cost associated with the boundary discretization of tractions in $\set{T}_\rve$; hence, it is conjectured that exploiting the standard Dirichlet and Neumann conditions computations and drawing conclusions about their bounding character would be a most competitive approach in FE\textsuperscript{2}-computations.
 
-
-The computational cost of the Neumann boundary condition is equivalent to that of the classical (compressible) Neumann boundary condition.
-The Dirichlet boundary condition requires a global unknown to relax the macroscopic volumetric deformation, which has a significant computational cost compared to the classical (compressible) Dirichlet boundary condition.
-The weakly periodic boundary condition has a has a large computational cost (depending heavily on the choice of discretization of $\set T_\rve$), so the bounds given by the Dirichlet and Neumann boundary condition is likely to be the most efficient solution for FE\textsuperscript{2} simulations.
-
-
-Due to the difficult procedure of constructing basis functions for $\set T_\rve$ for 3D geometries, the current implementation relies on global polynomials where the computational cost drastically increases with the order of the polynomials, while only showing a marginal improvement compared to the Neumann boundary condition.
-As a possible alternative, it is straight forward to derive a strongly periodic boundary condition by replacing \cref{eq61b} with
+As to future developments, it is desirable to further exploit the concept of weakly periodic boundary conditions; however, constructing basis functions for $\set{T}_\Box$ in 3D is not a trivial task.
+Of course, it is also of interest to compare with the classical condition of strongly periodic fluctuations, which is defined by replacing \cref{eq61b} with
 \begin{align}
     \set{U}_\rve^{\Periodic,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \jmp{\ta{v}}=\ta{0} \text{ on } \Gamma_\rve \}
 \end{align}
-and performing the steps following up to \cref{eq:weak_form_dirichlet}.
-While such implemented wouldn't need costly Lagrange multipliers for $\set{T}_\rve$, it instead requires a meshing software capable of creating periodic meshes.
+and performing the corresponding steps up to \cref{eq:weak_form_dirichlet}.
+However, this method has the definite drawback that the meshing software must produce strictly periodic meshes.
 
-The implementation of all three boundary conditions is available in the open source C++ code OOFEM (\texttt{www.oofem.org}) \cite{patzak_design_2001} under the name \texttt{MixedGradientPressure}.
+
+In a forthcoming paper, the proposed theoretical framework will be applied to the problem of sintering, a characteristic of which is that the microstructure evolves from being highly porous to becoming completely dense.
+The ``compaction'' process is driven by surface tension along the particle-pores boundaries until the pore have completely disappeared, cf. Öhman et al. (2013).
+
+
+% 
+% 
+% \section{Conclusions and outlook}
+% In this paper we have introduced a variationally consistent homogenization scheme for macroscopically incompressible micro structures.
+% We have derived a canonical form of the RVE-problem which has the same strong form as the macroscale problem, while still satisfying the macrohomogeneity condition.
+% This allows for straight forward finite element implementations, as both scales use the same standard $(\ta u,p)$-formulation.
+% 
+% We have also shown the bounds for the periodic boundary condition on an RVE by deriving the Dirichlet and Neumann boundary conditions.
+% The proposed method is required whenever an RVE exhibit near or complete incompressibility, and works seamlessly if an RVE transitions from compressible to incompressible response.
+% 
+% 
+% The computational cost of the Neumann boundary condition is equivalent to that of the classical (compressible) Neumann boundary condition.
+% The Dirichlet boundary condition requires a global unknown to relax the macroscopic volumetric deformation, which has a significant computational cost compared to the classical (compressible) Dirichlet boundary condition.
+% The weakly periodic boundary condition has a has a large computational cost (depending heavily on the choice of discretization of $\set T_\rve$), so the bounds given by the Dirichlet and Neumann boundary condition is likely to be the most efficient solution for FE\textsuperscript{2} simulations.
+% 
+% 
+% Due to the difficult procedure of constructing basis functions for $\set T_\rve$ for 3D geometries, the current implementation relies on global polynomials where the computational cost drastically increases with the order of the polynomials, while only showing a marginal improvement compared to the Neumann boundary condition.
+
 
 %\clearpage
 %\printbibliography
