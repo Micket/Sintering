@@ -32,7 +32,6 @@
 %\usepackage{fontspec}
 \usepackage{amsmath, amssymb, mathtools, contmech}
 \usepackage{graphicx, subfig, float, grffile}
-\usepackage{algorithm, algorithmic}
 \usepackage{microtype}
 %\usepackage{todonotes}
 \usepackage[width=0.8\paperwidth,height=0.85\paperheight]{geometry}
@@ -47,10 +46,10 @@
 
 \usepackage{tikz, pgfplots}
 \usetikzlibrary{arrows}
-\pgfplotsset{compat=1.6}
-% \renewcommand{\vec}[1]{\mathds{#1}}
-% \renewcommand{\mat}[1]{\mathds{#1}}
-
+\pgfplotsset{compat=1.9}
+\newcommand{\tikzsetnextfilename}[1]{}
+%\usetikzlibrary{external}
+%\tikzexternalize
 
 \ifluatex
   \usepackage{unicode-math}
@@ -83,8 +82,21 @@
 \newcommand{\figref}[1]{\Cref{#1}}
 \newcommand{\secref}[1]{\Cref{#1}}
 \newcommand{\appref}[1]{\Cref{#1}}
+\newcommand{\eqtref}[1]{\cref{#1}}
+\newcommand{\eqtrefrange}[2]{\crefrange{#1}{#2}}
 
-
+\DeclarePairedDelimiter{\homgen}{\langle}{\rangle_\rve}
+\DeclarePairedDelimiter{\jmp}{[\![}{]\!]}
+\newcommand{\prescribed}{\mathrm{pre}}
+\newcommand{\on}{\quad\text{ on }}
+\renewcommand{\dev}{\mathrm{d}}
+\renewcommand{\vol}{\mathrm{v}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\volume}{|\Omega_\rve|}
+\newcommand{\ded}{\mathrm{d}}
+\newcommand{\dep}{\mathrm{p}}
+\newcommand{\Periodic}{\mathrm{P}}
+\newcommand{\epspargs}{\{{\bar{\ts\epsilon}}_\dev, \bar{p}\}}
 % Reduce the size of the rve box a bit:
 \newcommand{\rve}{
   {\mathchoice
@@ -112,7 +124,5 @@ Numerical results, demonstrating the seamless character of the computational alg
 \end{abstract}
 
 \input{Contents}
-
-\input{Appendix}
 
 \end{document}

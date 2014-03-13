@@ -55,20 +55,27 @@
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
 \usepackage{microtype}
-\usepackage{cleveref}
-
 \usepackage{amsmath, amssymb, mathtools, contmech}
 \usepackage{graphicx, float}
 \usepackage{microtype}
-\usepackage{tikz, pgfplots}
-\usetikzlibrary{arrows}
-\pgfplotsset{compat=1.6}
+%\usepackage{tikz, pgfplots}
+%\usetikzlibrary{arrows}
+%\pgfplotsset{compat=1.9}
+%\usetikzlibrary{external}
+%\newcommand{\tikzinput}[1]{\input{#1.tikz}}
+%\tikzexternalize
+
+\newcommand{\tikzsetnextfilename}[1]{}
+\newcommand{\tikzinput}[1]{\includegraphics{#1}}
+
 
 \renewcommand{\doiurl}[1]{#1}
 
 \newcommand{\figref}[1]{Figure~\ref{#1}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
 \newcommand{\appref}[1]{Appendix~\ref{#1}}
+\newcommand{\eqtrefrange}[2]{\eqref{#1}--\eqref{#2}}
+\newcommand{\eqtref}[2]{\eqref{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                             %%
@@ -90,6 +97,8 @@
 %\def\includegraphics{}
 
 
+%%% Put your definitions there:
+\startlocaldefs
 
 % More specialized commands;
 \DeclarePairedDelimiter{\homgen}{\langle}{\rangle_\rve}
@@ -114,9 +123,6 @@
   }
 }
 
-
-%%% Put your definitions there:
-\startlocaldefs
 \endlocaldefs
 
 
@@ -347,20 +353,69 @@ Numerical results, demonstrating the seamless character of the computational alg
 %%                               %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\end{backmatter}
+\end{document}
 %%
 %% Do not use \listoffigures as most will included as separate files
 % 
-% \section*{Figures}
-%   \begin{figure}[h!]
-%   \caption{\csentence{Sample figure title.}
-%       A short description of the figure content
-%       should go here.}
-%       \end{figure}
-% 
-% \begin{figure}[h!]
-%   \caption{\csentence{Sample figure title.}
-%       Figure legend text.}
-%       \end{figure}
+\section*{Figures}
+\begin{figure}[h!]
+\centering
+\includegraphics{swisscheese}
+\caption{\csentence{Generic micro-heterogeneous material consisting of inclusions in matrix (example)}\label{fig:swisscheese}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics{swisscheese_periodic}
+\caption{\csentence{RVE in 2D with ``image'' and ``mirror'' boundaries.}\label{fig:swisscheese_periodic}}
+\end{figure}
+
+\begin{figure}[!htpb]
+ \centering
+ \includegraphics{original_problem_rewrite}
+ \caption{
+   \csentence{Comparison of the RVE-problem formulations.}
+   Original formulation (left) and Canonical formulation (right).\label{fig:format_comparison}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+ \includegraphics[width=0.4\linewidth]{rve6.png}
+ \includegraphics[width=0.4\linewidth]{rve6_inc.png}
+\caption{\csentence{SVE-cube with sample realization of particle composite of size $6\times 6\times 6$.}\label{fig:rve_sample6}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+ \includegraphics[width=0.4\linewidth]{rve9.png}
+ \includegraphics[width=0.4\linewidth]{rve9_inc.png}
+\caption{\csentence{SVE-cube with sample realization of particle composite of size $9\times 9\times 9$.}\label{fig:rve_sample9}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics{meanG}
+\includegraphics{varG}
+\caption{\csentence{Statistical comparison of the influence of the boundary conditions (Dirichlet, Neumann) on the macroscale shear modulus, $\bar{G}$.}}
+\label{fig:SVE_comp}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+ \includegraphics[width=0.5\linewidth]{rve6_def.png}
+\caption{\csentence{A sample SVE subjected to macroscopic pure shear}. The prescribed macroscopic shear is $(\bar{\ts\epsilon}_\dev)_{ij} = 0.4[1 - \delta_{ij}]$.}
+\label{fig:def_rve6}
+\end{figure}
+
+\begin{figure}[htbp!]
+\centering
+\includegraphics{CGmat}
+\includegraphics{GGmat}
+\caption{\csentence{Homogenized results from a single RVE with Dirichlet boundary condition.}
+Dependence of effective properties $\bar{C}$ and $\bar{G}$ on the bulk compliance $C_\mathrm{mat}$ for fixed values of $G_\mathrm{part} = 5\,G_\mathrm{mat}$ and $C_\mathrm{part} = 0$.}
+\label{fig:RVE_compressibility}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%
