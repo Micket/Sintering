@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+%\tikzstyle{every node}=[font=\Large]
+\node [inner sep=0pt,above right]{
+   \includegraphics[scale=.3]{SwissCheeseFig}
+   };
+\draw[<-, line width=.4mm] (5.0,4.0) to[out=0,in=-120] (6.0,5.0) node[right=1pt,black]{$\Gamma_\rve^+$};
+\draw[<-, line width=.4mm] (4.0,5.0) to[out=60,in=120] (6.0,5.0);
+\draw[<-, line width=.4mm] (0.0,1.0) to[out=180,in=60] (-1.0,0.0) node[left=1pt,black]{$\Gamma_\rve^-$};
+\draw[<-, line width=.4mm] (1.0,0.0) to[out=-120,in=-60] (-1.0,0.0);
+\draw[<-, line width=.6mm] (0.0,2.4) to[out=15,in=165] (5.0,2.4) node[right]{$\ta{\varphi}_\per$} ;
+%\draw[<-, line width=.4mm] (4.6,1.7) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,1.0) node[right=1pt,black,text width=3cm,text badly ragged]{$\partial\Omega_{\rve,i}^\text{p}$};
+\end{tikzpicture}
