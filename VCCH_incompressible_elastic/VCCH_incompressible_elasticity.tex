@@ -50,6 +50,7 @@
 %\usepackage{amsthm,amsmath}
 %\RequirePackage{natbib}
 %\RequirePackage{hyperref}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
@@ -63,18 +64,8 @@
 %\usetikzlibrary{external}
 %\newcommand{\tikzinput}[1]{\input{#1.tikz}}
 %\tikzexternalize
-
-\newcommand{\tikzsetnextfilename}[1]{}
-\newcommand{\tikzinput}[1]{\includegraphics{#1}}
-
-
-\renewcommand{\doiurl}[1]{#1}
-
-\newcommand{\figref}[1]{Figure~\ref{#1}}
-\newcommand{\secref}[1]{Section~\ref{#1}}
-\newcommand{\appref}[1]{Appendix~\ref{#1}}
-\newcommand{\eqtrefrange}[2]{\eqref{#1}--\eqref{#2}}
-\newcommand{\eqtref}[1]{\eqref{#1}}
+%\newcommand{\tikzsetnextfilename}[1]{}
+%\newcommand{\tikzinput}[1]{\includegraphics{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                             %%
@@ -98,6 +89,12 @@
 
 %%% Put your definitions there:
 \startlocaldefs
+
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+\newcommand{\eqtrefrange}[2]{\eqref{#1}--\eqref{#2}}
+\newcommand{\eqtref}[1]{\eqref{#1}}
 
 % More specialized commands;
 \DeclarePairedDelimiter{\homgen}{\langle}{\rangle_\rve}
@@ -2180,7 +2177,7 @@ For tangent operators associated with $\bar{e}$, we obtain
   The authors declare that they have no competing interests.
 
 \section*{Author's contributions}
-  The theory and manuscript was a joint work by all authors. MÖ developed the code for the numerical simulations.
+  The theory and manuscript represents joint work by all authors. MÖ developed the code for the numerical simulations.
 
 \section*{Acknowledgements}
   The work was funded by the Swedish Research Council.

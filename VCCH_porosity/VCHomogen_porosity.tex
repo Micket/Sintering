@@ -419,7 +419,7 @@ With the representations in \cref{eq12} and the constraints in \cref{eq14,eq13},
     \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) } \dprod \ts{\epsilon}_\dev[\delta\bar{\ta{u}}] 
 \label{eq15a} \\
     b_\rve(p,\delta\ta{u}^\macro) &=
-    -  \homgen{ p }\, \delta\bar{\ta{u}}\cdot\diff = - \bar{p}\, \delta\bar{\ta{u}}\cdot\diff - \shomgen{p\,\ta n\cdot[\ta x -\bar{\ta x}]}\, \delta\bar{\ta{u}}\cdot\diff
+    -  \homgen{ p }\, \delta\bar{\ta{u}}\cdot\diff
 \label{eq15b} \\
     b_\rve(\delta p^\macro,\ta{u}) &=
     - \delta\bar{p}\, \homgen{ \ta{u}\cdot\diff } = - \delta\bar{p} \, \bar{\ta u}\cdot\diff - \delta\bar{p}\,\shomgen{ \ta{u}\cdot\ta{n} }
@@ -453,12 +453,14 @@ The applied macroscale loads $\bar{\ta f}$, $\bar{\ta t}_\prescribed$ and ``mome
 We will also focus on the homogenization of $\bar{\ts\sigma}_\dev$ and $\bar{e}$, so $\bar{\ta f}$ and $\bar{\ta t}_\prescribed$ are considered as given macroscopic quantities. $\Box$
 
 \todo{?}Plugging \cref{eq15a,eq15b,eq15c,eq15d,eq15e,eq15f,eq15g} into \cref{eq6} weak form we get
-\begin{subequations}
+\begin{subequations}\label{eq:derived_macro}
 \begin{align}
- \int_\Omega \underbrace{[\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}]}_{=\bar{\ts\sigma}} \dprod [\delta\bar{\ta{u}}\outerp\diff] \dif V = \ldots
+ \int_\Omega \underbrace{[\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}]}_{=\bar{\ts\sigma}} \dprod [\delta\bar{\ta{u}}\outerp\diff] \dif V &= 
+  \int_\Omega \bar{\ta f} \cdot \delta\bar{\ta u} \dif V + 
+  \int_\Gamma \bar{\ta t}_\prescribed \cdot \delta\bar{\ta u} \dif S
 \label{eq:derived_macro_a}
 \\
- \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{[\homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}]}_{\bar{e}} \Big]\dif V = 0
+ \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{[\homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}]}_{\bar{e}} \Big]\dif V &= 0
 \label{eq:derived_macro_b}
 \end{align}
 \end{subequations}
@@ -474,33 +476,29 @@ where we continue to manipulate \cref{eq:derived_macro_a} further
   = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t}\outerp[\ta x - \bar{\ta x}]\dif C \Big]
  \label{eq:derived_macro_a2}
 \end{align}
-which can be split into deviatoric and volumetric parts;
-\begin{align}
-  \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \cdot [\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t} \cdot [\ta x - \bar{\ta x}]\dif C \Big]
- \label{eq:derived_macro_a2}
-\end{align}
-\todo{??}
-where we now can identify the suitable definitions
+Since pore boundaries on $\Gamma_\rve$ is not applicable for the weakly periodic or Neumann boundary condition, we henceforth limit the RVE's to have no pores crossing the boundary $\Gamma_\rve$, and as such the integral over $\partial\Gamma_\rve^\pore$ also vanishes. Thus we are in position to define the macroscopic deviatoric stress and volumetric strain
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t}\outerp[\ta x - \bar{\ta x}] \dif C \Big] \dprod \tf I_\dev, \, \quad
+    \bar{\ts{\sigma}}_\dev \defeq \int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev, \, \quad
     \bar{e} \defeq \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}
 \label{eq16}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------
-By combining \cref{eq4} with \cref{eq12} we note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered RVE.
+We note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered RVE.
 
-Finally, upon inserting \crefrange{eq15a}{eq15f} into the system \cref{eq6}, we obtain the macroscale problem:
+\noindent\textbf{Remark:} If one wants to incorporate a non-empty $\partial\Gamma_\rve^\pore$, then \cref{eq14b} also needs to include the corresponding term in order obtain the same macroscopic problem. $\Box$
+
+Finally, we may express the macroscale problem the abstract form:
 Find $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------------------------------------------
-\begin{subequations}\label{eq17}
+\begin{subequations}\label{eq:derived_macro}
 \begin{alignat}{3}
     \bar{a}(\bar{\ta{u}},\bar{p};\delta\bar{\ta{u}}) + \bar{b}(\bar{p},\delta\bar{\ta{u}}) &= \bar{l}(\delta\bar{\ta{u}})
       &\quad& \forall \delta\bar{\ta{u}} &&\in \bar{\set{U}}^{0}
-\label{eq17a} \\
+\label{eq:derived_macro_a} \\
     \bar{b}(\delta\bar{p},\bar{\ta{u}}) + \bar{c}^*(\bar{\ta{u}},\bar{p};\delta\bar{p}) &= 0
       &\quad& \forall \delta\bar{p} &&\in \bar{\set{P}}
-\label{eq17b}
+\label{eq:derived_macro_b}
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------------------------------------------------
@@ -533,27 +531,13 @@ As a preliminary for establishing the proper variational format of the RVE-probl
 %----------------------------------------------------------------------------
 \begin{subequations}
 \begin{align}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(\delta\ta{u},p) - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= l_\rve(\delta\ta{u})
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(\delta\ta{u},p) - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= l_{\fluct\rve}(\delta\ta{u})
 \label{eq19a} \\
     b_\rve(\ta{u},\delta p) + c^*_\rve(p;\delta p) &= 0
 \label{eq19b}
 \end{align}
 \end{subequations}
 %---------------------------------------------------------------------------
-or, more explicitly,
-%----------------------------------------------------------------------------
-\begin{subequations}\label{eq20}
-\begin{align}
-    \frac{1}{\volume}\int_{\Omega_\rve} \ts{\epsilon}_\dev[\delta\ta{u}]\dprod \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) \dif V
-    - \frac{1}{\volume}\int_{\Omega_\rve} p\, \delta\ta{u}\cdot\diff \dif V
-    - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= 0
-\label{eq20a} \\
-    - \frac{1}{\volume}\int_{\Omega_\rve} \delta p\, \ta{u}\cdot\diff \dif V
-    +  \frac{1}{\volume}\int_{\Omega_\rve} \delta p\,\hat{e}(p) \dif V &= 0
-\label{eq20b}
-\end{align}
-\end{subequations}
-%----------------------------------------------------------------------------
 which is supposed to hold true for all possible $\delta\ta{u}, \delta p$ in suitable function spaces (as discussed below).
 However, this problem is not solvable without further specification of the solution fields $\ta{u}, p, \ta{t}$.
 In this paper we adopt a recently proposed variational framework allowing for \emph{weak satisfaction of micro-periodicity}, cf.\  Larsson et al.\ \cite{larsson_computational_2011}, and this framework will be briefly summarized in what follows.
@@ -866,7 +850,7 @@ We now propose the alternative, subsequently denoted \emph{canonical}, formulati
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq51}
 \begin{alignat}{3}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= 0
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= l_{\fluct\rve}(\delta\ta u)
     &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
 \label{eq51a} \\
     b_\rve(\delta p,\ta{u}) + c^*_\rve(p;\delta p) &= 0
@@ -1336,7 +1320,7 @@ Since $d_\rve(\ta 0, \bullet) = 0$, \cref{eq:macro_homogeneity_original_a} is va
 
 
 \subsection{Macroscale tangent relations}
-In order to solve the (generally nonlinear) macroscale problem \cref{eq17} in the FE\textsuperscript{2}-setting using Newton iterations, we need the pertinent tangent operators.
+In order to solve the (generally nonlinear) macroscale problem \cref{eq:macro} in the FE\textsuperscript{2}-setting using Newton iterations, we need the pertinent tangent operators.
 Linearizing the implicit relations $\bar{\ts\sigma}_\dev\epspargs$ and $\bar{e}\epspargs$ we obtain
 \begin{align}
  \dif\bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \dif\bar{\ts\epsilon}_\dev + \bar{\ts E}\, \dif\bar{p},
@@ -1500,5 +1484,64 @@ whereby we obtain
 
 
 \section{Numerical results}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\linewidth]{figures/macro_fe2_0000}
+ \caption{FE2}
+ \label{fig:final_dirichlet}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}
+  \node at (0,0) {\includegraphics[scale=0.15]{figures/initial_rve}};
+  \node at (4,2) {\includegraphics[scale=0.15]{figures/final_dirichlet}};
+  \node at (4,-2) {\includegraphics[scale=0.15]{figures/final_neumann}};
+  \node at (0,1.5) {Initial};
+  \node at (4,3.5) {Dirichlet};
+  \node at (4,-0.5) {Neumann};
+  \draw[-latex] (1.5,0.5) -- (2.5,1);
+  \draw[-latex] (1.5,-0.5) -- (2.5,-1);
+  \node at (8,2) {\includegraphics[scale=0.2]{figures/rve_dirichlet_2}};
+  \node at (8,-2) {\includegraphics[scale=0.2]{figures/rve_neumann_2}};
+ \end{tikzpicture}
+ \caption{Initial and final state of RVEs subject to free sintering}
+ \label{fig:final_neumann}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+\begin{tikzpicture}
+ \begin{axis}[
+    width=0.8\linewidth,
+    height=0.4\linewidth,
+    ylabel={Relative density [\%]},xlabel={Time (scaled)},
+    xmax=1, xmin=0, ymax=1.01, ymin=0.83,
+    cycle list name=linestyles,
+    yticklabel style={font=\tiny}, xticklabel style={font=\tiny},
+%     scaled y ticks=manual:{}{\pgfmathparse{#1*100}}, % Scale for percentage
+%     scaled x ticks=manual:{}{\pgfmathparse{#1*1000}}, % Scale for percentage
+    legend style={draw=black,rounded corners=3pt,font=\footnotesize},
+    legend pos=south east
+    ]
+  \addplot[blue ,densely dashed] table[y index=2] {figures/macro_3_dirichlet_x.out.matdata};
+  \addlegendentry {Dirichlet 3$\times$3}
+  \addplot[red  ,densely dashed] table[y index=2] {figures/macro_2_dirichlet_x.out.matdata};
+  \addlegendentry {Dirichlet 2$\times$2}
+  \addplot[black,densely dashed] table[y index=2] {figures/macro_1_dirichlet_x.out.matdata};
+  \addlegendentry {Dirichlet 1$\times$1}
+
+  \addplot[blue ] table[y index=2] {figures/macro_3_neumann_x.out.matdata};
+  \addlegendentry {Neumann 3$\times$3}
+  \addplot[red  ] table[y index=2] {figures/macro_2_neumann_x.out.matdata};
+  \addlegendentry {Neumann 2$\times$2}
+  \addplot[black] table[y index=2] {figures/macro_1_neumann_x.out.matdata};
+  \addlegendentry {Neumann 1$\times$1}
+ \end{axis}
+\end{tikzpicture}
+ \caption{Evolution of porosity with time for a 1$\times$1 and 2$\times$2 unit-cell RVE subjected to zero macroscopic pressure, $\bar{p} = 0$.}
+ \label{fig:porosity}
+\end{figure}
 
 \end{document}
