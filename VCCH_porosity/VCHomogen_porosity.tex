@@ -261,11 +261,11 @@ The appropriate variational setting of the homogenized problem is obtained upon 
 %----------------------------------------------------------------------------
 \begin{align}
     y \mapsto
-    \homgen{y} &\defeq \frac{1}{\volume}\int_{\Omega_\rve} y \dif V
+    \homgen{y} &\defeq \frac{1}{\volume}\int_{\Omega_\rve^\particle} y \dif V, \quad \Omega_\rve^\particle = \Omega^\particle \cap\Omega_\rve
     \label{eq16ba}
 \intertext{and for the internal surface $\Gamma^\pore$}
     y \mapsto
-    \shomgen{ y } &\defeq \frac{1}{\volume}\int_{\Gamma^\pore\cap\Omega_\rve} y \dif S
+    \shomgen{ y } &\defeq \frac{1}{\volume}\int_{\Gamma_\rve^\pore} y \dif S, \quad \Gamma_\rve^\pore = \Gamma^\pore \cap\Omega_\rve
     \label{eq16ba}
 \end{align}
 %----------------------------------------------------------------------------
@@ -377,7 +377,7 @@ We thus introduce the macroscale fields $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\
 \begin{align}
     \ta{u}^\macro(\bar{\ta{x}};\ta{x}) &= \bar{\ta{u}}(\bar{\ta{x}}) + \bar{\ts{h}}(\bar{\ta{x}}) \cdot [\ta{x}-\bar{\ta{x}}], \quad \bar{\ts{h}}\defeq\bar{\ta{u}}\outerp\diff, \quad \ta{x}\in\Omega_\rve
 \label{eq12a} \\
-    p^\macro(\bar{\ta{x}};\ta{x}) &= \bar{p}(\bar{\ta{x}}) \quad
+    p^\macro(\bar{\ta{x}};\ta{x}) &= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p}(\bar{\ta{x}}) + l_{\surf\rve}(\frac13 [\ta x-\bar{\ta x}])] \quad
     \ta{x}\in\Omega_\rve
 \label{eq12b}
 \end{align}
@@ -391,7 +391,8 @@ Now, we require that
     \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta{u} \dif S = \bar{\ta{u}}, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u} \outerp \ta n \dif V = \bar{\ta{h}}
 \label{eq14a} \\
-    \frac{1}{\volume} \int_{\Gamma_\rve} p\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = \bar{p}
+    %\frac{1}{\volume} \int_{\Gamma_\rve} p\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = \bar{p}
+    \homgen{p} - l_{\surf\rve}(\frac13[\ta x - \bar{\ta x}]) = \bar{p}
 \label{eq14b}
 \end{gather}
 \end{subequations}
@@ -402,7 +403,7 @@ which leads to the constraints
     \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta{u}^\fluct \dif S = \ta 0, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u}^\fluct \outerp \ta n \dif V = \ts 0
 \label{eq14a} \\
-    \frac{1}{\volume} \int_{\Gamma_\rve} p^\fluct\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = 0
+    \homgen{p^\fluct} = 0
 \label{eq14b}
 \end{gather}
 \end{subequations}
@@ -422,10 +423,10 @@ With the representations in \cref{eq12} and the constraints in \cref{eq14,eq13},
     -  \homgen{ p }\, \delta\bar{\ta{u}}\cdot\diff
 \label{eq15b} \\
     b_\rve(\delta p^\macro,\ta{u}) &=
-    - \delta\bar{p}\, \homgen{ \ta{u}\cdot\diff } = - \delta\bar{p} \, \bar{\ta u}\cdot\diff - \delta\bar{p}\,\shomgen{ \ta{u}\cdot\ta{n} }
+    - \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\, \homgen{ \ta{u}\cdot\diff } = - \delta\bar{p} \, \bar{\ta u}\cdot\diff - \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\,\homgen{ \ta{u}^\fluct\cdot\ta{n} }
 \label{eq15c} \\
     c^*_\rve(p;\delta p^\macro) &=
-    \delta\bar{p}\, \homgen{ \hat{e}(p) }
+    \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\, \homgen{ \hat{e}(p) }
 \label{eq15d} \\
     l_{\surf\rve}(\delta\ta{u}^\macro) &=
     -\shomgen{ \gamma_\surf \hat{\ts I} } \dprod [\delta\bar{\ta{u}}\outerp\diff]
@@ -460,7 +461,7 @@ We will also focus on the homogenization of $\bar{\ts\sigma}_\dev$ and $\bar{e}$
   \int_\Gamma \bar{\ta t}_\prescribed \cdot \delta\bar{\ta u} \dif S
 \label{eq:derived_macro_a}
 \\
- \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{[\homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}]}_{\bar{e}} \Big]\dif V &= 0
+ \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[\homgen{ \hat{e}(p) } - \homgen{\ta u^\fluct\cdot\ta n}]}_{\bar{e}} \Big]\dif V &= 0
 \label{eq:derived_macro_b}
 \end{align}
 \end{subequations}
@@ -479,14 +480,14 @@ where we continue to manipulate \cref{eq:derived_macro_a} further
 Since pore boundaries on $\Gamma_\rve$ is not applicable for the weakly periodic or Neumann boundary condition, we henceforth limit the RVE's to have no pores crossing the boundary $\Gamma_\rve$, and as such the integral over $\partial\Gamma_\rve^\pore$ also vanishes. Thus we are in position to define the macroscopic deviatoric stress and volumetric strain
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    \bar{\ts{\sigma}}_\dev \defeq \int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev, \, \quad
-    \bar{e} \defeq \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}
+    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev, \, \quad
+    \bar{e} \defeq \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[\homgen{ \hat{e}(p) } - \homgen{\ta u^\fluct\cdot\ta n}]
 \label{eq16}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------
 We note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered RVE.
 
-\noindent\textbf{Remark:} If one wants to incorporate a non-empty $\partial\Gamma_\rve^\pore$, then \cref{eq14b} also needs to include the corresponding term in order obtain the same macroscopic problem. $\Box$
+\noindent\textbf{Remark:} If one wants to include a non-empty $\partial\Gamma_\rve^\pore$, then \cref{eq14b} also needs to include the corresponding term in order obtain the same macroscopic problem. $\Box$
 
 Finally, we may express the macroscale problem the abstract form:
 Find $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ that solve
@@ -650,9 +651,9 @@ In order to establish the most straightforward formulation of the RVE-problem, b
 %----------------------------------------------------------------------------
 \begin{align}
     \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
-    \homgen{ \ta{v}\outerp\diff } = \ta{0} \}
+    \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u}^\fluct \outerp \ta n \dif V = \ts 0 \}
 \label{eq28a} \\
-    \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \homgen{q} = 0 \}
+    \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume} \int_{\Gamma_\rve} p^\fluct\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = 0 \}
 \label{eq28b}
 \end{align}
 
@@ -706,10 +707,11 @@ d_\rve(\ta t,\delta\ta u^\fluct) = d_\rve(\ta t^\fluct, \delta\ta u^\fluct)\quad
 \end{align}
 Secondly, it follows from \cref{eq12a} and the properties of $\set{P}_\rve^\fluct$ that
 \begin{equation}
-    b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct) \quad\forall \delta p^\fluct\in\set{P}_\rve^\fluct
+    b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct) - \shomgen{\delta p^\fluct\,\ta n\cdot[\ta x-\bar{\ta x}]}\bar{h}_\vol \quad\forall \delta p^\fluct\in\set{P}_\rve^\fluct
 \label{eq27c}
 \end{equation}
 whereby it is noted that the macroscale part of $\ta{u}$ is ``filtered out''.
+\todo{***}
 
 
 
@@ -721,10 +723,10 @@ For \emph{given} values $\bar{\ta{u}}$, $\bar{\ts{h}}$, and $\bar{p}$, that repr
 \begin{alignat}{3}
     a_\rve(\bar{\ts\epsilon}_\dev\cdot [\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) +
     b_\rve(\bar{p}+p^\fluct,\delta\ta{u}^\fluct) +
-    d_\rve(\ta{t}^\fluct,\delta\ta{u}^\fluct) &= 0
+    d_\rve(\ta{t}^\fluct,\delta\ta{u}^\fluct) &= l_{\surf\rve}(\delta\ta{u}^\fluct)
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^\fluct
 \label{eq31a} \\
-    b_\rve(\delta p^\fluct,\ta{u}^\fluct) + c^*_\rve(\bar{p}+p^\fluct;\delta p^\fluct) &= 0
+    b_\rve(\delta p^\fluct,\ta{u}^\fluct) + c^*_\rve(\bar{p}+p^\fluct;\delta p^\fluct) &= \shomgen{\delta p^\fluct\,\ta n\cdot[\ta x - \bar{\ta x}]}
     &\quad& \forall \delta p^\fluct &&\in \set{P}_\rve^\fluct
 \label{eq31b} \\
     d_\rve(\delta\ta{t}^\fluct,\ta{u}^\fluct) &= 0
@@ -743,14 +745,16 @@ In a postprocessing step the homogenized ``fluxes'' can be represented as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     \bar{\ts\sigma}_\dev\epspargs &\defeq
-    \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) } =
-    \homgen{  \hat{\ts{\sigma}}_\dev(\bar{\ts\epsilon}_\dev + \ts{\epsilon}_\dev[\ta{u}^\fluct\epspargs]) }
+    \int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev
+    %= \homgen{  \hat{\ts{\sigma}}_\dev(\bar{\ts\epsilon}_\dev + \ts{\epsilon}_\dev[\ta{u}^\fluct\epspargs]) }
 \label{eq33a} \\
     \bar{e}\epspargs &\defeq
-    \homgen{ \hat{e}(p) } =
-    \homgen{ \hat{e}(\bar{p} + p^\fluct\epspargs) }
+    \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}
+    = \homgen{ \hat{e}(\bar{p} + p^\fluct\epspargs) - \ta u^\fluct\epspargs \cdot \diff} + \bar{h}_\vol\left[1-\frac{|\Omega^\particle_\rve|}{\volume}\right]
 \label{eq33b}
 \end{align}
+\todo{??}
+
 %---------------------------------------------------------------------------------------------------------------------
 Note that $\bar{e}\epspargs\neq\bar{h}_\vol$ in general!
 
@@ -758,7 +762,7 @@ From the aforesaid, it appears that there is a problem associated with the prese
 The reason is that the formulation \cref{eq31b} ``filters out'' any imposed \emph{constant} volumetric strain $\bar{\lambda}$; hence, the strong format generally reads
 %----------------------------------------------------------------------------
 \begin{equation}
-    - \ta{u}\cdot\diff + \hat{e}(p) + \bar{\lambda} = 0, \quad \bar{\lambda}\in\set{R}
+    - \ta{u}\cdot\diff + \hat{e}(p) + \bar{\lambda} = 0, \quad \bar{\lambda}\in\set{R} ???????????
 \label{eq34a}
 \end{equation}
 %----------------------------------------------------------------------------
@@ -786,7 +790,7 @@ The macrohomogeneity condition is satisfied if, for any given state $\ta u^\macr
 \begin{subequations}\label{eq:macro_homogeneity_original}
 \begin{alignat}{3}
     a_\rve(\ta u^\macro+\ta{u}^\fluct\{\ta u^\macro, p^\macro\};\dif\ta{u}^\fluct) +
-    b_\rve(p^\macro+p^\fluct\{\ta u^\macro, p^\macro\},\dif\ta{u}^\fluct) &= 0
+    b_\rve(p^\macro+p^\fluct\{\ta u^\macro, p^\macro\},\dif\ta{u}^\fluct) &= l_{\surf\rve}(\dif\ta u^\fluct)
     &\quad& \forall \dif\ta{u}^\fluct &&\in \set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro)
 \label{eq:macro_homogeneity_original_a}\\
     b_\rve(\dif p^\fluct, \ta{u}^\fluct\{\ta u^\macro, p^\macro\}) + c^*_\rve(p^\macro+p^\fluct\{\ta u^\macro, p^\macro\};\dif p^\fluct) &= 0
@@ -870,17 +874,20 @@ If follows from \cref{eq51} that the new variable $\bar{e}$ correctly obtains th
 To show this result, we first use the divergence theorem to obtain the identities
 %--------------------------------------------------------------------------------------------------------
 \begin{align}
-    -b_\rve(1, \bullet) &= d_\rve(\ta n, \bullet), \quad  d_\rve(\ta n, \ta x_\mean) = -b_\rve(1, \ta x_\mean) =  1
+    -b_\rve(1, \bullet) &= d_\rve(\ta n, \bullet) - \shomgen{\bullet\cdot\ta n}, \quad  d_\rve(\ta n, \ta x_\mean) = 1
 \end{align}
+\todo{***}
 %----------------------------------------------------------------------------------------------------------
 Using these identities together with \cref{eq51b}, \cref{eq51c}, we deduce
 %--------------------------------------------------------------------------------------------------------
 \begin{multline}
- \homgen{\hat{e}(p)} = c_\rve^*(p; 1) = -b_\rve(1, \ta u) = d_\rve(\ta n, \ta u) = \bar{e}\;d_\rve(\ta n, \ta x_\mean) + d_\rve(\ta{n}, \bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}]) 
+ \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n} = c_\rve^*(p; 1) - \shomgen{\ta u\cdot\ta n}
+          = -b_\rve(1, \ta u)- \shomgen{\ta u\cdot\ta n} 
 \\
-= \bar{e} + \left[\frac{1}{\volume}\int_{\Gamma_\rve^+} \ta n \outerp \jmp{\ta x - \bar{\ta x}}\dif S\right] \dprod \bar{\ts\epsilon}_\dev 
-= \bar{e} + \ts I \dprod \bar{\ts\epsilon}_\dev = \bar{e}.
+          = d_\rve(\ta n, \ta u) + \shomgen{\ta u\cdot\ta n} - \shomgen{\ta u\cdot\ta n}
+          = \bar{e}\;d_\rve(\ta n, \ta x_\mean) + d_\rve(\ta{n}, \bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])  = \bar{e}
 \end{multline}
+\todo{***}
 
 
 
@@ -925,9 +932,11 @@ Next, testing \cref{eq51a} with $\delta\check{\ts h}$ we obtain
 \begin{gather}
     a_\rve(\ta{u};\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) + 
     b_\rve(\check{p},\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) + 
-    d_\rve(\check{\ts \tau}\cdot\ta n,\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) = 0
+    d_\rve(\check{\ts \tau}\cdot\ta n,\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) = l_{\surf\rve}(\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}])
     \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
-\intertext{which gives}
+\end{gather}
+which gives\todo{***}
+\begin{gather}
     \delta\check{\ts h} \dprod[\bar{\ts\sigma}_\dev - \check{p} \ts I - \check{\ts\tau}] = 0
     \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
 \quad\implies\quad
@@ -964,7 +973,7 @@ As a result, $\bar{e}\epspargs=\homgen{ \hat{e}(p) }=0$, and we obtain the reduc
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq251}
 \begin{alignat}{3}
-    a_\rve(\ta{u},\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= 0
+    a_\rve(\ta{u},\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= l_{\fluct\rve}(\delta\ta u)
     &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
 \label{eq251a} \\
     b_\rve(\delta p,\ta{u}) &= 0
@@ -1062,7 +1071,7 @@ Details of the proof are given in \Cref{appendix:macroEnergy}.
 From the solution of the RVE-problem, $\bar{e}$ is obtained directly as a primary variable.
 The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \begin{align}
- \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
+ \bar{\ts\sigma}_\dev = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
 \label{eq:weak_periodic_sigma_dev}
 \end{align}
 
@@ -1156,7 +1165,7 @@ and this system of equations takes the explicit form: For given values $\bar{\ts
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:weak_form_dirichlet}
 \begin{alignat}{3}
-    a_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) + b_\rve(p,\delta\ta{u}^\fluct) &= 0
+    a_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) + b_\rve(p,\delta\ta{u}^\fluct) &= l_{\surf\rve}(\delta\ta{u}^\fluct)
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,\fluct}
 \label{eq64a} \\
     b_\rve(\delta p,\ta{u}^\fluct) + b_\rve(\delta p,\bar{e}\,\ta{x}_\mean) + c^*_\rve(p;\delta p) &= 0
@@ -1181,7 +1190,7 @@ Finally, the macroscale energy density at the stationary point becomes
 From the RVE-problem in \cref{eq:weak_form_dirichlet}, $\bar{e}$ is obtained directly as a primary variable.
 The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \begin{align}
- \bar{\ts\sigma}_\dev = \homgen{\ts\sigma_\dev} = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
+ \bar{\ts\sigma}_\dev = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
 \label{eq:weak_dirichlet_sigma_dev}
 \end{align}
 However in practice $\bar{\ts\sigma}_\dev$ is conveniently obtained as the reaction forces associated with the prescribed $\bar{\ts\epsilon}_\dev$.
@@ -1287,7 +1296,7 @@ and this system of equations takes the explicit form: For given values $\bar{\ts
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq67}
 \begin{alignat}{3}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) +  d_\rve(\bar{\ts\sigma}_\dev\cdot\ta n,\delta\ta{u}) &= d_\rve(\bar{p}\,\ta n,\delta\ta u)
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) +  d_\rve(\bar{\ts\sigma}_\dev\cdot\ta n,\delta\ta{u}) &= d_\rve(\bar{p}\,\ta n,\delta\ta u) + l_{\surf\rve}(\delta\ta{u})
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
 \label{eq67a} \\
     b_\rve(\delta p,\ta{u}) + c^*_\rve(p;\delta p) &= 0
@@ -1311,7 +1320,7 @@ Finally, we obtain the macroscale energy density as
 From the RVE-problem in \cref{eq67}, $\bar{\ts\sigma}_\dev$ is obtained directly as a primary variable.
 The volumetric strain $\bar{e}$ is obtained by post-processing:
 \begin{align}
- \bar{e} = \homgen{\ta u\cdot\diff} = \frac{1}{\volume} \int_{\Gamma_\rve} \ta u \cdot \ta n\dif S.
+ \bar{e} = \frac{1}{\volume} \int_{\Gamma_\rve} \ta u \cdot \ta n\dif S.
 \end{align}
 
 \textbf{Remark}:
