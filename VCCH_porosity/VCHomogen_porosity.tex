@@ -456,7 +456,7 @@ We will also focus on the homogenization of $\bar{\ts\sigma}_\dev$ and $\bar{e}$
 \todo{?}Plugging \cref{eq15a,eq15b,eq15c,eq15d,eq15e,eq15f,eq15g} into \cref{eq6} weak form we get
 \begin{subequations}\label{eq:derived_macro}
 \begin{align}
- \int_\Omega \underbrace{[\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}]}_{=\bar{\ts\sigma}} \dprod [\delta\bar{\ta{u}}\outerp\diff] \dif V &= 
+ \int_\Omega \underbrace{[\homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}]) - p \ts I } + \shomgen{ \gamma_\surf \hat{\ts I}}]}_{=\bar{\ts\sigma}_\dev - \bar{p}\ts I} \dprod [\delta\bar{\ta{u}}\outerp\diff] \dif V &= 
   \int_\Omega \bar{\ta f} \cdot \delta\bar{\ta u} \dif V + 
   \int_\Gamma \bar{\ta t}_\prescribed \cdot \delta\bar{\ta u} \dif S
 \label{eq:derived_macro_a}
@@ -480,7 +480,7 @@ where we continue to manipulate \cref{eq:derived_macro_a} further
 Since pore boundaries on $\Gamma_\rve$ is not applicable for the weakly periodic or Neumann boundary condition, we henceforth limit the RVE's to have no pores crossing the boundary $\Gamma_\rve$, and as such the integral over $\partial\Gamma_\rve^\pore$ also vanishes. Thus we are in position to define the macroscopic deviatoric stress and volumetric strain
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev, \, \quad
+    \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \bar{p}\ts I, \, \quad
     \bar{e} \defeq \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(p) - \ta u^\fluct\cdot\diff}
 \label{eq16}
 \end{align}
@@ -711,8 +711,6 @@ Secondly, it follows from \cref{eq12a} and the properties of $\set{P}_\rve^\fluc
 \label{eq27c}
 \end{equation}
 whereby it is noted that the macroscale part of $\ta{u}$ is ``filtered out''.
-\todo{***}
-
 
 
 
@@ -744,34 +742,16 @@ In conclusion, ($\bar{\ts\epsilon}_\dev,\bar{p})$ are the macroscale variables t
 In a postprocessing step the homogenized ``fluxes'' can be represented as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
-    \bar{\ts\sigma}_\dev\epspargs &\defeq
-    \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev
+    \bar{\ts\sigma}_\dev\epspargs &=
+    %\frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev
+    \frac{1}{\volume}\int_{\Gamma_\rve} \hat{\ts\sigma}_\dev(\bar{\ts\epsilon}_\dev + \ts\epsilon_\dev[\ta u^\fluct])\cdot\ta n \outerp[\ta x-\bar{\ta x}] \dif S
     %= \homgen{  \hat{\ts{\sigma}}_\dev(\bar{\ts\epsilon}_\dev + \ts{\epsilon}_\dev[\ta{u}^\fluct\epspargs]) }
 \label{eq33a} \\
-    \bar{e}\epspargs &\defeq
+    \bar{e}\epspargs &=
     \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct\epspargs) - \ta u^\fluct\epspargs\cdot\diff}
 \label{eq33b}
 \end{align}
 \todo{??}
-
-%---------------------------------------------------------------------------------------------------------------------
-Note that $\bar{e}\epspargs\neq\bar{h}_\vol$ in general!
-
-From the aforesaid, it appears that there is a problem associated with the presented ``consistent'' format in the sense that the strong form of the continuity equation does not (necessarily) represent that one of the fine scale.
-The reason is that the formulation \cref{eq31b} ``filters out'' any imposed \emph{constant} volumetric strain $\bar{\lambda}$; hence, the strong format generally reads
-%----------------------------------------------------------------------------
-\begin{equation}
-    - \ta{u}\cdot\diff + \hat{e}(p) + \bar{\lambda} = 0, \quad \bar{\lambda}\in\set{R} ???????????
-\label{eq34a}
-\end{equation}
-%----------------------------------------------------------------------------
-Clearly, testing \cref{eq34a} with a constant pressure, we obtain $\bar{\lambda}=\bar{h}_\vol+\homgen{\ta{u}^\fluct\cdot\diff-\hat{e}(p)}$.
-
-\textbf{Remark:} In the special case of intrinsically incompressible material response, defined by $\hat{e}(p)=0$ in $\Omega_\rve$, for any $p$, then we have  $\bar{\lambda}=\bar{h}_\vol+\homgen{\ta{u}^\fluct\cdot\diff}$.
-However, from \cref{eq31b}, \cref{eq31c} it is concluded that the solution of the RVE-problem is $\ta{u}^\fluct\cdot\diff=0$ in $\Omega_\rve$, whereby we obtain $\bar{\lambda}=\bar{h}_\vol \neq 0$.
-It is only when the macroscale solution represents incompressible response, i.e.\ when $\bar{h}_\vol = 0$, that we obtain $\bar{\lambda} = 0$.
-In conclusion, the RVE-problem is able to provide an ``incompressible solution'' even in the case that the macroscale solution represents compressible response.
-This anomaly is the main motivation for establishing an alternative format of the problem, which is discussed next. $\Box$
 
 \subsection{Macrohomogeneity condition (VCMC)}
 The Variationally Consistent Macrohomogeneity Condition (VCMC) (or generalized Hill-Mandel condition) is reviewed in \Cref{appendix:1}.
@@ -868,32 +848,6 @@ We now propose the alternative, subsequently denoted \emph{canonical}, formulati
 \label{eq51d}
 \end{alignat}
 \end{subequations}
-%----------------------------------------------------------------------------
-If follows from \cref{eq51} that the new variable $\bar{e}$ correctly obtains the value $\bar{e} = \homgen{\hat{e}(p)}$ in accordance with \cref{eq33b}.
-To show this result, we first use the divergence theorem to obtain the identities
-%--------------------------------------------------------------------------------------------------------
-\begin{align}
-    -b_\rve(1, \bullet) &= d_\rve(\ta n, \bullet) - \shomgen{\bullet\cdot\ta n}, \quad  d_\rve(\ta n, \ta x_\mean) = 1
-\end{align}
-\todo{***}
-%----------------------------------------------------------------------------------------------------------
-Using these identities together with \cref{eq51b}, \cref{eq51c}, we deduce
-%--------------------------------------------------------------------------------------------------------
-\begin{multline}
-  \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(p) - \ta u^\fluct\cdot\diff} 
-          %= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \bar{e}} = \bar{e}
-          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[c_\rve^*(p; 1)-\homgen{\ta u^\fluct\cdot\diff}]
-          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[-b_\rve(1, \ta u)-\homgen{\ta u^\fluct\cdot\diff}]
-\\
-          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[d_\rve(\ta n, \ta u) - \shomgen{\ta u\cdot\ta n}-\homgen{\ta u^\fluct\cdot\diff}]
-          %= -b_\rve(1, \ta u)- \shomgen{\ta u\cdot\ta n} 
-          %\\
-          %= d_\rve(\ta n, \ta u) + \shomgen{\ta u\cdot\ta n} - \shomgen{\ta u\cdot\ta n}
-          %= \bar{e}\;d_\rve(\ta n, \ta x_\mean) + d_\rve(\ta{n}, \bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])  = \bar{e}
-\end{multline}
-\todo{***}
-
-
 
 %---------------------------------------------------------------------------------------------------------------------
 The solution of the ``canonical'' problem \cref{eq51} contains, in fact, the solution of the original ``variationally consistent'' problem in \cref{eq31}; however, without the apparent drawback that is associated with that format.
@@ -970,26 +924,21 @@ Since the macroscopic response variables are identical, the VCMC is still fulfil
 An illustrative comparison between the two RVE formulations are shown \Cref{fig:format_comparison}.
 Despite the different displacement fields, the homogenized responses, $\bar{\ts\sigma}_\dev$ and $\bar{e}$, are the same.
 
-\subsection{RVE-problem -- Canonical weak format in the incompressible limit}
 
-Fine-scale incompressibility within the RVE is defined by $\hat{e}(p)=0 \,\,\forall \ta{x}\in\Omega_\rve$, which gives  $c^*_\rve(p;\delta p)=0\,\,\forall\delta p \in \set{P}_\rve$.
-As a result, $\bar{e}\epspargs=\homgen{ \hat{e}(p) }=0$, and we obtain the reduced RVE-problem: For given values $\bar{\ts\epsilon}_\dev$, $ \bar{p}$, that represent the macroscale fields, find the subscale fields $(\ta{u},p,\ta{t})\in\set{U}_\rve\times\set{P}_\rve\times\set{T}_\rve$ that solve the system
 %----------------------------------------------------------------------------
-\begin{subequations}\label{eq251}
-\begin{alignat}{3}
-    a_\rve(\ta{u},\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= l_{\fluct\rve}(\delta\ta u)
-    &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
-\label{eq251a} \\
-    b_\rve(\delta p,\ta{u}) &= 0
-    &\quad& \forall \delta p &&\in \set{P}_\rve
-\label{eq251b} \\
-    d_\rve(\delta\ta{t},\ta{u}) &= d_\rve(\delta\ta{t},\bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])
-    &\quad& \forall \delta\ta{t} &&\in \set{T}_\rve
-\label{eq251c}
-\end{alignat}
-\end{subequations}
-%----------------------------------------------------------------------------
-In practice, there is (of course) no need to establish \cref{eq251} as a separate system from \cref{eq51}, since $\bar{e}=0$ is obtained directly as part of the solution of \cref{eq51} in this case.
+It follows from \cref{eq51} that the new variable $\bar{e}$ correctly obtains the value $\bar{e} = \homgen{\hat{e}(p)}$ in accordance with \cref{eq33b}.
+%----------------------------------------------------------------------------------------------------------
+Using these identities together with \cref{eq51b} and \cref{eq129a} we deduce
+%--------------------------------------------------------------------------------------------------------
+\begin{multline}
+  \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(p) - \ta u^\fluct\cdot\diff} 
+          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[c_\rve^*(p; 1)-\homgen{\ta u^\fluct\cdot\diff}]
+          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[-b_\rve(1, \ta u)-\homgen{\ta u^\fluct\cdot\diff}]
+\\
+          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{[\ta u - \ta u^\fluct]\cdot\diff}
+          = \bar{\ts\epsilon}_\dev\dprod\ts I + \bar{e}
+          = \bar{e}
+\end{multline}
 
 
 \section{Variational properties of the RVE-problem -- Energy bounds from RVE-functional}
