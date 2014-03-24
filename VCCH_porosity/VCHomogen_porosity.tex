@@ -145,7 +145,7 @@ The total domain occupied by the cubic RVE is denoted $\Omega_\rve$ with externa
 \begin{tikzpicture}
 %\tikzstyle{every node}=[font=\Large]
 \node [inner sep=0pt,above right]{
-   \includegraphics[scale=.3]{SwissCheeseFig}
+   %\includegraphics[scale=.3]{SwissCheeseFig}
    };
 %\draw[<-, line width=.4mm] (1.6,5.0) .. controls +(up:0.5cm) and +(left:0.5cm) .. (2.5,5.7) node[right=1pt,black,text width=3cm,text badly ragged]{$\Gamma_\rve$};
 \draw[<-, line width=.4mm] (5.0,3.5) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,3.5) node[right,black]{$\Gamma_\rve$};
@@ -377,7 +377,7 @@ We thus introduce the macroscale fields $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\
 \begin{align}
     \ta{u}^\macro(\bar{\ta{x}};\ta{x}) &= \bar{\ta{u}}(\bar{\ta{x}}) + \bar{\ts{h}}(\bar{\ta{x}}) \cdot [\ta{x}-\bar{\ta{x}}], \quad \bar{\ts{h}}\defeq\bar{\ta{u}}\outerp\diff, \quad \ta{x}\in\Omega_\rve
 \label{eq12a} \\
-    p^\macro(\bar{\ta{x}};\ta{x}) &= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p}(\bar{\ta{x}}) + l_{\surf\rve}(\frac13 [\ta x-\bar{\ta x}])] \quad
+    p^\macro(\bar{\ta{x}};\ta{x}) &= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p}(\bar{\ta{x}}) + \frac23 \shomgen{\gamma_\surf}] \quad
     \ta{x}\in\Omega_\rve
 \label{eq12b}
 \end{align}
@@ -392,7 +392,7 @@ Now, we require that
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u} \outerp \ta n \dif V = \bar{\ta{h}}
 \label{eq14a} \\
     %\frac{1}{\volume} \int_{\Gamma_\rve} p\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = \bar{p}
-    \homgen{p} - l_{\surf\rve}(\frac13[\ta x - \bar{\ta x}]) = \bar{p}
+    \homgen{p} - \frac23 \shomgen{\gamma_\surf} = \bar{p}
 \label{eq14b}
 \end{gather}
 \end{subequations}
@@ -423,7 +423,7 @@ With the representations in \cref{eq12} and the constraints in \cref{eq14,eq13},
     -  \homgen{ p }\, \delta\bar{\ta{u}}\cdot\diff
 \label{eq15b} \\
     b_\rve(\delta p^\macro,\ta{u}) &=
-    - \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\, \homgen{ \ta{u}\cdot\diff } = - \delta\bar{p} \, \bar{\ta u}\cdot\diff - \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\,\homgen{ \ta{u}^\fluct\cdot\ta{n} }
+    - \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\, \homgen{ \ta{u}\cdot\diff } = - \delta\bar{p} \, \bar{\ta u}\cdot\diff - \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\,\homgen{ \ta{u}^\fluct\cdot\diff }
 \label{eq15c} \\
     c^*_\rve(p;\delta p^\macro) &=
     \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\, \homgen{ \hat{e}(p) }
@@ -461,7 +461,7 @@ We will also focus on the homogenization of $\bar{\ts\sigma}_\dev$ and $\bar{e}$
   \int_\Gamma \bar{\ta t}_\prescribed \cdot \delta\bar{\ta u} \dif S
 \label{eq:derived_macro_a}
 \\
- \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[\homgen{ \hat{e}(p) } - \homgen{\ta u^\fluct\cdot\ta n}]}_{\bar{e}} \Big]\dif V &= 0
+ \int_\Omega \Big[ - \delta\bar{p}\, \bar{\ta{u}}\cdot\diff + \delta\bar{p}\, \underbrace{\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(p) - \ta u^\fluct\cdot\ta n}}_{\bar{e}} \Big]\dif V &= 0
 \label{eq:derived_macro_b}
 \end{align}
 \end{subequations}
@@ -481,7 +481,7 @@ Since pore boundaries on $\Gamma_\rve$ is not applicable for the weakly periodic
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev, \, \quad
-    \bar{e} \defeq \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[\homgen{ \hat{e}(p) } - \homgen{\ta u^\fluct\cdot\ta n}]
+    \bar{e} \defeq \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(p) - \ta u^\fluct\cdot\diff}
 \label{eq16}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------
@@ -555,7 +555,7 @@ We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma^+ \rightarro
 \begin{tikzpicture}
 %\tikzstyle{every node}=[font=\Large]
 \node [inner sep=0pt,above right]{
-   \includegraphics[scale=.3]{SwissCheeseFig}
+   %\includegraphics[scale=.3]{SwissCheeseFig}
    };
 \draw[<-, line width=.4mm] (5.0,4.0) to[out=0,in=-120] (6.0,5.0) node[right=1pt,black]{$\Gamma_\rve^+$};
 \draw[<-, line width=.4mm] (4.0,5.0) to[out=60,in=120] (6.0,5.0);
@@ -653,7 +653,7 @@ In order to establish the most straightforward formulation of the RVE-problem, b
     \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u}^\fluct \outerp \ta n \dif V = \ts 0 \}
 \label{eq28a} \\
-    \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \frac{1}{\volume} \int_{\Gamma_\rve} p^\fluct\,\ta n \cdot [\ta x-\bar{\ta x}] \dif S = 0 \}
+    \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \homgen{q} = 0 \}
 \label{eq28b}
 \end{align}
 
@@ -662,7 +662,7 @@ It is then obvious that, for given macroscale values $\bar{\ta u}$, $\bar{\ts h}
 \begin{alignat}{2}
     \ta{u} &= \bar{\ta{u}} + \bar{\ts{h}} \cdot [\ta{x}-\bar{\ta{x}}] + \ta{u}^\fluct, &\quad& \ta{u}^\fluct\in\set{U}_\rve^\fluct
 \label{eq29a} \\
-     p     &= \bar{p} + p^\fluct, &\quad& p^\fluct\in\set{P}_\rve^\fluct
+     p     &= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct, &\quad& p^\fluct\in\set{P}_\rve^\fluct
 \label{eq29b}
 \end{alignat}
 \end{subequations}
@@ -707,7 +707,7 @@ d_\rve(\ta t,\delta\ta u^\fluct) = d_\rve(\ta t^\fluct, \delta\ta u^\fluct)\quad
 \end{align}
 Secondly, it follows from \cref{eq12a} and the properties of $\set{P}_\rve^\fluct$ that
 \begin{equation}
-    b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct) - \shomgen{\delta p^\fluct\,\ta n\cdot[\ta x-\bar{\ta x}]}\bar{h}_\vol \quad\forall \delta p^\fluct\in\set{P}_\rve^\fluct
+    b_\rve(\delta p^\fluct,\ta{u}) = b_\rve(\delta p^\fluct,\ta{u}^\fluct) \quad\forall \delta p^\fluct\in\set{P}_\rve^\fluct
 \label{eq27c}
 \end{equation}
 whereby it is noted that the macroscale part of $\ta{u}$ is ``filtered out''.
@@ -722,11 +722,11 @@ For \emph{given} values $\bar{\ta{u}}$, $\bar{\ts{h}}$, and $\bar{p}$, that repr
 \begin{subequations}\label{eq31}
 \begin{alignat}{3}
     a_\rve(\bar{\ts\epsilon}_\dev\cdot [\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) +
-    b_\rve(\bar{p}+p^\fluct,\delta\ta{u}^\fluct) +
+    b_\rve(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] +p^\fluct,\delta\ta{u}^\fluct) +
     d_\rve(\ta{t}^\fluct,\delta\ta{u}^\fluct) &= l_{\surf\rve}(\delta\ta{u}^\fluct)
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^\fluct
 \label{eq31a} \\
-    b_\rve(\delta p^\fluct,\ta{u}^\fluct) + c^*_\rve(\bar{p}+p^\fluct;\delta p^\fluct) &= \shomgen{\delta p^\fluct\,\ta n\cdot[\ta x - \bar{\ta x}]}
+    b_\rve(\delta p^\fluct,\ta{u}^\fluct) + c^*_\rve(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] +p^\fluct;\delta p^\fluct) &= 0
     &\quad& \forall \delta p^\fluct &&\in \set{P}_\rve^\fluct
 \label{eq31b} \\
     d_\rve(\delta\ta{t}^\fluct,\ta{u}^\fluct) &= 0
@@ -745,12 +745,11 @@ In a postprocessing step the homogenized ``fluxes'' can be represented as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     \bar{\ts\sigma}_\dev\epspargs &\defeq
-    \int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev
+    \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S \dprod \tf I_\dev
     %= \homgen{  \hat{\ts{\sigma}}_\dev(\bar{\ts\epsilon}_\dev + \ts{\epsilon}_\dev[\ta{u}^\fluct\epspargs]) }
 \label{eq33a} \\
     \bar{e}\epspargs &\defeq
-    \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n}
-    = \homgen{ \hat{e}(\bar{p} + p^\fluct\epspargs) - \ta u^\fluct\epspargs \cdot \diff} + \bar{h}_\vol\left[1-\frac{|\Omega^\particle_\rve|}{\volume}\right]
+    \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct\epspargs) - \ta u^\fluct\epspargs\cdot\diff}
 \label{eq33b}
 \end{align}
 \todo{??}
@@ -840,7 +839,7 @@ Secondly, the fine-scale fields within an RVE are decomposed as
 \begin{alignat}{2}
     \ta{u} &= \bar{\ts\epsilon}_\dev \cdot [\ta{x}-\bar{\ta{x}}] + \bar{e}\,\ta{x}_\mean + \ta{u}^\fluct, &\quad& \ta{u}^\fluct\in\set{U}_\rve^\fluct
 \label{eq129a} \\
-     p     &= \bar{p} + p^\fluct, &\quad& p^\fluct\in\set{P}_\rve^\fluct
+     p     &= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct, &\quad& p^\fluct\in\set{P}_\rve^\fluct
 \label{eq129b}
 \end{alignat}
 \end{subequations}
@@ -881,11 +880,16 @@ To show this result, we first use the divergence theorem to obtain the identitie
 Using these identities together with \cref{eq51b}, \cref{eq51c}, we deduce
 %--------------------------------------------------------------------------------------------------------
 \begin{multline}
- \homgen{ \hat{e}(p) } - \shomgen{\ta u\cdot\ta n} = c_\rve^*(p; 1) - \shomgen{\ta u\cdot\ta n}
-          = -b_\rve(1, \ta u)- \shomgen{\ta u\cdot\ta n} 
+  \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(p) - \ta u^\fluct\cdot\diff} 
+          %= \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \bar{e}} = \bar{e}
+          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[c_\rve^*(p; 1)-\homgen{\ta u^\fluct\cdot\diff}]
+          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[-b_\rve(1, \ta u)-\homgen{\ta u^\fluct\cdot\diff}]
 \\
-          = d_\rve(\ta n, \ta u) + \shomgen{\ta u\cdot\ta n} - \shomgen{\ta u\cdot\ta n}
-          = \bar{e}\;d_\rve(\ta n, \ta x_\mean) + d_\rve(\ta{n}, \bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])  = \bar{e}
+          = \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}[d_\rve(\ta n, \ta u) - \shomgen{\ta u\cdot\ta n}-\homgen{\ta u^\fluct\cdot\diff}]
+          %= -b_\rve(1, \ta u)- \shomgen{\ta u\cdot\ta n} 
+          %\\
+          %= d_\rve(\ta n, \ta u) + \shomgen{\ta u\cdot\ta n} - \shomgen{\ta u\cdot\ta n}
+          %= \bar{e}\;d_\rve(\ta n, \ta x_\mean) + d_\rve(\ta{n}, \bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])  = \bar{e}
 \end{multline}
 \todo{***}
 
