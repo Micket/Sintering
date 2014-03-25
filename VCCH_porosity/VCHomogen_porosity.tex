@@ -129,14 +129,12 @@ The paper is outlined as follows:
 
 \section{Subscale modeling of isotropic elasticity allowing for the incompressible limit}
 
-%\subsection{A mixed $(\ta{u},p)$ weak format}
 \subsection{A mixed displacement-pressure weak format}
 
 We consider a generic micro-heterogeneous material in a given body whose macroscopic configuration occupies the region $\Omega$ in space with (presumed smooth) boundary $\Gamma$.
 However, the actual medium has porosity, which means the particle composite only occupies only the region $\Omega^\particle$.
 We are then lead to defining a Representative Volume Element (RVE), that represents the topology of the micro-heterogeneous microstructure, as shown in \Cref{Figure1}.
 The total domain occupied by the cubic RVE is denoted $\Omega_\rve$ with external boundary $\Gamma_\rve$, while particles within the RVE occupies $\Omega_\rve^\particle$.
-
 %-----------------------------------------------------------------------------------------------------------------------------
 \begin{figure}
 \centering
@@ -172,6 +170,11 @@ With the kinematic definition $\ts{\epsilon}_\dev[\ta{u}]\defeq[\ta{u}\outerp\di
 Hence, $\hat{\ts{\sigma}}_\dev(\bullet)$ and $\hat{e}(\bullet)$ denote suitable constitutive functions.
 Obviously, in the simplest case of linear isotropic elasticity, we have $\hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev)=2G\ts{\epsilon}_\dev$ and $\hat{e}(p)=-\frac{1}{K}p$, where $G(\ta{x}), K(\ta{x})$ for $\ta{x}\in\Omega$ are the standard elastic moduli that fluctuate strongly.
 Moreover, intrinsic incompressibility is defined as $\hat{e}(p)=0$ for any value of $p$.
+%------------------------------------------------------------------------------------------------------------
+With micro-pores, taking into account surface tension is also necessary, which is defined by the traction 
+\begin{align}
+ \ta t^\surf \defeq \gamma_\surf \hat{\ts I}\cdot\diff = -\kappa \gamma_\surf \ta n \quad\text{ on } \Gamma^\pore.
+\end{align}
 %------------------------------------------------------------------------------------------------------------------------
 We are now in the position to formulate the strong format of the fine-scale problem under standard quasistatic conditions and small strain kinematics:
 %------------------------------------------------------------------------------------------------------------
@@ -179,7 +182,7 @@ We are now in the position to formulate the strong format of the fine-scale prob
 \begin{alignat}{2}
     -\left[\hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}])-p\ts{I}\right]\cdot\diff & = \ta{f} &&\,\,\text{in}\,\, \Omega^\particle
  \label{eq1a} \\
-    -\ta{u}\cdot\diff +  \hat{e}(p) & = 0 &&\,\,\text{in}\,\, \Omega
+    -\ta{u}\cdot\diff +  \hat{e}(p) & = 0 &&\,\,\text{in}\,\, \Omega^\particle
 \label{eq1b} \\
     \ta{t}_\surf \defeq -\kappa\,\gamma_\surf\,\ta n &= \ts\sigma\cdot\ta n &&\,\,\text{on}\,\, \Gamma^\pore
 \label{eq1surf} \\
@@ -205,17 +208,17 @@ where
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     a(\ta{v};\ta{w}) &\defeq
-    \int_{\Omega}  \ts{\epsilon}_\dev[\ta{w}]\dprod \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{v}]) \dif V
+    \int_{\Omega^\particle}  \ts{\epsilon}_\dev[\ta{w}]\dprod \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{v}]) \dif V
 \label{eq3a} \\
     b(q,\ta{v}) &\defeq
-    - \int_{\Omega}  q\,\ta{v}\cdot\diff \dif V
+    - \int_{\Omega^\particle}  q\,\ta{v}\cdot\diff \dif V
 \label{eq3b} \\
     c^*(q;r) &\defeq
-    \int_{\Omega}  r\,\hat{e}(q) \dif V
+    \int_{\Omega^\particle}  r\,\hat{e}(q) \dif V
 \label{eq3c} \\
     l_\surf(\ta{v}) &\defeq -\int_{\Gamma^\pore} \gamma_\surf \hat{\ta I} \dprod [\ta{v}\outerp\diff] \dif S 
 \label{eq3d} \\
-    l(\ta{v}) &\defeq \int_{\Omega} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
+    l(\ta{v}) &\defeq \int_{\Omega^\particle} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
 \label{eq3d}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
@@ -252,6 +255,14 @@ The stationarity conditions of $\Pi(\ta{u},p)$ are
 \end{subequations}
 %----------------------------------------------------------------------------------------------------------------------
 which are identical to the weak form in \cref{eq2}.
+
+\todo{**}
+Here we highlight the differences from weak format in the previous work \cite{ohman_computational_2014}:
+\begin{itemize}
+\item The sub-scale domain is only $\Omega^\particle \subseteq \Omega$.
+\item The additional surface-tension load $l_\surf(\ta v)$ in \eqref{eq2a}
+\end{itemize}
+In the special case that $\Omega^\particle = \Omega$, and thus $\Gamma^\pore = \emptyset$, then we retain the exact problem as in \cite{2014_ohman_...}.
 
 \section{Variationally Consistent Homogenization}
 
@@ -333,7 +344,7 @@ where the RVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 \label{eqRveBulkPotential}
 \end{align}
 %----------------------------------------------------------------------------
-Note in particular the treatment of the surface tension in \cref{eq7e}, which exists now only in the RVE-problem, and influences the macroscale problem only through \cref{eq7a, eq7b}.
+Note in particular the treatment of the surface tension in \eqref{eq7e}, which exists now only in the RVE-problem, and influences the macroscale problem only through \eqref{eq7a} and \eqref{eq7b}.
 
 In the spirit of the Variational MultiScale method (VMS) \cite{larsson_variationally_2010}, we introduce the \emph{ansatz} that the fields $\ta{u}\in\set{U}$ and $p\in\set{P}$ can be decomposed into macroscale (smooth) and subscale (fluctuating) parts inside each RVE via the unique orthogonal split $\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$.
 As a result, we may assume that it is possible solve for the fluctuation fields $\ta{u}^\fluct\in\set{U}^\fluct$ and $p^\fluct\in\set{P}^\fluct$ as ``local approximations'' on each RVE for given macroscale solutions $\ta{u}^\macro\in\set{U}^\macro$ and $p^\macro\in\set{P}^\macro$, i.e.\ we construct the complete solution on each RVE as\footnote{Curly brackets $\{(\bullet)\}$ indicate implicit and/or nonlocal functional dependence on $(\bullet)$.}.
@@ -492,14 +503,14 @@ We note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions 
 Finally, we may express the macroscale problem the abstract form:
 Find $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------------------------------------------
-\begin{subequations}\label{eq:derived_macro}
+\begin{subequations}\label{eq:macro}
 \begin{alignat}{3}
     \bar{a}(\bar{\ta{u}},\bar{p};\delta\bar{\ta{u}}) + \bar{b}(\bar{p},\delta\bar{\ta{u}}) &= \bar{l}(\delta\bar{\ta{u}})
       &\quad& \forall \delta\bar{\ta{u}} &&\in \bar{\set{U}}^{0}
-\label{eq:derived_macro_a} \\
+\label{eq:macro_a} \\
     \bar{b}(\delta\bar{p},\bar{\ta{u}}) + \bar{c}^*(\bar{\ta{u}},\bar{p};\delta\bar{p}) &= 0
       &\quad& \forall \delta\bar{p} &&\in \bar{\set{P}}
-\label{eq:derived_macro_b}
+\label{eq:macro_b}
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------------------------------------------------
@@ -522,6 +533,14 @@ where
 %----------------------------------------------------------------------------------------------------------------------
 If we consider the macroscale fields, $\bar{\ts\sigma}_\dev$ and $\bar{e}$,  we conclude that they are implicit functions of the fields $\bar{\ta u}$ and $\bar{p}$.
 The macroscale spaces $\bar{\set{U}}$ and $\bar{\set{P}}$ are chosen as the standard ones for the fine-scale problem.
+
+\todo{**}
+We remark that we have obtained the same macroscale problem as in \cite{ohman_computational_2014}.
+The only difference is how the response variables, $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are identified.
+In order to obtain the desired format in \eqref{eq:macro}, we have to carefully define $p^\macro$ in \eqref{eq12b} to incorporate the volumetric part of the surface tension as well as the volume ratio. However, this particular definition leads to a very simple constraint for the fluctuation $p^\fluct$ in \eqref{eq13b} which will prove useful for the RVE-problem.
+In the special case $\Omega_\particle = \Omega$, we again retain the same $p^\macro$, $\bar{e}$ as in \cite{ohman_computational_2014}.
+
+
 
 \section{Canonical formulation of RVE-problem}
 
