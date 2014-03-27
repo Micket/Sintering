@@ -197,7 +197,7 @@ The corresponding weak format is: Find $\ta{u}\in\set{U}, p\in\set{P}$ s.t.
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq2}
 \begin{alignat}{3}
-    a(\ta{u};\delta\ta{u}) + b(p,\delta\ta{u}) &= l_\surf(\delta\ta{u}) + l(\delta\ta{u}) &\quad& \forall \delta\ta{u} &&\in \set{U}^{0}
+    a(\ta{u};\delta\ta{u}) + b(p,\delta\ta{u}) &= l^\pore(\delta\ta{u}) + l(\delta\ta{u}) &\quad& \forall \delta\ta{u} &&\in \set{U}^{0}
 \label{eq2a} \\
     b(\delta p,\ta{u}) + c^*(p;\delta p) &= 0 &\quad& \forall \delta p &&\in \set{P}
 \label{eq2b}
@@ -216,10 +216,10 @@ where
     c^*(q;r) &\defeq
     \int_{\Omega^\particle}  r\,\hat{e}(q) \dif V
 \label{eq3c} \\
-    l_\surf(\ta{v}) &\defeq -\int_{\Gamma^\pore} \gamma_\surf \hat{\ta I} \dprod [\ta{v}\outerp\diff] \dif S 
+    l^\pore(\ta{v}) &\defeq -\int_{\Gamma^\pore} \gamma_\surf \hat{\ta I} \dprod [\ta{v}\outerp\diff] \dif S 
 \label{eq3d} \\
     l(\ta{v}) &\defeq \int_{\Omega^\particle} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
-\label{eq3d}
+\label{eq3e}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
 The solution space $\set{U}$ and the test space $\set{U}^0$ are defined in standard fashion.
@@ -229,7 +229,7 @@ The pressure space $\set{P}$ does not satisfy any boundary conditions.
 It is illuminating (although not necessary from an operational point of view) to invoke the potential $\Pi(\ta{u},p)$
 %----------------------------------------------------------------------------
 \begin{align}
-    \Pi(\ta{u},p) &\defeq \Lambda(\ta{u},p) - l_\surf(\ta{u}) - l(\ta{u})
+    \Pi(\ta{u},p) &\defeq \Lambda(\ta{u},p) - l^\pore(\ta{u}) - l(\ta{u})
     \quad\mbox{with}\quad
     \Lambda(\ta{u},p) \defeq \int_{\Omega} \left[\psi_\mathrm{u}(\ts{\epsilon}_\dev[\ta{u}]) - p\,\ta{u}\cdot\diff + \psi_\mathrm{p}^*(p)\right] \dif V
 \label{eq121}
@@ -247,7 +247,7 @@ The stationarity conditions of $\Pi(\ta{u},p)$ are
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq123}
 \begin{alignat}{3}
-    \Pi'_u(\ta{u},p;\delta\ta{u}) &= a(\ta{u};\delta\ta{u}) + b(p,\delta\ta{u})- l_\surf(\delta\ta{u})  - l(\delta\ta{u}) =0 &\quad& \forall \delta\ta{u} &&\in \set{U}^{0}
+    \Pi'_u(\ta{u},p;\delta\ta{u}) &= a(\ta{u};\delta\ta{u}) + b(p,\delta\ta{u})- l^\pore(\delta\ta{u})  - l(\delta\ta{u}) =0 &\quad& \forall \delta\ta{u} &&\in \set{U}^{0}
 \label{eq123a} \\
     \Pi'_p(\ta{u},p;\delta p) &= b(\delta p,\ta{u}) + c^*(p;\delta p) = 0 &\quad& \forall \delta p &&\in \set{P}
 \label{eq123b}
@@ -260,9 +260,9 @@ which are identical to the weak form in \cref{eq2}.
 Here we highlight the differences from weak format in the previous work \cite{ohman_computational_2014}:
 \begin{itemize}
 \item The sub-scale domain is only $\Omega^\particle \subseteq \Omega$.
-\item The additional surface-tension load $l_\surf(\ta v)$ in \eqref{eq2a}
+\item The additional surface-tension load $l^\pore(\ta v)$ in \eqref{eq2a}
 \end{itemize}
-In the special case that $\Omega^\particle = \Omega$, and thus $\Gamma^\pore = \emptyset$, then we retain the exact problem as in \cite{2014_ohman_...}.
+In the special case that $\Omega^\particle = \Omega$, and thus $\Gamma^\pore = \emptyset$, then we retain the exact problem as in \cite{ohman_computational_2014}.
 
 \section{Variationally Consistent Homogenization}
 
@@ -273,11 +273,11 @@ The appropriate variational setting of the homogenized problem is obtained upon 
 \begin{align}
     y \mapsto
     \homgen{y} &\defeq \frac{1}{\volume}\int_{\Omega_\rve^\particle} y \dif V, \quad \Omega_\rve^\particle = \Omega^\particle \cap\Omega_\rve
-    \label{eq16ba}
+    \label{eq16a}
 \intertext{and for the internal surface $\Gamma^\pore$}
     y \mapsto
     \shomgen{ y } &\defeq \frac{1}{\volume}\int_{\Gamma_\rve^\pore} y \dif S, \quad \Gamma_\rve^\pore = \Gamma^\pore \cap\Omega_\rve
-    \label{eq16ba}
+    \label{eq16b}
 \end{align}
 %----------------------------------------------------------------------------
 representing a smoothing approximation on a RVE.
@@ -290,7 +290,7 @@ Boundary integrals can be homogenized in similar fashion, by considering Represe
 \end{align}
 
 
-The weak forms in \crefrange{eq3a}{eq3d} are thus approximated as
+The weak forms in \crefrange{eq3a}{eq3e} are thus approximated as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     a(\ta{v};\ta{w}) &\approx \int_\Omega a_\rve(\ta{v};\ta{w}) \dif V
@@ -301,7 +301,7 @@ The weak forms in \crefrange{eq3a}{eq3d} are thus approximated as
 \label{eq7c} \\
     l(\ta{v}) &\approx \int_\Omega l_\rve(\ta{v}) \dif V + \int_{\Gamma^\Neumann} l_\#(\ta{v}) \dif S
 \label{eq7d} \\
-    l_\surf(\ta{v}) &\approx \int_\Omega l_{\surf\rve}(\ta v) \dif V
+    l^\pore(\ta{v}) &\approx \int_\Omega l_\rve^\pore(\ta v) \dif V
 \label{eq7e}
 \end{align}
 %---------------------------------------------------------------------------------------------------------------------
@@ -317,7 +317,7 @@ where the RVE-functionals in \crefrange{eq7a}{eq7d} are defined as
     c^*_\rve(q;r) &\defeq
     \homgen{ r\,\hat{e}(q) }
 \label{eq8c} \\
-    l_{\surf\rve}(\ta{v}) &\defeq
+    l_\rve^\pore(\ta{v}) &\defeq
     \shomgen{ \gamma_\surf \hat{\ts I} \dprod [\ta{v}\outerp\diff] }
 \label{eq8d} \\
     l_\rve(\ta{v}) &\defeq
@@ -339,7 +339,7 @@ where the RVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 \begin{align}
     \Lambda_\rve(\ta{v},q) &\defeq
     \homgen{ \psi_u(\ts{\epsilon}_\dev[\ta{v}])}
-    + l_{\surf\rve}(\ta{v}) 
+    + l_\rve^\pore(\ta{v}) 
     - \homgen{  p\,\ta{v}\cdot\diff } + \homgen{ \psi_p^*(q) }
 \label{eqRveBulkPotential}
 \end{align}
@@ -413,9 +413,9 @@ which leads to the constraints
 \begin{gather}
     \frac{1}{|\Gamma_\rve|} \int_{\Gamma_\rve} \ta{u}^\fluct \dif S = \ta 0, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta{u}^\fluct \outerp \ta n \dif V = \ts 0
-\label{eq14a} \\
+\label{eq13a} \\
     \homgen{p^\fluct} = 0
-\label{eq14b}
+\label{eq13b}
 \end{gather}
 \end{subequations}
 %----------------------------------------------------------------------------
@@ -439,7 +439,7 @@ With the representations in \cref{eq12} and the constraints in \cref{eq14,eq13},
     c^*_\rve(p;\delta p^\macro) &=
     \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\delta\bar{p}\, \homgen{ \hat{e}(p) }
 \label{eq15d} \\
-    l_{\surf\rve}(\delta\ta{u}^\macro) &=
+    l_\rve^\pore(\delta\ta{u}^\macro) &=
     -\shomgen{ \gamma_\surf \hat{\ts I} } \dprod [\delta\bar{\ta{u}}\outerp\diff]
 \label{eq15e} \\
     l_\rve(\delta\ta{u}^\macro) &=
@@ -499,6 +499,7 @@ Since pore boundaries on $\Gamma_\rve$ is not applicable for the weakly periodic
 We note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions of the values of the macroscale variables $\bar{\ta u}$, $\bar{\ts h}$ and $\bar{p}$, pertinent to the considered RVE.
 
 \noindent\textbf{Remark:} If one wants to include a non-empty $\partial\Gamma_\rve^\pore$, then \cref{eq14b} also needs to include the corresponding term in order obtain the same macroscopic problem. $\Box$
+\todo{**}
 
 Finally, we may express the macroscale problem the abstract form:
 Find $(\bar{\ta{u}},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ that solve
@@ -538,7 +539,7 @@ The macroscale spaces $\bar{\set{U}}$ and $\bar{\set{P}}$ are chosen as the stan
 We remark that we have obtained the same macroscale problem as in \cite{ohman_computational_2014}.
 The only difference is how the response variables, $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are identified.
 In order to obtain the desired format in \eqref{eq:macro}, we have to carefully define $p^\macro$ in \eqref{eq12b} to incorporate the volumetric part of the surface tension as well as the volume ratio. However, this particular definition leads to a very simple constraint for the fluctuation $p^\fluct$ in \eqref{eq13b} which will prove useful for the RVE-problem.
-In the special case $\Omega_\particle = \Omega$, we again retain the same $p^\macro$, $\bar{e}$ as in \cite{ohman_computational_2014}.
+In the special case $\Omega_\particle = \Omega$, we again retain the same expression for $\bar{e}$ and $\bar{\ts\sigma}_\dev$ as in \cite{ohman_computational_2014}.
 
 
 
@@ -546,12 +547,11 @@ In the special case $\Omega_\particle = \Omega$, we again retain the same $p^\ma
 
 \subsection{Preliminaries -- Concept of weak periodicity of fluctuation displacement}
 
-To avoid unnecessary technical complexity, we henceforth consider the situation without volume load, i.e.\ $\ta{f}=\ta{0}$.
-As a preliminary for establishing the proper variational format of the RVE-problem, we consider the most general weak form of the quasi-static momentum balance by introducing the boundary integral with boundary tractions:
+We will now propose an RVE problem in the same manner as in \cite{ohman_computational_2014}, with the modifications that the domain is $\Omega^\particle$ and the inclusion of the surface tension load:
 %----------------------------------------------------------------------------
 \begin{subequations}
 \begin{align}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(\delta\ta{u},p) - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= l_{\fluct\rve}(\delta\ta{u})
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(\delta\ta{u},p) - \frac{1}{\volume}\int_{\Gamma_\rve} \ta{t}\cdot\delta\ta{u} \dif S &= l_\rve^\pore(\delta\ta{u})
 \label{eq19a} \\
     b_\rve(\ta{u},\delta p) + c^*_\rve(p;\delta p) &= 0
 \label{eq19b}
@@ -623,7 +623,7 @@ As an immediate consequence of this symmetry assumption, we obtain that the boun
 %---------------------------------------------------------------------------
 as depicted in \cref{Figure2}.
 We now evaluate, upon using \cref{eq24}, the boundary term in
-\cref{eq19a,eq20a}, as follows:
+\cref{eq19a}, as follows:
 %----------------------------------------------------------------------------
 \begin{equation}
     \int_{\Gamma_\rve} \ta{t} \cdot \delta \ta{u} \dif S =
@@ -740,7 +740,7 @@ For \emph{given} values $\bar{\ta{u}}$, $\bar{\ts{h}}$, and $\bar{p}$, that repr
 \begin{alignat}{3}
     a_\rve(\bar{\ts\epsilon}_\dev\cdot [\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) +
     b_\rve(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] +p^\fluct,\delta\ta{u}^\fluct) +
-    d_\rve(\ta{t}^\fluct,\delta\ta{u}^\fluct) &= l_{\surf\rve}(\delta\ta{u}^\fluct)
+    d_\rve(\ta{t}^\fluct,\delta\ta{u}^\fluct) &= l_\rve^\pore(\delta\ta{u}^\fluct)
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^\fluct
 \label{eq31a} \\
     b_\rve(\delta p^\fluct,\ta{u}^\fluct) + c^*_\rve(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] +p^\fluct;\delta p^\fluct) &= 0
@@ -788,7 +788,7 @@ The macrohomogeneity condition is satisfied if, for any given state $\ta u^\macr
 \begin{subequations}\label{eq:macro_homogeneity_original}
 \begin{alignat}{3}
     a_\rve(\ta u^\macro+\ta{u}^\fluct\{\ta u^\macro, p^\macro\};\dif\ta{u}^\fluct) +
-    b_\rve(p^\macro+p^\fluct\{\ta u^\macro, p^\macro\},\dif\ta{u}^\fluct) &= l_{\surf\rve}(\dif\ta u^\fluct)
+    b_\rve(p^\macro+p^\fluct\{\ta u^\macro, p^\macro\},\dif\ta{u}^\fluct) &= l_\rve^\pore(\dif\ta u^\fluct)
     &\quad& \forall \dif\ta{u}^\fluct &&\in \set{U}_\rve^{\prime\fluct}(\ta u^\macro, p^\macro)
 \label{eq:macro_homogeneity_original_a}\\
     b_\rve(\dif p^\fluct, \ta{u}^\fluct\{\ta u^\macro, p^\macro\}) + c^*_\rve(p^\macro+p^\fluct\{\ta u^\macro, p^\macro\};\dif p^\fluct) &= 0
@@ -809,14 +809,6 @@ Now choosing $\delta\ta t^\fluct = \ta t^\fluct$ in \cref{eq:d_macro_sens}, we o
 \end{align}
 Finally, upon choosing $\delta\ta u^\fluct = \dif\ta u^\fluct \in \set{U}_\rve^{\prime\fluct} \subseteq \set{U}_\rve^\fluct$ in \cref{eq31a} and 
 $\delta p^\fluct = \dif p^\fluct \in \set{P}_\rve^{\prime\fluct} \subseteq \set{P}_\rve^\fluct$ in \cref{eq31b} while noting the identity in \cref{eq:d_macro_sens2} we recover \cref{eq:macro_homogeneity_original}. In conclusion the VCMC is satisfied.
-
-
-\textbf{Remark}:
-In the present case there is, obviously, no need to compute the sensitivities $\dif\ta u^\fluct = (\ta u^\fluct)'$ and $\dif p^\fluct = (p^\fluct)'$ explicitly.
-However, it is always possible to compute the sensitivities of all the fluctuation fields, $\ta u^\fluct$, $p^\fluct$, and $\ta t^\fluct$ from the (linear) system obtained by linearizing \cref{eq31}.
-This system is closely related to the sensitivity problem that must be established as part of computing the pertinent macroscale tangent tensors exploited in Newton iterations on the macroscale problem.
-The explicit format of that sensitivity problem is discussed in \Cref{appendix:sensitivity} for the Canonical format of the RVE-problem that is introduced subsequently. $\Box$
-
 
 \subsection{RVE-problem -- Canonical weak format}
 
@@ -852,7 +844,7 @@ We now propose the alternative, subsequently denoted \emph{canonical}, formulati
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq51}
 \begin{alignat}{3}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= l_{\fluct\rve}(\delta\ta u)
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) + d_\rve(\ta{t},\delta\ta{u}) &= l_\rve^\pore(\delta\ta u)
     &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
 \label{eq51a} \\
     b_\rve(\delta p,\ta{u}) + c^*_\rve(p;\delta p) &= 0
@@ -909,7 +901,7 @@ Next, testing \cref{eq51a} with $\delta\check{\ts h}$ we obtain
 \begin{gather}
     a_\rve(\ta{u};\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) + 
     b_\rve(\check{p},\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) + 
-    d_\rve(\check{\ts \tau}\cdot\ta n,\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) = l_{\surf\rve}(\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}])
+    d_\rve(\check{\ts \tau}\cdot\ta n,\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) = l_\rve^\pore(\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}])
     \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
 \end{gather}
 which gives\todo{***}
@@ -935,18 +927,9 @@ Hence, we compute the identical quantities $\ta u^\fluct\{\bar{\ts\epsilon}_\dev
 Finally, the canonical form results in the identical responses $\bar{\ts\sigma}_\dev\epspargs$ and $\bar{e}\epspargs$ as expressed in \cref{eq33a,eq33b}.
 Since the macroscopic response variables are identical, the VCMC is still fulfilled.
 
-\begin{figure}[!htpb]
- \centering
- \input{original_problem_rewrite.tikz}
- \caption{Comparison of the RVE-problem formulations; Original (left) and Canonical (right).}\label{fig:format_comparison}
-\end{figure}
-An illustrative comparison between the two RVE formulations are shown \Cref{fig:format_comparison}.
-Despite the different displacement fields, the homogenized responses, $\bar{\ts\sigma}_\dev$ and $\bar{e}$, are the same.
-
 
 %----------------------------------------------------------------------------
 It follows from \cref{eq51} that the new variable $\bar{e}$ correctly obtains the value $\bar{e} = \homgen{\hat{e}(p)}$ in accordance with \cref{eq33b}.
-%----------------------------------------------------------------------------------------------------------
 Using these identities together with \cref{eq51b} and \cref{eq129a} we deduce
 %--------------------------------------------------------------------------------------------------------
 \begin{multline}
@@ -958,7 +941,6 @@ Using these identities together with \cref{eq51b} and \cref{eq129a} we deduce
           = \bar{\ts\epsilon}_\dev\dprod\ts I + \bar{e}
           = \bar{e}
 \end{multline}
-
 
 \section{Variational properties of the RVE-problem -- Energy bounds from RVE-functional}
 
@@ -1038,7 +1020,7 @@ We now deduce that $\bar{\psi}_\rve$ serves as the ``macroscale energy density''
 \label{eq88}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-Details of the proof are given in \Cref{appendix:macroEnergy}.
+Details of the proof are given in \cite{ohman_computational_2014}. \todo{*}
 
 From the solution of the RVE-problem, $\bar{e}$ is obtained directly as a primary variable.
 The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
@@ -1047,97 +1029,20 @@ The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \label{eq:weak_periodic_sigma_dev}
 \end{align}
 
+Using the RVE-potential, it is now straightforward to derive the Dirichlet and Neumann boundary conditions. This procedure is henceforth identical to that in \cite{ohman_computational_2014}, with the addition of $l_\rve^\pore(\ta u)$ in the definition of $\Lambda_\rve(\ta u,p)$.
+The tangent problem, necessary to obtain the tangent relations between the output variables, $\bar{\ts\sigma}_\dev$ for use in Newton-iterations, are identical to the derivations shown in \cite{ohman_computational_2014}.
+We refer to details in \cite{ohman_computational_2014} for these derivations, and will subsequently only show the final RVE-problems for the Dirichlet and Neumann boundary conditions.
+
+
+
 
 \subsection{Variational properties for Dirichlet boundary conditions}
 
-In order to establish a suitable variational setting we replace the solution space $\set{U}_\rve$ with $\set{U}_\rve^\Dirichlet\subseteq\set{U}_\rve$ defined as
-%----------------------------------------------------------------------------
-\begin{align}
-    \set{U}_\rve^\Dirichlet &= \{\ta{v} \,|\,\, \ta{v}=\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\check{e}\,\ta{x}_\mean+\ta{v}^\fluct, (\check{\ts\epsilon}_\dev,\check{e}, \ta v^\fluct)\in\set{R}^{3\times3}_\dev \times\set{R}\times\set{U}_\rve^{\Dirichlet,\fluct} \}
-\label{eq61a} \\
-\intertext{where}
-    \set{U}_\rve^{\Dirichlet,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \ta{v}=\ta{0} \text{ on } \Gamma_\rve \}
-\label{eq61b}
-\end{align}
-%----------------------------------------------------------------------------
-while $\set{P}_\rve^\Dirichlet=\set{P}_\rve$, ${\set{T}}_\rve^\Dirichlet={\set{T}}_\rve$ are the same spaces as for the generic problem.
-The generalized saddle-point problem \cref{eq:periodic_energy} can now be rephrased as
-%----------------------------------------------------------------------------------------------------------------
-\begin{equation}
-    \bar{\psi}_\rve^\Dirichlet\epspargs =
-    \inf_{\substack{
-    \hat{\ta{u}}^\fluct\in\set{U}_\rve^{\Dirichlet,\fluct}\\
-    \check{\ts\epsilon}_\dev\in \set{R}^{3\times 3}_\dev \\
-    \check{e}\in\set{R}
-    }}
-    \sup_{\substack{
-    \hat{p}\in\set{P}_\rve\\
-    \hat{\ta{t}}\in\set{T}_\rve
-    }}
-    \inf_{
-    \hat{\bar{e}}\in\set{R}
-    }
-    \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}] + \check{e}\,\ta{x}_\mean+\hat{\ta{u}}^\fluct,\hat{p},\hat{\ta{t}},\hat{\bar{e}})
-\label{eq:dirichlet_energy}
-\end{equation}
-%----------------------------------------------------------------------------------------------------------------------
-where
-%----------------------------------------------------------------------------------------------------------------
-\begin{multline}
-    \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}] + \check{e}\,\ta{x}_\mean+\hat{\ta{u}}^\fluct,\hat{p},\hat{\ta{t}},\hat{\bar{e}}) =
-\\
-    \Lambda_\rve(\check{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}] + \check{e}\,\ta{x}_\mean+\hat{\ta{u}}^\fluct,\hat{p}) + \bar{p}\,\hat{\bar{e}}
-     + d_\rve(\hat{\ta{t}}, [\check{\ts\epsilon}_\dev-\bar{\ts\epsilon}_\dev]\cdot[\ta{x}-\bar{\ta{x}}]+[\check{e}-\hat{\bar{e}}]\,\ta{x}_\mean)
-\label{eq91b}
-\end{multline}
-%----------------------------------------------------------------------------------------------------------------------
-The only possibility to obtain a finite value of $\bar{\psi}_\rve^\Dirichlet$ while evaluating the sup over $\hat{\ta{t}}\in\set{T}_\rve$ is to set $\check{\ts\epsilon}_\dev = \bar{\ts\epsilon}_\dev$ and $\check{e} = \hat{\bar{e}}$.
-Hence, we replace the saddle-point problem by
-%----------------------------------------------------------------------------------------------------------------
-\begin{equation}
-    \bar{\psi}_\rve^\Dirichlet\epspargs =
-    \inf_{
-    \hat{\ta{u}}^\fluct\in\set{U}_\rve^{\Dirichlet,\fluct}
-    }
-    \sup_{
-    \hat{p}\in\set{P}_\rve
-    }
-    \inf_{
-    \hat{\bar{e}}\in\set{R}
-    }
-    \Pi_\rve^\Dirichlet(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}}^\fluct,\hat{p},\hat{\bar{e}})
-\label{eq93a}
-\end{equation}
-%----------------------------------------------------------------------------------------------------------------------
-where
-%----------------------------------------------------------------------------------------------------------------
-\begin{equation}
-    \Pi_\rve^\Dirichlet(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}}^\fluct,\hat{p},\hat{\bar{e}})
-    = \Lambda_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\hat{\bar{e}}\,\ta{x}_\mean+\hat{\ta{u}}^\fluct,\hat{p}) - \bar{p}\,\hat{\bar{e}}
-\label{eq93b}
-\end{equation}
-%----------------------------------------------------------------------------------------------------------------------
-A stationary point of $\Pi_\rve^\Dirichlet$ is defined by the relations
-%----------------------------------------------------------------------------
-\begin{subequations}\label{eq94}
-\begin{alignat}{4}
-    &(\Pi_\rve^\Dirichlet)'_u(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u}^\fluct,p,\bar{e};\delta\ta{u}^\fluct) &&= 0
-    &\quad & \forall \delta\ta{u}^\fluct &&\in\set{U}_\rve^{\Dirichlet,\fluct}
-\label{eq94a} \\
-    &(\Pi_\rve^\Dirichlet)'_p(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u}^\fluct,p,\bar{e};\delta p) &&= 0
-    &\quad & \forall \delta p &&\in\set{P}_\rve
-\label{eq94b} \\
-    &(\Pi_\rve^\Dirichlet)'_{\bar{e}}(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u}^\fluct,p,\ta{t},\bar{e};\delta\bar{e}) &&= 0
-    &\quad & \forall \delta\bar{e} &&\in\set{R}
-\label{eq94c}
-\end{alignat}
-\end{subequations}
-%----------------------------------------------------------------------------
-and this system of equations takes the explicit form: For given values $\bar{\ts\epsilon}_\dev, \bar{p}$, find the subscale fields $(\ta{u}^\fluct,p,\bar{e})\in\set{U}_\rve^{\Dirichlet,\fluct}\times\set{P}_\rve\times\set{R}$ that solve the system
+For given values $\bar{\ts\epsilon}_\dev, \bar{p}$, find the subscale fields $(\ta{u}^\fluct,p,\bar{e})\in\set{U}_\rve^{\Dirichlet,\fluct}\times\set{P}_\rve\times\set{R}$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:weak_form_dirichlet}
 \begin{alignat}{3}
-    a_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) + b_\rve(p,\delta\ta{u}^\fluct) &= l_{\surf\rve}(\delta\ta{u}^\fluct)
+    a_\rve(\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta{u}^\fluct;\delta\ta{u}^\fluct) + b_\rve(p,\delta\ta{u}^\fluct) &= l_\rve^\pore(\delta\ta{u}^\fluct)
     &\quad& \forall \delta\ta{u}^\fluct &&\in \set{U}_\rve^{\Dirichlet,\fluct}
 \label{eq64a} \\
     b_\rve(\delta p,\ta{u}^\fluct) + b_\rve(\delta p,\bar{e}\,\ta{x}_\mean) + c^*_\rve(p;\delta p) &= 0
@@ -1149,6 +1054,10 @@ and this system of equations takes the explicit form: For given values $\bar{\ts
 \label{eq64c}
 \end{alignat}
 \end{subequations}
+where
+\begin{align}
+    \set{U}_\rve^{\Dirichlet,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \ta{v}=\ta{0} \text{ on } \Gamma_\rve \}.
+\end{align}
 %----------------------------------------------------------------------------
 Finally, the macroscale energy density at the stationary point becomes
 %----------------------------------------------------------------------------------------------------------------
@@ -1158,117 +1067,23 @@ Finally, the macroscale energy density at the stationary point becomes
 \label{eq95}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-
-From the RVE-problem in \cref{eq:weak_form_dirichlet}, $\bar{e}$ is obtained directly as a primary variable.
+From the solution of the RVE-problem, $\bar{e}$ is obtained directly as a primary variable.
 The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \begin{align}
  \bar{\ts\sigma}_\dev = \frac{1}{\volume} \int_{\Gamma_\rve^+} \ta t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \bar{p}\ts I
-\label{eq:weak_dirichlet_sigma_dev}
+\label{eq:dirichlet_sigma_dev}
 \end{align}
 However in practice $\bar{\ts\sigma}_\dev$ is conveniently obtained as the reaction forces associated with the prescribed $\bar{\ts\epsilon}_\dev$.
 
-\textbf{Remark}:
-The VMCM in \cref{eq:macro_homogeneity_original} is still valid for the restricted space $\set{U}_\rve^{\Dirichlet,\fluct}\subset \set{U}_\rve^\fluct$.
-Since $d_\rve(\delta\ta t^\fluct, \ta u^\fluct) = 0\;\forall\,\ta u^\fluct \in \set U_\rve^{\Dirichlet,\fluct}$, \cref{eq:macro_homogeneity_original_a} is satisfied for all $\delta\ta u^\fluct\in\set U^{\Dirichlet,\fluct}$. $\Box$
+
+
 
 \subsection{Variational properties for Neumann boundary conditions}
-The Neumann condition represents the weakest possible way of enforcing the micro-periodicity condition.
-Here it is considered as a \emph{model assumption}; however, it is also possible to view this choice as a (crude) FE-approximation of the deviatoric traction field.
-The pertinent RVE-problem is obtained from the general format upon restricting the space $\set{T}_\rve$, i.e.\ introducing $\set{T}_\rve^\Neumann\subseteq\set{T}_\rve$ defined as
-%----------------------------------------------------------------------------
-\begin{equation}
-    \set{T}_\rve^\Neumann =
-    \{\ta{t}\in\set{T}_\rve\,|\,\, \exists(\check{\ts\sigma}_\dev,\check{p})\in\set{R}^{3\times3}_\dev \times\set{R} \text{ s.t. }
-    \ta{t}=\left[\check{\ts\sigma}_\dev-\check{p}\ts{I}\right]\cdot\ta{n} \text{ on } \Gamma_\rve^+\}
-    \label{eq65}
-\end{equation}
-%---------------------------------------------------------------------------
-while $\set{U}_\rve^\Neumann=\set{U}_\rve$ and $\set{P}_\rve^\Neumann=\set{P}_\rve$ are left unrestricted.
-Clearly, the choice of $\set{T}_\rve^\Neumann$ restricts the tractions to become piecewise constant on each of the three positive boundary faces of the RVE-cube.
-The generalized saddle-point problem \cref{eq:periodic_energy} can then be rephrased as
-%----------------------------------------------------------------------------------------------------------------
-\begin{equation}
-    \bar{\psi}_\rve^\Neumann\epspargs =
-    \inf_{
-    \hat{\ta{u}}\in\set{U}_\rve
-    }
-    \sup_{\substack{
-    \hat{p}\in\set{P}_\rve \\
-    \check{\ts\sigma}_\dev\in\set{R}^{3\times3}_\dev \\
-    \check{p}\in\set{R}
-    }}
-    \inf_{
-    \hat{\bar{e}}\in\set{R}
-    }
-    \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\left[\check{\ts\sigma}_\dev-\check{p}\ts{I}\right]\cdot\ta{n},\hat{\bar{e}})
-\label{eq:neumann_energy}
-\end{equation}
-%----------------------------------------------------------------------------------------------------------------------
-where
-%----------------------------------------------------------------------------------------------------------------
-\begin{multline}
-    \Pi_\rve(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\left[\check{\ts\sigma}_\dev-\check{p}\ts{I}\right]\cdot\ta{n},\hat{\bar{e}})
-    =
-\\
-    \Lambda_\rve(\hat{\ta{u}},\hat{p}) + \bar{p}\,\hat{\bar{e}} +
-    d_\rve(\left[\check{\ts\sigma}_\dev-\check{p}\ts{I}\right]\cdot\ta{n},\hat{\ta{u}}-\bar{\ts\epsilon}_\dev\cdot
-    [\ta{x}-\bar{\ta{x}}]-\hat{\bar{e}}\,\ta{x}_\mean)
-\label{eq96b}
-\end{multline}
-%----------------------------------------------------------------------------------------------------------------------
-The only possibility to obtain a finite value of $\bar{\psi}_\rve^\Neumann$ while evaluating the $\inf$ over $\hat{\bar{e}}\in\set{R}$ is to set $\check{p} = \bar{p}$.
-As a direct consequence the variable $\hat{\bar{e}}$ disappears in the resulting expression, cf.\ \cref{eq98b} below.
-Moreover, from \cref{eq:weak_periodic_sigma_dev} we see that for tractions $\ta t \in \set T_\rve^\Neumann$ we obtain $\check{\ts\sigma}_\dev
-= \homgen{ \hat{\ts{\sigma}}_\dev(\ts{\epsilon}_\dev[\ta{u}\epspargs]) } = \bar{\ts\sigma}_\dev\epspargs$.
-%----------------------------------------------------------------------------------------------------------------------
-Hence, we replace the saddle-point problem by
-%----------------------------------------------------------------------------------------------------------------
-\begin{align}
-    \bar{\psi}_\rve^\Neumann\epspargs =
-    \inf_{
-    \hat{\ta{u}}\in\set{U}_\rve
-    }
-    \sup_{\substack{
-    \hat{p}\in\set{P}_\rve \\
-    \bar{\ts\sigma}_\dev\in\set{R}^{3\times3}_\dev
-    }}
-    \Pi_\rve^\Neumann(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\bar{\ts\sigma}_\dev)
-%\nonumber \\
-%    &=& \inf_{\tilde{\ta{u}}^\fluct\in\set{U}^{\Dirichlet,\fluct}} \sup_{\tilde{p}\in\set{P} \tilde{\ta{t}}\in\set{T}} \inf_{\check{e}\in\set{R}}
-%    \left[\Lambda_\rve(\tilde{\ta{u}},\tilde{p}) - \bar{p}\,\check{e}\right]
-\label{eq98a}
-\end{align}
-%----------------------------------------------------------------------------------------------------------------------
-where
-%----------------------------------------------------------------------------------------------------------------
-\begin{equation}
-    \Pi_\rve^\Neumann(\bar{\ts\epsilon}_\dev,\bar{p};\hat{\ta{u}},\hat{p},\bar{\ts\sigma}_\dev)
-    = \Lambda_\rve(\hat{\ta{u}},\hat{p}) +
-    d_\rve([\bar{\ts\sigma}_\dev-\bar{p}\ts{I}]\cdot\ta n,\hat{\ta{u}}-\bar{\ts\epsilon}_\dev\cdot[\ta{x}-\bar{\ta{x}}])
-\label{eq98b}
-\end{equation}
-%----------------------------------------------------------------------------------------------------------------------
-A stationary point of $\Pi_\rve^\Neumann$ is defined by the relations
-%----------------------------------------------------------------------------
-\begin{subequations}\label{eq104}
-\begin{alignat}{4}
-    &(\Pi_\rve^\Neumann)'_u(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\bar{\ts\sigma}_\dev;\delta\ta{u}) &&= 0
-    &\quad & \forall \delta\ta{u} &&\in\set{U}_\rve
-\label{eq104a} \\
-    &(\Pi_\rve^\Neumann)'_p(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\bar{\ts\sigma}_\dev;\delta p) &&= 0
-    &\quad & \forall \delta p &&\in\set{P}_\rve
-\label{eq104b} \\
-    &(\Pi_\rve^\Neumann)'_{\bar{\sigma}}(\bar{\ts\epsilon}_\dev,\bar{p};\ta{u},p,\bar{\ts\sigma}_\dev;\delta\bar{\ts\sigma}_\dev) &&= 0
-    &\quad & \forall \delta\bar{\ts\sigma}_\dev &&\in\set{R}^{3\times3}_\dev
-\label{eq104c}
-\end{alignat}
-\end{subequations}
-%----------------------------------------------------------------------------
-and this system of equations takes the explicit form: For given values $\bar{\ts\epsilon}_\dev, \bar{p}$, find the subscale fields $\ta{u},p,\bar{\ts\sigma}_\dev\in\set{U}_\rve\times\set{P}_\rve\times\set{R}^{3\times 3}_\dev$ that solve the system
+For given values $\bar{\ts\epsilon}_\dev, \bar{p}$, find the subscale fields $\ta{u},p,\bar{\ts\sigma}_\dev\in\set{U}_\rve\times\set{P}_\rve\times\set{R}^{3\times 3}_\dev$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq67}
 \begin{alignat}{3}
-    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) +  d_\rve(\bar{\ts\sigma}_\dev\cdot\ta n,\delta\ta{u}) &= d_\rve(\bar{p}\,\ta n,\delta\ta u) + l_{\surf\rve}(\delta\ta{u})
+    a_\rve(\ta{u};\delta\ta{u}) + b_\rve(p,\delta\ta{u}) +  d_\rve(\bar{\ts\sigma}_\dev\cdot\ta n,\delta\ta{u}) &= d_\rve(\bar{p}\,\ta n,\delta\ta u) + l_\rve^\pore(\delta\ta{u})
     & \quad & \forall \delta\ta{u} &&\in \set{U}_\rve
 \label{eq67a} \\
     b_\rve(\delta p,\ta{u}) + c^*_\rve(p;\delta p) &= 0
@@ -1295,172 +1110,9 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
  \bar{e} = \frac{1}{\volume} \int_{\Gamma_\rve} \ta u \cdot \ta n\dif S.
 \end{align}
 
-\textbf{Remark}:
-The VMCM in \cref{eq:macro_homogeneity_original} is still valid for the restricted space $\set{T}_\rve^\fluct = \{\ta 0\}$.
-Since $d_\rve(\ta 0, \bullet) = 0$, \cref{eq:macro_homogeneity_original_a} is valid for all $\delta\ta u^\fluct \in \set U_\rve^\fluct$. $\Box$
 
 
-\subsection{Macroscale tangent relations}
-In order to solve the (generally nonlinear) macroscale problem \cref{eq:macro} in the FE\textsuperscript{2}-setting using Newton iterations, we need the pertinent tangent operators.
-Linearizing the implicit relations $\bar{\ts\sigma}_\dev\epspargs$ and $\bar{e}\epspargs$ we obtain
-\begin{align}
- \dif\bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \dif\bar{\ts\epsilon}_\dev + \bar{\ts E}\, \dif\bar{p},
-\quad
- \dif\bar{e} = \bar{\ts C} \dprod \dif\bar{\ts\epsilon}_\dev - \bar{C}\, \dif\bar{p}
-\label{eq:periodic_difsigma}
-\end{align}
-thereby defining the tangents $\bar{\tf E}$ (4th order), $\bar{\ts E}$ (2nd order), $\bar{\ts C}$ (2nd order), and $\bar{C}$ (scalar).
-Since a potential exists, it follows that $\bar{\tf {E}}$ possesses major symmetry and that $\bar{\ts E} = \bar{\ts C}$, cf.\ \"Ohman et. al \cite{ohman_computational_2012}.
 
-In order to compute the tangent operators, it is necessary to first compute the relevant sensitivity fields w.r.t.\ changes of the macroscale variables $\bar{\ts\epsilon}_\dev$ and $\bar{p}$, and they are solved from the pertinent tangent problem.
-On should then note that the particular sensitivity fields that are actually exploited (and needed) and the corresponding explicit formulation of the tangent problem depend on the chosen formulation of the RVE-problem (in terms of the boundary conditions: Weakly Periodic, Dirichlet, Neumann). 
-Here, we shall give details only on the ``generic'' choice of the weakly periodic conditions.
-
-\textbf{Remark}: In the case of macroscale incompressibility, $\bar{\ts C}$ and $\bar{C}$ will vanish. $\Box$
-
-As a point of departure for computing the tangent tensors, we note that $\bar{e}\epspargs$ is a primary variable in the RVE-problem, whereas $\bar{\ts\sigma}_\dev\epspargs$ is post-processed via \cref{eq:weak_periodic_sigma_dev}.
-We thus need to compute sensitivities of $\bar{e}$ and $\ta t$ from the tangent problem.
-To begin with, we establish the linearized form of \cref{eq51} at the solution state to obtain
-\begin{subequations}
-\begin{alignat}{3}
-    (a_\rve)'(\ta{u};\delta\ta{u},\dif\ta u) + b_\rve(\dif p,\delta\ta{u}) + d_\rve(\dif\ta{t},\delta\ta{u}) &= 0
-    &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
-\\
-    b_\rve(\delta p,\dif\ta{u}) + (c^*_\rve)'(p;\delta p, \dif p) &= 0
-    &\quad& \forall \delta p &&\in \set{P}_\rve
-\\
-    d_\rve(\delta\ta{t},\dif\ta{u}) - d_\rve(\delta\ta{t},\dif\bar{e}\,\ta{x}_\mean) &= d_\rve(\delta\ta{t},\dif\bar{\ts\epsilon}_\dev \cdot[\ta{x}-\bar{\ta{x}}])
-    &\quad& \forall \delta\ta{t} &&\in \set{T}_\rve
-\\
-    - d_\rve(\dif\ta{t},\delta\bar{e}\,\ta{x}_\mean) &=
-    - \dif\bar{p}\,\delta\bar{e}
-    &\quad& \forall \delta\bar{e} &&\in \set{R}
-\end{alignat}
-\end{subequations}
-which must be valid for any given perturbations $\dif\bar{\ts\epsilon}_\dev$ and $\dif\bar{p}$ giving rize to the corresponding perturbations $\dif\ta u$, $\dif p$, $\dif\ta t$, and $\dif\bar{e}$ in the solution fields.
-
-Next, we introduce orthonormal base dyads $\ts G_i$, $i = 1,2,...,8$ to ensure that the deviatoric tensors $\ts\epsilon_\dev$ and $\ts\sigma_\dev$ are, indeed, deviatoric in character.
-In other words we do not use the conventional base dyads $\ta e_i\outerp\ta e_j$, $i,j=1,2,3$, but we rather introduce the new set of base dyads such that the requirement $\ts G_i \dprod \ta I = 0$ for $i=1,2,...,8$ is fulfilled.
-Examples of such (generally unsymmetric) dyads with Cartesian components, are
-\begin{equation}
-\begin{gathered}
- \ts G_1 = \frac{1}{\sqrt{6}}\left[\begin{smallmatrix} 2 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 & -1\end{smallmatrix}\right],\;
- \ts G_2 = \left[\begin{smallmatrix} 0 & 0 & 0\\ 0 & 1 & 0 \\ 0 & 0 & -1\end{smallmatrix}\right],\;
- \ts G_3 = \left[\begin{smallmatrix} 0 & 1 & 0\\ 0 & 0 & 0 \\ 0 & 0 & 0\end{smallmatrix}\right],\;
- \ldots,\;
- \ts G_8 = \left[\begin{smallmatrix} 0 & 0 & 0\\ 0 & 0 & 0 \\ 0 & 1 & 0\end{smallmatrix}\right].
-\end{gathered}
-\end{equation}
-with respect to this basis, we have the representation
-\begin{gather}
- \ts\epsilon_\dev = \sum_k (\ts\epsilon_\dev)_k \, \ts G_k,\quad 
- (\ts\epsilon_\dev)_k = \ts G_k \dprod \ts\epsilon_\dev
-\\
- \ts\sigma_\dev = \sum_k (\ts\sigma_\dev)_k \, \ts G_k,\quad
- (\ts\sigma_\dev)_k = \ts G_k \dprod \ts\sigma_\dev
-\end{gather}
-% Hence, the component form of \cref{eq:periodic_difsigma} becomes
-% \begin{align}
-%  (\dif\ts\sigma_\dev)_i = \sum_k (\bar{\tf E})_{ik} (\dif\bar{\ts\epsilon}_\dev)_k + (\bar{\ts E})_i\dif\bar{p}
-% \end{align}
-% and
-% \todo{why for E but not C}
-% \begin{align}
-%  \bar{\tf E} = \sum_{i,j} (\bar{\tf E})_{ij} \ts G_i \outerp \ts G_j,\quad \bar{\ts E} = \sum_i (\bar{\ts E})_i \ts G_i
-% \end{align}
-Next, we express the pertinent sensitivities via the representations
-\begin{subequations}
-\begin{align}
- \dif\ta u &= \sum_k \ta u_\ded^{(k)} (\dif\bar{\ts\epsilon}_\dev)_k + \ta u_\dep\,\dif\bar{p}
-\\
- \dif p &= \sum_k p_\ded^{(k)} (\dif\bar{\ts\epsilon}_\dev)_k + p_\dep\,\dif\bar{p}
-\\
- \dif\ta t &= \sum_k \ta t_\ded^{(k)} (\dif\bar{\ts\epsilon}_\dev)_k + \ta t_\dep\,\dif\bar{p}
-\label{eq:periodic_dif_t}
-\\
- \dif\bar{e} &= \sum_k \bar{e}_\ded^{(k)} (\dif\bar{\ts\epsilon}_\dev)_k + \bar{e}_\dep\,\dif\bar{p}
-\label{eq:periodic_dif_ebar}
-\end{align}
-\end{subequations}
-We thus obtain the following sets of tangent problems:
-\begin{itemize}
- \item $\dif\bar{\ts\epsilon}_\dev = \ts G_k$ while $\dif\bar{p} = 0$: For $k = 1, \ldots, 8$, solve for the sensitivities $\ta{u}_\ded^{(k)}$, $p_\ded^{(k)}$, $\ta{t}_{\ded}^{(k)}$, $\bar{e}_\ded^{(k)}$ from the system 
-\end{itemize}
-\begin{subequations}\label{eq:p_sensitivities_d}
-\begin{alignat}{3}
-    (a_\rve)'(\ta{u};\delta\ta{u},\ta{u}_\ded^{(k)}) + b_\rve(p_\ded^{(k)},\delta\ta{u}) + d_\rve(\ta{t}_{\ded}^{(k)},\delta\ta{u}) &= 0
-    &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
-\\
-    b_\rve(\delta p,\ta{u}_\ded^{(k)}) + (c^*_\rve)'(p;\delta p, p_\ded^{(k)}) &= 0
-    &\quad& \forall \delta p &&\in \set{P}_\rve
-\\
-    d_\rve(\delta\ta{t},\ta{u}_\ded^{(k)}) - d_\rve(\delta\ta{t},\bar{e}_\ded^{(k)}\,\ta{x}_\mean) &= d_\rve(\delta\ta{t}, \ts G_k \cdot[\ta{x}-\bar{\ta{x}}])
-    &\quad& \forall \delta\ta{t} &&\in \set{T}_\rve
-\\
-    - d_\rve(\ta{t}_{\ded}^{(k)},\delta\bar{e}\,\ta{x}_\mean) &= 0
-    &\quad& \forall \delta\bar{e} &&\in \set{R}
-\end{alignat}
-\end{subequations}
-\begin{itemize}
-\item $\dif\bar{p} = 1$ while $\dif\bar{\ts\epsilon}_\dev = \ts 0$: Solve for the sensitivities $\ta{u}_\dep$, $p_\dep$, $\ta{t}_\dep$, $\bar{e}_\dep$ from the system 
-\end{itemize}
-\begin{subequations}\label{eq:p_sensitivities_p}
-\begin{alignat}{3}
-    (a_\rve)'(\ta{u};\delta\ta{u},\ta{u}_\dep) + b_\rve(p_\dep,\delta\ta{u}) + d_\rve(\ta{t}_\dep,\delta\ta{u}) &= 0
-    &\quad& \forall \delta\ta{u} &&\in \set{U}_\rve
-\\
-    b_\rve(\delta p,\ta{u}_\dep) + (c^*_\rve)'(p;\delta p, p_\dep) &= 0
-    &\quad& \forall \delta p &&\in \set{P}_\rve
-\\
-    d_\rve(\delta\ta{t},\ta{u}_\dep) - d_\rve(\delta\ta{t},\bar{e}_\dep\,\ta{x}_\mean) &= 0
-    &\quad& \forall \delta\ta{t} &&\in \set{T}_\rve
-\\
-    - d_\rve(\ta{t}_\dep,\delta\bar{e}\,\ta{x}_\mean) &=
-    - \delta\bar{e}
-    &\quad& \forall \delta\bar{e} &&\in \set{R}
-\end{alignat}
-\end{subequations}
-Now, upon linearizing \cref{eq:weak_periodic_sigma_dev} and using the representation for $\dif\ta t$ in \cref{eq:periodic_dif_t}, we obtain
-\begin{align}
-    \dif\bar{\ts\sigma}_{\dev}
-    & =
-    \frac{1}{\volume} \int_{\Gamma_\Box^+} \dif\ts t \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \dif\bar{p}\ts I
-\\
-    &= 
-    \underbrace{\sum_k \frac{1}{\volume} \int_{\Gamma_\Box^+} \ts t_\ded^{(k)} \outerp \jmp{\ta x - \bar{\ta x}}\dif S\outerp \ts G_k}_{\bar{\tf E}}\dprod\dif\bar{\ts\epsilon}_\dev + 
-    \underbrace{\left[\frac{1}{\volume} \int_{\Gamma_\Box^+} \ts t_\dep \outerp \jmp{\ta x - \bar{\ta x}}\dif S + \ts I \right]}_{\bar{\ts E}}\dif\bar{p}
-\end{align}
-Directly from \cref{eq:periodic_dif_ebar}, we obtain
-\begin{align}
- \dif\bar{e} = \underbrace{\sum_k \bar{e}_\ded^{(k)}\, \ts G_k}_{\bar{\ts C}} \dprod \dif \bar{\ts\epsilon}_\dev + \underbrace{\bar{e}_\dep}_{-\bar{C}}\,\dif\bar{p}
-\end{align}
-
-Macroscale tangent relations for the Dirichlet and Neumann boundary conditions are detailed in \Cref{appendix:sensitivity}.
-
-\subsection{Bounds on the macroscale energy density}
-
-Since we have derived the Dirichlet and Neumann problems by respectively restricting the solution spaces as
-\begin{align}
- \set{U}_\rve^\Dirichlet \subset \set{U}_\rve,\quad \set{T}_\rve^\Neumann \subset \set{T}_\rve
-\end{align}
-it follows from \cref{eq:dirichlet_energy}, \cref{eq:neumann_energy}, and \cref{eq:periodic_energy} that
-\begin{align}
- \bar\psi^\Dirichlet_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\} \geq \bar\psi\{\bar{\ts\epsilon}_\dev, \bar {p}\} \geq \bar\psi^\Neumann\{\bar{\ts\epsilon}_\dev, \bar {p}\}.
-\end{align}
-In other words, the Dirichlet and Neumann boundary conditions represent upper and lower bounds
-on the macroscale energy density that is obtained with periodic boundary conditions for any given realization of the RVE and for a given macroscale state $(\bar{\ts\epsilon}_\dev, \bar{p})$.
-
-In the case of linear elasticity, the tangent operators represent the upscaled (=homogenized) constant operators in the representations
-\begin{align}
- \bar{\ts\sigma}_\dev = \bar{\tf E} \dprod \bar{\ts\epsilon}_\dev + \bar{\ts E}\, \bar{p}, \quad \bar{e} = \bar{\ts C}\dprod\bar{\ts\epsilon}_\dev - \bar{C}\,\bar{p}
-\end{align}
-whereby we obtain
-\begin{alignat}{4}
- &\bar{\psi}_\rve\{\bar{\ts\epsilon}_\dev, \bar{p}\} &&= \frac12 \bar{\ts\epsilon}_\dev \dprod \bar{\tf E}\dprod \bar{\ts\epsilon}_\dev -\frac12 \bar{p}\;\bar{C}\;\bar{p}
-&\quad&\forall\;\bar{\ts\epsilon}_\dev,\,\bar{p} &&\implies
- \bar{\tf E}^\Dirichlet \geq \bar{\tf E} \geq \bar{\tf E}^\Neumann,\quad
- \bar{C}^\Dirichlet \leq \bar{C} \leq \bar{C}^\Neumann
-\end{alignat}
 
 
 
@@ -1524,5 +1176,35 @@ whereby we obtain
  \caption{Evolution of porosity with time for a 1$\times$1 and 2$\times$2 unit-cell RVE subjected to zero macroscopic pressure, $\bar{p} = 0$.}
  \label{fig:porosity}
 \end{figure}
+
+
+
+
+
+
+
+\section{Conclusions and outlook}
+
+Conclusions:
+Same macro problem as in \cite{ohman_computational_2014}
+
+Same Canonoical WP, Dirichlet, and Neumann RVE-problem, as in \cite{ohman_computational_2014} by only passing information through the RVE-boundary $\Gamma_\rve$.
+Allows for simple FE-implementation of boundary conditions.
+
+Allows for porosity and surface tension, seamless transition from compressibility to incompressibility.
+
+
+Same macroscale problem and Dirichlet RVE-problem as in \cite{ohman_computational_2012} where initially only the velocity field was homogenized, finally showing that it can be directly derived with VCH.
+
+
+Surface tension can actually have contributions to $\bar{\ts\sigma}_\dev$, which is not captured in traditional macroscale material models of the ``sintering-stress''. This can play a role in metal powder that is unevenly distorted from the compaction, leading to unwanted shape distortions as the sintering stress is the main driving force. (this is a very valuable conclusion!!!)
+This effect is captured naturally in the RVE-model.
+
+
+Outlook:
+Needs pores on boundaries for realistic 3D-RVEs; Neumann and WP needs to be modified to handle such cases.
+
+
+
 
 \end{document}
