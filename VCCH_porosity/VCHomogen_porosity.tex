@@ -770,7 +770,6 @@ In a postprocessing step the homogenized ``fluxes'' can be represented as
     \frac{|\Omega_\rve|}{|\Omega_\rve^\particle|}\homgen{ \hat{e}(\frac{|\Omega_\rve|}{|\Omega_\rve^\particle|} [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct\epspargs) - \ta u^\fluct\epspargs\cdot\diff}
 \label{eq33b}
 \end{align}
-\todo{??}
 
 \subsection{Macrohomogeneity condition (VCMC)}
 The Variationally Consistent Macrohomogeneity Condition (VCMC) (or generalized Hill-Mandel condition) is reviewed in \Cref{appendix:1}.
@@ -904,12 +903,12 @@ Next, testing \cref{eq51a} with $\delta\check{\ts h}$ we obtain
     d_\rve(\check{\ts \tau}\cdot\ta n,\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}]) = l_\rve^\pore(\delta\check{\ts h}\cdot[\ta x - \bar{\ta x}])
     \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
 \end{gather}
-which gives\todo{***}
+which gives
 \begin{gather}
-    \delta\check{\ts h} \dprod[\bar{\ts\sigma}_\dev - \check{p} \ts I - \check{\ts\tau}] = 0
+    \delta\check{\ts h} \dprod[\bar{\ts\sigma}_\dev - (\frac{|\Omega^\particle_\rve|}{\volume}\check{p}-\frac23 \shomgen{\gamma_\surf}) \ts I - \check{\ts\tau}] = 0
     \quad \forall \delta\check{\ts h} \in \set R^{3\times 3}
 \quad\implies\quad
-\check{\ts\tau} = \bar{\ts\sigma}_\dev - \check{p} \ts I.
+\check{\ts\tau} = \bar{\ts\sigma}_\dev - (\frac{|\Omega^\particle_\rve|}{\volume}\check{p}-\frac23 \shomgen{\gamma_\surf}) \ts I.
 \label{eq:tau_check_result}
 \end{gather}
 Lastly, from \cref{eq51d} we obtain
@@ -920,7 +919,7 @@ Lastly, from \cref{eq51d} we obtain
 \quad\implies\quad
     -\frac13 \check{\ts\tau}\dprod\ts I = \check{p}
 \end{alignat}
-With \cref{eq:tau_check_result}, this result implies that $\check{p} = \bar{p}$.
+With \cref{eq:tau_check_result}, this result implies that $\check{p} = \frac{\volume}{|\Omega^\particle_\rve|}[\bar{p} + \frac23 \shomgen{\gamma_\surf}] = p^\macro$.
 
 Now, testing \cref{eq51a,eq51b,eq51c} with the fluctuations $\delta\ta u^\fluct$, $\delta p^\fluct$, and $\delta\ta t^\fluct$ respectively, we obtain exactly the original system in \cref{eq31}.
 Hence, we compute the identical quantities $\ta u^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\}$ and $p^\fluct\{\bar{\ts\epsilon}_\dev, \bar{p}\}$.
