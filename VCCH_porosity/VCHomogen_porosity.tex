@@ -127,6 +127,38 @@ Multiscale; Computational Homogenization; Incompressibility, Porosity, Surface t
 \end{abstract}
 
 \section{Introduction}
+\todo{from paper 2}
+Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality.
+For a hardmetal (such as WC-Co) cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating.
+This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e.\ via surface traction, stemming from stored surface energy.
+The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally.
+To model and quantitatively simulate the sintering process is a challenging task.
+The goal is to (i) estimate the final resulting quality (i.e.\ in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
+
+A wealth of literature has been devoted to the modeling and simulation of the sintering process.
+From a mesoscale viewpoint, a classical approach is to consider socalled ``unit problems'', whereby the constitutive modeling is based on diffusion and, most importantly, flow models.
+Among the early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are those by \cite{JagDaw1988a}, \cite{JagDaw1988b}, \cite{Vorst1993}.
+In a series of papers, \cite{ZhoDer1998}, \cite{ZhoDer2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction.
+The main challenges  are the complex subscale geometry and the moving free boundary giving rise to very large deformations and severe topology changes.
+Recent developments of free-boundary tracing FE-strategies for large deformations (without severe topological changes) are discussed by \cite{DetPer2006}, \cite{SakPer2006a}, \cite{SakPer2006b}.
+All the mentioned work consider surface tension effects in fluids.
+A recent extension to include surface tension in the context of solid modeling, where anisotropic surface energy may be present, is due to \cite{JavSte2009:2d}, \cite{JavSte2010:3d}.
+
+Attempts have also been made in the literature to use macroscopic models based on nonlinear viscoelasticity and viscoplasticity.
+In such models the densification process is driven by the ``sintering stress'', which is the macroscale manifestation of the stored surface energy.
+From a thermodynamical viewpoint, it is the dissipative stress that is conjugated to the current macroscale porosity, e.g.\ \cite{ReiOak1990}, \cite{MahRun2000}.
+Among the literature on macroscale modeling, we mention \cite{Svoetal1996}, \cite{XuMeh1997} and \cite{Luetal2001:porosity}.
+
+\todo{this paper}
+Since computational homogenization has proven useful in a wide variety of applications, e.g.\ \cite{Sandstrom2012}, \cite{ZohdiWriggers2001}, \cite{Klinge2012}, \cite{Mieheetal1999}, \cite{OskayFish2007}, it is natural to exploit this technique even for the present type of complex deformation process. 
+%
+%
+In a previous paper, \textsc{\"Ohman et al.} \cite{Ohman2013}, computational homogenization was applied to liquid phase sintering of particle agglomerates modeled as viscous fluids subject to surface tension.  This was followed by a Variationally Consistent Homogenization (VCH) of mixed displacement-pressure formulation in \cite{Ohmanm2014}.
+In this present paper, we aim to apply the fine-scale modeling in \cite{Ohman2013} with the VCH framework detailed in \cite{Ohmanm2014}.
+The theory in \cite{Ohmanm2014} thus needs to be extended to incorporate porosity and surface tension.
+The resulting FE\textsuperscript{2} framework allows to simulate the sintering process in the fully heated state (only isothermal analysis is considered).
+
+
 
 \todo{TODO}
 In this work, we aim to combine subscale structure, incompressible medium with pores from [paper2] with the VCH procedure laid out in [paper3].
@@ -146,7 +178,7 @@ Numerical examples are shown in Section 6, followed by conclusions in Section 7.
 
 \section{Subscale modeling of porous fluid with }
 
-\subsection{A mixed displacement-pressure weak format}
+\subsection{A mixed velocity-pressure weak format}
 
 We consider a generic micro-heterogeneous material in a given body whose macroscopic configuration occupies the region $\Omega$ in space with (presumed smooth) boundary $\Gamma$.
 However, the actual medium has pores, which means the particle composite only occupies only the region $\Omega^\particle$.
@@ -210,11 +242,11 @@ We are now in the position to formulate the strong format of the fine-scale prob
 \end{alignat}
 \end{subequations}
 %-----------------------------------------------------------------------------------------------------
-The corresponding weak format is: Find $\ta v\in\set{U}, p\in\set{P}$ s.t.
+The corresponding weak format is: Find $\ta v\in\set{V}, p\in\set{P}$ s.t.
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq2}
 \begin{alignat}{3}
-    a(\ta v;\delta\ta v) + b(p,\delta\ta v) &= l^\pore(\delta\ta v) + l(\delta\ta v) &\quad& \forall \delta\ta v &&\in \set{U}^{0}
+    a(\ta v;\delta\ta v) + b(p,\delta\ta v) &= l^\pore(\delta\ta v) + l(\delta\ta v) &\quad& \forall \delta\ta v &&\in \set{V}^{0}
 \label{eq2a} \\
     b(\delta p,\ta v) + c^*(p;\delta p) &= 0 &\quad& \forall \delta p &&\in \set{P}
 \label{eq2b}
@@ -239,8 +271,8 @@ where
 \label{eq3e}
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
-The solution space $\set{U}$ and the test space $\set{U}^0$ are defined in standard fashion.
-In particular, all $\ta{v}\in\set{U}$ are characterized by $\ta{v}=\ta v_\prescribed$ on $\Gamma^\Dirichlet$, whereas all $\ta{v}\in\set{U}^0$ satisfy $\ta{v}=\ta{0}$ on $\Gamma^\Dirichlet$.
+The solution space $\set{V}$ and the test space $\set{V}^0$ are defined in standard fashion.
+In particular, all $\ta{v}\in\set{V}$ are characterized by $\ta{v}=\ta v_\prescribed$ on $\Gamma^\Dirichlet$, whereas all $\ta{v}\in\set{V}^0$ satisfy $\ta{v}=\ta{0}$ on $\Gamma^\Dirichlet$.
 The pressure space $\set{P}$ does not satisfy any boundary conditions.
 
 It is illuminating (although not necessary from an operational point of view) to invoke the potential $\Pi(\ta v,p)$
@@ -264,7 +296,7 @@ The stationarity conditions of $\Pi(\ta v,p)$ are
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq123}
 \begin{alignat}{3}
-    \Pi'_u(\ta v,p;\delta\ta v) &= a(\ta v;\delta\ta v) + b(p,\delta\ta v)- l^\pore(\delta\ta v)  - l(\delta\ta v) =0 &\quad& \forall \delta\ta v &&\in \set{U}^{0}
+    \Pi'_u(\ta v,p;\delta\ta v) &= a(\ta v;\delta\ta v) + b(p,\delta\ta v)- l^\pore(\delta\ta v)  - l(\delta\ta v) =0 &\quad& \forall \delta\ta v &&\in \set{V}^{0}
 \label{eq123a} \\
     \Pi'_p(\ta v,p;\delta p) &= b(\delta p,\ta v) + c^*(p;\delta p) = 0 &\quad& \forall \delta p &&\in \set{P}
 \label{eq123b}
@@ -362,8 +394,8 @@ where the RVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 %----------------------------------------------------------------------------
 Note in particular the treatment of the surface tension in \eqref{eq7e}, which exists now only in the RVE-problem, and influences the macroscale problem only through \eqref{eq7a} and \eqref{eq7b}.
 
-In the spirit of the Variational MultiScale method (VMS) \cite{larsson_variationally_2010}, we introduce the \emph{ansatz} that the fields $\ta v\in\set{U}$ and $p\in\set{P}$ can be decomposed into macroscale (smooth) and subscale (fluctuating) parts inside each RVE via the unique orthogonal split $\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$.
-As a result, we may assume that it is possible solve for the fluctuation fields $\ta v^\fluct\in\set{U}^\fluct$ and $p^\fluct\in\set{P}^\fluct$ as ``local approximations'' on each RVE for given macroscale solutions $\ta v^\macro\in\set{U}^\macro$ and $p^\macro\in\set{P}^\macro$, i.e.\ we construct the complete solution on each RVE as\footnote{Curly brackets $\{(\bullet)\}$ indicate implicit and/or nonlocal functional dependence on $(\bullet)$.}.
+In the spirit of the Variational MultiScale method (VMS) \cite{larsson_variationally_2010}, we introduce the \emph{ansatz} that the fields $\ta v\in\set{V}$ and $p\in\set{P}$ can be decomposed into macroscale (smooth) and subscale (fluctuating) parts inside each RVE via the unique orthogonal split $\set{V} = \set{V}^\macro \oplus \set{V}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$.
+As a result, we may assume that it is possible solve for the fluctuation fields $\ta v^\fluct\in\set{V}^\fluct$ and $p^\fluct\in\set{P}^\fluct$ as ``local approximations'' on each RVE for given macroscale solutions $\ta v^\macro\in\set{V}^\macro$ and $p^\macro\in\set{P}^\macro$, i.e.\ we construct the complete solution on each RVE as\footnote{Curly brackets $\{(\bullet)\}$ indicate implicit and/or nonlocal functional dependence on $(\bullet)$.}.
 %------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq4}
 \begin{alignat}{2}
@@ -377,15 +409,15 @@ As a result, we may assume that it is possible solve for the fluctuation fields 
 On the boundary of the macroscale domain, $\Gamma$, we assume smooth variation of $\ta v$ defined by the explicit relations $\ta v = \ta v^\macro$, $p = p^\macro$ on $\Gamma_\#$.
 
 
-In addition, the test function $\delta\ta v\in\set{U}^{0}$ in \cref{eq2a} is replaced by $\delta\ta v^\macro\in\set{U}^{\macro,0}$, whereas $\delta p\in\set{P}$ in \cref{eq2b} is replaced by $\delta p^\macro\in\set{P}^{\macro}$.
-Altogether, these assumptions infer that $\ta v^\macro\in\set{U}^\macro$ and $p^\macro\in\set{P}^\macro$ can be solved from the homogenized problem
+In addition, the test function $\delta\ta v\in\set{V}^{0}$ in \cref{eq2a} is replaced by $\delta\ta v^\macro\in\set{V}^{\macro,0}$, whereas $\delta p\in\set{P}$ in \cref{eq2b} is replaced by $\delta p^\macro\in\set{P}^{\macro}$.
+Altogether, these assumptions infer that $\ta v^\macro\in\set{V}^\macro$ and $p^\macro\in\set{P}^\macro$ can be solved from the homogenized problem
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq6}
 \begin{alignat}{3}
     a(\tilde{\ta v}\{\ta v^\macro,p^\macro\};\delta\ta v^\macro) +
     b(\tilde{p}\{\ta v^\macro,p^\macro\},\delta\ta v^\macro)
     &= l(\delta\ta v^\macro)
-    &\quad& \forall \delta\ta v^\macro &&\in \set{U}^{\macro,0}
+    &\quad& \forall \delta\ta v^\macro &&\in \set{V}^{\macro,0}
 \label{eq6a} \\
     b(\delta p^\macro,\tilde{\ta v}\{\ta v^\macro,p^\macro\}) +
     c^*(\tilde{p}\{\ta v^\macro,p^\macro\};\delta p^\macro)
@@ -398,7 +430,7 @@ Altogether, these assumptions infer that $\ta v^\macro\in\set{U}^\macro$ and $p^
 \subsection{Explicit format of macroscale (homogenized) problem}
 In practice, the scales are linked  by expressing $\ta v^\macro(\bar{\ta{x}},{\ta{x}})$\footnote{Double arguments, i.e.\ $\ta v(\bar{\ta{x}},\ta{x})$, are used to explicitly point out the underlying scale separation.} and $p^\macro(\bar{\ta x},\ta x)$ using Taylor series expansions of suitable order for $\bar{\ta{x}}\in\Omega$ and $\ta{x}\in\Omega_\rve(\bar{\ta{x}})$
 in terms of the macroscale solution $\bar{\ta v}(\bar{\ta{x}})$ and $\bar{p}(\bar{\ta x})$ respectively. However, in this case we must take into account both porosity and surface tension in order to obtain the simplest macroscale format.
-We thus introduce the macroscale fields $(\bar{\ta v},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ such that the macroscale solutions $\ta v^\macro, p^\macro$ inside each RVE are expanded as follows:
+We thus introduce the macroscale fields $(\bar{\ta v},\bar{p})\in\bar{\set{V}}\times\bar{\set{P}}$ such that the macroscale solutions $\ta v^\macro, p^\macro$ inside each RVE are expanded as follows:
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq12}
 \begin{align}
@@ -436,9 +468,9 @@ which leads to the constraints
 \end{gather}
 \end{subequations}
 %----------------------------------------------------------------------------
-As a result, the hierarchical split ($\set{U} = \set{U}^\macro \oplus \set{U}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$) is guaranteed.
+As a result, the hierarchical split ($\set{V} = \set{V}^\macro \oplus \set{V}^\fluct$ and $\set{P} = \set{P}^\macro \oplus \set{P}^\fluct$) is guaranteed.
 %----------------------------------------------------------------------------
-We can thus establish at the outset, before any further analysis, that the displacement and pressure fields within each RVE are implicit functions of the values $\bar{\ta v}$, $\bar{\ts h}$, $\bar{p}$, such that $\ta v = \tilde{\ta v}\{\bar{\ta v}, \bar{\ts h}, \bar{p}\}$ and $p = \tilde{p}\{\bar{\ta v}, \bar{\ts h}, \bar{p}\}$.
+We can thus establish at the outset, before any further analysis, that the velocity and pressure fields within each RVE are implicit functions of the values $\bar{\ta v}$, $\bar{\ts h}$, $\bar{p}$, such that $\ta v = \tilde{\ta v}\{\bar{\ta v}, \bar{\ts h}, \bar{p}\}$ and $p = \tilde{p}\{\bar{\ta v}, \bar{\ts h}, \bar{p}\}$.
 
 With the representations in \cref{eq12} and the constraints in \cref{eq14,eq13}, we are in the position to compute the homogenized quantities that enter the system \cref{eq6}:
 %----------------------------------------------------------------------------------------------------------------
@@ -518,12 +550,12 @@ We note that $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are indeed implicit functions 
 \noindent\textbf{Remark:} If one wants to include a non-empty $\partial\Gamma_\rve^\pore$, then \cref{eq14b} also needs to include the corresponding term in order obtain the same macroscopic problem. $\Box$
 
 Finally, we may express the macroscale problem the abstract form:
-Find $(\bar{\ta v},\bar{p})\in\bar{\set{U}}\times\bar{\set{P}}$ that solve
+Find $(\bar{\ta v},\bar{p})\in\bar{\set{V}}\times\bar{\set{P}}$ that solve
 %----------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq:macro}
 \begin{alignat}{3}
     \bar{a}(\bar{\ta v},\bar{p};\delta\bar{\ta v}) + \bar{b}(\bar{p},\delta\bar{\ta v}) &= \bar{l}(\delta\bar{\ta v})
-      &\quad& \forall \delta\bar{\ta v} &&\in \bar{\set{U}}^{0}
+      &\quad& \forall \delta\bar{\ta v} &&\in \bar{\set{V}}^{0}
 \label{eq:macro_a} \\
     \bar{b}(\delta\bar{p},\bar{\ta v}) + \bar{c}^*(\bar{\ta v},\bar{p};\delta\bar{p}) &= 0
       &\quad& \forall \delta\bar{p} &&\in \bar{\set{P}}
@@ -549,7 +581,7 @@ where
 \end{align}
 %----------------------------------------------------------------------------------------------------------------------
 If we consider the macroscale fields, $\bar{\ts\sigma}_\dev$ and $\bar{e}$,  we conclude that they are implicit functions of the fields $\bar{\ta v}$ and $\bar{p}$.
-The macroscale spaces $\bar{\set{U}}$ and $\bar{\set{P}}$ are chosen as the standard ones for the fine-scale problem.
+The macroscale spaces $\bar{\set{V}}$ and $\bar{\set{P}}$ are chosen as the standard ones for the fine-scale problem.
 
 We remark that we have obtained the same macroscale problem as in [paper3].
 The only difference is how the response variables, $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are identified.
@@ -560,7 +592,7 @@ In the special case $\Omega^\particle = \Omega$, we again retain the same expres
 
 \section{Canonical formulation of RVE-problem}
 
-\subsection{Preliminaries -- Concept of weak periodicity of fluctuation displacement}
+\subsection{Preliminaries -- Concept of weak periodicity of fluctuation velocity}
 
 We will now propose an RVE problem in the same manner as in [paper3], with the modifications that the domain is $\Omega^\particle$ and the inclusion of the surface tension load:
 %----------------------------------------------------------------------------
@@ -603,7 +635,7 @@ We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma^+ \rightarro
 \label{Figure2}
 \end{figure}
 %--------------------------------------------------------------------------------
-In particular, we express micro-periodicity of the displacement fluctuation field as
+In particular, we express micro-periodicity of the velocity fluctuation field as
 %--------------------------------------------------------------------------------
 \begin{equation}
     \ta v^\fluct(\ta{x}) = \ta v^\fluct(\ta{\varphi}_\per(\ta{x})), \quad
@@ -685,7 +717,7 @@ whereby the constraint \cref{eq26} is expressed as
 In order to establish the most straightforward formulation of the RVE-problem, based on micro-periodicity, we first use the constraints in \cref{eq13} and introduce the following spaces for the fluctuation fields:
 %----------------------------------------------------------------------------
 \begin{align}
-    \set{U}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
+    \set{V}_\rve^\fluct &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{|\Gamma_\rve|}\int_{\Gamma_\rve} \ta{v} \dif S = \ta 0, \quad
     \frac{1}{\volume} \int_{\Gamma_\rve} \ta v^\fluct \outerp \ta n \dif V = \ts 0 \}
 \label{eq28a} \\
     \set{P}_\rve^\fluct &= \{q\in L_2(\Omega_\rve) \,| \quad \homgen{q} = 0 \}
@@ -695,7 +727,7 @@ In order to establish the most straightforward formulation of the RVE-problem, b
 It is then obvious that, for given macroscale values $\bar{\ta v}$, $\bar{\ts h}$, and $\bar{p}$, we can introduce the unique decompositions
 \begin{subequations}\label{eq29}
 \begin{alignat}{2}
-    \ta v &= \bar{\ta v} + \bar{\ts{h}} \cdot [\ta{x}-\bar{\ta{x}}] + \ta v^\fluct, &\quad& \ta v^\fluct\in\set{U}_\rve^\fluct
+    \ta v &= \bar{\ta v} + \bar{\ts{h}} \cdot [\ta{x}-\bar{\ta{x}}] + \ta v^\fluct, &\quad& \ta v^\fluct\in\set{V}_\rve^\fluct
 \label{eq29a} \\
      p     &= \densinv [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct, &\quad& p^\fluct\in\set{P}_\rve^\fluct
 \label{eq29b}
@@ -711,7 +743,7 @@ This definition for the average stress is chosen so that for any stress field $\
 $\bar{\ts\tau} = \frac{1}{\volume}\int_{\Gamma_\rve} \ts\tau\cdot\ta n \outerp \jmp{\ta x - \bar{\ta x}}\dif S$.
 We also conclude that 
 \begin{align}
-d_\rve(\bar{\ts\tau}\cdot \ta n, \ta v^\fluct) = 0\quad \forall\ta v^\fluct\in\set{U}_\rve^\fluct,\;\bar{\ts\tau}\in\set{R}^{3\times3}.
+d_\rve(\bar{\ts\tau}\cdot \ta n, \ta v^\fluct) = 0\quad \forall\ta v^\fluct\in\set{V}_\rve^\fluct,\;\bar{\ts\tau}\in\set{R}^{3\times3}.
 \label{eq:dtauu0}
 \end{align}
 As a direct consequence of \cref{eq:t_average}, we may introduce the unique split
@@ -738,7 +770,7 @@ Hence, $\ta t^\fluct \defeq \ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\r
 As preliminaries for establishing the RVE-problem, we establish two identities:
 Firstly, from \cref{eq:dtauu0,eq:t_split} follows that
 \begin{align}
-d_\rve(\ta t,\delta\ta v^\fluct) = d_\rve(\ta t^\fluct, \delta\ta v^\fluct)\quad \forall\delta\ta v^\fluct \in\set{U}_\rve^\fluct
+d_\rve(\ta t,\delta\ta v^\fluct) = d_\rve(\ta t^\fluct, \delta\ta v^\fluct)\quad \forall\delta\ta v^\fluct \in\set{V}_\rve^\fluct
 \end{align}
 Secondly, it follows from \cref{eq12a} and the properties of $\set{P}_\rve^\fluct$ that
 \begin{equation}
@@ -750,14 +782,14 @@ whereby it is noted that the macroscale part of $\ta v$ is ``filtered out''.
 
 
 We are now in the position to establish the subscale problem:
-For \emph{given} values $\bar{\ta v}$, $\bar{\ts{h}}$, and $\bar{p}$, that represent the macroscale fields (and which solve the macroscale problem), find the subscale fluctuations $(\ta v^\fluct,p^\fluct,\ta{t}^\fluct)\in\set{U}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system
+For \emph{given} values $\bar{\ta v}$, $\bar{\ts{h}}$, and $\bar{p}$, that represent the macroscale fields (and which solve the macroscale problem), find the subscale fluctuations $(\ta v^\fluct,p^\fluct,\ta{t}^\fluct)\in\set{V}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq31}
 \begin{alignat}{3}
     a_\rve(\bar{\ts d}_\dev\cdot [\ta{x}-\bar{\ta{x}}]+\ta v^\fluct;\delta\ta v^\fluct) +
     b_\rve(\densinv [\bar{p} + \frac23 \shomgen{\gamma_\surf}] +p^\fluct,\delta\ta v^\fluct) +
     d_\rve(\ta{t}^\fluct,\delta\ta v^\fluct) &= l_\rve^\pore(\delta\ta v^\fluct)
-    &\quad& \forall \delta\ta v^\fluct &&\in \set{U}_\rve^\fluct
+    &\quad& \forall \delta\ta v^\fluct &&\in \set{V}_\rve^\fluct
 \label{eq31a} \\
     b_\rve(\delta p^\fluct,\ta v^\fluct) + c^*_\rve(\densinv [\bar{p} + \frac23 \shomgen{\gamma_\surf}] +p^\fluct;\delta p^\fluct) &= 0
     &\quad& \forall \delta p^\fluct &&\in \set{P}_\rve^\fluct
@@ -792,19 +824,19 @@ The Variationally Consistent Macrohomogeneity Condition (VCMC) (or generalized H
 In order to establish its localized form for the present problem, we first identify the tangent spaces
 \begin{subequations}
 \begin{align}
- \set{U}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro) &\defeq \{ \set{U}_\rve^\fluct \ni \dif\ta v^\fluct = (\ta v^\fluct)'\{\ta v^\macro, p^\macro; \dif\ta v^\macro, \dif p^\macro\}, \dif\ta v^\macro \in \set{U}_\rve^{\macro,0},  \dif p^\macro \in \set{P}_\rve^{\macro} \}
+ \set{V}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro) &\defeq \{ \set{V}_\rve^\fluct \ni \dif\ta v^\fluct = (\ta v^\fluct)'\{\ta v^\macro, p^\macro; \dif\ta v^\macro, \dif p^\macro\}, \dif\ta v^\macro \in \set{V}_\rve^{\macro,0},  \dif p^\macro \in \set{P}_\rve^{\macro} \}
 \\
- \set{P}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro) &\defeq \{ \set{P}_\rve^\fluct \ni \dif p^\fluct = (p^\fluct)'\{\ta v^\macro, p^\macro; \dif\ta v^\macro, \dif p^\macro\}, \dif\ta v^\macro \in \set{U}_\rve^{\macro,0},  \dif p^\macro \in \set{P}_\rve^{\macro} \}
+ \set{P}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro) &\defeq \{ \set{P}_\rve^\fluct \ni \dif p^\fluct = (p^\fluct)'\{\ta v^\macro, p^\macro; \dif\ta v^\macro, \dif p^\macro\}, \dif\ta v^\macro \in \set{V}_\rve^{\macro,0},  \dif p^\macro \in \set{P}_\rve^{\macro} \}
 \end{align}
 \end{subequations}
-whereby $\dif\ta v^\fluct\in \set{U}_\rve^{\prime\fluct}$ and $\dif p^\fluct\in \set{P}_\rve^{\prime\fluct}$ represent sensitivity fields (or directional derivatives) for given changes $\dif\ta v^\macro \in\set{U}_\rve^{\macro,0}$ and $\dif p^\macro \in\set{P}_\rve^{\macro,0}$ of the macroscale fields within each RVE.
+whereby $\dif\ta v^\fluct\in \set{V}_\rve^{\prime\fluct}$ and $\dif p^\fluct\in \set{P}_\rve^{\prime\fluct}$ represent sensitivity fields (or directional derivatives) for given changes $\dif\ta v^\macro \in\set{V}_\rve^{\macro,0}$ and $\dif p^\macro \in\set{P}_\rve^{\macro,0}$ of the macroscale fields within each RVE.
 
 The macrohomogeneity condition is satisfied if, for any given state $\ta v^\macro$, $p^\macro$ localized to the considered RVE, the following relations hold:
 \begin{subequations}\label{eq:macro_homogeneity_original}
 \begin{alignat}{3}
     a_\rve(\ta v^\macro+\ta v^\fluct\{\ta v^\macro, p^\macro\};\dif\ta v^\fluct) +
     b_\rve(p^\macro+p^\fluct\{\ta v^\macro, p^\macro\},\dif\ta v^\fluct) &= l_\rve^\pore(\dif\ta v^\fluct)
-    &\quad& \forall \dif\ta v^\fluct &&\in \set{U}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro)
+    &\quad& \forall \dif\ta v^\fluct &&\in \set{V}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro)
 \label{eq:macro_homogeneity_original_a}\\
     b_\rve(\dif p^\fluct, \ta v^\fluct\{\ta v^\macro, p^\macro\}) + c^*_\rve(p^\macro+p^\fluct\{\ta v^\macro, p^\macro\};\dif p^\fluct) &= 0
     &\quad& \forall \dif p^\fluct &&\in \set{P}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro)
@@ -816,13 +848,13 @@ Upon differentiating this relation w.r.t.\ $\ta v^\macro$ and $p^\macro$, we obt
  d_\rve(\delta \ta t^\fluct, \dif\ta v^\fluct) = 0\quad \forall \delta \ta t^\fluct \in \set{T}_\rve^\fluct
 \label{eq:d_macro_sens}
 \end{align}
-for any $\dif\ta v^\fluct \in \set{U}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro)$ (by definition of $(\ta v^\fluct)'\{\ta v^\macro, p^\macro; \dif\ta v^\macro, \dif p^\macro\}$).
+for any $\dif\ta v^\fluct \in \set{V}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro)$ (by definition of $(\ta v^\fluct)'\{\ta v^\macro, p^\macro; \dif\ta v^\macro, \dif p^\macro\}$).
 Now choosing $\delta\ta t^\fluct = \ta t^\fluct$ in \cref{eq:d_macro_sens}, we obtain 
 \begin{align}
- d_\rve(\ta t^\fluct, \dif\ta v^\fluct) = 0\quad \forall\dif\ta v^\fluct\in\set{U}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro) \subseteq \set{U}_\rve^\fluct
+ d_\rve(\ta t^\fluct, \dif\ta v^\fluct) = 0\quad \forall\dif\ta v^\fluct\in\set{V}_\rve^{\prime\fluct}(\ta v^\macro, p^\macro) \subseteq \set{V}_\rve^\fluct
 \label{eq:d_macro_sens2}
 \end{align}
-Finally, upon choosing $\delta\ta v^\fluct = \dif\ta v^\fluct \in \set{U}_\rve^{\prime\fluct} \subseteq \set{U}_\rve^\fluct$ in \cref{eq31a} and 
+Finally, upon choosing $\delta\ta v^\fluct = \dif\ta v^\fluct \in \set{V}_\rve^{\prime\fluct} \subseteq \set{V}_\rve^\fluct$ in \cref{eq31a} and 
 $\delta p^\fluct = \dif p^\fluct \in \set{P}_\rve^{\prime\fluct} \subseteq \set{P}_\rve^\fluct$ in \cref{eq31b} while noting the identity in \cref{eq:d_macro_sens2} we recover \cref{eq:macro_homogeneity_original}. In conclusion the VCMC is satisfied.
 
 \subsection{RVE-problem -- Canonical weak format}
@@ -831,7 +863,7 @@ A generalized formulation of the RVE-problem that does not contain the above-men
 Firstly, we introduce the following spaces for the total (macroscale and fluctuation) fields:
 %----------------------------------------------------------------------------
 \begin{align}
-    \set{U}_\rve &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{\volume}\int_{\Gamma_\rve} \ta{v} \dif S = \ta{0} \}
+    \set{V}_\rve &= \{\ta{v}\in [H^1(\Omega_\rve)]^{3} \,| \quad \frac{1}{\volume}\int_{\Gamma_\rve} \ta{v} \dif S = \ta{0} \}
 \label{eq45a} \\
     \set{P}_\rve &= \{q\in L_2(\Omega_\rve) \}
 \label{eq45b} \\
@@ -843,7 +875,7 @@ Secondly, the fine-scale fields within an RVE are decomposed as
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq129}
 \begin{alignat}{2}
-    \ta v &= \bar{\ts d}_\dev \cdot [\ta{x}-\bar{\ta{x}}] + \bar{e}\,\ta{x}_\mean + \ta v^\fluct, &\quad& \ta v^\fluct\in\set{U}_\rve^\fluct
+    \ta v &= \bar{\ts d}_\dev \cdot [\ta{x}-\bar{\ta{x}}] + \bar{e}\,\ta{x}_\mean + \ta v^\fluct, &\quad& \ta v^\fluct\in\set{V}_\rve^\fluct
 \label{eq129a} \\
      p     &= \densinv [\bar{p} + \frac23 \shomgen{\gamma_\surf}] + p^\fluct, &\quad& p^\fluct\in\set{P}_\rve^\fluct
 \label{eq129b}
@@ -855,12 +887,12 @@ where $\ta{x}_\mean\defeq\frac{1}{3}[\ta{x}-\bar{\ta{x}}]$, and where $\bar{e}$ 
 \textbf{Remark}:
 As a consequence of the ansatz in \cref{eq129a}, the rigid body motion is removed; $\bar{\ta v} = \ta 0$ and $\bar{\ts h}^\skw = \ts 0$. Hence, the ansatz $\ta v$ is not identical to the solution $\ta v = \ta v^\macro + \ta v^\fluct$ as expressed in \cref{eq29a}. $\Box$
 
-We now propose the alternative, subsequently denoted \emph{canonical}, formulation of the RVE-problem as follows: For given values $\bar{\ts d}_\dev$, $ \bar{p}$, that represent the macroscale fields (which solve the macroscale problem), find the subscale fields ($\ta v,p,\ta{t},\bar{e})\in\set{U}_\rve\times\set{P}_\rve\times\set{T}_\rve\times\set{R}$ that solve the system
+We now propose the alternative, subsequently denoted \emph{canonical}, formulation of the RVE-problem as follows: For given values $\bar{\ts d}_\dev$, $ \bar{p}$, that represent the macroscale fields (which solve the macroscale problem), find the subscale fields ($\ta v,p,\ta{t},\bar{e})\in\set{V}_\rve\times\set{P}_\rve\times\set{T}_\rve\times\set{R}$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq51}
 \begin{alignat}{3}
     a_\rve(\ta v;\delta\ta v) + b_\rve(p,\delta\ta v) + d_\rve(\ta{t},\delta\ta v) &= l_\rve^\pore(\delta\ta v)
-    &\quad& \forall \delta\ta v &&\in \set{U}_\rve
+    &\quad& \forall \delta\ta v &&\in \set{V}_\rve
 \label{eq51a} \\
     b_\rve(\delta p,\ta v) + c^*_\rve(p;\delta p) &= 0
     &\quad& \forall \delta p &&\in \set{P}_\rve
@@ -890,11 +922,11 @@ The fluctuations
 \end{align}
 \end{subequations}
 %----------------------------------------------------------------------------
-are identical to ($\ta v^\fluct,p^\fluct,\ta{t}^\fluct)\in\set{U}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system \cref{eq31}.
+are identical to ($\ta v^\fluct,p^\fluct,\ta{t}^\fluct)\in\set{V}_\rve^\fluct\times\set{P}_\rve^\fluct\times\set{T}_\rve^\fluct$ that solve the system \cref{eq31}.
 This important result can be shown by introducing the unique split of the unknowns
 \begin{align}
  \ta v &= \check{\ts h}\cdot[\ta x - \bar{\ta x}] + \ta v^\fluct, & \delta\ta v &= \delta\check{\ts h}\cdot[\ta x - \bar{\ta x}] + \delta\ta v^\fluct,
- & \check{\ts h}, \delta\check{\ts h} &\in \set{R}^{3\times 3}, & \ta v^\fluct, \delta\ta v^\fluct &\in \set{U}_\rve^\fluct
+ & \check{\ts h}, \delta\check{\ts h} &\in \set{R}^{3\times 3}, & \ta v^\fluct, \delta\ta v^\fluct &\in \set{V}_\rve^\fluct
 \\
  p &= \check{p} + p^\fluct, & \delta p &= \delta\check{p} + \delta p^\fluct,
  & \check{p}, \delta\check{p} &\in \set{R},
@@ -978,7 +1010,7 @@ We now define the volume-specific ``macroscale energy density''\footnote{$\bar{\
 %----------------------------------------------------------------------------------------------------------------
 \begin{equation}
     \bar{\psi}_\rve\epspargs =
-    \inf_{\hat{\ta v}\in\set{U}_\rve}
+    \inf_{\hat{\ta v}\in\set{V}_\rve}
     \sup_{\substack{ \hat{p}\in\set{P}_\rve \\ \hat{\ta{t}}\in\set{T}_\rve }}
     \inf_{ \hat{\bar{e}}\in\set{R} }
     \Pi_\rve(\bar{\ts d}_\dev,\bar{p};\hat{\ta v},\hat{p},\hat{\ta{t}},\hat{\bar{e}})
@@ -990,7 +1022,7 @@ A stationary point of $\Pi_\rve$ is defined by the relations
 \begin{subequations}\label{eq:rveStat}
 \begin{alignat}{4}
     &(\Pi_\rve)'_u(\bar{\ts d}_\dev,\bar{p};\ta v,p,\ta{t},\bar{e};\delta\ta v) &&= 0
-    & \quad & \forall \delta\ta v &&\in\set{U}_\rve
+    & \quad & \forall \delta\ta v &&\in\set{V}_\rve
 \label{eq:rveStata} \\
     &(\Pi_\rve)'_p(\bar{\ts d}_\dev,\bar{p};\ta v,p,\ta{t},\bar{e};\delta p) &&= 0
     & \quad & \forall \delta p &&\in\set{P}_\rve
@@ -1055,13 +1087,13 @@ We refer to details in [paper3] for these derivations, and will subsequently onl
 
 
 \subsection{Variational properties for Dirichlet boundary conditions}
-
-For given values $\bar{\ts d}_\dev, \bar{p}$, find the subscale fields $(\ta v^\fluct,p,\bar{e})\in\set{U}_\rve^{\Dirichlet,\fluct}\times\set{P}_\rve\times\set{R}$ that solve the system
+The Dirichlet boundary condition acts as an upper bound for the periodic solution. By restricting the space $\set{V}_\rve$ such that the fluctuations $\ta v^\fluct = 0$ on $\Gamma_\rve$ we obtain the following problem:
+For given values $\bar{\ts d}_\dev, \bar{p}$, find the subscale fields $(\ta v^\fluct,p,\bar{e})\in\set{V}_\rve^{\Dirichlet,\fluct}\times\set{P}_\rve\times\set{R}$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq:weak_form_dirichlet}
 \begin{alignat}{3}
     a_\rve(\bar{\ts d}_\dev\cdot[\ta{x}-\bar{\ta{x}}]+\ta v^\fluct;\delta\ta v^\fluct) + b_\rve(p,\delta\ta v^\fluct) &= l_\rve^\pore(\delta\ta v^\fluct)
-    &\quad& \forall \delta\ta v^\fluct &&\in \set{U}_\rve^{\Dirichlet,\fluct}
+    &\quad& \forall \delta\ta v^\fluct &&\in \set{V}_\rve^{\Dirichlet,\fluct}
 \label{eq64a} \\
     b_\rve(\delta p,\ta v^\fluct) + b_\rve(\delta p,\bar{e}\,\ta{x}_\mean) + c^*_\rve(p;\delta p) &= 0
     &\quad& \forall \delta p &&\in \set{P}_\rve
@@ -1074,7 +1106,7 @@ For given values $\bar{\ts d}_\dev, \bar{p}$, find the subscale fields $(\ta v^\
 \end{subequations}
 where
 \begin{align}
-    \set{U}_\rve^{\Dirichlet,\fluct} &= \{\ta{v}\in \set{U}_\rve^\fluct \,|\,\, \ta{v}=\ta{0} \text{ on } \Gamma_\rve \}.
+    \set{V}_\rve^{\Dirichlet,\fluct} &= \{\ta{v}\in \set{V}_\rve^\fluct \,|\,\, \ta{v}=\ta{0} \text{ on } \Gamma_\rve \}.
 \end{align}
 %----------------------------------------------------------------------------
 Finally, the macroscale energy density at the stationary point becomes
@@ -1097,12 +1129,14 @@ However in practice $\bar{\ts\sigma}_\dev$ is conveniently obtained as the react
 
 
 \subsection{Variational properties for Neumann boundary conditions}
-For given values $\bar{\ts d}_\dev, \bar{p}$, find the subscale fields $\ta v,p,\bar{\ts\sigma}_\dev\in\set{U}_\rve\times\set{P}_\rve\times\set{R}^{3\times 3}_\dev$ that solve the system
+The Neumann  boundary condition acts as a lower bound for the periodic solution.
+By restricting the space $\set{T}_\rve$ such that such that $\ta t = \check{\ts\sigma}\cdot\ta n$, where $\check{\ts\sigma}$ is constant, we obtain the following problem:
+For given values $\bar{\ts d}_\dev, \bar{p}$, find the subscale fields $\ta v,p,\bar{\ts\sigma}_\dev\in\set{V}_\rve\times\set{P}_\rve\times\set{R}^{3\times 3}_\dev$ that solve the system
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq67}
 \begin{alignat}{3}
     a_\rve(\ta v;\delta\ta v) + b_\rve(p,\delta\ta v) +  d_\rve(\bar{\ts\sigma}_\dev\cdot\ta n,\delta\ta v) &= d_\rve(\bar{p}\,\ta n,\delta\ta v) + l_\rve^\pore(\delta\ta v)
-    & \quad & \forall \delta\ta v &&\in \set{U}_\rve
+    & \quad & \forall \delta\ta v &&\in \set{V}_\rve
 \label{eq67a} \\
     b_\rve(\delta p,\ta v) + c^*_\rve(p;\delta p) &= 0
     & \quad & \forall \delta p &&\in \set{P}_\rve
