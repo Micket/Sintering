@@ -1,29 +1,32 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools,dsfont}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
 \usepackage{a4wide}
 \usepackage{hyperref}
 \usepackage{tikz}
 %\usepackage{parskip}
 
-\renewcommand{\to}[1]{\text{\boldmath $#1$}} % Bold, cursive
+\newcommand{\ta}[1]{\text{\boldmath $#1$}} % Bold, cursive
 \newcommand{\ts}[1]{\text{\boldmath $\mathrm{#1}$}} % Bold, straigt
 \newcommand{\td}[1]{\text{\boldmath $\mathcal{#1}$}} % Bold, 
 \newcommand{\tf}[1]{\text{\boldmath $\mathsf{#1}$}} % Bold, sans-serif
-\newcommand{\uv}[1]{\mathds{#1}}
-\newcommand{\um}[1]{\mathds{#1}}
-\newcommand{\intd}[1]{\mathrm{d}#1}
+\newcommand{\uv}[1]{\mathbb{#1}}
+\newcommand{\um}[1]{\mathbb{#1}}
+\newcommand{\dif}[1]{\mathrm{d}#1}
+\newcommand{\diff}{\ta{\nabla}}
 %\newcommand{\pderiv}[2]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pderiv}[2]{\partial_{#2} #1}
 \newcommand{\dderiv}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
 \newcommand{\norm}[1]{\left\lVert{#1}\right\rVert}
 \newcommand{\T}{\mathrm{T}}
+\newcommand{\sym}{\mathrm{sym}}
+\newcommand{\surf}{\mathrm{s}}
+\newcommand{\tangent}{\mathrm{t}}
 \newcommand{\defeq}{:=}
 \newcommand{\element}{\mathrm{e}}
 \newcommand{\linear}{\mathrm{lin}}
 \newcommand{\boundary}{\text{boundary}}
-\DeclareMathOperator{\diff}{D}
 \DeclareMathOperator{\sign}{sign}
 
 \begin{document}
@@ -31,35 +34,35 @@
 This document derives expressions necessary to calculate the load vector in FE analysis for isotropic surface tension.
 %First rewriting the curvature in order to avoid the second derivative.
 \begin{align}
- \int_\Omega 2 H \to w\cdot \to n\intd A = \int_{\partial\Omega} \to w\cdot\to m\intd S - \int_\Omega \to \nabla_s \cdot \to w \intd A
+ \int_\Omega 2 H \ta w\cdot \ta n\dif A = \int_{\partial\Omega} \ta w\cdot\ta m\dif S - \int_\Omega \diff_\surf \cdot \ta w \dif A
  \label{eq:curvature}
 \end{align}
 %where both integrals will need to be calculated. The difficult part comes from the surface divergence,
 \begin{align}
- \to \nabla_s \defeq \left(\ts I - \to n\otimes\to n \right)\cdot \to \nabla
+ \diff_\surf \defeq \left(\ts I - \ta n\otimes\ta n \right)\cdot \diff
 \end{align}
 % which can be complicated to compute. The boundary term over $\partial\Omega$ is where the free surface ends. It could be on side of an finite element surface, possibly several.
 
 \section{Summary}
 \begin{align}
-\uv A &\defeq \dderiv{{\um N}}{s}^\T \cdot \to e_s & \uv B &\defeq {\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix} & \uv D \defeq \uv N^\T \cdot \to e_s
+\uv A &\defeq \dderiv{{\um N}}{s}^\T \cdot \ta e_\surf & \uv B &\defeq {\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix} & \uv D \defeq \uv N^\T \cdot \ta e_\surf
 \end{align}
 \subsection{Extruded 2D}
 \begin{align}
- \uv F &= -\gamma t \int_{-1}^{1} \uv A J\intd\xi\\
- \um K &= \gamma t \int_{-1}^{1} \left(\dderiv{\um N}{s}^\T\cdot\dderiv{\um N}{s} - \uv A\otimes\uv A\right) J \intd\xi
+ \uv F &= -\gamma t \int_{-1}^{1} \uv A J\dif\xi\\
+ \um K &= \gamma t \int_{-1}^{1} \left(\dderiv{\um N}{s}^\T\cdot\dderiv{\um N}{s} - \uv A\otimes\uv A\right) J \dif\xi
 %  \uv F_\boundary &= \gamma t \sign[\xi] \uv D\\
 %  \um K_\boundary &= -\gamma t \sign[\xi]J^{-1} (\um N^\T \cdot \um N'- \uv D\otimes \uv A)
 \end{align}
 
 \subsection{Axisymmetric}
 \begin{align}
-  \uv F &= -2\pi \gamma \int_{-1}^{1} \left(\uv A + \uv B\right) r J_\xi\intd\xi\\
+  \uv F &= -2\pi \gamma \int_{-1}^{1} \left(\uv A + \uv B\right) r J_\xi\dif\xi\\
   \um K &= 2\pi \int_{-1}^{1} \bigg(
 	\uv A \otimes \uv B +
 	\uv B \otimes \uv A +
 	r \left(\dderiv{\um N}{s}^\T \cdot \dderiv{\um N}{s} - \uv A\otimes \uv A\right)
-	\bigg) J_\xi \intd\xi
+	\bigg) J_\xi \dif\xi
 %  \uv F_\boundary &= 2\pi\gamma\sign[\xi] r \uv D\\
 %  \um K_\boundary &= -2 \pi \gamma\sign[\xi] \left(\uv D\otimes\uv B + J_\xi^{-1} r \left(\um N^\T\cdot\um N' -\uv D\otimes\uv A\right) \right)
 \end{align}
@@ -74,7 +77,7 @@ The surface $\Omega$ is the extruded 2D line shown in figure \ref{fig:extruded}.
  \begin{tikzpicture}
   \draw[thick] (0,0) to[out=0,in=250] coordinate[near start] (m) node[at start,left] {$A$} node[at end,right] {$B$} (1,1) ;
   \draw[->] (0,0.2) to[out=0,in=250] node[at end,left] {$s$} (0.8,1);
-  \draw[|->] (m) -- +(30:0.7) node[at end,right] {$\to e_s[\xi]$};
+  \draw[|->] (m) -- +(30:0.7) node[at end,right] {$\ta e_\surf[\xi]$};
   \draw[fill,black] (0,0) circle (0.05) (1,1) circle (0.05);
  \end{tikzpicture}
  \caption{Geometry and coordinate system for 2D (and axisymmetric)}
@@ -83,59 +86,59 @@ The surface $\Omega$ is the extruded 2D line shown in figure \ref{fig:extruded}.
 
 The geometry is parameterized as
 \begin{align}
- \to x &= \sum_{i=1}^n N_i[\xi]\to x_i
+ \ta x &= \sum_{i=1}^n N_i[\xi]\ta x_i
   = \um N \cdot \uv X
   = \underbrace{\begin{bmatrix}N_1 & 0 & \cdots\\ 0 & N_1 & \cdots \end{bmatrix}}_{2\times 2n}\cdot \underbrace{\begin{bmatrix}x_1\\y_1\\x_2\\y_2\\ \vdots\end{bmatrix}}_{2n\times 1}
 \end{align}
 so the divergence and integral can be rewritten by obtaining
 \begin{gather}
- J \defeq \dderiv{s}{\xi} = \norm{\to x'}\\
- \to e_s \defeq \to x' J^{-1} = J^{-1}\sum_{i=1}^n N_i'[\xi] \to x_i\\
- \intd A = t \intd s = t J \intd \xi     \label{eq:intdA_2d}\\
- \to \nabla_s = \pderiv{}{s}\to e_s = \pderiv{}{\xi}\to e_s J^{-1}    \label{eq:nabla_s_2d}
+ J \defeq \dderiv{s}{\xi} = \norm{\ta x'}\\
+ \ta e_\surf \defeq \ta x' J^{-1} = J^{-1}\sum_{i=1}^n N_i'[\xi] \ta x_i\\
+ \dif A = t \dif s = t J \dif \xi     \label{eq:intdA_2d}\\
+ \diff_\surf = \pderiv{}{s}\ta e_\surf = \pderiv{}{\xi}\ta e_\surf J^{-1}    \label{eq:nabla_surf_2d}
 \end{gather}
-and for the tangent the following derivations are also usefull
+and for the tangent the following derivations are also useful
 \begin{align}
- \pderiv{\to x'}{\to x_i} &= N_i' \ts I & \pderiv{\to x'}{\uv X} &= \um N'\\
- \pderiv{J}{\to x_i} &= \to e_s \cdot \pderiv{\to x'}{\to x_i} = \to e_s N_i'  & \pderiv{J}{\uv X} &= \to e_s\cdot \um N' \\
- \pderiv{\to e_s}{\to x_i} &= (\ts I - \to e_s\otimes\to e_s)N_i' J^{-1} &  \pderiv{\to e_s}{\uv X} &= (\ts I - \to e_s\otimes \to e_s)\cdot \um N' J^{-1}
+ \pderiv{\ta x'}{\ta x_i} &= N_i' \ts I & \pderiv{\ta x'}{\uv X} &= \um N'\\
+ \pderiv{J}{\ta x_i} &= \ta e_\surf \cdot \pderiv{\ta x'}{\ta x_i} = \ta e_\surf N_i'  & \pderiv{J}{\uv X} &= \ta e_\surf\cdot \um N' \\
+ \pderiv{\ta e_\surf}{\ta x_i} &= (\ts I - \ta e_\surf\otimes\ta e_\surf)N_i' J^{-1} &  \pderiv{\ta e_\surf}{\uv X} &= (\ts I - \ta e_\surf\otimes \ta e_\surf)\cdot \um N' J^{-1}
 \end{align}
 
-Plugging \eqref{eq:intdA_2d} and \eqref{eq:nabla_s_2d} into the integral in \eqref{eq:curvature}
+Plugging \eqref{eq:intdA_2d} and \eqref{eq:nabla_surf_2d} into the integral in \eqref{eq:curvature}
 \begin{align}
- \int_\Omega\to \nabla_s\cdot\to w\intd A &= t \int_{-1}^{1} \to w'\cdot \to e_s \intd\xi = \left( t \int_{-1}^1 \dderiv{\to w}{s} \cdot \to e_s\intd s\right)
+ \int_\Omega\diff_\surf\cdot\ta w\dif A &= t \int_{-1}^{1} \ta w'\cdot \ta e_\surf \dif\xi = \left( t \int_{-1}^1 \dderiv{\ta w}{s} \cdot \ta e_\surf\dif s\right)
 \end{align}
 and its tangent
 \begin{align}
- \int_\Omega\to \nabla_s\cdot\to w\intd A \otimes \pderiv{}{\uv X}
- =&t \int_{-1}^{1} \left(\to w'\cdot \to e_s\right)\otimes \pderiv{}{\uv X}  \intd\xi\\
- =&t \int_{-1}^{1} \to w'\cdot \pderiv{\to e_s}{\uv X} \intd\xi\\
- =&t \int_{-1}^{1} \to w'\cdot \left(\ts I-\to e_s'\otimes\to e_s' \right)\cdot \um N' J^{-1} \intd\xi
+ \int_\Omega\diff_\surf\cdot\ta w\dif A \otimes \pderiv{}{\uv X}
+ =&t \int_{-1}^{1} \left(\ta w'\cdot \ta e_\surf\right)\otimes \pderiv{}{\uv X}  \dif\xi\\
+ =&t \int_{-1}^{1} \ta w'\cdot \pderiv{\ta e_\surf}{\uv X} \dif\xi\\
+ =&t \int_{-1}^{1} \ta w'\cdot \left(\ts I-\ta e_\surf'\otimes\ta e_\surf' \right)\cdot \um N' J^{-1} \dif\xi
 \end{align}
 
 % The boundary term is trivial
 % \begin{gather}
-%  \to m = \sign[\xi]\to e_s\\
-%  \int_{\partial\Omega} \to w\cdot \to m\intd S = \to w \cdot\to m t = \sign[\xi]\to w \cdot \to e_s t
+%  \ta m = \sign[\xi]\ta e_\surf\\
+%  \int_{\partial\Omega} \ta w\cdot \ta m\dif S = \ta w \cdot\ta m t = \sign[\xi]\ta w \cdot \ta e_\surf t
 % \end{gather}
 % and its tangent
 % \begin{align}
-%  \int_{\partial\Omega} \to w\cdot \to m\intd S\otimes \pderiv{}{\uv X} &= t \to w\cdot\pderiv{\to m}{\uv X}\\
-%  &= \sign[\xi]t \to w\cdot\pderiv{\to e_s}{\uv X}\\
-%  &= \sign[\xi]t \to w\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' J^{-1}
+%  \int_{\partial\Omega} \ta w\cdot \ta m\dif S\otimes \pderiv{}{\uv X} &= t \ta w\cdot\pderiv{\ta m}{\uv X}\\
+%  &= \sign[\xi]t \ta w\cdot\pderiv{\ta e_\surf}{\uv X}\\
+%  &= \sign[\xi]t \ta w\cdot \left(\ts I-\ta e_\surf\otimes\ta e_\surf\right)\cdot \um N' J^{-1}
 % \end{align}
 
 The load vector becomes
 \begin{align}
- \uv F &= -\gamma t \int_{-1}^{1} {\um N}'^\T\cdot \to e_s \intd\xi\\
-       &= -\gamma t \int_{-1}^{1} \dderiv{{\um N}^\T}{s}\cdot \to e_s J \intd\xi \\
- \um K &= \gamma t \int_{-1}^{1} {\um N}'^\T\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot{\um N}' J^{-1} \intd\xi\\
-       &=  \gamma t \int_{-1}^{1} \dderiv{\um N^\T}{s}\cdot \left(\ts I-\to e_s\otimes\to e_s\right)\cdot\dderiv{\um N}{s} J \intd\xi
+ \uv F &= -\gamma t \int_{-1}^{1} {\um N}'^\T\cdot \ta e_\surf \dif\xi\\
+       &= -\gamma t \int_{-1}^{1} \dderiv{{\um N}^\T}{s}\cdot \ta e_\surf J \dif\xi \\
+ \um K &= \gamma t \int_{-1}^{1} {\um N}'^\T\cdot \left(\ts I-\ta e_\surf\otimes\ta e_\surf\right)\cdot{\um N}' J^{-1} \dif\xi\\
+       &=  \gamma t \int_{-1}^{1} \dderiv{\um N^\T}{s}\cdot \left(\ts I-\ta e_\surf\otimes\ta e_\surf\right)\cdot\dderiv{\um N}{s} J \dif\xi
 \end{align}
 % and the boundary term
 % \begin{gather}
-%  \uv F = \sign[\xi]\gamma t {\um N}^\T\cdot\to e_s\\
-%  \um K = -\sign[\xi]\gamma t J^{-1} {\um N}^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N}'
+%  \uv F = \sign[\xi]\gamma t {\um N}^\T\cdot\ta e_\surf\\
+%  \um K = -\sign[\xi]\gamma t J^{-1} {\um N}^\T \cdot (\ts I - \ta e_\surf\otimes \ta e_\surf)\cdot {\um N}'
 % \end{gather}
 
 \subsection{Linear elements}
@@ -146,7 +149,7 @@ The load vector becomes
 	L^{-2}\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}\otimes\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_1-y_2\end{bmatrix}
   \right)
 \end{gather}
-% and for the boundary (boundary at $\to x_1$)
+% and for the boundary (boundary at $\ta x_1$)
 % \begin{gather}
 %  \uv F_\linear = -\gamma t L^{-1} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\\
 %  \um K_\linear = -\gamma t L^{-1} \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\0&0&0&0\\0&0&0&0\end{bmatrix} - L^{-2} \begin{bmatrix}x_2-x_1\\y_2-y_1\\0\\0\end{bmatrix}\otimes\begin{bmatrix}x_2-x_1\\y_2-y_1\\x_1-x_2\\y_2-y_1\end{bmatrix}2\right)\\
@@ -158,108 +161,108 @@ For brevity, the notation $(\bullet)' = \pderiv{\bullet}{\xi}$ or $(\bullet)' = 
 This part was more complicated than initially estimated.
 I have consistently decomposed variables into $\ts Q$ to make this managable and also analytically calculating the integral over $\theta$.
 
-With cylindrical coordinates $\to r = r\to e_r + z \to e_z$.
+With cylindrical coordinates $\ta r = r\ta e_r + z \ta e_z$.
 \begin{align}
- \to r &= \sum_i N_i[\xi]\to r_i = \um N\cdot \uv R\\
+ \ta r &= \sum_i N_i[\xi]\ta r_i = \um N\cdot \uv R\\
  x &= \cos[\theta] r\\
  y &= \sin[\theta] r\\
  z &= z\\
  \ts Q &= \begin{bmatrix}\cos[\theta] & 0\\ \sin[\theta] & 0\\ 0 & 1\end{bmatrix}\\
- \to x &= \ts Q[\theta] \cdot \to r[\xi]\\
- \to w &= \ts Q[\theta] \cdot \to v[\xi]\\
- \to m &= \ts Q[\theta] \cdot \to t[\xi]
+ \ta x &= \ts Q[\theta] \cdot \ta r[\xi]\\
+ \ta w &= \ts Q[\theta] \cdot \ta v[\xi]\\
+ \ta m &= \ts Q[\theta] \cdot \ta t[\xi]
 \end{align}
 
 Since we have a convenient orthogonality, we can treat $\xi$ and $\theta$ seperarely.
 \begin{align}
- J_\xi &= \norm{\pderiv{\to x}{\xi}} = \norm{\ts Q \cdot \to r'} = \norm{\to r'}\\
- J_\theta &= \norm{\pderiv{\to x}{\theta}} = \norm{\ts Q' \cdot \to r} = r \\
- \intd A &= J_\xi J_\theta \intd \xi \intd \theta \\
- \to\nabla_s &= J_\xi^{-2} \pderiv{\to x}{\xi}\pderiv{}{\xi} + J_\theta^{-2} \pderiv{\to x}{\theta}\pderiv{}{\theta}
+ J_\xi &= \norm{\pderiv{\ta x}{\xi}} = \norm{\ts Q \cdot \ta r'} = \norm{\ta r'}\\
+ J_\theta &= \norm{\pderiv{\ta x}{\theta}} = \norm{\ts Q' \cdot \ta r} = r \\
+ \dif A &= J_\xi J_\theta \dif \xi \dif \theta \\
+ \diff_\surf &= J_\xi^{-2} \pderiv{\ta x}{\xi}\pderiv{}{\xi} + J_\theta^{-2} \pderiv{\ta x}{\theta}\pderiv{}{\theta}
 \end{align}
 and for the tangent the following derivations are also usefull
 \begin{align}
- \to e_s &\defeq \to r' J_\xi^{-1} & \uv D &\defeq \um N^\T \cdot \to e_s\\
- \uv A &\defeq {\um N}'^\T \cdot \to e_s & \uv B &\defeq \pderiv{r}{\uv R} = {\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\\
+ \ta e_\surf &\defeq \ta r' J_\xi^{-1} & \uv D &\defeq \um N^\T \cdot \ta e_\surf\\
+ \uv A &\defeq {\um N}'^\T \cdot \ta e_\surf & \uv B &\defeq \pderiv{r}{\uv R} = {\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\\
 \end{align}
 \begin{align}
- \pderiv{\to r'}{\to r_i} &= N_i' \ts I
-	& \pderiv{\to r'}{\uv R} &= \um N'\\
- \pderiv{J_\xi}{\to r_i} &= \to e_s \cdot \pderiv{\to r'}{\to r_i} = \to e_s N_i'
-	& \pderiv{J_\xi}{\uv R} &= \to e_s\cdot \um N' \\
- \pderiv{\to e_s}{\to r_i} &= (\ts I - \to e_s\otimes\to e_s)N_i' J_\xi^{-1}
-	& \pderiv{\to e_s}{\uv R} &= (\ts I - \to e_s \otimes \to e_s )\cdot \um N' J_\xi^{-1}
+ \pderiv{\ta r'}{\ta r_i} &= N_i' \ts I
+	& \pderiv{\ta r'}{\uv R} &= \um N'\\
+ \pderiv{J_\xi}{\ta r_i} &= \ta e_\surf \cdot \pderiv{\ta r'}{\ta r_i} = \ta e_\surf N_i'
+	& \pderiv{J_\xi}{\uv R} &= \ta e_\surf\cdot \um N' \\
+ \pderiv{\ta e_\surf}{\ta r_i} &= (\ts I - \ta e_\surf\otimes\ta e_\surf)N_i' J_\xi^{-1}
+	& \pderiv{\ta e_\surf}{\uv R} &= (\ts I - \ta e_\surf \otimes \ta e_\surf )\cdot \um N' J_\xi^{-1}
 \end{align}
 
 Plugging this into \eqref{eq:curvature} to obtain
 \begin{align}
- &\int_\Omega\to \nabla_s\cdot\to w\intd A\\
-=&\int_{-1}^{1}\int_0^{2\pi}\left( J_\xi^{-2} \pderiv{\to x}{\xi}\cdot\pderiv{\to w}{\xi} +
-                              J_\theta^{-2} \pderiv{\to x}{\theta}\cdot\pderiv{\to w}{\theta}
-  \right) J_\xi J_\theta \intd \theta \intd \xi\\
+ &\int_\Omega\diff_\surf\cdot\ta w\dif A\\
+=&\int_{-1}^{1}\int_0^{2\pi}\left( J_\xi^{-2} \pderiv{\ta x}{\xi}\cdot\pderiv{\ta w}{\xi} +
+                              J_\theta^{-2} \pderiv{\ta x}{\theta}\cdot\pderiv{\ta w}{\theta}
+  \right) J_\xi J_\theta \dif \theta \dif \xi\\
 =&\int_{-1}^{1}\int_0^{2\pi}\left(
-	  J_\xi^{-2} (\ts Q^\T\cdot\ts Q):(\to r'\otimes \to v') +
-	  J_\theta^{-2} ({\ts Q'}^\T\cdot\ts Q'):(\to r\otimes\to v)
-  \right) J_\xi J_\theta \intd \theta \intd \xi\\
+	  J_\xi^{-2} (\ts Q^\T\cdot\ts Q):(\ta r'\otimes \ta v') +
+	  J_\theta^{-2} ({\ts Q'}^\T\cdot\ts Q'):(\ta r\otimes\ta v)
+  \right) J_\xi J_\theta \dif \theta \dif \xi\\
 =&\int_{-1}^{1}\int_0^{2\pi}\left(
-	  J_\xi^{-2} \ts I :(\to r'\otimes \to v') +
-	  J_\theta^{-2} \begin{bmatrix}1&0\\0&0\end{bmatrix}:(\to r \otimes \to v)
-  \right) J_\xi J_\theta \intd \theta \intd \xi\\
-=&2\pi\int_{-1}^{1}\left( \to v' \cdot \to e_s r + \to v \cdot \begin{bmatrix}1\\0\end{bmatrix} J_\xi \right) \intd \xi\\
-=&2\pi\int_{-1}^{1}\left( \dderiv{\to v}{s} \cdot \to e_s r + \to v \cdot \begin{bmatrix}1\\0\end{bmatrix} \right) \intd s
+	  J_\xi^{-2} \ts I :(\ta r'\otimes \ta v') +
+	  J_\theta^{-2} \begin{bmatrix}1&0\\0&0\end{bmatrix}:(\ta r \otimes \ta v)
+  \right) J_\xi J_\theta \dif \theta \dif \xi\\
+=&2\pi\int_{-1}^{1}\left( \ta v' \cdot \ta e_\surf r + \ta v \cdot \begin{bmatrix}1\\0\end{bmatrix} J_\xi \right) \dif \xi\\
+=&2\pi\int_{-1}^{1}\left( \dderiv{\ta v}{s} \cdot \ta e_\surf r + \ta v \cdot \begin{bmatrix}1\\0\end{bmatrix} \right) \dif s
 \end{align}
 and its tangent
 \begin{align}
- &\int_\Omega\to \nabla_s\cdot\to w\intd A \otimes \pderiv{}{\uv R} \\
+ &\int_\Omega\diff_\surf\cdot\ta w\dif A \otimes \pderiv{}{\uv R} \\
  =& 2\pi \int_{-1}^{1} \left(
-	\to v' \cdot \to e_s r + \to v\cdot \begin{bmatrix}1\\0\end{bmatrix} J_\xi
-	\right)\otimes\pderiv{}{\uv R}\intd\xi\\
+	\ta v' \cdot \ta e_\surf r + \ta v\cdot \begin{bmatrix}1\\0\end{bmatrix} J_\xi
+	\right)\otimes\pderiv{}{\uv R}\dif\xi\\
   =& 2\pi \int_{-1}^{1} \left(
-	\to v' \cdot \to e_s \otimes \pderiv{r}{\uv R} + \to v'\cdot \pderiv{\to e_s}{\uv R} r + \to v\cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes\pderiv{J_\xi}{\uv R}
-	\right)\intd\xi\\
+	\ta v' \cdot \ta e_\surf \otimes \pderiv{r}{\uv R} + \ta v'\cdot \pderiv{\ta e_\surf}{\uv R} r + \ta v\cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes\pderiv{J_\xi}{\uv R}
+	\right)\dif\xi\\
   =& 2\pi \int_{-1}^{1} \bigg(
-	\to v' \cdot \to e_s \otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot \um N\right) +
-	\to v'\cdot (\ts I - \to e_s\otimes \to e_s)\cdot \um N' J_\xi^{-1} r
-	+\to v\cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes (\to e_s\cdot \um N')
-	\bigg)\intd\xi
+	\ta v' \cdot \ta e_\surf \otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot \um N\right) +
+	\ta v'\cdot (\ts I - \ta e_\surf\otimes \ta e_\surf)\cdot \um N' J_\xi^{-1} r
+	+\ta v\cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes (\ta e_\surf\cdot \um N')
+	\bigg)\dif\xi
 \end{align}
 
 % The boundary term is computed as
 % \begin{align}
-%  \int_{\partial\Omega} \to w\cdot\to m\intd S &= \int_0^{2\pi} (\ts Q^\T\cdot \ts Q):(\to v\cdot\to t) r \intd \theta\\
-%   &= 2\pi r \to v \cdot \to t = 2\pi\sign[\xi]r \to v\cdot \to e_s
+%  \int_{\partial\Omega} \ta w\cdot\ta m\dif S &= \int_0^{2\pi} (\ts Q^\T\cdot \ts Q):(\ta v\cdot\ta t) r \dif \theta\\
+%   &= 2\pi r \ta v \cdot \ta t = 2\pi\sign[\xi]r \ta v\cdot \ta e_\surf
 % \end{align}
 % and its tangent
 % \begin{align}
-%  \int_{\partial\Omega} \to w\cdot\to m\intd S \otimes \pderiv{}{\uv R} &= 2\pi\sign[\xi] (r \to v \cdot \to e_s)\otimes \pderiv{}{\uv R}\\
-%   &= 2 \pi \sign[\xi]\left(\to v\cdot\to e_s\otimes\pderiv{r}{\uv R} + r \to v\cdot\pderiv{\to t}{\uv R}\right)\\
-%   &= 2 \pi \sign[\xi]\left(\to v\cdot\to e_s\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) +  J_\xi^{-1} r \to v\cdot\left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N'\right)
+%  \int_{\partial\Omega} \ta w\cdot\ta m\dif S \otimes \pderiv{}{\uv R} &= 2\pi\sign[\xi] (r \ta v \cdot \ta e_\surf)\otimes \pderiv{}{\uv R}\\
+%   &= 2 \pi \sign[\xi]\left(\ta v\cdot\ta e_\surf\otimes\pderiv{r}{\uv R} + r \ta v\cdot\pderiv{\ta t}{\uv R}\right)\\
+%   &= 2 \pi \sign[\xi]\left(\ta v\cdot\ta e_\surf\otimes\left(\begin{bmatrix}1&0\end{bmatrix}\cdot\um N\right) +  J_\xi^{-1} r \ta v\cdot\left(\ts I-\ta e_\surf\otimes\ta e_\surf\right)\cdot \um N'\right)
 % \end{align}
 
 The load vector for an element is
 \begin{gather}
- \uv F = -2\pi \gamma \int_{-1}^{1} \left(r{\um N}'^\T\cdot\to e_s + J_\xi{\um N}^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) \intd\xi
+ \uv F = -2\pi \gamma \int_{-1}^{1} \left(r{\um N}'^\T\cdot\ta e_\surf + J_\xi{\um N}^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) \dif\xi
 \end{gather}
 \begin{multline}
  \um K = 2\pi \int_{-1}^{1} \bigg(
-	{\um N}'^\T \cdot \to e_s \otimes {\um N}^\T\cdot \begin{bmatrix}1\\0\end{bmatrix} +\\
-	{\um N}'^\T \cdot (\ts I - \to e_s\otimes \to e_s)\cdot {\um N}' J_\xi^{-1} r +
-	{\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes \to e_s\cdot {\um N}'
-	\bigg)\intd\xi
+	{\um N}'^\T \cdot \ta e_\surf \otimes {\um N}^\T\cdot \begin{bmatrix}1\\0\end{bmatrix} +\\
+	{\um N}'^\T \cdot (\ts I - \ta e_\surf\otimes \ta e_\surf)\cdot {\um N}' J_\xi^{-1} r +
+	{\um N}^\T \cdot \begin{bmatrix}1\\0\end{bmatrix}\otimes \ta e_\surf\cdot {\um N}'
+	\bigg)\dif\xi
 \end{multline}
 or
 \begin{gather}
-  \uv F = -2\pi \gamma \int_{-1}^{1} \left(r\uv A + J_\xi\uv B\right) \intd\xi\\
+  \uv F = -2\pi \gamma \int_{-1}^{1} \left(r\uv A + J_\xi\uv B\right) \dif\xi\\
   \um K = 2\pi \int_{-1}^{1} \bigg(
 	\uv A \otimes \uv B +
 	\uv B\otimes \uv A +
 	J_\xi^{-1} r({\um N}'^\T \cdot {\um N}' - \uv A\otimes \uv A)
-	\bigg)\intd\xi
+	\bigg)\dif\xi
 \end{gather}
 % and for the boundary
 % \begin{align}
-%  \uv F &= 2\pi\gamma\sign[\xi] r {\uv N}^\T \cdot \to e_s = 2\pi\gamma\sign[\xi]\uv D\\
-%  \um K &= -2 \pi \gamma \sign[\xi]\um N^\T\cdot\left(\to e_s\otimes\left(\um N^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) + J_\xi^{-1} r \left(\ts I-\to e_s\otimes\to e_s\right)\cdot \um N' \right)\\
+%  \uv F &= 2\pi\gamma\sign[\xi] r {\uv N}^\T \cdot \ta e_\surf = 2\pi\gamma\sign[\xi]\uv D\\
+%  \um K &= -2 \pi \gamma \sign[\xi]\um N^\T\cdot\left(\ta e_\surf\otimes\left(\um N^\T\cdot\begin{bmatrix}1\\0\end{bmatrix}\right) + J_\xi^{-1} r \left(\ts I-\ta e_\surf\otimes\ta e_\surf\right)\cdot \um N' \right)\\
 %        &= -2 \pi \gamma \sign[\xi]\left(\uv D\otimes\uv B + J_\xi^{-1} r \left(\um N^\T\cdot\um N' -\uv D\otimes\uv A\right) \right)
 % \end{align}
 
@@ -274,107 +277,132 @@ or
   + 2L^{-1} r \left(\begin{bmatrix}1&0&-1&0\\0&1&0&-1\\-1&0&1&0\\0&-1&0&1\end{bmatrix} - \hat{\uv A}\otimes\hat{\uv A}\right)
   \right)
 \end{gather}
-% and for boundary at $\to r_1$;
+% and for boundary at $\ta r_1$;
 % \begin{gather}
 %  \nonumber \uv B = \begin{bmatrix}1\\0\\0\\0\end{bmatrix}, \quad \uv D = L^{-1}\begin{bmatrix}r_2-r_1\\z_2-z_1\\0\\0\end{bmatrix}\\
 %  \uv K_\linear = 2\pi \gamma\left(\uv D\otimes \uv B + L^{-1} r_1 \left(\begin{bmatrix}-1&0&1&0\\0&-1&0&1\\0&0&0&0\\0&0&0&0\end{bmatrix}- \uv D\otimes \hat{\uv A}\right)\right)\\
 %  \uv F_\linear = -2\pi \gamma r_1 L^{-1} \begin{bmatrix}r_2-r_1\\z_2-z_1\\0\\0\end{bmatrix}
 % \end{gather}
 
+\newpage
 \section{General 3D}
 
 Introducing another parameter $\zeta$ in order to obtain a nice mapping.
 \begin{align}
- \to x[\xi,\eta,\zeta] &= (1+\zeta)\to n + \sum_i N_i[\xi,\eta]\to x_i  %= \to n + \um N \cdot \uv X\\
+ \ta x[\xi,\eta,\zeta] &= (1+\zeta)\ta n + \sum_i N_i[\xi,\eta]\ta x_i  %= \ta n + \um N \cdot \uv X\\
   %&= (1-\zeta) \begin{bmatrix}N_1 & 0 & 0 & N_2 & \cdots\\0&N_1&0&0&\cdots\\0&0&N_1&0&\cdots\end{bmatrix}\cdot\begin{bmatrix}x_1\\y_1\\z_1\\x_2\\\vdots\end{bmatrix}
 \end{align}
 
 \begin{gather}
- J \defeq \norm{\pderiv{\to x}{\xi} \times  \pderiv{\to x}{\eta}}\\
- \to n = \pderiv{\to x}{\xi} \times \pderiv{\to x}{\eta} J^{-1}\\
- \begin{bmatrix}\intd x\\ \intd y\\ \intd z\end{bmatrix} =
+ J \defeq \norm{\pderiv{\ta x}{\xi} \times  \pderiv{\ta x}{\eta}}\\
+ \ta n = \pderiv{\ta x}{\xi} \times \pderiv{\ta x}{\eta} J^{-1}\\
+ \begin{bmatrix}\dif x\\ \dif y\\ \dif z\end{bmatrix} =
   \underbrace{\begin{bmatrix}\pderiv{x}{\xi} & \pderiv{x}{\eta} & \pderiv{x}{\zeta}\\
 	  \pderiv{y}{\xi} & \pderiv{y}{\eta} & \pderiv{y}{\zeta}\\
 	  \pderiv{z}{\xi} & \pderiv{z}{\eta} & \pderiv{z}{\zeta} \end{bmatrix}}_{\ts J}
-  \cdot \begin{bmatrix}\intd \xi \\ \intd \eta \\ \intd \zeta\end{bmatrix}\\
+  \cdot \begin{bmatrix}\dif \xi \\ \dif \eta \\ \dif \zeta\end{bmatrix}\\
   \ts J = \begin{bmatrix}\pderiv{x}{\xi} & \pderiv{x}{\eta} & n_1\\
 	  \pderiv{y}{\xi} & \pderiv{y}{\eta} & n_2\\
 	  \pderiv{z}{\xi} & \pderiv{z}{\eta} & n_3 \end{bmatrix}\\
- \to\nabla = \ts J^{-\T}\cdot\to\nabla_\xi\\
- \intd A = J \intd \xi \intd \eta 
+ \diff = \ts J^{-\T}\cdot\diff_\xi\\
+ \dif A = J \dif \xi \dif \eta 
 \end{gather}
 
 and we obtain
 \begin{align}
- &\iint_\Omega\to \nabla_s\cdot\to w\intd A\\
-=&\iint_\omega(\ts I-\to n\otimes\to n):(\to w\otimes \ts J^{-\T}\cdot\to\nabla_\xi)J\intd\xi\intd\eta\big|_{\zeta=0}\\
-=&\iint_\omega(\ts I-\to n\otimes\to n):\left((\to w\otimes\to\nabla_\xi) \cdot\ts J^{-1}\right)J\intd\xi\intd\eta\big|_{\zeta=0}
-%=&\iint_\omega((\ts I-\to n\otimes\to n)\cdot\ts J^{-\T}):(\to w\otimes\to\nabla_\xi)J\intd\xi\intd\eta\big|_{\zeta=0}\\
-%=&\iint_\omega(\to w\otimes\to\nabla_\xi):((\ts I-\to n\otimes\to n)\cdot\ts J^{-\T})J\intd\xi\intd\eta\big|_{\zeta=0}
+ &\iint_\Omega\diff_\surf\cdot\ta w\dif A\\
+=&\iint_\omega(\ts I-\ta n\otimes\ta n):(\ta w\otimes \ts J^{-\T}\cdot\diff_\xi)J\dif\xi\dif\eta\big|_{\zeta=0}\\
+=&\iint_\omega(\ts I-\ta n\otimes\ta n):\left((\ta w\otimes\diff_\xi) \cdot\ts J^{-1}\right)J\dif\xi\dif\eta\big|_{\zeta=0}
+%=&\iint_\omega((\ts I-\ta n\otimes\ta n)\cdot\ts J^{-\T}):(\ta w\otimes\diff_\xi)J\dif\xi\dif\eta\big|_{\zeta=0}\\
+%=&\iint_\omega(\ta w\otimes\diff_\xi):((\ts I-\ta n\otimes\ta n)\cdot\ts J^{-\T})J\dif\xi\dif\eta\big|_{\zeta=0}
 \end{align}
 
 % And given an edge along $\xi$;
 % \begin{align}
-%  &\int_{\partial\Omega}\to w\cdot\to m\intd S\\
-% =&\int_{\partial\omega}\to w\cdot\to m J_\xi \intd \xi\\
-%  \hat{\to n} &= \to e_\xi \times \to e_\eta\\
-%  \hat{\to m} &= \to e_\xi \times \hat{\to n} = \to e_\xi\times (\to e_\xi \times \to e_\eta)\\
-%  \to m &= \hat{\to m}\norm{\to m}^{-1}
+%  &\int_{\partial\Omega}\ta w\cdot\ta m\dif S\\
+% =&\int_{\partial\omega}\ta w\cdot\ta m J_\xi \dif \xi\\
+%  \hat{\ta n} &= \ta e_\xi \times \ta e_\eta\\
+%  \hat{\ta m} &= \ta e_\xi \times \hat{\ta n} = \ta e_\xi\times (\ta e_\xi \times \ta e_\eta)\\
+%  \ta m &= \hat{\ta m}\norm{\ta m}^{-1}
 % \end{align}
 
 It becomes a bit tricky to express the load vector nicely due to the appearance of a third order tensor, it will need to be reshaped.
 After some rewriting the expression becomes
 \begin{align}
  \hat{\uv N} &= \begin{bmatrix} N_1\\ N_2\\ \vdots\end{bmatrix}\\
- \hat{\um B} &= \ts J^{-\T}\cdot(\to\nabla_\xi\cdot(\hat{\uv N})^\T)\\
- \hat{\um F} &= \iint_\omega(\ts I-\to n \cdot \to n^\T)\cdot \hat{\um B} J\intd\xi\intd\eta\big|_{\zeta=0}\\
+ \hat{\um B} &= \ts J^{-\T}\cdot(\diff_\xi\cdot(\hat{\uv N})^\T)\\
+ \hat{\um F} &= \iint_\omega(\ts I-\ta n \cdot \ta n^\T)\cdot \hat{\um B} J\dif\xi\dif\eta\big|_{\zeta=0}\\
  \uv F &= \begin{bmatrix}\hat{\uv F}_{1:}\\\hat{\uv F}_{2:}\\\vdots\end{bmatrix}
 \end{align}
 % and along the boundary
 % \begin{align}
-%  \uv F &= \int_{\partial\omega}{\um N}^\T\cdot\to m J_\xi \intd \xi
+%  \uv F &= \int_{\partial\omega}{\um N}^\T\cdot\ta m J_\xi \dif \xi
 % \end{align}
 
-
+\newpage
 \section{General 3D alternative method}
 \begin{align}
- \to x[\xi,\eta] = \sum_i N_i[\xi,\eta]\to x_i
+ \ta x[\xi,\eta] = \sum_i N_i[\xi,\eta]\ta x_i
 \end{align}
 \begin{gather}
- J \defeq \norm{\pderiv{\to x}{\xi} \times  \pderiv{\to x}{\eta}}\\
- \to n = \pderiv{\to x}{\xi} \times \pderiv{\to x}{\eta} J^{-1}\\
- \to e_s = \pderiv{\to x}{\xi}\norm{\pderiv{\to x}{\xi}}^{-1}\\
- \to e_t = -\to e_s\times \to n\\
- \begin{bmatrix}\intd x\\ \intd y\\ \intd z\end{bmatrix} =
-  \underbrace{\begin{bmatrix}\pderiv{\to x}{\xi} & \pderiv{\to x}{\eta}
+ J \defeq \norm{\pderiv{\ta x}{\xi} \times  \pderiv{\ta x}{\eta}}\\
+ \ta n = \pderiv{\ta x}{\xi} \times \pderiv{\ta x}{\eta} J^{-1}\\
+ \ta e_\surf = \pderiv{\ta x}{\xi}\norm{\pderiv{\ta x}{\xi}}^{-1}\\
+ \ta e_\tangent = -\ta e_\surf\times \ta n\\
+ \begin{bmatrix}\dif x\\ \dif y\\ \dif z\end{bmatrix} =
+  \underbrace{\begin{bmatrix}\pderiv{\ta x}{\xi} & \pderiv{\ta x}{\eta}
   \end{bmatrix}}_{\ts J''}
-  \cdot \begin{bmatrix}\intd \xi \\ \intd \eta\end{bmatrix}\\
- \begin{bmatrix}\intd s\\ \intd t\end{bmatrix} =
-  \underbrace{\begin{bmatrix} \to e_s^\T \\ \to e_t^\T
+  \cdot \begin{bmatrix}\dif \xi \\ \dif \eta\end{bmatrix}\\
+ \begin{bmatrix}\dif s\\ \dif t\end{bmatrix} =
+  \underbrace{\begin{bmatrix} \ta e_\surf^\T \\ \ta e_\tangent^\T
   \end{bmatrix}}_{\ts J'}
-  \cdot \begin{bmatrix}\intd x \\ \intd y \\ \intd z\end{bmatrix}\\
- \intd A = J \intd \xi \intd \eta
+  \cdot \begin{bmatrix}\dif x \\ \dif y \\ \dif z\end{bmatrix}\\
+ \dif A = J \dif \xi \dif \eta
 \end{gather}
 
 \begin{align}
- \to\nabla_s\cdot\to w &= \to\nabla_{st}\cdot\to w_{st} \\
- &= (\to w_{st}\otimes\to\nabla_{st}):\ts I \\
- &= \left(((\ts J'\cdot \to w) \otimes \to\nabla_{\xi\eta})\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right): \ts I\\
- &= \left((\to w\cdot (\ts J'^\T \otimes \to\nabla_{\xi\eta}) +\ts J'\cdot(\to w\otimes\to\nabla_{\xi\eta}) )\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right): \ts I
+ \diff_\surf\cdot\ta w &= \diff_{st}\cdot\ta w_{st} \\
+ &= (\ta w_{st}\otimes\diff_{st}):\ts I \\
+ &= \left(((\ts J'\cdot \ta w) \otimes \diff_{\xi\eta})\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right): \ts I\\
+ &= \left((\ta w\cdot (\ts J'^\T \otimes \diff_{\xi\eta}) +\ts J'\cdot(\ta w\otimes\diff_{\xi\eta}) )\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right): \ts I
 \end{align}
-The gradient $\ts J'^\T \otimes\to\nabla_{\xi\eta}$ is bothersome.
+The gradient $\ts J'^\T \otimes\diff_{\xi\eta}$ is bothersome.
 \begin{align}
- \to e_s \otimes \to\nabla_{\xi\eta} = \text{ugh...}
+ \ta e_\surf \otimes \diff_{\xi\eta} = \text{ugh...}
 \end{align}
 
 Considering the special case of linear surfaces;
 \begin{align}
-  \to\nabla_s\cdot\to w &= \left(\ts J'\cdot(\to w\otimes\to\nabla_{\xi\eta})\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right): \ts I
+  \diff_\surf\cdot\ta w &= \left(\ts J'\cdot(\ta w\otimes\diff_{\xi\eta})\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right): \ts I
 \end{align}
 
 \begin{align}
- &\iint_\Omega\to \nabla_s\cdot\to w\intd A\\
-=&\iint_\omega \ts I:\left(\ts J'\cdot(\to w\otimes\to\nabla_{\xi\eta})\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right)J\intd\xi\intd\eta
+ &\iint_\Omega\diff_\surf\cdot\ta w\dif A\\
+=&\iint_\omega \ts I:\left(\ts J'\cdot(\ta w\otimes\diff_{\xi\eta})\cdot \left(\ts J'\cdot\ts J''\right)^{-1}\right)J\dif\xi\dif\eta
 \end{align}
+
+
+\newpage
+\section{General 3D alternative 2}
+\begin{align}
+ \ta w \cdot \ts\nabla_{s} = (\ta w \otimes \diff) : (\ts I - \ta n \otimes \ta n)= (\ta w \otimes \diff)^\sym : (\ts I - \ta n \otimes \ta n)
+\end{align}
+FE implementation
+\begin{align}
+ \uv F = \um{B}^\T \cdot \begin{pmatrix} 1 - n_1 n_1 \\ 1 - n_2 n_2 \\ 1 - n_3 n_3 \\ -n_2 n_3 \\ -n_1 n_3 \\ -n_1 n_2 \end{pmatrix}
+\end{align}
+
+
+\begin{gather}
+ J \defeq \norm{\pderiv{\ta x}{\xi} \times  \pderiv{\ta x}{\eta}}\\
+ \ta n = \pderiv{\ta x}{\xi} \times \pderiv{\ta x}{\eta} J^{-1}\\
+ \dif A = J \dif a
+\end{gather}
+
+\begin{align}
+ \int_\Omega \ta w\cdot\diff_\surf \dif A \to \int_\omega \uv F J \dif a
+\end{align}
+
+
 
 \end{document}
