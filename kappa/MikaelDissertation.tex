@@ -27,7 +27,7 @@
  \usepackage[utf8]{inputenc} % File encoding, you should try to stick to utf8.
 \fi
 \usepackage{microtype} % Magically improves typesetting for pdflatex
-%\usepackage{subfiles} % Convenient use of subfiles in documents. Using \subfile is optional. See README
+\usepackage{subfiles} % Convenient use of subfiles in documents. Using \subfile is optional. See README
 \usepackage{hyperref} % Required for in document links and document metadata.
 \usepackage[swedish, english]{babel}
 
@@ -38,6 +38,8 @@
 \usepackage{mathtools} % All your math related needs
 \usepackage{tikz} % Draw figures. Required for cover page
 \usepackage{subfig} % Subfloats
+\usepackage{siunitx, contmech}
+\usepackage{amsfonts}
 
 % Read the manuals for the respective package to see the usage;
 %\usepackage{pdfpages} % For included other pdf files (like articles).
@@ -51,6 +53,12 @@
 %\usepackage{yourcustomcommands} % Put your custom commands in a file 'yourcustomcommands.sty' and load it like this.
 
 \usepackage{lipsum}\setlipsumdefault{1-3} % Package used to put in placeholder text. Remove it.
+
+
+
+\newcommand{\surf}{\mathrm{surf}}
+
+
 
 % User commands
 \title{On Computational Modeling of Sintering based on Homogenization}

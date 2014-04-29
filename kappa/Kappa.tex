@@ -5,29 +5,6 @@
 
 \chapter{Introduction}
 
-\chapter{Theory}
-\section{Macroscopic modeling}
-
-\section{Fine-scale problem}
-\subsection{Mixed velocity-pressure formulation}
-\subsection{Surface tension}
-
-
-\chapter{Variationally Consistent Homogenization}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \section{The process of sintering of hardmetal}
 
 Manufacturing of PM products is based on the ``welding'' (sintering) of particles due to heating or combined heating and mechanical loading (uniaxial or isotropic pressing).
@@ -121,7 +98,13 @@ In order to achieve this goal, the following tasks are identified in the present
  \item Develop FE-software, in particular for efficient implementation of parallel algorithms.
 \end{itemize}
 
-\chapter{Modeling Features}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Theory}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Constitutive modeling of constituents}
 Elastic deformation is neglected in the subscale constituents, which is a reasonable assumption since the (visco)plastic deformation is totally dominating the process.
@@ -142,10 +125,10 @@ In the absence of acceleration, the balance equations for the quasi-static motio
 %-----------------------------------------------------------------
 \begin{subequations}\label{eq:stokesflow}
 \begin{align}
-    -\ts{\sigma}\cdot\diff & = \ts{0} \quad% \mbox{ in }\Omega^\particle \defeq \cup_i \Omega^\particle_i
+    -\ts{\sigma}\cdot\diff & = \ts{0} \quad% \text{ in }\Omega^\particle \defeq \cup_i \Omega^\particle_i
 \label{eq:stokesflow_momentum}
 \\
-    \ta{v}\cdot\diff & = 0 \quad% \mbox{ in }\Omega^\particle
+    \ta{v}\cdot\diff & = 0 \quad% \text{ in }\Omega^\particle
 \label{eq:stokesflow_continuity}
 \end{align}
 \end{subequations}
@@ -164,9 +147,9 @@ A vital part of the simulation is the modeling of surface tension which acts as 
 An extensive theory on boundary energy potentials has been developed by Steinmann \cite{Steinmann2008:boundaryenergies}, which has served as the basis for the surface tension modeling in this work.
 In short; equilibrium across a surface $\Gamma$ represented by a thin shell bounded by the curve $\mathcal{C}$, as in Figure~\ref{fig:surfacestress} can be stated as:
 \begin{align}
-    \ta{t}^+ + \ta{t}^- + \ta{t}_\surf &= \ta{0} \quad \mbox{on} \,\, \Gamma \quad \mbox{with } \ta{t}_\surf \defeq \hat{\ts\sigma}\cdot\hat{\diff}
+    \ta{t}^+ + \ta{t}^- + \ta{t}_\surf &= \ta{0} \quad \text{on} \,\, \Gamma \quad \text{with } \ta{t}_\surf \defeq \hat{\ts\sigma}\cdot\hat{\diff}
 \label{eq103KR}\\
-    \sum_i \hat{\ta t}_i &= \ta{0} \quad \mbox{on} \,\, \mathcal{C}
+    \sum_i \hat{\ta t}_i &= \ta{0} \quad \text{on} \,\, \mathcal{C}
 \label{eq104KR}
 \end{align}
 where $\hat\diff \defeq \diff - (\diff\cdot\ta n)\ta n$.
@@ -205,10 +188,21 @@ A remeshing strategy was developed in \refpaper{A} to deal with this issue.
 
 %For the homogenization of the RVE, Dirichlet boundary condition was chosen due to its simplicity. Periodic boundary conditions were not considered to to its difficulty in relation to remeshing and Neumann boundary condition remain as a future work.
 
+\section{Fine-scale problem}
+\subsection{Mixed velocity-pressure formulation}
+\subsection{Surface tension}
+
+\section{Variationally Consistent Homogenization}
+
+
+\chapter{}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Summary of Appended Papers}
 \begin{itemize}
- \item \textbf{\refpaper{A}: \citefield{Ohman2011a}{title}}.
+ \item \textbf{\refpaper{A}: \citefield{ohman_computational_2012}{title}}.
 Liquid phase sintering of particle agglomerates is simulated as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface.
 Particles are modeled as purely viscous fluids (with no elasticity). 
 Computational homogenization is adopted for the RVE with Dirichlet boundary conditions.
@@ -216,7 +210,7 @@ A surface motion algorithm was developed that requires complete remeshing of the
 Since the particles are intrinsically incompressible, the macroscopic compressibility is determined from shrinking porosity in the substructure.
 The numerical examples include free sintering of an RVE and a fully coupled FE\textsuperscript{2}-simulation of a specimen with inhomogeneous initial distribution of porosity.
 
- \item \textbf{\refpaper{B}: \citefield{Ohman2011b}{title}}.
+ \item \textbf{\refpaper{B}: \citefield{ohman_computational_2013}{title}}.
 Liquid phase sintering of particle agglomerates is modeled on the mesoscale as the viscous deformation of particle-particle contact, whereby the single driving force is the surface tension on the particle/pore interface.
 On the macroscale, a quasistatic equilibrium problem allows for the prediction of the shrinkage of the sintering body. 
 The present paper presents a novel FE\textsuperscript{2} formulation of the two-scale sintering problem allowing for the transition to zero porosity, implying macroscale incompressibility.
@@ -224,33 +218,45 @@ The seamless transition from compressibility to incompressibility on the macrosc
 This has consequences also for the formulation of the mesoscale problem, that is complemented with an extra constraint equation regarding the prolongation of the volumetric part of the macroscopic rate-of-deformation.
 The numerical example shows the sintering of a single representative volume element (RVE), which is sheared beyond the point where the porosity vanishes while subjected to zero macroscopic pressure.
 
+ \item \textbf{\refpaper{C}: \citefield{ohman_variationally_2014}{title}}.
+In this work, a mixed displacement-pressure formulation for elasticity is considered as the prototype problem.
+Variationally Consistent Homogenization is used to derive the macroscale problem, and the Variationally Consistent Macrohomogeneity condition is 
+Dirichlet, Neumann, and (weakly) periodic boundary conditions for the RVE's are derived, and the Dirichlet and Neumann boundary conditions are shown to be bounds for the periodic boundary condition.
+
+
+
+ \item \textbf{\refpaper{D}: \citefield{ohman_new_2014}{title}}.
+The final work in this thesis extends the Variationally Consistent Homogenization of the mixed formulation presented in \refpaper{C} with the mesoscale modeling found in \refpaper{A} and \refpaper{B}.
+In particular, it is shown that the Dirichlet boundary condition becomes equivalent to that in \refpaper{C}.
+
+
 \end{itemize}
 
 \chapter{Conclusions and Outlook}
 
-% 1
-In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented.
-Examples of the response of a single RVE subjected to different macroscopic conditions showed that the results converged quite rapidly with increasing RVE-size for the adopted Dirichlet boundary conditions. 
-The final FE\textsuperscript{2}-analysis for an inhomogeneous initial distribution of the macroscopic porosity was carried out using a code parallelization with respect to the macroscale integration points. 
-
-% 2
-By introducing the mixed variational ($\bar{\ts v},\bar{p}$)-format of the macroscale problem, we can ensure a ``seamless'' transition from the macroscopically compressible to the incompressible response.
-Hence, there is no need to change the computational algorithm when the simulation is taken beyond the state of a fully dense macroscopic response (in some spatial point in the macro-domain).
-Without such a mixed formulation, the macroscopic ATS-tensor would become unbounded at the transition state.
-
-% 3
-The FE\textsuperscript{2} algorithm has been implemented in the open source code OOFEM (cf. \cite{Patzak2000:OOFEM}).
-All parts have been implemented with a modular approach, implying that they can be used individually and with other problems.
-These modules will be available in the future official releases of OOFEM.
-
-% 4
-As an outlook to future developments, the new mixed RVE-format will be adopted in conjunction with micro-periodic and Neumann boundary conditions.
-It would also be of interest to extend the classical strong format of micro-periodicity to a weak variational setting, cf. Larsson et al. \cite{Larsson_etal2011}.
-A major advantage is that the subscale FE-mesh does not need to be periodic, which is particularly beneficial in a context of adaptive mesh (re)generation. 
-
-The microstructural properties of the ``green body'', i.e. before the sintering process starts, should be represented in a more realistic way than is presently the case.
-For example, the RVE should be generated from a given statistical distribution of particle size and shape.
-Parameter variations should be carried out of the various geometrical and constitutive properties.
-In order to make (inverse) parameter identification meaningful, it is necessary to extend the description of the subscale geometry to three dimensions in the future, although this may represent a major increase in complexity and computational demand. 
+% % 1
+% In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented.
+% Examples of the response of a single RVE subjected to different macroscopic conditions showed that the results converged quite rapidly with increasing RVE-size for the adopted Dirichlet boundary conditions. 
+% The final FE\textsuperscript{2}-analysis for an inhomogeneous initial distribution of the macroscopic porosity was carried out using a code parallelization with respect to the macroscale integration points. 
+% 
+% % 2
+% By introducing the mixed variational ($\bar{\ts v},\bar{p}$)-format of the macroscale problem, we can ensure a ``seamless'' transition from the macroscopically compressible to the incompressible response.
+% Hence, there is no need to change the computational algorithm when the simulation is taken beyond the state of a fully dense macroscopic response (in some spatial point in the macro-domain).
+% Without such a mixed formulation, the macroscopic ATS-tensor would become unbounded at the transition state.
+% 
+% % 3
+% The FE\textsuperscript{2} algorithm has been implemented in the open source code OOFEM (cf. \cite{Patzak2000:OOFEM}).
+% All parts have been implemented with a modular approach, implying that they can be used individually and with other problems.
+% These modules will be available in the future official releases of OOFEM.
+% 
+% % 4
+% As an outlook to future developments, the new mixed RVE-format will be adopted in conjunction with micro-periodic and Neumann boundary conditions.
+% It would also be of interest to extend the classical strong format of micro-periodicity to a weak variational setting, cf. Larsson et al. \cite{Larsson_etal2011}.
+% A major advantage is that the subscale FE-mesh does not need to be periodic, which is particularly beneficial in a context of adaptive mesh (re)generation. 
+% 
+% The microstructural properties of the ``green body'', i.e. before the sintering process starts, should be represented in a more realistic way than is presently the case.
+% For example, the RVE should be generated from a given statistical distribution of particle size and shape.
+% Parameter variations should be carried out of the various geometrical and constitutive properties.
+% In order to make (inverse) parameter identification meaningful, it is necessary to extend the description of the subscale geometry to three dimensions in the future, although this may represent a major increase in complexity and computational demand. 
 
 \end{document}
