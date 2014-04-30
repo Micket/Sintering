@@ -135,7 +135,11 @@ In the absence of acceleration, the balance equations for the quasi-static motio
 Note that these equations are intrinsic to the particles.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Surface tension}
+\section{Fine-scale problem}
+
+\subsection{Mixed velocity-pressure formulation}
+
+\subsection{Surface tension}
 
 \begin{figure}[th!]
     \centering
@@ -161,41 +165,34 @@ where $\kappa$ is the curvature.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{RVE-problem}
-\begin{figure}[th!]
-  \centering
-  \input{figures/sintering_rve.tikz}
-  \caption{Microstructure of porous particulate material with sintering particles in contact.}
-  \label{fig:micro}
-\end{figure}
-The fundamental microconstituents of the subscale are defined in Figure~\ref{fig:micro}.
-Surface tension could be considered on all boundaries; $\Gamma_i^{\mathrm{pore}}$ and $\Gamma_j^{\mathrm{cont}}$; however, it is assumed to be zero on $\Gamma_j^{\mathrm{cont}}$ in all the numerical examples in the appended papers.
-%
-\begin{figure}[H]
-    \centering
-    \input{figures/4particle_rve.tikz}
-    %\subfloat[$t = 0$]{\input{figures/4particle_rve.tikz}\label{fig:4particle_rve_a}}
-    %\subfloat[$t > 0$]{\input{figures/4particles_deformed.tikz}\label{fig:4particle_rve_b}}
-    \caption{Idealized initial configuration of the RVE in 2D consisting of circular particles in a square lattice.}
-    \label{fig:4particleRVE}
-\end{figure}
-%
-In the simplest form, the RVE is idealized to a unit cell with four contacting circular particles.
-The size of the initial contact surface after compaction is represented by the length $a_0$.
-
-During the FE-simulation of the RVE, the mesh becomes very distorted, in particular when the sharp contact is rapidly rounded off and when the pores vanish.
-A remeshing strategy was developed in \refpaper{A} to deal with this issue.
+% \subsection{RVE-problem}
+% \begin{figure}[th!]
+%   \centering
+%   \input{figures/sintering_rve.tikz}
+%   \caption{Microstructure of porous particulate material with sintering particles in contact.}
+%   \label{fig:micro}
+% \end{figure}
+% The fundamental microconstituents of the subscale are defined in Figure~\ref{fig:micro}.
+% Surface tension could be considered on all boundaries; $\Gamma_i^{\mathrm{pore}}$ and $\Gamma_j^{\mathrm{cont}}$; however, it is assumed to be zero on $\Gamma_j^{\mathrm{cont}}$ in all the numerical examples in the appended papers.
+% %
+% \begin{figure}[H]
+%     \centering
+%     \input{figures/4particle_rve.tikz}
+%     %\subfloat[$t = 0$]{\input{figures/4particle_rve.tikz}\label{fig:4particle_rve_a}}
+%     %\subfloat[$t > 0$]{\input{figures/4particles_deformed.tikz}\label{fig:4particle_rve_b}}
+%     \caption{Idealized initial configuration of the RVE in 2D consisting of circular particles in a square lattice.}
+%     \label{fig:4particleRVE}
+% \end{figure}
+% %
+% In the simplest form, the RVE is idealized to a unit cell with four contacting circular particles.
+% The size of the initial contact surface after compaction is represented by the length $a_0$.
+% 
+% During the FE-simulation of the RVE, the mesh becomes very distorted, in particular when the sharp contact is rapidly rounded off and when the pores vanish.
+% A remeshing strategy was developed in \refpaper{A} to deal with this issue.
 
 %For the homogenization of the RVE, Dirichlet boundary condition was chosen due to its simplicity. Periodic boundary conditions were not considered to to its difficulty in relation to remeshing and Neumann boundary condition remain as a future work.
 
-\section{Fine-scale problem}
-\subsection{Mixed velocity-pressure formulation}
-\subsection{Surface tension}
-
 \section{Variationally Consistent Homogenization}
-
-
-\chapter{}
 
 
 
@@ -220,14 +217,16 @@ The numerical example shows the sintering of a single representative volume elem
 
  \item \textbf{\refpaper{C}: \citefield{ohman_variationally_2014}{title}}.
 In this work, a mixed displacement-pressure formulation for elasticity is considered as the prototype problem.
-Variationally Consistent Homogenization is used to derive the macroscale problem, and the Variationally Consistent Macrohomogeneity condition is 
+Variationally Consistent Homogenization is directly used to derive the macroscale problem, and the Variationally Consistent Macrohomogeneity condition is used to determine the RVE problem.
 Dirichlet, Neumann, and (weakly) periodic boundary conditions for the RVE's are derived, and the Dirichlet and Neumann boundary conditions are shown to be bounds for the periodic boundary condition.
-
-
+The numerical examples show the convergence rate of the Neumann and Dirichlet boundary conditions for a series of 3D Statistical Volume Elements (SVE's).
+A final example shows the influence of the compressibility of the microconstituents on the homogenized macroscopic shear modulus.
 
  \item \textbf{\refpaper{D}: \citefield{ohman_new_2014}{title}}.
 The final work in this thesis extends the Variationally Consistent Homogenization of the mixed formulation presented in \refpaper{C} with the mesoscale modeling found in \refpaper{A} and \refpaper{B}.
 In particular, it is shown that the Dirichlet boundary condition becomes equivalent to that in \refpaper{C}.
+The numerical examples show transient behavior of the Neumann and Dirichlet boundary conditions for a 2D RVE subject to free sintering.
+A 3D microstructure with porespace and surface tension compares the effective macroscale properties between the Dirichlet, Neumann and weakly periodic boundary condition.
 
 
 \end{itemize}
