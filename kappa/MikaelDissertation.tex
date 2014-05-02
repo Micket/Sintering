@@ -41,6 +41,8 @@
 \usepackage{siunitx, contmech}
 \usepackage{amsfonts}
 
+\usepackage{cleveref}
+
 % Read the manuals for the respective package to see the usage;
 %\usepackage{pdfpages} % For included other pdf files (like articles).
 %\usepackage{thmtools} % For theorems.
@@ -55,10 +57,33 @@
 \usepackage{lipsum}\setlipsumdefault{1-3} % Package used to put in placeholder text. Remove it.
 
 
-
-\newcommand{\surf}{\mathrm{surf}}
-
-
+\DeclarePairedDelimiter{\homgen}{\langle}{\rangle_\rve}
+\DeclarePairedDelimiter{\shomgen}{\langle\!\langle}{\rangle\!\rangle_\rve}
+\DeclarePairedDelimiter{\jmp}{[\![}{]\!]}
+\newcommand{\prescribed}{\mathrm{pre}}
+\newcommand{\on}{\quad\text{ on }}
+\renewcommand{\dev}{\mathrm{d}}
+\renewcommand{\vol}{\mathrm{v}}
+\newcommand{\per}{\mathrm{per}}
+\newcommand{\volume}{|\Omega_\rve|}
+\newcommand{\ded}{\mathrm{d}}
+\newcommand{\dep}{\mathrm{p}}
+\newcommand{\Periodic}{\mathrm{P}}
+\newcommand{\surf}{\mathrm{s}}
+\newcommand{\pore}{\mathrm{pore}}
+\newcommand{\particle}{\mathrm{part}}
+\newcommand{\devop}{\ts\epsilon_\dev}
+\newcommand{\densinv}{\eta}
+\newcommand{\dens}{\eta^{-1}}
+\newcommand{\epspargs}{\{{\bar{\ts d}}_\dev, \bar{p}\}}
+\newcommand{\rve}{
+  {\mathchoice
+   {\mbox{\scalebox{0.67}{$\Box$}}}
+   {\mbox{\scalebox{0.67}{$\Box$}}}
+   {\mbox{\scalebox{0.5}{$\Box$}}}
+   {\mbox{\scalebox{0.375}{$\Box$}}}
+  }
+}
 
 % User commands
 \title{On Computational Modeling of Sintering based on Homogenization}
@@ -147,8 +172,8 @@ Liquid phase sintering, Incompressibility, Mixed variational formulations, Multi
 % \setlength{\topcolumn}{0.22\textwidth} % Column for "Thesis" page which might need adjustments if there is other publications.
 
 \begin{document}
+
 %\makethesisdefence % Should be printed at a5paper size
-%\end{document}
 \maketitle
 % If you need to do any modifications, you can redefine each page respectively, or just call them manually as;
 %\makecoverpage
@@ -160,7 +185,7 @@ Liquid phase sintering, Incompressibility, Mixed variational formulations, Multi
 %\makeacknowledgementspage
 % \pagestyle{empty}
 % \maketableofpaperspage
-% \end{document}
+% \end{do cument}
 %\cleardoublepage\tableofcontents
 %\cleardoublepage\pagenumbering{arabic}
 

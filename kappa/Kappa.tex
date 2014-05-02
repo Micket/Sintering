@@ -1,5 +1,5 @@
 % Sample file on how to use subfiles.
-\documentclass[ExampleMasters.tex]{subfiles}
+\documentclass[MikaelDissertation.tex]{subfiles}
 
 \begin{document}
 
@@ -138,7 +138,48 @@ Note that these equations are intrinsic to the particles.
 \section{Fine-scale problem}
 
 \subsection{Mixed velocity-pressure formulation}
+We consider a generic micro-heterogeneous material in a given body whose macroscopic configuration occupies the region $\Omega$ in space with (presumed smooth) boundary $\Gamma$.
+However, the actual medium has pores, which means the particle composite only occupies only the region $\Omega^\particle$.
+We are then lead to defining a Representative Volume Element (RVE), that represents the topology of the micro-heterogeneous microstructure, as shown in \Cref{Figure1}.
+The total domain occupied by the cubic RVE is denoted $\Omega_\rve$ with external boundary $\Gamma_\rve$, while particles within the RVE occupies $\Omega_\rve^\particle$.
+%-----------------------------------------------------------------------------------------------------------------------------
+% \begin{figure}
+% \centering
+% %\hspace{0.9cm}
+% %\scalebox{1.0}{
+% \begin{tikzpicture}
+% %\tikzstyle{every node}=[font=\Large]
+% \node [inner sep=0pt,above right]{
+%    \includegraphics[scale=.3]{SwissCheeseFig}
+%    };
+% %\draw[<-, line width=.4mm] (1.6,5.0) .. controls +(up:0.5cm) and +(left:0.5cm) .. (2.5,5.7) node[right=1pt,black,text width=3cm,text badly ragged]{$\Gamma_\rve$};
+% \draw[<-, line width=.4mm] (5.0,3.5) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,3.5) node[right,black]{$\Gamma_\rve$};
+% \draw[<-, line width=.4mm] (4.6,2.) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,2.0) node[right,black]{$\Gamma_\rve^\pore$};
+% %\draw[-*, line width=.4mm] (-1.0,1.5) node[left=-2.0cm,black,text width=3cm,text badly ragged]{$\Omega_{\rve,i}^\mathrm{p}$} .. controls +(right:0.5cm) and +(left:1.cm) .. (0.6,1.1);
+% \draw[-*, line width=.4mm] (-1.0,2.1) node[left,black]{$\Omega_\rve^\particle$} .. controls +(right:0.5cm) and +(left:1.cm) .. (0.6,2.1);
+% \draw[-*, line width=.4mm] (-1.0,3.1) node[left,black]{$\Omega_\rve^\pore$} .. controls +(right:0.5cm) and +(left:1.cm) .. (1.2,3.1);
+% %\draw[<-, line width=.4mm] (4.6,1.7) .. controls +(right:0.5cm) and +(left:0.5cm) .. (6.0,1.0) node[right=1pt,black,text width=3cm,text badly ragged]{$\partial\Omega_{\rve,i}^\text{p}$};
+% \end{tikzpicture}
+% %}
+% \caption{Generic micro-heterogeneous material consisting of inclusions in matrix (example)}
+% \label{Figure1}
+% \end{figure}
 
+We consider a model material as follows: The stress is decomposed in terms of deviator and pressure as $\ts{\sigma} = \ts{\sigma}_\dev - p\ts{I}$.
+With the kinematic definition $\devop[\ta v]\defeq[\ta v\outerp\diff]^\sym-\frac{1}{3}[\ta v\cdot\diff]\ts{I}$, we introduce the constitutive relations
+%------------------------------------------------------------------------------------------------------------
+\begin{equation}
+    \ts{\sigma}_\dev = \hat{\ts{\sigma}}_\dev(\devop[\ta v]), \quad
+    \ta v\cdot\diff = \hat{e}(p)
+\label{eq201}
+\end{equation}
+%------------------------------------------------------------------------------------------------------
+Hence, $\hat{\ts{\sigma}}_\dev(\bullet)$ and $\hat{e}(\bullet)$ denote suitable constitutive functions.
+In the simplest case of viscous fluid, we have $\hat{\ts{\sigma}}_\dev(\ts{d}_\dev)=2\mu\ts{d}_\dev$ and $\hat{e}(p)=- C p$, where $\mu(\ta{x}), C(\ta{x})$ for $\ta{x}\in\Omega$ may fluctuate strongly.
+Moreover, intrinsic incompressibility is defined as $\hat{e}(p)=0$ for any value of $p$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Surface tension}
 
 \begin{figure}[th!]
@@ -163,6 +204,54 @@ For an isotropic surface potential one obtains, $\hat{\ts\sigma} = \gamma_\surf(
 \end{align}
 where $\kappa$ is the curvature.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\subsection{Weak format of fine scale problem}
+We are now in the position to formulate the strong format of the fine-scale problem under standard quasistatic conditions and small strain kinematics:
+%------------------------------------------------------------------------------------------------------------
+\begin{subequations}\label{eq1}
+\begin{alignat}{2}
+    -\left[\hat{\ts{\sigma}}_\dev(\devop[\ta v])-p\ts{I}\right]\cdot\diff & = \ta{f} &&\,\,\text{in}\,\, \Omega^\particle
+ \label{eq1a} \\
+    -\ta v\cdot\diff +  \hat{e}(p) & = 0 &&\,\,\text{in}\,\, \Omega^\particle
+\label{eq1b} \\
+    \ta v & = \ta v_\prescribed &&\,\,\text{on}\,\, \Gamma^\Dirichlet
+\label{eq1c} \\
+    \ta{t}\defeq\left[\hat{\ts{\sigma}}_\dev(\devop[\ta v])-p\ts{I}\right]\cdot\ta{n} & = \ta t_\prescribed &&\,\,\text{on}\,\, \Gamma^\Neumann
+\label{eq1d} \\
+    \ta{t}\defeq\left[\hat{\ts{\sigma}}_\dev(\devop[\ta v])-p\ts{I}\right]\cdot\ta{n} & =\ta{t}_\surf &&\,\,\text{on}\,\, \Gamma^\pore
+\label{eq1surf}
+\end{alignat}
+\end{subequations}
+%-----------------------------------------------------------------------------------------------------
+The corresponding weak format is: Find $\ta v\in\set{V}, p\in\set{P}$ s.t.
+%----------------------------------------------------------------------------------------------------------------
+\begin{subequations}\label{eq2}
+\begin{alignat}{3}
+    a(\ta v;\delta\ta v) + b(p,\delta\ta v) &= l^\pore(\delta\ta v) + l(\delta\ta v) &\quad& \forall \delta\ta v &&\in \set{V}^{0}
+\label{eq2a} \\
+    b(\delta p,\ta v) + c^*(p;\delta p) &= 0 &\quad& \forall \delta p &&\in \set{P}
+\label{eq2b}
+\end{alignat}
+\end{subequations}
+%----------------------------------------------------------------------------------------------------------------------
+where
+%----------------------------------------------------------------------------------------------------------------
+\begin{align}
+    a(\ta{v};\ta{w}) &\defeq
+    \int_{\Omega^\particle}  \devop[\ta{w}]\dprod \hat{\ts{\sigma}}_\dev(\devop[\ta{v}]) \dif V
+\label{eq3a} \\
+    b(q,\ta{v}) &\defeq
+    - \int_{\Omega^\particle}  q\,\ta{v}\cdot\diff \dif V
+\label{eq3b} \\
+    c^*(q;r) &\defeq
+    \int_{\Omega^\particle}  r\,\hat{e}(q) \dif V
+\label{eq3c} \\
+    l^\pore(\ta{v}) &\defeq -\int_{\Gamma^\pore} \gamma_\surf \hat{\ta I} \dprod [\ta{v}\outerp\diff] \dif S 
+\label{eq3d} \\
+    l(\ta{v}) &\defeq \int_{\Omega^\particle} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
+\label{eq3e}
+\end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{RVE-problem}
@@ -225,11 +314,13 @@ A final example shows the influence of the compressibility of the microconstitue
  \item \textbf{\refpaper{D}: \citefield{ohman_new_2014}{title}}.
 The final work in this thesis extends the Variationally Consistent Homogenization of the mixed formulation presented in \refpaper{C} with the mesoscale modeling found in \refpaper{A} and \refpaper{B}.
 In particular, it is shown that the Dirichlet boundary condition becomes equivalent to that in \refpaper{C}.
+Also highlighted in this paper is that the surface tension may also have contribution to the deviatoric part of the macroscopic stress, whereas traditional models for sintering only accounts for volumetric macroscopic ``sintering stress''.
 The numerical examples show transient behavior of the Neumann and Dirichlet boundary conditions for a 2D RVE subject to free sintering.
 A 3D microstructure with porespace and surface tension compares the effective macroscale properties between the Dirichlet, Neumann and weakly periodic boundary condition.
-
-
 \end{itemize}
+
+The core problem in 
+
 
 \chapter{Conclusions and Outlook}
 
