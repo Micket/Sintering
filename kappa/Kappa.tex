@@ -322,22 +322,22 @@ Without introducing further assumptions (approximations), the dimension of the o
 In order to reduce the problem dimension based on homogenization (via the assumption of scale separation), we introduce the following key assumptions:
 
 \begin{itemize}
-\item The integrands in the pertinent volume integrals are replaced by a running volume average on RVE's of the type introduced in \cref{eq16ba}
+\item The integrands in the pertinent volume integrals are replaced by a running volume average on RVE's
 such that, typically, the residual in \cref{eq:A2a} can be rewritten in terms of the contributions defined on each RVE as
 %--------------------------------------------------------------------------------------------------------------------------
 \begin{align}
 \label{eq:A106} R_\Omega(z;\delta z) = \int_\Omega R_\rve(z;\delta z)(\bar{\ta x})\dif\Omega
 \end{align}
-%------------------------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------------
 where $R_\rve$ is the RVE-residual that is localized to the Representative Volume Element (RVE).
 In practice (in FE-analysis), quadrature is used such that the evaluation of $R_\rve$ is carried out only in the Gauss points.
 
 Furthermore, for the sake of simplicity we assume smoothness of boundary terms, such that $R_\Gamma(z; \delta z^\macro) \approx R_\Gamma(z^\macro;\delta z^\macro)$, i.e.\ no boundary homogenization is necessary.
 
 \item Local approximations for the fluctuation field $z^\fluct$ are introduced in the spirit of VMS.
-This means that $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}\in\set{Z}_\rve^{\fluct}$ is the \emph{approximate} solution\footnote{Curly brackets $\{\bullet\}$ indicate implicit function.} of the fine-scale 
+This means that $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}\in\set{Z}_\rve^{\fluct}$ is the \emph{approximate} solution of the fine-scale 
 equation \cref{eq:A2b} for given $z^\macro$, i.e.\ \cref{eq:A2b} is replaced by ``closed'' RVE-problems (in the macroscale quadrature points) associated with a particular choice of boundary conditions on $\Omega_\rve$.
-In this paper we obtain such ``closed'' RVE-problems by choosing  weakly periodic boundary conditions.
+%In this paper we obtain such ``closed'' RVE-problems by choosing  weakly periodic boundary conditions.
 \end{itemize}
 Returning to \cref{eq:A2a}, we now replace this problem by the approximate, homogenized, problem
 %---------------------------------------------------------------------------------------------------------------------------------------------
@@ -448,7 +448,7 @@ First order Taylor expansion of the velocity field, and zeroth order expansion f
 \end{align}
 where we require that in each RVE
 \begin{align}
- \homgen{\ta v\outerp\diff} &= \bar{\ts h}
+ \homgen{\ta v\outerp\diff} &= \bar{\ta v}\outerp\diff
 \\
  \homgen{p} &= \bar{p}
 \end{align}
@@ -457,7 +457,7 @@ However, in the case when pores and surface tension are present, as in \refpaper
 \begin{align}
  \ta v^\macro = \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
 \\
- \ta p^\macro = \frac{\volume}{|\Omega_\rve^\particle|}[\bar{p} + \frac23\shomgen{\gamma_\surf}]
+ p^\macro = \frac{\volume}{|\Omega_\rve^\particle|}[\bar{p} + \frac23\shomgen{\gamma_\surf}]
 \end{align}
 where we now require that in each RVE
 \begin{align}
@@ -516,29 +516,29 @@ A 3D microstructure with porespace and surface tension compares the effective ma
 
 \chapter{Conclusions and Outlook}
 
-% % 1
-% In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented.
-% Examples of the response of a single RVE subjected to different macroscopic conditions showed that the results converged quite rapidly with increasing RVE-size for the adopted Dirichlet boundary conditions. 
-% The final FE\textsuperscript{2}-analysis for an inhomogeneous initial distribution of the macroscopic porosity was carried out using a code parallelization with respect to the macroscale integration points. 
-% 
-% % 2
-% By introducing the mixed variational ($\bar{\ts v},\bar{p}$)-format of the macroscale problem, we can ensure a ``seamless'' transition from the macroscopically compressible to the incompressible response.
-% Hence, there is no need to change the computational algorithm when the simulation is taken beyond the state of a fully dense macroscopic response (in some spatial point in the macro-domain).
-% Without such a mixed formulation, the macroscopic ATS-tensor would become unbounded at the transition state.
+In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented, replacing the traditional macroscopic constitutive models.
+With the new proposed homogenization procedure, we can ensure a seamless transition from the macroscopically compressible to the incompressible response, which is of vital importance when modeling sintering of particle composites.
+
+Through rigorously applying VCH, we can ensure that the obtained multiscale problem is sound, and by further manipulation we can obtain a simpler and still consistent RVE-problem that retains the same strong form as the fine scale problem.
+These manipulations allows for a straight forward FE-implementation.
+The FE\textsuperscript{2} algorithm is freely available in the open source code OOFEM (cf.\ \cite{Patzak2000:OOFEM}) as free software.
+
 % 
 % % 3
 % The FE\textsuperscript{2} algorithm has been implemented in the open source code OOFEM (cf. \cite{Patzak2000:OOFEM}).
 % All parts have been implemented with a modular approach, implying that they can be used individually and with other problems.
 % These modules will be available in the future official releases of OOFEM.
 % 
-% % 4
-% As an outlook to future developments, the new mixed RVE-format will be adopted in conjunction with micro-periodic and Neumann boundary conditions.
-% It would also be of interest to extend the classical strong format of micro-periodicity to a weak variational setting, cf. Larsson et al. \cite{Larsson_etal2011}.
-% A major advantage is that the subscale FE-mesh does not need to be periodic, which is particularly beneficial in a context of adaptive mesh (re)generation. 
-% 
-% The microstructural properties of the ``green body'', i.e. before the sintering process starts, should be represented in a more realistic way than is presently the case.
-% For example, the RVE should be generated from a given statistical distribution of particle size and shape.
-% Parameter variations should be carried out of the various geometrical and constitutive properties.
-% In order to make (inverse) parameter identification meaningful, it is necessary to extend the description of the subscale geometry to three dimensions in the future, although this may represent a major increase in complexity and computational demand. 
+
+
+For the homogenization procedure, pores on the RVE-boundaries remain complicated. Weakly periodic and Neumann boundary conditions are not applicable, while Dirichlet boundary conditions constrains the closing of pores on the boundary.
+A strongly periodic boundary condition could therefore be a necessity for these RVEs with pores, but makes it considerably harder to (re)generate a mesh.
+
+
+There are also possible improvements of the subscale modeling, where the bulk- and surface-diffusion is still missing.
+Due to limitations in the remeshing and post-processing software, the microstructural properties of the ``green body'', i.e.\ before the sintering process starts, have so far only been idealized to contacting spheres.
+While these serve the need for demonstrating the homogenization procedure, they fail to capture a realistic microstructure, particularly that of WC-Co.
+
+An attempt to address the large topological changes have been outlined in \refpaper{A}, but is lacking a robust 3D implementation.
 
 \end{document}
