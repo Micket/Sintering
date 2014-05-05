@@ -48,31 +48,32 @@ Modeling efforts can be classified by two major paradigms: \emph{a priori macros
 A vast majority of the existing literature on \emph{a priori} macro-scale modeling is devoted to the compaction stage, and it is noted that very few (if any) attempts have been made to develop a unifying macroscopic constitutive model for the compaction and sintering stages.
 As to the compaction process, material rate-independence (elasto-plasticity) is a common (and valid) assumption.
 Such plasticity models are often taken, at least conceptually, from soil mechanics.
-The major focus is on the evolution of the yield surface due to changing porosity as the predominant hardening mechanism, e.g.\ Fleck et al. \cite{FleKuhMcM1992},
-Oliver et al. \cite{OliOllCan1996}, Brandt and Nilsson \cite{BraNil1998}, Redanz \cite{Red1998}, Kraft \cite{Kra2003}.
+The major focus is on the evolution of the yield surface due to changing porosity as the predominant hardening mechanism, e.g.\ Fleck et al.\ \cite{fleck_yielding_1992},
+Oliver et al.\ \cite{oliver_plasticity_1996}, Brandt and Nilsson \cite{brandt_fe-simulation_1998}, Redanz \cite{redanz_numerical_1998}, Kraft \cite{kraft_optimizing_2003}.
 
 For the solid phase sintering, the major feature is the strong rate-dependence close to, and above, the melting temperature of the binder.
-Models based on viscoelasticity and viscoplasticity have, therefore, been proposed to simulate the creep behavior of the highly deformable (and even partly melt) binder, e.g. Shinigawa \cite{Shi1996}, Brandt and Nilsson \cite{BraNil1998}.
-Clearly, it is of utmost importance to model the high sensitivity of yield stress to temperature, e.g. Mähler et al. \cite{MahEkhRun2001a}.
-The task of providing a rational thermodynamic definition of the sintering stress was addressed by, e.g. Reid and Oakberg \cite{ReiOak1990}, Mähler and Runesson \cite{MahRun2000}.
+Models based on viscoelasticity and viscoplasticity have, therefore, been proposed to simulate the creep behavior of the highly deformable (and even partly melt) binder, e.g. Shinagawa \cite{shinagawa_finite_1996}, Brandt and Nilsson \cite{brandt_fe-simulation_1998}.
+Clearly, it is of utmost importance to model the high sensitivity of yield stress to temperature, e.g. Mähler et al.\ \cite{mahler_modelling_2000}.
+The task of providing a rational thermodynamic definition of the sintering stress was addressed by, e.g. Reid and Oakberg \cite{reid_continuum_1990}, Mähler and Runesson \cite{mahler_constitutive_2003}.
 
-As to liquid phase sintering, the text-book by German \cite{Ger1985} is still an authority in the field.
-Examples of the rich literature are Svoboda et al. \cite{SvoRieGae1996}, Xu and Mehrabahdi \cite{XuMeh1997}, Lu et al. \cite{LuXuYiGer2001}, who used a single-phase approach.
+As to liquid phase sintering, the text-book by German \cite{german_sintering_1996} is still an authority in the field.
+Examples of the rich literature are Svoboda et al.\ \cite{svoboda_model_1996}, Xu and Mehrabahdi \cite{xu_micromechanical_1997}, Lu et al.\ \cite{lu_porosity_2001}, who used a single-phase approach.
 
 % To date, it seems that no attempts have been made in the literature to use mixture theory, which explicitly acknowledges the coexistence of a solid skeleton of the WC-particles and partly solidified and liquid Co.
 
 \subsection{Micromechanics modeling and computational homogenization}
 
 Most micromechanically based models consider idealized geometrical arrangement, such as a regular array of (in many cases only two) spheres, within a Representative Volume Element (RVE).
-One common approach is to consider grain boundary diffusion, e.g. Helle, et al. \cite{HelEasAsh1985}, McMeeking and Kuhn \cite{McMKuh1992}, Riedel and Svoboda \cite{RieSvo1993} and Shinigawa \cite{Shi1996} and particle bridging via diffusion, e.g. Svoboda and Riedel \cite{SvoRie1995}, Binet \cite{BinLenHeaGer2004}, Luque et al. \cite{LuqAldMarMarSevFar2005}, as the principal mechanisms for densification.
-Some attempts have been made too include more realistic microstructural arrangements and carry out computational homogenization to obtain response functions, e.g. Mähler and Runesson \cite{MahRun2000}.
+One common approach is to consider grain boundary diffusion, e.g. Helle, et al.\ \cite{helle_hot-isostatic_1985}, McMeeking and Kuhn \cite{mcmeeking_diffusional_1992}, Riedel and Svoboda \cite{riedel_theoretical_1993} and Shinagawa \cite{shinagawa_finite_1996} and particle bridging via diffusion, e.g. Svoboda and Riedel \cite{svoboda_new_1995}, Bient \cite{bient_modeling_2004}, Luque et al.\ \cite{luque_simulation_2005}, as the principal mechanisms for densification.
+% TODO: Really?
+Some attempts have been made too include more realistic microstructural arrangements and carry out computational homogenization to obtain response functions, e.g. Mähler and Runesson \cite{mahler_modelling_2000}.
 
-Early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are by Jagota and Dawson \cite{JagDaw1988a,JagDaw1988b} and van de Vorst \cite{Vorst1993}.
-In a series of papers, Zhou and Derby \cite{ZhoDer1998,ZhoDer2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction.
+Early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are by Jagota and Dawson \cite{jagota_micromechanical_1988,jagota_micromechanical_1988-1} and van de Vorst \cite{van_de_vorst_integral_1993}.
+In a series of papers, Zhou and Derby \cite{zhou_three-dimensional_1998,zhou_assessment_2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction.
 The main challenges  are the complex subscale geometry and the moving free boundary giving rise to very large deformations and severe topology changes.
-Recent developments of free-boundary tracing FE-strategies for large deformations (without severe topological changes) are discussed by Peric and coworkers, \cite{DetPer2006}, \cite{SakPer2006a}, \cite{SakPer2006b}.
+Recent developments of free-boundary tracing FE-strategies for large deformations (without severe topological changes) are discussed by Peri\'c and coworkers, \cite{dettmer_computational_2006}, \cite{saksono_finite_2006}, \cite{saksono_finite_2006-1}.
 All the mentioned work consider surface tension effects in fluids.
-A recent extension to include surface tension in the context of solid modeling, where anisotropic surface energy may be present, is due to Javili and Steinmann \cite{JavSte2010:3d}.
+A recent extension to include surface tension in the context of solid modeling, where anisotropic surface energy may be present, is due to Javili and Steinmann \cite{javili_finite_2010}.
 
 Micro-mechanical analysis must be accompanied by computational homogenization in order to obtain a predictive model for a component.
 One possibility is socalled upscaling, i. e. to use the subscale modeling to calibrate a macroscopic model.
@@ -191,7 +192,7 @@ Moreover, intrinsic incompressibility is defined as $\hat{e}(p)=0$ for any value
     \label{fig:surfacestress}
 \end{figure}
 A vital part of the simulation is the modeling of surface tension which acts as the ``driving force'' for liquid-phase sintering.
-An extensive theory on boundary energy potentials has been developed by Steinmann \cite{Steinmann2008:boundaryenergies}, which has served as the basis for the surface tension modeling in this work.
+An extensive theory on boundary energy potentials has been developed by Steinmann \cite{steinmann_boundary_2008}, which has served as the basis for the surface tension modeling in this work.
 In short; equilibrium across a surface $\Gamma$ represented by a thin shell bounded by the curve $\mathcal{C}$, as in Figure~\ref{fig:surfacestress} can be stated as:
 \begin{align}
     \ta{t}^+ + \ta{t}^- + \ta{t}_\surf &= \ta{0} \quad \text{on} \,\, \Gamma \quad \text{with } \ta{t}_\surf \defeq \hat{\ts\sigma}\cdot\hat{\diff}
@@ -295,6 +296,7 @@ The abstract formulation of a multifield problem based on a given set of balance
  R(z; \delta z) \defeq R_\Omega(z; \delta z) + R_\Gamma(z;\delta z) = 0\quad \forall\;\delta z\in \set Z^0
 \label{eq:A1}
 \end{align}
+VCH is applied on all 
 No explicit reference to the specific character of the underlying problem is made in this section.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -514,24 +516,34 @@ A 3D microstructure with porespace and surface tension compares the effective ma
 \end{itemize}
 
 
-\chapter{Conclusions and Outlook}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Contributions of the thesis}
+\begin{itemize}
+ \item VCH homogenization of mixed v-p to v suitable for the sintering problem.
+ \item Extending paper A to allow the particly incompressible FE\textsuperscript{2} simulation (paper B).
+ \item VCH of (in)compressible elasticity in mixed u-p formulation.
+  (investigating the influence of homogenized shear modulus w.r.t.\ bulk modulus) (paper C)
+ \item VCH taking into account pores and surface tension. (paper A, B, D),
+  (taking into account for the possibility of anisotropic sintering stress), ()
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Concluding remarks and Future work}
 
 In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented, replacing the traditional macroscopic constitutive models.
 With the new proposed homogenization procedure, we can ensure a seamless transition from the macroscopically compressible to the incompressible response, which is of vital importance when modeling sintering of particle composites.
 
 Through rigorously applying VCH, we can ensure that the obtained multiscale problem is sound, and by further manipulation we can obtain a simpler and still consistent RVE-problem that retains the same strong form as the fine scale problem.
 These manipulations allows for a straight forward FE-implementation.
-The FE\textsuperscript{2} algorithm is freely available in the open source code OOFEM (cf.\ \cite{Patzak2000:OOFEM}) as free software.
+The FE\textsuperscript{2} algorithm is freely available in the open source code OOFEM (cf.\ \cite{patzak_oofem_2000}) as free software.
 
-% 
-% % 3
-% The FE\textsuperscript{2} algorithm has been implemented in the open source code OOFEM (cf. \cite{Patzak2000:OOFEM}).
-% All parts have been implemented with a modular approach, implying that they can be used individually and with other problems.
-% These modules will be available in the future official releases of OOFEM.
-% 
-
-
-For the homogenization procedure, pores on the RVE-boundaries remain complicated. Weakly periodic and Neumann boundary conditions are not applicable, while Dirichlet boundary conditions constrains the closing of pores on the boundary.
+For the homogenization procedure, pores on the RVE-boundaries remain complicated.
+Weakly periodic and Neumann boundary conditions are not applicable, while Dirichlet boundary conditions constrains the closing of pores on the boundary.
 A strongly periodic boundary condition could therefore be a necessity for these RVEs with pores, but makes it considerably harder to (re)generate a mesh.
 
 
@@ -540,5 +552,6 @@ Due to limitations in the remeshing and post-processing software, the microstruc
 While these serve the need for demonstrating the homogenization procedure, they fail to capture a realistic microstructure, particularly that of WC-Co.
 
 An attempt to address the large topological changes have been outlined in \refpaper{A}, but is lacking a robust 3D implementation.
+Alternative methods such as level sets, volume fractions, or particle-FEM could offer a simpler numerical procedure for the fine-scale problem.
 
 \end{document}
