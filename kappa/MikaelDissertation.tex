@@ -40,8 +40,14 @@
 \usepackage{subfig} % Subfloats
 \usepackage{siunitx, contmech}
 \usepackage{amsfonts}
-
 \usepackage{cleveref}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes,arrows}
+% \usetikzlibrary{external}
+% \tikzexternalize[prefix=figures/]
+% \tikzexternalize
 
 % Read the manuals for the respective package to see the usage;
 %\usepackage{pdfpages} % For included other pdf files (like articles).
@@ -105,8 +111,8 @@ Germany
 \oppositiondate{10.00 am, 13\textsuperscript{th} June, 2014 in HA2 Hörsalsvägen 4, Göteborg}
 
 % You should scale the figure according to textwidth and or paperheight.
-\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/ExampleCover}}
-\covercaption{Some explanation}
+%\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/ExampleCover}}
+%\covercaption{Some explanation}
 
 \firstabstract{
 Liquid-phase sintering is the process where a precompacted powder, ``green body'', is heated to the point where (a part of) the solid material melts, and the specimen shrinks while keeping (almost) net shape.
@@ -138,14 +144,27 @@ Numerical examples are shown for different loading scenarios, where the macrosco
 Liquid phase sintering, Incompressibility, Mixed variational formulations, Multiscale, Computational homogenization, FE\textsuperscript{2}
 }
 
-\preface{\lipsum} % You can use \input to put preface and acknowledgements in another document
-\acknowledgements{The research has been funded by the Swedish research council.}
+\preface{\input{Preface.tex}} % You can use \input to put preface and acknowledgements in another document
+%\acknowledgements{The research has been funded by the Swedish research council.}
 %\dedication{\textit{to my dear mother.}}
-\paperwork{}
+\paperwork{
+The appended papers were prepared in collaboration with the co-authors.
+The author of this thesis was responsible for the major progress of the work in preparing the papers, i.e. took part in planning the papers, took part in developing the theory, developed the numerical implementation and carried out the numerical simulations.
+}
 
 % You can add extra contents such as abbreviations and nomenclature using.
 % Use \presectiontitle to render add titles to new sections.
-\extrafrontmatter{\presectiontitle{Nomenclature} \lipsum} % Optional
+\extrafrontmatter{
+\presectiontitle{Nomenclature}
+\begin{itemize}
+ \item[RVE] Representative Volume Element
+ \item[VCH] Variationally Consistent Homogenization
+ \item[$\bullet_\dev$] Subscript d represents deviatoric part of a 2nd order tensor
+ \item[$\bar{\bullet}$] Bar represents macroscopic variables
+ \item[$\bullet^\macro$] Superscript M represents the local prolongation of the macroscopic fields
+ \item[$\bullet^\fluct$] Superscript s represents fluctuation fields
+\end{itemize}
+} % Optional
 
 % Other optional settings for biblatex;
 \DeclareFieldFormat[article]{title}{#1} % Removes quotes from article title
@@ -198,7 +217,7 @@ Liquid phase sintering, Incompressibility, Mixed variational formulations, Multi
 \subfile{Kappa}
 
 %\nocite{*} % Cites everything from the bibliography
-%\printbibliography % This command is new in biblatex. Do not attempt to use style files as with old latex.
+\printbibliography % This command is new in biblatex. Do not attempt to use style files as with old latex.
 
 \part{Appended Papers A--B}
 \paper{\citefield{ohman_computational_2012}{title}}{\fullcite{ohman_computational_2012}}
