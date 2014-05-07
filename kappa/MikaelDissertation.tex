@@ -159,6 +159,7 @@ The author of this thesis was responsible for the major progress of the work in 
 \begin{itemize}
  \item[RVE] Representative Volume Element
  \item[VCH] Variationally Consistent Homogenization
+ \item[VCMC] Variationally Consistent Macrohomogeneity Condition
  \item[$\bullet_\dev$] Subscript d represents deviatoric part of a 2nd order tensor
  \item[$\bar{\bullet}$] Bar represents macroscopic variables
  \item[$\bullet^\macro$] Superscript M represents the local prolongation of the macroscopic fields
@@ -183,6 +184,21 @@ The author of this thesis was responsible for the major progress of the work in 
   \usebibmacro{issue}%
   \newunit}
 % End of optional citation modifications.
+
+\DeclareFieldFormat{url}{%
+  \iffieldundef{doi}{%
+    \mkbibacro{URL}\addcolon\space\url{#1}%
+  }{%
+  }%
+}
+
+\DeclareFieldFormat{urldate}{%
+  \iffieldundef{doi}{%
+    \mkbibparens{\bibstring{urlseen}\space#1}%
+  }{%
+  }%
+}
+\renewcommand{\bibfont}{\normalfont\small}
 
 \addbibresource{Multiscale.bib} % New command, use if available
 \addbibresource{Sintering.bib}
@@ -216,7 +232,6 @@ The author of this thesis was responsible for the major progress of the work in 
 \part{Extended Summary} % Using the starred command avoids numbering.
 \subfile{Kappa}
 
-%\nocite{*} % Cites everything from the bibliography
 \printbibliography % This command is new in biblatex. Do not attempt to use style files as with old latex.
 
 \part{Appended Papers A--B}
