@@ -43,7 +43,6 @@ Primarily, this relates to the constitutive modeling of
 Modeling efforts can be classified by two major paradigms: \emph{a priori macroscale modeling} and \emph{micromechanics modeling and computational homogenization}.
 
 \subsection{Macroscale modeling}
-\textbf{update!}
 
 A vast majority of the existing literature on \emph{a priori} macro-scale modeling is devoted to the compaction stage, and it is noted that very few (if any) attempts have been made to develop a unifying macroscopic constitutive model for the compaction and sintering stages.
 As to the compaction process, material rate-independence (elasto-plasticity) is a common (and valid) assumption.
@@ -58,6 +57,9 @@ The task of providing a rational thermodynamic definition of the sintering stres
 
 As to liquid phase sintering, the text-book by German \cite{german_sintering_1996} is still an authority in the field.
 Examples of the rich literature are Svoboda et al.\ \cite{svoboda_model_1996}, Xu and Mehrabahdi \cite{xu_micromechanical_1997}, Lu et al.\ \cite{lu_porosity_2001}, who used a single-phase approach.
+In work by Olevsky and German \cite{olevsky_theory_1998}, \cite{olevsky_effect_2000} we find the modeling of sintering by linear viscous material law.
+
+Common in these macroscopic models are of course the need to calibrate material parameters from experimental data, which diminishes the predictive capabilities.
 
 % To date, it seems that no attempts have been made in the literature to use mixture theory, which explicitly acknowledges the coexistence of a solid skeleton of the WC-particles and partly solidified and liquid Co.
 
@@ -65,6 +67,7 @@ Examples of the rich literature are Svoboda et al.\ \cite{svoboda_model_1996}, X
 
 Most micromechanically based models consider idealized geometrical arrangement, such as a regular array of spheres, within a Representative Volume Element (RVE).
 One common approach is to consider grain boundary diffusion, e.g. Helle, et al.\ \cite{helle_hot-isostatic_1985}, McMeeking and Kuhn \cite{mcmeeking_diffusional_1992}, Riedel and Svoboda \cite{riedel_theoretical_1993} and Shinagawa \cite{shinagawa_finite_1996} and particle bridging via diffusion, e.g. Svoboda and Riedel \cite{svoboda_new_1995}, Bient \cite{bient_modeling_2004}, Luque et al.\ \cite{luque_simulation_2005}, as the principal mechanisms for densification.
+\textbf{REFERENS TILL LEVELSET+SINTRING HÄR}
 % TODO: Really?
 Some attempts have been made too include more realistic microstructural arrangements and carry out computational homogenization to obtain response functions, e.g. Mähler and Runesson \cite{mahler_modelling_2000}.
 
