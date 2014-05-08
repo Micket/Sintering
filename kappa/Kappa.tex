@@ -67,7 +67,7 @@ Common in these macroscopic models are of course the need to calibrate material 
 
 Most micromechanically based models consider idealized geometrical arrangement, such as a regular array of spheres, within a Representative Volume Element (RVE).
 One common approach is to consider grain boundary diffusion, e.g. Helle, et al.\ \cite{helle_hot-isostatic_1985}, McMeeking and Kuhn \cite{mcmeeking_diffusional_1992}, Riedel and Svoboda \cite{riedel_theoretical_1993} and Shinagawa \cite{shinagawa_finite_1996} and particle bridging via diffusion, e.g. Svoboda and Riedel \cite{svoboda_new_1995}, Bient \cite{bient_modeling_2004}, Luque et al.\ \cite{luque_simulation_2005}, as the principal mechanisms for densification.
-\textbf{REFERENS TILL LEVELSET+SINTRING HÄR}
+In recent work by Pino-Muñoz et al.\ \cite{pino_munoz_direct_2013}, sintering of multiple spherical particles are based on a level-set description and accounts for volume and surface diffusion.
 % TODO: Really?
 Some attempts have been made too include more realistic microstructural arrangements and carry out computational homogenization to obtain response functions, e.g. Mähler and Runesson \cite{mahler_modelling_2000}.
 
@@ -147,7 +147,7 @@ In the simplest case of viscous fluid, we have $\hat{\ts{\sigma}}_\dev(\ts{d}_\d
 Moreover, intrinsic incompressibility is defined as $\hat{e}(p)=0$ for any value of $p$.
 In the case of flow problems, $C = 0$ is the only reasonable choice, however, the more general form is kept to illustrate the similarity between the fine-scale and macro-scale problem.
 
-In this setting, the instantaneous velocity in a Lagragian setting is solved for at any given time, and explicit time-integration is used to drive the deformations.
+In this setting, the instantaneous velocity in a Lagrangian setting is solved for at any given time, and explicit time-integration is used to drive the deformations.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
@@ -493,7 +493,7 @@ However, by rewriting the problem and always connect the scales through the RVE-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Numerical aspects}
 
-In \refpaper{B--C} the macroscale problems, as shown in \cref{eq:prototype_macro}, will also require stabilization and the Taylor-Hood elements are is the obvious choice.
+In \refpaper{B}--\refpaper{C} the macroscale problems, as shown in \cref{eq:prototype_macro}, will also require stabilization and the Taylor-Hood elements are is the obvious choice.
 While computationally much more expensive than traditional macroscopic material models, the FE\textsuperscript{2} procedure allows for trivial parallelization w.r.t.\ macroscale integration points.
 
 
@@ -588,13 +588,14 @@ The FE\textsuperscript{2}-format for the weakly periodic boundary condition is s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Contributions of the thesis}
 \begin{itemize}
- \item VCH homogenization of mixed v-p to v suitable for the sintering problem.
- \item Application of surface tracking algorithm and remeshing strategy suitable for free surface flows.
- \item Extending paper A to allow the particly incompressible FE\textsuperscript{2} simulation (paper B).
- \item VCH of (in)compressible elasticity in mixed u-p formulation.
-  (investigating the influence of homogenized shear modulus w.r.t.\ bulk modulus) (paper C)
- \item VCH taking into account pores and surface tension. (paper A, B, D),
-  (taking into account for the possibility of anisotropic sintering stress), ()
+ \item In \refpaper{A} and the extension in \refpaper{B}, we find the first variationally consistent multiscale problem for sintering.
+   In \refpaper{B} the procedure is extended into the macroscopically incompressible regime. Numerical investigations show how the pore shape strongly influences the ``sintering stress''.
+ \item To deal with large topological changes in the RVE-problems, a surface tracking algorithm capable of tracking multiple phases, allowing for vanishing pores, and tracking multiple regions for boundary conditions, was implemented for \refpaper{A}. 
+   This allows for the Lagrangian mesh to follow the free surface flow of the sintered particles to the point of vanishing porosity, as the FE\textsuperscript{2}-simulations in \refpaper{B} demonstrates.
+ \item In \refpaper{C}, VCH is applied to elasticity in mixed $(\ta u,p)$-formulation for the first time.
+  Numerical examples investigate the influence of bulk modulus of constituents (to the point of macroscopic incompressibility) on the homogenized shear modulus.
+ \item Finalizing the thesis with \refpaper{D}, we find VCH applied to mixed formulation, allowing for incompressibility and existence of pore space with surface tension.
+   The weakly periodic, Dirichlet, and Neumann boundary conditions for the RVEs are derived for the first time.
 \end{itemize}
 
 
