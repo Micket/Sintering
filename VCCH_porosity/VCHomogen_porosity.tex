@@ -1232,9 +1232,8 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
 
 \begin{figure}[H]
  \centering
- PLACEHOLDER
- %\includegraphics[height=0.4\linewidth]{figures/rve_3d}
- %\includegraphics[height=0.4\linewidth]{figures/rve_3d_half}
+ \includegraphics[height=0.3\linewidth]{figures/eightspheres}
+ \includegraphics[height=0.3\linewidth]{figures/eightspheres_cut}
  \caption{Initial state of 3D RVE with middle cross-section visible (right).}
  \label{fig:rve_3d}
 \end{figure}
@@ -1242,24 +1241,38 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
 
 \begin{figure}[H]
  \centering
- PLACEHOLDER
- %\includegraphics[width=0.4\linewidth]{figures/rve_3d_dirichlet}
- %\includegraphics[width=0.4\linewidth]{figures/rve_3d_periodic}
- %\includegraphics[width=0.4\linewidth]{figures/rve_3d_neumann}
- \caption{3D RVE subject to pure shear}
+ \includegraphics[width=0.3\linewidth]{figures/eightspheres_d_shear}
+ \includegraphics[width=0.3\linewidth]{figures/eightspheres_p_shear}
+ \includegraphics[width=0.3\linewidth]{figures/eightspheres_n_shear}
+ \caption{3D RVE subject to pure shear. Boundary conditions are in order; Dirichlet, weakly Periodic, and Neumann}
  \label{fig:rve_3d_deformed}
 \end{figure}
+
+\begin{table}[H]
+ \centering
+
+% # IST_DeviatoricStress, IST_Viscosity
+% 6  0.000474658 0.00255358 -0.00302823  -0.000295588 -0.00137175   0.00186331 1 4.02824 % Dirichlet
+% 6 -0.00144386  0.00113675  0.0013641    0.00308251   0.000218519 -0.00177107 1 3.44272 % Neumann
+% 6 -0.00144378  0.000604311 0.000839466 -0.00175045  -7.27793e-05  0.00321311 1 0.440223 % Periodic
+
+ %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
+ %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
+ \caption{Homogenized values from the unit-cell 3D RVE subject to free sintering at time zero}
+ \label{tab:rve_3d_homog}
+\end{table}
+
 
 \begin{figure}[H]
  \centering
- PLACEHOLDER
- %\includegraphics[width=0.4\linewidth]{figures/rve_3d_dirichlet}
- %\includegraphics[width=0.4\linewidth]{figures/rve_3d_periodic}
- %\includegraphics[width=0.4\linewidth]{figures/rve_3d_neumann}
- \caption{3D RVE subject to pure shear}
- \label{fig:rve_3d_deformed}
+PLACEHOLDER
+ %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
+ %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
+ \caption{3D RVE of Dirichlet (left) and Neumann (right) type subject to free sintering}
+ \label{fig:rve_3d_final}
 \end{figure}
 
+In \cref{fig:rve_3d_deformed} displacements of an RVE can be seen exaggerated and we can see that Neumann boundary condition is a close approximation of the weakly periodic boundary condition for this type of RVE.
 
 
 
