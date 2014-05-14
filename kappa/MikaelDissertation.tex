@@ -120,10 +120,9 @@ In the case of hardmetal, the microstructure is defined by WC-Co-particles with 
 In the ideal case, a fully dense material is achieved when the sintering is completed.
 The ``driving force'' of the sintering procedure is surface tension along the free surfaces, i.e. Co-pore interfaces.
 In this thesis, the intrinsic deformation of both the solid phase and the melt phase is modeled as the creeping flow of the Stokes’ type, whereby elastic deformation is ignored.
-The macroscopic properties are derived via computational homogenization that utilizes a highly idealized mesostructure within each Representative Volume Element (RVE).
-2D RVE’s are used predominantly; however, 3D-mesostructures are also analyzed.
 
-Within the FE\textsuperscript{2} algorithmic setting, the homogenization is carried out in standard fashion at the Gaussian integration points in the macroscale FE-mesh.
+The macroscopic properties are derived via computational homogenization that utilizes a highly idealized mesostructure within each Representative Volume Element (RVE).
+2D RVE’s are used predominantly; however, 3D-mesostructures are also analyzed. Within the FE\textsuperscript{2} algorithmic setting, the homogenization is carried out at the Gaussian integration points in the macroscale FE-mesh.
 This allows for the investigation of properties that are not easily captured with traditional macroscopic constitutive models, which inevitably would become highly complex with many material parameters that lack physical interpretation.
 
 The finite element mesh of the RVE becomes heavily deformed as the surface tension pulls the particles closer; hence, it was necessary to develop a surface tracking method with remeshing.
@@ -164,6 +163,10 @@ The author of this thesis was responsible for the major progress of the work in 
  \item[$\bar{\bullet}$] Bar represents macroscopic variables
  \item[$\bullet^\macro$] Superscript M represents the local prolongation of the macroscopic fields
  \item[$\bullet^\fluct$] Superscript s represents fluctuation fields
+ \item[$\hat{\bullet}$] Hat denotes a constitutive law
+ \item[$f\{\bullet\}$] Curly brackets are used for implicit functions
+ \item[$\homgen{\bullet}$] Volume average
+ \item[$\shomgen{\bullet}$] Volume average of pore surface
 \end{itemize}
 } % Optional
 

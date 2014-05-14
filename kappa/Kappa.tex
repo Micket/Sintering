@@ -57,7 +57,7 @@ The task of providing a rational thermodynamic definition of the sintering stres
 
 As to liquid phase sintering, the text-book by German \cite{german_sintering_1996} is still an authority in the field.
 Examples of the rich literature are Svoboda et al.\ \cite{svoboda_model_1996}, Xu and Mehrabahdi \cite{xu_micromechanical_1997}, Lu et al.\ \cite{lu_porosity_2001}, who used a single-phase approach.
-In work by Olevsky and German \cite{olevsky_theory_1998}, \cite{olevsky_effect_2000} we find the modeling of sintering by a linear viscous material law.
+In the work by Olevsky and German \cite{olevsky_theory_1998}, \cite{olevsky_effect_2000} we find the modeling of sintering by a linear viscous material model.
 
 Common in these macroscopic models are of course the need to calibrate material parameters from experimental data, which diminishes the predictive capabilities.
 
@@ -147,11 +147,7 @@ In the simplest case of viscous fluid, we have $\hat{\ts{\sigma}}_\dev(\ts{d}_\d
 Moreover, intrinsic incompressibility is defined as $\hat{e}(p)=0$ for any value of $p$.
 In the case of flow problems, $C = 0$ is the only reasonable choice, however, the more general form is kept to illustrate the similarity between the fine-scale and macro-scale problem.
 
-In this setting, the instantaneous velocity in a Lagrangian setting is solved for at any given time, and explicit time-integration is used to drive the deformations.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-\section{Surface tension}
+In this setting, the instantaneous velocity is solved for at any given time, and explicit time-integration is used to drive the deformations.
 
 \begin{figure}[th!]
     \centering
@@ -175,9 +171,6 @@ For an isotropic surface potential one obtains $\hat{\ts\sigma} = \gamma_\surf[\
 \end{align}
 where $\kappa$ is the Gaussian curvature.
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-\section{Weak format of fine scale problem}
 We are now in the position to formulate the strong format of the fine-scale problem under standard quasistatic conditions:
 %------------------------------------------------------------------------------------------------------------
 \begin{subequations}\label{eq1}
@@ -223,6 +216,7 @@ where
     l(\ta{v}) &\defeq \int_{\Omega^\particle} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
 \label{eq3e}
 \end{align}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -275,6 +269,7 @@ Only the updated surfaces needs to be tracked, but that alone is a considerable 
 \centering
 \begin{tikzpicture}
  \node at (0,0) {\includegraphics[scale=0.6]{figures/Homogenization.pdf}};
+ \draw[latex-] (1.35,1.5) -- +(-0.5,0) node[left] {$\Gamma_\rve$};
  \node at (2.5,1.5) {RVE};
  \node at (-2.5,-2.2) {Fine-scale};
  \node at (2.5,-2.2) {Macroscale};
@@ -288,215 +283,304 @@ Only the updated surfaces needs to be tracked, but that alone is a considerable 
 \label{fig:homogenization}
 \end{figure}
 
-
-As the amount of detail in the in the fine scale problem exceeds the computational, we must use homogenization. 
+As the amount of detail in the in the fine scale problem exceeds the computational, we must use homogenization.
 Variationally Consistent Homogenization (VCH) will be used to obtain the two-scale problem, as illustrated in \cref{fig:homogenization}.
-By applying a split of both $\ta v$ and $p$ (not the only possible choice, as can be seen in \refpaper{A}) we then choose suitable definitions of the macroscopic response variables $\bar{\ts\sigma}_\dev$ and $\bar{e}$ in order to obtain a macroscopic problem as follows
-\begin{subequations}\label{eq:prototype_macro}
-\begin{alignat}{2}
- -[\bar{\ts\sigma}_\dev\{\devop[\bar{\ta v}], \bar{p}\} -\bar{p}\ts I]\cdot\diff &= \bar{\ta f} &&\text{ in } \Omega
+A general review of VCH can be found in Appendix A in \refpaper{C}.
+With the presence of pores, the volume average used is defined as
+\begin{align}
+ \homgen{\bullet} \defeq \frac{1}{\volume} \int_{\Omega_\rve^\particle} \bullet \dif V,\quad \Omega_\rve^\particle \defeq \Omega_\rve \cap \Omega^\particle
 \\
- -\bar{\ta v}\cdot\diff + \bar{e}\{\devop[\bar{\ta v}], \bar{p}\} &= 0 &&\text{ in } \Omega
+ \shomgen{\bullet} \defeq \frac{1}{\volume} \int_{\Gamma^\pore_\rve} \bullet \dif S,\quad \Gamma^\pore_\rve \defeq \Omega_\rve \cap \Gamma^\pore
+\end{align}
+where $\Omega_\rve$ is the window of the RVE.
+
+At the core of VCH is the hierarchical split of the unknown primary fields.
+In the present case we have two fields, $\ta v$ and $p$, which we decompose into fluctuations and macroscopic parts $\ta v = \ta v^\macro + \ta v^\fluct$ and $p = p^\macro + p^\fluct$.
+
+In \refpaper{A}, the chosen split was defined by the first order Taylor expansion of the velocity field, and no macroscale pressure, i.e.
+\begin{align}
+ \ta v^\macro &= \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
+\\
+ p^\macro &= 0
+\end{align}
+and requirements for the fluctuations that in each RVE
+\begin{align}
+ \frac{1}{\volume} \int_{\Gamma_\rve} \ta v\outerp\diff \dif S &= \bar{\ta v}\outerp\diff
+% \\
+%  \homgen{p} &= 0 ??????????????? CHECK!
+\end{align}
+Following this, one obtains a macroscale problem as follows
+\begin{subequations}\label{eq:prototype_macro_A}
+\begin{alignat}{2}
+ -\bar{\ts\sigma}\{[\bar{\ta v}\outerp\diff]^\sym\}\cdot\diff &= \bar{\ta f} &&\text{ in } \Omega
+\label{eq:macro_A_a}
 \\
  \bar{\ta v} &= \bar{\ta v}_\prescribed &&\text{ on } \Gamma_\Dirichlet
+\label{eq:macro_A_c}
 \\
  \bar{\ta t} &= \bar{\ta t}_\prescribed &&\text{ on } \Gamma_\Neumann
+\label{eq:macro_A_d}
 \end{alignat}
 \end{subequations}
+where $\bar{\ts\sigma}$ is the homogenized response (derived by VCH) from the RVE-problem.
+It is worth mentioning that only the velocity exists as a primary field at the macroscale.
+With \refpaper{B}, purely algebraic manipulation was used to rewrite the system of equations and doing so leads to exactly the problem in \cref{eq:prototype_macro}.
+This step is necessary, as \cref{eq:prototype_macro_A} breaks down at the incompressible limit, i.e.\ when all pores have vanished in any macroscopic point.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Variationally Consistent Homogenization (VCH)}
-
-Throughout all included papers, the VCH method has been applied.
-We introduce the abbreviated notation $z = (\ta v, p) \in \set{Z} = \set V \times \set P$, where $\set Z$ represents the space of fine-scale (non-homogenized) solutions.
-Similarly, $\set Z^0 = \set V^0 \times \set P$ is the test space and where each $\ta v\in \set V^0$ vanishes on the Dirichlet part of the boundary.
-
-The abstract formulation of a multifield problem based on a given set of balance (or constraint) equations may conveniently be abbreviated in abstract form as the residual equation
-%-------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
- R(z; \delta z) \defeq R_\Omega(z; \delta z) + R_\Gamma(z;\delta z) = 0\quad \forall\;\delta z\in \set Z^0
-\label{eq:A1}
-\end{align}
-VCH is applied in all appended papers.
-No explicit reference to the specific character of the underlying problem is made in this section.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{VMS-approach -- Scale separation and homogenization}
-
-Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), cf.\ \cite{hughes_variational_1998}, \cite{larson_adaptive_2007}.
-
-%-------------------------------------------------------------------------------------------------------------------------------
-
-A multiscale formulation of \cref{eq:A1} is defined by the hierarchical split $\set Z = \set Z^\macro \oplus \set Z^\fluct$, where $\set Z^\macro$ contains smooth macroscale functions and $\set Z^\fluct$ is the hierarchical complement of $\set Z^\macro$ that, typically, represents the fine-scale features.
-It is assumed that each $z\in \set Z$ can be split uniquely as $z = z^\macro + z^\fluct$ such that $z^\macro \in \set Z^\macro$ and $z^\fluct \in \set Z^\fluct$.
-Therefore, solve $z^\macro \in \set Z^\macro$, $z^\fluct \in \set Z^\fluct$ such that \cref{eq:A1} can be represented by the set of equations
-%------------------------------------------------------------------------------------------------------------------------------------------------
-\begin{subequations}\label{eq:A2}
-\begin{alignat}{3}
-\label{eq:A2a} & R(z^\macro + z^\fluct; \delta z^\macro) &&= 0 \quad &&\forall\;\delta z^\macro \in \set Z^{\macro,0}\\
-\label{eq:A2b} & R(z^\macro + z^\fluct; \delta z^\fluct) &&= 0       &&\forall\;\delta z^\fluct \in \set Z^{\fluct}
-\end{alignat}
-\end{subequations}
-%-----------------------------------------------------------------------------------------------------------------------------
-Without introducing further assumptions (approximations), the dimension of the original problem has not changed, i.e.\ \cref{eq:A2} represent two global problems whose solution requires the same computational effort as does \cref{eq:A1}.
-In order to reduce the problem dimension based on homogenization (via the assumption of scale separation), we introduce the following key assumptions:
-
-\begin{itemize}
-\item The integrands in the pertinent volume integrals are replaced by a running volume average on RVE's
-such that, typically, the residual in \cref{eq:A2a} can be rewritten in terms of the contributions defined on each RVE as
-%--------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A106} R_\Omega(z;\delta z) = \int_\Omega R_\rve(z;\delta z)(\bar{\ta x})\dif\Omega
-\end{align}
-%--------------------------------------------------------------------------------------------------------------------------
-where $R_\rve$ is the RVE-residual that is localized to the Representative Volume Element (RVE).
-In practice (in FE-analysis), quadrature is used such that the evaluation of $R_\rve$ is carried out only in the Gauss points.
-
-Furthermore, for the sake of simplicity we assume smoothness of boundary terms, such that $R_\Gamma(z; \delta z^\macro) \approx R_\Gamma(z^\macro;\delta z^\macro)$, i.e.\ no boundary homogenization is necessary.
-
-\item Local approximations for the fluctuation field $z^\fluct$ are introduced in the spirit of VMS.
-This means that $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}\in\set{Z}_\rve^{\fluct}$ is the \emph{approximate} solution of the fine-scale 
-equation \cref{eq:A2b} for given $z^\macro$, i.e.\ \cref{eq:A2b} is replaced by ``closed'' RVE-problems (in the macroscale quadrature points) associated with a particular choice of boundary conditions on $\Omega_\rve$.
-%In this paper we obtain such ``closed'' RVE-problems by choosing  weakly periodic boundary conditions.
-\end{itemize}
-Returning to \cref{eq:A2a}, we now replace this problem by the approximate, homogenized, problem
-%---------------------------------------------------------------------------------------------------------------------------------------------
-\begin{multline}
-\label{eq:A3} R(z^\macro+\tilde{z}^\fluct\{z^\macro\};\delta z^\macro) = \int_\Omega R_\rve(z^\macro+\tilde{z}^\fluct\{z^\macro\};\delta z^\macro)(\bar{\ta x})\dif\Omega
- \\
- + R_\Gamma(z^\macro, \delta z^\macro) = 0 \quad \forall\;\delta z^\macro \in \set Z^{\macro,0}
-\end{multline}
-%--------------------------------------------------------------------------------------------------------------------------------
-which has the same dimension as \cref{eq:A2a}.
-We note that \cref{eq:A3} represents a valid homogenization problem for any given choice of $\set{Z}_\rve^{\fluct}$; however, to preserve typical Galerkin properties, such as symmetry of the macroscale tangent operator when such symmetry is inherent in the underlying fine-scale problem, it is crucial to satisfy the VCMC.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Variationally Consistent Macrohomogeneity Condition (VCMC)}
-
-We shall assume that there exists a potential $\Pi(z)$ such that \cref{eq:A3} represents the stationary point of $\Pi(z)$, i.e.\ it is assumed that
-%---------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A4} R(z;\delta z) = \Pi'(z;\delta z) \defeq \frac{\dif}{\dif\epsilon}\Pi(z+\epsilon\delta z)|_{\epsilon = 0} = 0\quad \forall\;\delta z \in \set Z^0
-\end{align}
-%------------------------------------------------------------------------------------------------------
-Next, we introduce the crucial \emph{approximation} (restriction) $z \approx z^\macro + \tilde{z}^\fluct\{z^\macro\}$ before evaluation of the stationarity conditions, whereby we obtain
-%---------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A5} \Pi_{z^\macro}'\{z^\macro;\delta z^\macro\} & \defeq
-\frac{\dif}{\dif\epsilon}\Pi(z^\macro+\epsilon \delta z^\macro+\tilde{z}^\fluct\{z^\macro+\epsilon \delta z^\macro\})|_{\epsilon = 0} \nonumber \\
-& =
-R(z^\macro + \tilde{z}^\fluct\{z^\macro\}; \delta z^\macro + (\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}) = 0\quad \forall\;\delta z^\macro\in\set Z^{\macro,0}
-\end{align}
-%------------------------------------------------------------------------------------------------------------------------------------------
-where $(\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}$ denotes the sensitivity (or directional derivative) of $\tilde z^\fluct$ for a variation $\delta z^\macro$ of the macroscale solution $z^\macro$.
-Hence, the choice of test function in \cref{eq:A5} is restricted as compared to \cref{eq:A4}, and this restriction represents a ``generalized Galerkin property'' in terms of the underlying macroscale functions in $\set Z^\macro$.
-Moreover, and most importantly, \cref{eq:A5} is completely equivalent to the homogenized problem \cref{eq:A3} if it is possible, for any given $z^\macro\in\set Z^{\macro}$, to satisfy the constraint
-%---------------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A6a} R(z^\macro + \tilde z^\fluct\{z^\macro\}; (\tilde{z}^\fluct)'\{z^\macro;\dif z^\macro\}) = 0\quad \forall\;\dif z^\macro\in\set Z^{\macro,0}(z^\macro)
-\end{align}
-%-------------------------------------------------------------------------------------------------------------------------------------------------
-or, equivalently,
-%---------------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A6b} R(z^\macro + \tilde z^\fluct\{z^\macro\}; \dif\tilde{z}^\fluct) = 0\quad \forall\;\dif\tilde{z}^\fluct\in\tilde{\set Z}'^{\fluct}(z^\macro)
-\end{align}
-%-------------------------------------------------------------------------------------------------------------------------------------------------
-where the test space $\tilde{\set Z}'^{\fluct}(z^\macro)$, which is the tangent space to the approximation space, is defined as
-%----------------------------------------------------------------------------------------------------------------
-\begin{align}
-    \tilde{\set{Z}}'^{\fluct}(z^\macro)\defeq\{\set{Z}^\fluct\ni \dif z^\fluct = (\tilde{z}^\fluct)'\{z^\macro;\dif z^\macro\},\,
-    \dif z^\macro\in \set{Z}^{\macro,0}\}
-\label{eq:A6c}
-\end{align}
-%----------------------------------------------------------------------------------------------------------------------
-Hence, any $\dif \tilde{z}^\fluct\in\tilde{\set{Z}}'^{\fluct}(z^\macro)$ is a sensitivity of the fluctuation field $\tilde{z}^\fluct$ for a differential change of the macroscale field $z^\macro$ within the considered RVE.
-It is computed from the tangent problem that is associated with the RVE-problem.
-We refer to \cref{eq:A6a} or \cref{eq:A6b} as a ``Variationally Consistent (generalized) Macrohomogeneity Condition'' (VCMC).
-Obviously, a sufficient condition for these identities to hold true is to require the RVE-residual to vanish on each RVE (in each quadrature point), i.e.\ to ensure that
-%--------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A8} R_\rve(z^\macro + \tilde z^\fluct\{z^\macro\};(\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}) = 0\quad \forall\;z^\macro,\delta z^\macro\in\set Z^{\macro}|_{\Omega_\rve}\times\set Z^{\macro,0}|_{\Omega_\rve}
-\end{align}
-%----------------------------------------------------------------------------------------------------------------------------------------------
-An even stronger condition is to require that $R_\rve(z;\delta z^\fluct) = 0$ for \emph{any} $\delta z^\fluct$ in a given set of functions that is defined locally for the considered RVE without requiring any implicit (or explicit) 
-coupling to the sensitivity field $(\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}$, which obviously defines a restricted choice of test functions.
-In such a case, the VCMC can be identified as precisely the classical Hill-Mandel macrohomogeneity condition.
-
-Finally, we remark that the VCMC ensures that the macroscale tangent operator becomes symmetrical, since it holds that
-%---------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A9} R'(z;\delta z_1,\delta z_2) = \Pi''(z;\delta z_1,\delta z_2) \defeq \frac{\dif}{\dif\epsilon}\Pi'(z+\epsilon\delta z_2;\delta z_1)|_{\epsilon=0}\quad \forall\;\delta z_1,\delta z_2 \in \set Z^0
-\end{align}
-%------------------------------------------------------------------------------------------------------
-With the introduced approximation $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}$, the test functions in \cref{eq:A9} are chosen as
-%---------------------------------------------------------------------------------------------------------------------------------------
-\begin{align}
-\label{eq:A10} \delta z_i \approx \delta z_i^\macro + (\tilde{z}^\fluct)'\{z^\macro;\delta z_i^\macro\} \quad \forall\;\delta z_i^\macro\in\set Z^{\macro,0}, \,\, i=1,2
-\end{align}
-%------------------------------------------------------------------------------------------------------------------------------------------
-
-\section{Choice of the hierarchical split}
-The common theme throughout the series articles is the treatment of macroscopic incompressibility.
-In \refpaper{A}, the split ($\ta v = \ta v^\macro + \ta v^\fluct$) was only introduced to the velocity field, while the for the incompressibility condition was solved in each RVE independently (i.e.\ $p^\macro = 0$, $p = p^\fluct$).
-By choosing to do so, only the momentum balance equation is obtained at the macroscopic level.
-In the RVE problem the constraints are placed for a unique decomposition, e.g.\ $\homgen{\ta v \outerp\diff} = \bar{\ta v}\outerp\diff$ (or equivalently $\homgen{\ta v^\fluct\outerp\diff} = \ts 0$) for a first order expansion of the velocity field.
-However, at the incompressible limit, when all microconstituents are intrinsically incompressible and no pore space exist, it is necessary to satisfy part of this constraint weakly.
-In \refpaper{B} this is done by algebraic manipulation of the FE\textsuperscript{2} procedure derived in \refpaper{A}, while in \refpaper{C} and \refpaper{D} this is obtained directly as part of the homogenization procedure.
-
-
-For an RVE with no pores or surface tension, as in \refpaper{C}, the prolongation of the macroscopic fields $\bar{\ta v}$ (or equivalently $\bar{\ta u}$) and $\bar{p}$ are as expected;
-First order Taylor expansion of the velocity field, and zeroth order expansion for the pressure field
+In \refpaper{C}, first order Taylor expansion of the velocity (or displacement) field, and zeroth order expansion for the pressure field
 \begin{align}
  \ta v^\macro &= \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
 \\
  p^\macro &= \bar{p}
 \end{align}
-where we require that in each RVE
+and requirements for the fluctuations that in each RVE
 \begin{align}
  \homgen{\ta v\outerp\diff} &= \bar{\ta v}\outerp\diff
 \\
  \homgen{p} &= \bar{p}
 \end{align}
-
-However, in the case when pores and surface tension are present, as in \refpaper{D}, it is necessary to carefully choose the prolongation in such a way that we obtain the desired (simple) macroscale formulation:
+This leads to a macroscale problem
+\begin{subequations}\label{eq:prototype_macro}
+\begin{alignat}{2}
+ -[\bar{\ts\sigma}_\dev\{\devop[\bar{\ta v}], \bar{p}\} -\bar{p}\ts I]\cdot\diff &= \bar{\ta f} &&\text{ in } \Omega
+\label{eq:macro_a}
+\\
+ -\bar{\ta v}\cdot\diff + \bar{e}\{\devop[\bar{\ta v}], \bar{p}\} &= 0 &&\text{ in } \Omega
+\label{eq:macro_b}
+\\
+ \bar{\ta v} &= \bar{\ta v}_\prescribed &&\text{ on } \Gamma_\Dirichlet
+\label{eq:macro_c}
+\\
+ \bar{\ta t} &= \bar{\ta t}_\prescribed &&\text{ on } \Gamma_\Neumann
+\label{eq:macro_d}
+\end{alignat}
+\end{subequations}
+where $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are the homogenized response variables (derived by VCH) from the RVE-problem.
+The intentional similarity of \eqref{eq:prototype_macro} and \eqref{eq1a}--\eqref{eq1d} is emphasized.
+However, in the case when pores and surface tension are present, as in \refpaper{D}, it is necessary to choose the prolongation in such non-standard fashion
 \begin{align}
  \ta v^\macro = \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
+\label{eq:vm_d}
 \\
  p^\macro = \frac{\volume}{|\Omega_\rve^\particle|}[\bar{p} + \frac23\shomgen{\gamma_\surf}]
+\label{eq:pm_d}
 \end{align}
-where we now require that in each RVE
+and the requirements for the fluctuations in each RVE
 \begin{align}
- \int_{\Gamma_\rve}\ta v\outerp\ta n\dif S = \bar{\ta v}\outerp\diff
+ \frac{1}{\volume}\int_{\Gamma_\rve}\ta v\outerp\ta n\dif S = \bar{\ta v}\outerp\diff
+\label{eq:avg_v_d}
 \\
  \homgen{p} - \frac23\homgen{\gamma_\surf} = \bar{p}
+\label{eq:avg_p_d}
 \end{align}
-However, by rewriting the problem and always connect the scales through the RVE-boundary, we obtain a simple relation that holds true both \refpaper{C} and \refpaper{D};
-\begin{align}
- \frac{1}{\volume}\int_{\Gamma_\rve}\ta v\outerp\ta n\dif S &= \bar{\ta v}\outerp\diff
-\\
- \frac{1}{\volume}\int_{\Gamma_\rve}\ta t\outerp[\ta x-\bar{\ta x}]\dif S &= \bar{\ts\sigma} \implies \int_{\Gamma_\rve}\ta t\cdot[\ta x-\bar{\ta x}]\dif S = \bar{p}
-\end{align}
+With these choices, we maintain the macroscale problem as \cref{eq:prototype_macro}, as shown in the derivations in \refpaper{D}.
 
+When using VCH, one typically also wish to preserve Galerkin properties, such as symmetry of the macroscale tangent operators. Therefore, is crucial to also satisfy the Variationally Consitent Macrohomogeneity Condition (VCMC) in each RVE-problem.
+In the appended papers, a stricter form of VCMC is satisfied, and it can in this form be recognized as the Hill-Mandel condition.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Variationally Consistent Homogenization (VCH)}
+% 
+% We introduce the abbreviated notation $z = (\ta v, p) \in \set{Z} = \set V \times \set P$, where $\set Z$ represents the space of fine-scale (non-homogenized) solutions.
+% Similarly, $\set Z^0 = \set V^0 \times \set P$ is the test space and where each $\ta v\in \set V^0$ vanishes on the Dirichlet part of the boundary.
+% 
+% The abstract formulation of a multifield problem based on a given set of balance (or constraint) equations may conveniently be abbreviated in abstract form as the residual equation
+% %-------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+%  R(z; \delta z) \defeq R_\Omega(z; \delta z) + R_\Gamma(z;\delta z) = 0\quad \forall\;\delta z\in \set Z^0
+% \label{eq:A1}
+% \end{align}
+% VCH is applied in all appended papers.
+% No explicit reference to the specific character of the underlying problem is made in this section.
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{VMS-approach -- Scale separation and homogenization}
+% 
+% Classical model-based homogenization can be formulated in the spirit of the Variational MultiScale method (VMS), cf.\ \cite{hughes_variational_1998}, \cite{larson_adaptive_2007}.
+% 
+% %-------------------------------------------------------------------------------------------------------------------------------
+% 
+% A multiscale formulation of \cref{eq:A1} is defined by the hierarchical split $\set Z = \set Z^\macro \oplus \set Z^\fluct$, where $\set Z^\macro$ contains smooth macroscale functions and $\set Z^\fluct$ is the hierarchical complement of $\set Z^\macro$ that, typically, represents the fine-scale features.
+% It is assumed that each $z\in \set Z$ can be split uniquely as $z = z^\macro + z^\fluct$ such that $z^\macro \in \set Z^\macro$ and $z^\fluct \in \set Z^\fluct$.
+% Therefore, solve $z^\macro \in \set Z^\macro$, $z^\fluct \in \set Z^\fluct$ such that \cref{eq:A1} can be represented by the set of equations
+% %------------------------------------------------------------------------------------------------------------------------------------------------
+% \begin{subequations}\label{eq:A2}
+% \begin{alignat}{3}
+% \label{eq:A2a} & R(z^\macro + z^\fluct; \delta z^\macro) &&= 0 \quad &&\forall\;\delta z^\macro \in \set Z^{\macro,0}\\
+% \label{eq:A2b} & R(z^\macro + z^\fluct; \delta z^\fluct) &&= 0       &&\forall\;\delta z^\fluct \in \set Z^{\fluct}
+% \end{alignat}
+% \end{subequations}
+% %-----------------------------------------------------------------------------------------------------------------------------
+% Without introducing further assumptions (approximations), the dimension of the original problem has not changed, i.e.\ \cref{eq:A2} represent two global problems whose solution requires the same computational effort as does \cref{eq:A1}.
+% In order to reduce the problem dimension based on homogenization (via the assumption of scale separation), we introduce the following key assumptions:
+% 
+% \begin{itemize}
+% \item The integrands in the pertinent volume integrals are replaced by a running volume average on RVE's
+% such that, typically, the residual in \cref{eq:A2a} can be rewritten in terms of the contributions defined on each RVE as
+% %--------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A106} R_\Omega(z;\delta z) = \int_\Omega R_\rve(z;\delta z)(\bar{\ta x})\dif\Omega
+% \end{align}
+% %--------------------------------------------------------------------------------------------------------------------------
+% where $R_\rve$ is the RVE-residual that is localized to the Representative Volume Element (RVE).
+% In practice (in FE-analysis), quadrature is used such that the evaluation of $R_\rve$ is carried out only in the Gauss points.
+% 
+% Furthermore, for the sake of simplicity we assume smoothness of boundary terms, such that $R_\Gamma(z; \delta z^\macro) \approx R_\Gamma(z^\macro;\delta z^\macro)$, i.e.\ no boundary homogenization is necessary.
+% 
+% \item Local approximations for the fluctuation field $z^\fluct$ are introduced in the spirit of VMS.
+% This means that $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}\in\set{Z}_\rve^{\fluct}$ is the \emph{approximate} solution of the fine-scale 
+% equation \cref{eq:A2b} for given $z^\macro$, i.e.\ \cref{eq:A2b} is replaced by ``closed'' RVE-problems (in the macroscale quadrature points) associated with a particular choice of boundary conditions on $\Omega_\rve$.
+% %In this paper we obtain such ``closed'' RVE-problems by choosing  weakly periodic boundary conditions.
+% \end{itemize}
+% Returning to \cref{eq:A2a}, we now replace this problem by the approximate, homogenized, problem
+% %---------------------------------------------------------------------------------------------------------------------------------------------
+% \begin{multline}
+% \label{eq:A3} R(z^\macro+\tilde{z}^\fluct\{z^\macro\};\delta z^\macro) = \int_\Omega R_\rve(z^\macro+\tilde{z}^\fluct\{z^\macro\};\delta z^\macro)(\bar{\ta x})\dif\Omega
+%  \\
+%  + R_\Gamma(z^\macro, \delta z^\macro) = 0 \quad \forall\;\delta z^\macro \in \set Z^{\macro,0}
+% \end{multline}
+% %--------------------------------------------------------------------------------------------------------------------------------
+% which has the same dimension as \cref{eq:A2a}.
+% We note that \cref{eq:A3} represents a valid homogenization problem for any given choice of $\set{Z}_\rve^{\fluct}$; however, to preserve typical Galerkin properties, such as symmetry of the macroscale tangent operator when such symmetry is inherent in the underlying fine-scale problem, it is crucial to satisfy the VCMC.
+% 
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Variationally Consistent Macrohomogeneity Condition (VCMC)}
+% 
+% We shall assume that there exists a potential $\Pi(z)$ such that \cref{eq:A3} represents the stationary point of $\Pi(z)$, i.e.\ it is assumed that
+% %---------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A4} R(z;\delta z) = \Pi'(z;\delta z) \defeq \frac{\dif}{\dif\epsilon}\Pi(z+\epsilon\delta z)|_{\epsilon = 0} = 0\quad \forall\;\delta z \in \set Z^0
+% \end{align}
+% %------------------------------------------------------------------------------------------------------
+% Next, we introduce the crucial \emph{approximation} (restriction) $z \approx z^\macro + \tilde{z}^\fluct\{z^\macro\}$ before evaluation of the stationarity conditions, whereby we obtain
+% %---------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A5} \Pi_{z^\macro}'\{z^\macro;\delta z^\macro\} & \defeq
+% \frac{\dif}{\dif\epsilon}\Pi(z^\macro+\epsilon \delta z^\macro+\tilde{z}^\fluct\{z^\macro+\epsilon \delta z^\macro\})|_{\epsilon = 0} \nonumber \\
+% & =
+% R(z^\macro + \tilde{z}^\fluct\{z^\macro\}; \delta z^\macro + (\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}) = 0\quad \forall\;\delta z^\macro\in\set Z^{\macro,0}
+% \end{align}
+% %------------------------------------------------------------------------------------------------------------------------------------------
+% where $(\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}$ denotes the sensitivity (or directional derivative) of $\tilde z^\fluct$ for a variation $\delta z^\macro$ of the macroscale solution $z^\macro$.
+% Hence, the choice of test function in \cref{eq:A5} is restricted as compared to \cref{eq:A4}, and this restriction represents a ``generalized Galerkin property'' in terms of the underlying macroscale functions in $\set Z^\macro$.
+% Moreover, and most importantly, \cref{eq:A5} is completely equivalent to the homogenized problem \cref{eq:A3} if it is possible, for any given $z^\macro\in\set Z^{\macro}$, to satisfy the constraint
+% %---------------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A6a} R(z^\macro + \tilde z^\fluct\{z^\macro\}; (\tilde{z}^\fluct)'\{z^\macro;\dif z^\macro\}) = 0\quad \forall\;\dif z^\macro\in\set Z^{\macro,0}(z^\macro)
+% \end{align}
+% %-------------------------------------------------------------------------------------------------------------------------------------------------
+% or, equivalently,
+% %---------------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A6b} R(z^\macro + \tilde z^\fluct\{z^\macro\}; \dif\tilde{z}^\fluct) = 0\quad \forall\;\dif\tilde{z}^\fluct\in\tilde{\set Z}'^{\fluct}(z^\macro)
+% \end{align}
+% %-------------------------------------------------------------------------------------------------------------------------------------------------
+% where the test space $\tilde{\set Z}'^{\fluct}(z^\macro)$, which is the tangent space to the approximation space, is defined as
+% %----------------------------------------------------------------------------------------------------------------
+% \begin{align}
+%     \tilde{\set{Z}}'^{\fluct}(z^\macro)\defeq\{\set{Z}^\fluct\ni \dif z^\fluct = (\tilde{z}^\fluct)'\{z^\macro;\dif z^\macro\},\,
+%     \dif z^\macro\in \set{Z}^{\macro,0}\}
+% \label{eq:A6c}
+% \end{align}
+% %----------------------------------------------------------------------------------------------------------------------
+% Hence, any $\dif \tilde{z}^\fluct\in\tilde{\set{Z}}'^{\fluct}(z^\macro)$ is a sensitivity of the fluctuation field $\tilde{z}^\fluct$ for a differential change of the macroscale field $z^\macro$ within the considered RVE.
+% It is computed from the tangent problem that is associated with the RVE-problem.
+% We refer to \cref{eq:A6a} or \cref{eq:A6b} as a ``Variationally Consistent (generalized) Macrohomogeneity Condition'' (VCMC).
+% Obviously, a sufficient condition for these identities to hold true is to require the RVE-residual to vanish on each RVE (in each quadrature point), i.e.\ to ensure that
+% %--------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A8} R_\rve(z^\macro + \tilde z^\fluct\{z^\macro\};(\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}) = 0\quad \forall\;z^\macro,\delta z^\macro\in\set Z^{\macro}|_{\Omega_\rve}\times\set Z^{\macro,0}|_{\Omega_\rve}
+% \end{align}
+% %----------------------------------------------------------------------------------------------------------------------------------------------
+% An even stronger condition is to require that $R_\rve(z;\delta z^\fluct) = 0$ for \emph{any} $\delta z^\fluct$ in a given set of functions that is defined locally for the considered RVE without requiring any implicit (or explicit) 
+% coupling to the sensitivity field $(\tilde{z}^\fluct)'\{z^\macro;\delta z^\macro\}$, which obviously defines a restricted choice of test functions.
+% In such a case, the VCMC can be identified as precisely the classical Hill-Mandel macrohomogeneity condition.
+% 
+% Finally, we remark that the VCMC ensures that the macroscale tangent operator becomes symmetrical, since it holds that
+% %---------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A9} R'(z;\delta z_1,\delta z_2) = \Pi''(z;\delta z_1,\delta z_2) \defeq \frac{\dif}{\dif\epsilon}\Pi'(z+\epsilon\delta z_2;\delta z_1)|_{\epsilon=0}\quad \forall\;\delta z_1,\delta z_2 \in \set Z^0
+% \end{align}
+% %------------------------------------------------------------------------------------------------------
+% With the introduced approximation $z^\fluct \approx \tilde{z}^\fluct\{z^\macro\}$, the test functions in \cref{eq:A9} are chosen as
+% %---------------------------------------------------------------------------------------------------------------------------------------
+% \begin{align}
+% \label{eq:A10} \delta z_i \approx \delta z_i^\macro + (\tilde{z}^\fluct)'\{z^\macro;\delta z_i^\macro\} \quad \forall\;\delta z_i^\macro\in\set Z^{\macro,0}, \,\, i=1,2
+% \end{align}
+% %------------------------------------------------------------------------------------------------------------------------------------------
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+% \section{Choice of the hierarchical split}
+% The common theme throughout the series articles is the treatment of macroscopic incompressibility.
+% In \refpaper{A}, the split ($\ta v = \ta v^\macro + \ta v^\fluct$) was only introduced to the velocity field, while the for the incompressibility condition was solved in each RVE independently (i.e.\ $p^\macro = 0$, $p = p^\fluct$).
+% By choosing to do so, only the momentum balance equation is obtained at the macroscopic level.
+% In the RVE problem the constraints are placed for a unique decomposition, e.g.\ $\homgen{\ta v \outerp\diff} = \bar{\ta v}\outerp\diff$ (or equivalently $\homgen{\ta v^\fluct\outerp\diff} = \ts 0$) for a first order expansion of the velocity field.
+% However, at the incompressible limit, when all microconstituents are intrinsically incompressible and no pore space exist, it is necessary to satisfy part of this constraint weakly.
+% In \refpaper{B} this is done by algebraic manipulation of the FE\textsuperscript{2} procedure derived in \refpaper{A}, while in \refpaper{C} and \refpaper{D} this is obtained directly as part of the homogenization procedure.
+% 
+% 
+% For an RVE with no pores or surface tension, as in \refpaper{C}, the prolongation of the macroscopic fields $\bar{\ta v}$ (or equivalently $\bar{\ta u}$) and $\bar{p}$ are as expected;
+% First order Taylor expansion of the velocity field, and zeroth order expansion for the pressure field
+% \begin{align}
+%  \ta v^\macro &= \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
+% \\
+%  p^\macro &= \bar{p}
+% \end{align}
+% where we require that in each RVE
+% \begin{align}
+%  \homgen{\ta v\outerp\diff} &= \bar{\ta v}\outerp\diff
+% \\
+%  \homgen{p} &= \bar{p}
+% \end{align}
+% 
+% However, in the case when pores and surface tension are present, as in \refpaper{D}, it is necessary to carefully choose the prolongation in such a way that we obtain the desired (simple) macroscale formulation:
+% \begin{align}
+%  \ta v^\macro = \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
+% \label{eq:vm_d}
+% \\
+%  p^\macro = \frac{\volume}{|\Omega_\rve^\particle|}[\bar{p} + \frac23\shomgen{\gamma_\surf}]
+% \label{eq:pm_d}
+% \end{align}
+% where we now require that in each RVE
+% \begin{align}
+%  \int_{\Gamma_\rve}\ta v\outerp\ta n\dif S = \bar{\ta v}\outerp\diff
+% \label{eq:avg_v_d}
+% \\
+%  \homgen{p} - \frac23\homgen{\gamma_\surf} = \bar{p}
+% \label{eq:avg_p_d}
+% \end{align}
+% However, by rewriting the problem and always connect the scales through the RVE-boundary, we obtain a simple relation that holds true both \refpaper{C} and \refpaper{D};
+% \begin{align}
+%  \frac{1}{\volume}\int_{\Gamma_\rve}\ta v\outerp\ta n\dif S &= \bar{\ta v}\outerp\diff
+% \\
+%  \frac{1}{\volume}\int_{\Gamma_\rve}\ta t\outerp[\ta x-\bar{\ta x}]\dif S &= \bar{\ts\sigma} \implies \int_{\Gamma_\rve}\ta t\cdot[\ta x-\bar{\ta x}]\dif S = \bar{p}
+% \end{align}
+% 
+% With the choices in \cref{eq:vm_d,eq:pm_d} and \cref{eq:avg_v_d,eq:avg_p_d}, as in \refpaper{D}, VCH leads to the expected macroscale problem as stated in \eqref{eq:prototype_macro}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Numerical aspects}
 
-In \refpaper{B}--\refpaper{C} the macroscale problems, as shown in \cref{eq:prototype_macro}, will also require stabilization and the Taylor-Hood elements are is the obvious choice.
+In \refpaper{B}--\refpaper{C} the macroscale problems, as shown in \cref{eq:prototype_macro}, will also require stabilization and the Taylor-Hood approximation is the obvious choice.
 While computationally much more expensive than traditional macroscopic material models, the FE\textsuperscript{2} procedure allows for trivial parallelization w.r.t.\ macroscale integration points.
 
-
+The FE\textsuperscript{2} implementation simply replaces the the conventional material model on the macroscopic level with a finite element analysis and homogenization.
+The RVE-problems requires unusual boundary conditions, such as complicated function spaces or global Lagrange multipliers, which requires a flexible finite element code.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -545,7 +629,7 @@ The FE\textsuperscript{2}-format (modified to handle seamless transition from ma
 
  \item \textbf{\refpaper{C}: \citefield{ohman_variationally_2014}{title}}.
 In this work, a mixed displacement-pressure formulation for elasticity is considered as the prototype problem.
-Variationally Consistent Homogenization is directly used to derive the macroscale problem, and the Variationally Consistent Macrohomogeneity condition is used to determine the RVE problem.
+Variationally Consistent Homogenization is directly used to derive the macroscale problem, and the Variationally Consistent Macrohomogeneity condition is used to determine the RVE-problem.
 Dirichlet, Neumann, and (weakly) periodic boundary conditions for the RVE's are derived, and the Dirichlet and Neumann boundary conditions are shown to be bounds for the periodic boundary condition.
 
 The numerical examples show the convergence rate of the Neumann and Dirichlet boundary conditions for a series of 3D Statistical Volume Elements (SVE's).
@@ -608,8 +692,8 @@ In this thesis a novel approach to simulate the sintering process as a problem o
 With the new proposed homogenization procedure, we can ensure a seamless transition from the macroscopically compressible to the incompressible response, which is of vital importance when modeling sintering of particle composites.
 
 Through rigorously applying VCH, we can ensure that the obtained multiscale problem is sound, and by further manipulation we can obtain a simpler and still consistent RVE-problem that retains the same strong form as the fine scale problem.
-These manipulations allows for a straight forward FE-implementation.
-The FE\textsuperscript{2} algorithm is freely available in the open source code OOFEM (cf.\ \cite{patzak_oofem_2000}) as free software.
+These manipulations allows for a straightforward FE-implementation.
+The FE\textsuperscript{2} algorithm is freely available in the open source code OOFEM (cf.\ \cite{patzak_oofem_2000}).
 
 For the homogenization procedure, pores on the RVE-boundaries remain complicated.
 Weakly periodic and Neumann boundary conditions are not applicable, while Dirichlet boundary conditions constrains the closing of pores on the boundary.
