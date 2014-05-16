@@ -36,7 +36,7 @@
 \usepackage{microtype}
 %\usepackage{todonotes}
 \usepackage[width=0.8\paperwidth,height=0.85\paperheight]{geometry}
-%\usepackage[firstinits=true, style=alphabetic, url=false, isbn=false, hyperref=true]{biblatex}
+\usepackage[firstinits=true, style=numeric, url=false, isbn=false, hyperref=true, backend=biber]{biblatex}
 %\def\bibfont{\footnotesize}
 %\usepackage{siunitx}
 %\usepackage{fixltx2e}
@@ -71,7 +71,7 @@
 \captionsetup[figure]{textfont=it}
 %\newcommand{\figref}[1]{Figure~\ref{#1}}
 
-\linespread{1.3}
+%\linespread{1.3}
 \renewcommand{\topfraction}{1.0}	% 99% of page top can be a float
 \renewcommand{\bottomfraction}{1.0}	% 99% of page bottom can be a float
 \renewcommand{\textfraction}{0.0}	% only 1% of page must to be the text
@@ -110,17 +110,32 @@
    {\mbox{\scalebox{0.375}{$\Box$}}}
   }
 }
-\title{On the Variationally Consistent Computational Homogenization of Porous Materials in the Incompressible Limit}
+\title{On the variationally consistent computational homogenization of porous materials in the incompressible limit}
 
 \author{
 Mikael Öhman, Fredrik Larsson and Kenneth Runesson\\
 Department of Applied Mechanics \\
 Chalmers University of Technology}
 
+\addbibresource{Multiscale.bib} % New command, use if available
+\addbibresource{Sintering.bib}
+\addbibresource{FEM_Software.bib}
+\addbibresource{Boundary_representation.bib}
+\addbibresource{BoundaryPotential.bib}
+\addbibresource{Mesh.bib}
+
 \begin{document}
 \maketitle
 \begin{abstract}
-\todo{TODO}
+In this paper the Variationally Consistent Homogenization (VCH) of a mixed velocity-pressure formulation with micropores and surface tension is developed to model the problem of sintering.
+%In particular, it is shown that the Dirichlet boundary condition becomes equivalent to that in \refpaper{C}.
+The macroscopic ``sintering stress'' is captured through homogenization of the subscale modeling of surface tension, and allows for contributions also to the deviatoric part of the macroscopic stress, whereas traditional macroscopic modeling only accounts for volumetric contribution as the driving force for sintering.
+The proposed method can seamlessly handle the transition from macroscopically compressible to incompressible response from the subscale.
+
+For the Representative Volume Elements (RVEs) the weakly periodic, Neumann, and Dirichlet type boundary conditions are derived and the homogenized values are shown to satisfy the Hill-Mandell condition.
+The numerical examples show transient behavior of the Neumann and Dirichlet boundary conditions for a 2D RVE subject to free sintering.
+A 3D microstructure with porespace and surface tension compares the effective macroscale properties between the Dirichlet, Neumann and weakly periodic boundary condition.
+
 
 \textbf{Keywords}:
 Multiscale; Computational Homogenization; Incompressibility, Porosity, Surface tension, Sintering
@@ -149,25 +164,29 @@ In such models the densification process is driven by the ``sintering stress'', 
 From a thermodynamical viewpoint, it is the dissipative stress that is conjugated to the current macroscale porosity, e.g.\ \cite{ReiOak1990}, \cite{MahRun2000}.
 Among the literature on macroscale modeling, we mention \cite{Svoetal1996}, \cite{XuMeh1997} and \cite{Luetal2001:porosity}.
 
-\todo{this paper}
-Since computational homogenization has proven useful in a wide variety of applications, e.g.\ \cite{Sandstrom2012}, \cite{ZohdiWriggers2001}, \cite{Klinge2012}, \cite{Mieheetal1999}, \cite{OskayFish2007}, it is natural to exploit this technique even for the present type of complex deformation process. 
+
+
+% TODO:
+
+Since computational homogenization has proven useful in a wide variety of applications, e.g.\ \cite{klinge_application_2012}, \cite{miehe_computational_2002}, \cite{oskay_eigendeformation-based_2007}, \cite{sandstrom_variationally_2012}, \cite{zohdi_model_2001}, it is natural to exploit this technique even for the present type of complex deformation process. 
 %
 %
-In a previous paper, \textsc{\"Ohman et al.} \cite{Ohman2013}, computational homogenization was applied to liquid phase sintering of particle agglomerates modeled as viscous fluids subject to surface tension.  This was followed by a Variationally Consistent Homogenization (VCH) of mixed displacement-pressure formulation in \cite{Ohmanm2014}.
-In this present paper, we aim to apply the fine-scale modeling in \cite{Ohman2013} with the VCH framework detailed in \cite{Ohmanm2014}.
-The theory in \cite{Ohmanm2014} thus needs to be extended to incorporate porosity and surface tension.
-The resulting FE\textsuperscript{2} framework allows to simulate the sintering process in the fully heated state (only isothermal analysis is considered).
+In a previous paper, \textsc{\"Ohman et al.} \cite{ohman_computational_2013}, computational homogenization was applied to liquid phase sintering of particle agglomerates modeled as viscous fluids subject to surface tension.
+This was followed by the application of Variationally Consistent Homogenization (VCH) on a mixed displacement-pressure formulation in \cite{ohman_variationally_2014}.
+In this present paper, we aim to apply the fine-scale modeling aspects in \cite{ohman_computational_2013} with the VCH framework detailed in \cite{ohman_variationally_2014}.
+The theory in \cite{ohman_variationally_2014} thus needs to be extended to incorporate porosity and surface tension.
+The resulting FE\textsuperscript{2} framework allows to simulate the sintering process .
 
 
 
-\todo{TODO}
-In this work, we aim to combine subscale structure, incompressible medium with pores from [paper2] with the VCH procedure laid out in [paper3].
-In particular, we will show that we obtain the same macroscale and subscale format as in [paper2] for the Dirichlet boundary condition by directly applying VCH to the mixed formulation.
-
-For the case of sintering, we are particularly interested in the scenario where all microconstituents can be considered viscous, incompressible, fluids (negligible elastic deformation).
-This marks the need for a format that can seamlessly handle the transition from macroscopic compressibility to incompressibility.
-For simplicity and generality, we will however the equivalent problem of elasticity, cf.\ [paper3], throughout the derivations.
-\todo{END}
+% \todo{TODO}
+% In this work, we aim to combine subscale structure, incompressible medium with pores from [paper2] with the VCH procedure laid out in [paper3].
+% In particular, we will show that we obtain the same macroscale and subscale format as in [paper2] for the Dirichlet boundary condition by directly applying VCH to the mixed formulation.
+% 
+% For the case of sintering, we are particularly interested in the scenario where all microconstituents can be considered viscous, incompressible, fluids (negligible elastic deformation).
+% This marks the need for a format that can seamlessly handle the transition from macroscopic compressibility to incompressibility.
+% For simplicity and generality, we will however the equivalent problem of elasticity, cf.\ [paper3], throughout the derivations.
+% \todo{END}
 
 The paper is outlined as follows:
 The variational setting of the fine scale problem including pores in mixed formulation is given in Section 2.
@@ -1169,6 +1188,16 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
 
 
 \section{Numerical results}
+\newcommand{\binder}{\mathrm{bind}}
+
+Computations were carried out for composite of spherical particles embedded in a binder, whereby both constituents are incompressible and defined by an isotropic viscous constitutive law
+\begin{align}
+ \hat{\ts\sigma}_{\dev,\particle}(\ts d_\dev) = 2 \mu_\particle \ts d_\dev
+\\
+ \hat{\ts\sigma}_{\dev,\binder}(\ts d_\dev) = 2 \mu_\binder \ts d_\dev
+\end{align}
+where $\mu_\particle = 5\mu_\binder$.
+A unit-cell is constructed by particles covered in binder and in partial contact, as seen in \cref{fig:final_neumann} and \cref{fig:rve_3d}.
 
 % \begin{figure}[H]
 %  \centering
@@ -1225,16 +1254,20 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
   \addlegendentry {Neumann 1$\times$1}
  \end{axis}
 \end{tikzpicture}
- \caption{Evolution of porosity with time for a 1$\times$1, 2$\times$2, and 3$\times$3 unit-cell 2D RVE subjected to zero macroscopic pressure, $\bar{p} = 0$.}
+ \caption{Evolution of porosity with time for a 1$\times$1, 2$\times$2, and 3$\times$3  2D unit-cell subjected to zero macroscopic pressure, $\bar{p} = 0$.}
  \label{fig:porosity}
 \end{figure}
+
+
+
+
 
 
 \begin{figure}[H]
  \centering
  \includegraphics[height=0.3\linewidth]{figures/eightspheres}
  \includegraphics[height=0.3\linewidth]{figures/eightspheres_cut}
- \caption{Initial state of 3D RVE with middle cross-section visible (right).}
+ \caption{Initial state of 3D unit-cell with middle cross-section visible (right).}
  \label{fig:rve_3d}
 \end{figure}
 
@@ -1244,7 +1277,7 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
  \includegraphics[width=0.3\linewidth]{figures/eightspheres_d_shear}
  \includegraphics[width=0.3\linewidth]{figures/eightspheres_p_shear}
  \includegraphics[width=0.3\linewidth]{figures/eightspheres_n_shear}
- \caption{3D RVE subject to pure shear. Boundary conditions are in order; Dirichlet, weakly Periodic, and Neumann}
+ \caption{3D unit-cell subject to pure shear. Boundary conditions are in order; Dirichlet, weakly periodic, and Neumann}
  \label{fig:rve_3d_deformed}
 \end{figure}
 
@@ -1256,24 +1289,35 @@ The volumetric strain $\bar{e}$ is obtained by post-processing:
 % 6 -0.00144386  0.00113675  0.0013641    0.00308251   0.000218519 -0.00177107 1 3.44272 % Neumann
 % 6 -0.00144378  0.000604311 0.000839466 -0.00175045  -7.27793e-05  0.00321311 1 0.440223 % Periodic
 
+
  %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
  %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
- \caption{Homogenized values from the unit-cell 3D RVE subject to free sintering at time zero}
+ \caption{Homogenized values from the 3D unit-cell subject to free sintering at time zero}
  \label{tab:rve_3d_homog}
 \end{table}
 
 
-\begin{figure}[H]
- \centering
-PLACEHOLDER
- %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
- %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
- \caption{3D RVE of Dirichlet (left) and Neumann (right) type subject to free sintering}
- \label{fig:rve_3d_final}
-\end{figure}
+% \begin{figure}[H]
+%  \centering
+% PLACEHOLDER
+%  %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
+%  %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
+%  \caption{3D RVE of Dirichlet (left) and Neumann (right) type subject to free sintering}
+%  \label{fig:rve_3d_final}
+% \end{figure}
 
-In \cref{fig:rve_3d_deformed} displacements of an RVE can be seen exaggerated and we can see that Neumann boundary condition is a close approximation of the weakly periodic boundary condition for this type of RVE.
+In \cref{fig:rve_3d_deformed} displacements of an RVE can be seen exaggerated as to show the slight differences from the weakly periodic and Neumann boundary condition.
+Effective macroscopic viscosity, $\bar{\mu}$, can be computed by the minimization
+\begin{align}
+ \min \frac12 \sum_{ijkl} (\bar{\tf E} - 2 \bar{\mu} \tf I_\dev)_{ijkl}^2 \implies \bar{\mu} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}(\bar{\tf E})_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
+\end{align}
+where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ can be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{\mu} \tf I_\dev$ in standard fashion.
 
+For the RVE in \cref{fig:rve_3d}, one can find for each respective boundary condition; Dirichlet $\bar{\mu}^\Dirichlet = 4.024 \mu_\binder$, periodic $\bar{\mu}^\Periodic = 3.675\mu_\binder$, Neumann $\bar{\mu}^\Neumann = 3.433\mu_\binder$.
+As expected, the Neumann and Dirichlet boundary condition does act as bounds, i.e.\ $\bar{\mu}_\particle \geq \bar{\mu}^\Dirichlet \geq \bar{\mu}^\Periodic \geq \bar{\mu}^\Neumann$.
+%   3.67483  % Periodic
+%   4.02441  % Dirichlet
+%   3.43327  % Neumann
 
 
 
@@ -1284,9 +1328,9 @@ In this paper, we have shown a variationally consistent homogenization procedure
 When all microconstituents are intrinsically incompressible, we may still obtain macroscopic deformation if pores are present.
 The case of sintering, where pores, driven by surface tension, are allowed to completely vanish, can now be captured in this homogenization scheme. 
 
-By carefully choosing the prolongation of the macroscopic fields onto $\ta v^\macro$ and $p^\macro$, we have shown that one obtains the same simple macroscopic formulation as in [paper3], even when taking into account both porosity and surface tension.
-Furthermore, by isolating the post-processing procedure of the macroscopic variables $\bar{\ts\sigma}_\dev$ and $\bar{e}$ to the RVE-boundary, $\Gamma_\rve$, an identical procedure to that of [paper3] where pores where not present is obtained.
-Worth pointing out is that deriving the macroscale format and the Dirichlet boundary condition by VCH yields identical results that in [paper2], where only the velocity field was homogenized.
+By carefully choosing the prolongation of the macroscopic fields onto $\ta v^\macro$ and $p^\macro$, we have shown that one obtains the same simple macroscopic formulation as in \cite{ohman_variationally_2014}, even when taking into account both porosity and surface tension.
+Furthermore, by isolating the post-processing procedure of the macroscopic variables $\bar{\ts\sigma}_\dev$ and $\bar{e}$ to the RVE-boundary, $\Gamma_\rve$, an identical procedure to that of \cite{ohman_variationally_2014} where pores where not present is obtained.
+Worth pointing out is that deriving the macroscale format and the Dirichlet boundary condition by VCH yields identical results that in \cite{ohman_computational_2013}, where only the velocity field was homogenized.
 
 
 We have also shown that surface tension on micropores can actually have contributions to $\bar{\ts\sigma}_\dev$, which is not captured in traditional macroscale material models of the ``sintering-stress'' which is usually defined as a macroscopic pressure resulting from surface tension on micro pores.
@@ -1298,6 +1342,10 @@ In order to derive the weakly periodic and Neumann boundary conditions, we have 
 This puts an ultimate limitation to the realism of the microstructure when using the Neumann and Weakly periodic boundary condition.
 
 
+The large deformations of the RVEs requires remeshing which are particularly challenging for free surface flow in 3D.
+Alternatives to remeshing, such as \cite{pino_munoz_direct_2013} which uses level-sets to describe the geometry of multiple randomized particles can be used to alleviate the need for complicated remeshing strategies.
 
+
+\printbibliography
 
 \end{document}
