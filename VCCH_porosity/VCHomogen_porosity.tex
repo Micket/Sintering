@@ -110,7 +110,8 @@
    {\mbox{\scalebox{0.375}{$\Box$}}}
   }
 }
-\title{On the variationally consistent computational homogenization of porous materials in the incompressible limit}
+%\title{On the variationally consistent computational homogenization of porous materials in the incompressible limit}
+\title{A new mixed variational format for the two-scale analysis liquid-phase sintering based on variationally consistent homogenization}
 
 \author{
 Mikael Öhman, Fredrik Larsson and Kenneth Runesson\\
@@ -127,7 +128,7 @@ Chalmers University of Technology}
 \begin{document}
 \maketitle
 \begin{abstract}
-In this paper the Variationally Consistent Homogenization (VCH) of a mixed velocity-pressure formulation with micropores and surface tension is developed to model the problem of sintering.
+In this paper Variationally Consistent Homogenization (VCH) is applied to a mixed velocity-pressure formulation with micropores and surface tension in order to model the problem of sintering in a multiscale analysis.
 %In particular, it is shown that the Dirichlet boundary condition becomes equivalent to that in \refpaper{C}.
 The macroscopic ``sintering stress'' is captured through homogenization of the subscale modeling of surface tension, and allows for contributions also to the deviatoric part of the macroscopic stress, whereas traditional macroscopic modeling only accounts for volumetric contribution as the driving force for sintering.
 The proposed method can seamlessly handle the transition from macroscopically compressible to incompressible response from the subscale.
@@ -144,25 +145,25 @@ Multiscale; Computational Homogenization; Incompressibility, Porosity, Surface t
 \section{Introduction}
 \todo{from paper 2}
 Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality.
-For a hardmetal (such as WC-Co) cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating.
-This means that the binder metal Co is heated to melt in order to obtain sufficient mobility via capillary action, i.e.\ via surface traction, stemming from stored surface energy.
+For a hardmetal cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating.
+This means that the binder metal is heated to melt in order to obtain sufficient mobility via capillary action, i.e.\ via surface traction, stemming from stored surface energy.
 The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally.
 To model and quantitatively simulate the sintering process is a challenging task.
 The goal is to (i) estimate the final resulting quality (i.e.\ in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
 
 A wealth of literature has been devoted to the modeling and simulation of the sintering process.
 From a mesoscale viewpoint, a classical approach is to consider socalled ``unit problems'', whereby the constitutive modeling is based on diffusion and, most importantly, flow models.
-Among the early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are those by \cite{JagDaw1988a}, \cite{JagDaw1988b}, \cite{Vorst1993}.
-In a series of papers, \cite{ZhoDer1998}, \cite{ZhoDer2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction.
+Among the early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are those by \cite{jagota_micromechanical_1988}, \cite{jagota_micromechanical_1988-1}, \cite{van_de_vorst_integral_1993}.
+In a series of papers, \cite{zhou_three-dimensional_1998}, \cite{zhou_assessment_2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction.
 The main challenges  are the complex subscale geometry and the moving free boundary giving rise to very large deformations and severe topology changes.
-Recent developments of free-boundary tracing FE-strategies for large deformations (without severe topological changes) are discussed by \cite{DetPer2006}, \cite{SakPer2006a}, \cite{SakPer2006b}.
-All the mentioned work consider surface tension effects in fluids.
-A recent extension to include surface tension in the context of solid modeling, where anisotropic surface energy may be present, is due to \cite{JavSte2009:2d}, \cite{JavSte2010:3d}.
+One approach to the problem of free-boundary tracing FE-strategies for large deformations (without severe topological changes) is discussed by \cite{dettmer_computational_2006}, and more recently level-sets have been successfully used to the describe the free surface of evolving particles in \cite{pino_munoz_direct_2013}, although only considering a single material phase.
+
 
 Attempts have also been made in the literature to use macroscopic models based on nonlinear viscoelasticity and viscoplasticity.
 In such models the densification process is driven by the ``sintering stress'', which is the macroscale manifestation of the stored surface energy.
-From a thermodynamical viewpoint, it is the dissipative stress that is conjugated to the current macroscale porosity, e.g.\ \cite{ReiOak1990}, \cite{MahRun2000}.
-Among the literature on macroscale modeling, we mention \cite{Svoetal1996}, \cite{XuMeh1997} and \cite{Luetal2001:porosity}.
+From a thermodynamical viewpoint, it is the dissipative stress that is conjugated to the current macroscale porosity, e.g.\ \cite{reid_continuum_1990}, \cite{mahler_modelling_2000}.
+Among the literature on macroscale modeling, we mention \cite{svoboda_model_1996}, \cite{xu_micromechanical_1997} and \cite{lu_porosity_2001}.
+In the work by Olevsky and German \cite{olevsky_theory_1998}, \cite{olevsky_effect_2000} we find the modeling of sintering by a linear viscous material model, which could make a suitable target for upscaling of the mesoscale models developed in this paper.
 
 
 
@@ -175,7 +176,8 @@ In a previous paper, \textsc{\"Ohman et al.} \cite{ohman_computational_2013}, co
 This was followed by the application of Variationally Consistent Homogenization (VCH) on a mixed displacement-pressure formulation in \cite{ohman_variationally_2014}.
 In this present paper, we aim to apply the fine-scale modeling aspects in \cite{ohman_computational_2013} with the VCH framework detailed in \cite{ohman_variationally_2014}.
 The theory in \cite{ohman_variationally_2014} thus needs to be extended to incorporate porosity and surface tension.
-The resulting FE\textsuperscript{2} framework allows to simulate the sintering process .
+%The resulting FE\textsuperscript{2} framework allows to simulate the sintering process.
+
 
 
 

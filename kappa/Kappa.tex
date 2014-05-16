@@ -279,6 +279,20 @@ Only the updated surfaces needs to be tracked, but that alone is a considerable 
 \chapter{Formulation of the two-scale problem}
 
 \section{Preliminaries}
+
+As the amount of detail in the in the fine scale problem becomes excessive, it is advantageous to use homogenization.
+Variationally Consistent Homogenization (VCH) will be used to obtain the two-scale problem, as illustrated in \cref{fig:homogenization}.
+A general review of VCH can be found in Appendix A in \refpaper{C}.
+With the presence of pores, the volume average used is defined as
+\begin{align}
+ \homgen{\bullet} \defeq \frac{1}{\volume} \int_{\Omega_\rve^\particle} \bullet \dif V,\quad \Omega_\rve^\particle \defeq \Omega_\rve \cap \Omega^\particle
+\\
+ \shomgen{\bullet} \defeq \frac{1}{\volume} \int_{\Gamma^\pore_\rve} \bullet \dif S,\quad \Gamma^\pore_\rve \defeq \Omega_\rve \cap \Gamma^\pore
+\end{align}
+where $\Omega_\rve$ is the window of the Representative Volume Element (RVE) as illustrated in \cref{fig:homogenization} and \cref{fig:rve_example}.
+At the macroscale, the homogenized properties from solving the RVE-problems replace the material law.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 \begin{figure}[htpb!]
 \centering
 \begin{tikzpicture}
@@ -297,17 +311,18 @@ Only the updated surfaces needs to be tracked, but that alone is a considerable 
 \label{fig:homogenization}
 \end{figure}
 
-As the amount of detail in the in the fine scale problem becomes excessive, it is advantageous to use homogenization.
-Variationally Consistent Homogenization (VCH) will be used to obtain the two-scale problem, as illustrated in \cref{fig:homogenization}.
-A general review of VCH can be found in Appendix A in \refpaper{C}.
-With the presence of pores, the volume average used is defined as
-\begin{align}
- \homgen{\bullet} \defeq \frac{1}{\volume} \int_{\Omega_\rve^\particle} \bullet \dif V,\quad \Omega_\rve^\particle \defeq \Omega_\rve \cap \Omega^\particle
-\\
- \shomgen{\bullet} \defeq \frac{1}{\volume} \int_{\Gamma^\pore_\rve} \bullet \dif S,\quad \Gamma^\pore_\rve \defeq \Omega_\rve \cap \Gamma^\pore
-\end{align}
-where $\Omega_\rve$ is the window of the Representative Volume Element (RVE) as illustrated in \cref{fig:homogenization}.
-At the macroscale, the homogenized properties from solving the RVE-problems replace the material law.
+\begin{figure}[htpb!]
+\centering
+\begin{tikzpicture}
+ \node at (0,0) {\includegraphics[scale=0.15]{figures/initial_rve}};
+ \node at (-0.75,0.85) {$\Omega_\rve^\particle$};
+ \draw[latex-] (-1.33,0.) -- ++(-1,0) node[left] {$\Gamma_\rve$};
+ \draw[latex-] (45:0.5) -- +(1.6,0.5) node[right] {$\Gamma_\rve^\pore$};
+\end{tikzpicture}
+\caption{Example of an idealized RVE consisting of a single unit cell of spherical particles in contact}
+\label{fig:rve_example}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 
 At the core of VCH is the hierarchical split of the unknown primary fields.
 In the present case we have two fields, $\ta v$ and $p$, which we decompose into fluctuations and macroscopic parts $\ta v = \ta v^\macro + \ta v^\fluct$ and $p = p^\macro + p^\fluct$, and depending on how these are chosen different macroscale and RVE-problems are obtained.
@@ -365,7 +380,7 @@ The RVE-problem with Dirichlet boundary conditions becomes
 
 Unfortunately, the theory breaks down at the macroscopically incompressible limit, where the entire macroscopic rate-of-deformation tensor, $\bar{\ts d}$, can no longer be directly controlled.
 
-\section{VCH with seamless transition to the macroscopically incompressible regime}
+\section{VCH with seamless transition to the macroscopically incompressible case}
 
 In \refpaper{C}, first order Taylor expansion of the velocity (or displacement) field, and zeroth order expansion for the pressure field
 \begin{align}
@@ -397,6 +412,8 @@ This leads to a macroscale problem
 \end{subequations}
 where $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are the homogenized response variables (derived by VCH) from the RVE-problem.
 The intentional similarity of \eqref{eq:prototype_macro} and \eqref{eq1a}--\eqref{eq1d} is emphasized.
+This mixed formulation is capable of seamless transition to the incompressible response, which is identified by $\bar{e} = 0$.
+
 However, in the case when pores and surface tension are present, as in \refpaper{D}, it is necessary to choose the prolongation in a non-standard fashion
 \begin{align}
  \ta v^\macro = \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
@@ -444,7 +461,7 @@ This is done by replacing the step $\bar{\ts d} \to \bar{\ts\sigma}$ by split co
 
 
 The mixed macroscopic $(\bar{\ta v},\bar{p})$-formulation in \cref{eq:prototype_macro} will also require stabilization and the Taylor-Hood approximation is the obvious choice.
-The RVE-problem also requires unusual boundary conditions, as seen in \cref{eq:rve_c}, which requires a flexible finite element code for implementation.
+The RVE-problem also requires unusual boundary conditions, as seen in \cref{eq:rve_c}, and therefore requires a flexible finite element code for implementation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
