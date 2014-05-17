@@ -1309,17 +1309,19 @@ A unit-cell is constructed by particles covered in binder and in partial contact
 % \end{figure}
 
 In \cref{fig:rve_3d_deformed} displacements of an RVE can be seen exaggerated as to show the slight differences from the weakly periodic and Neumann boundary condition.
-Effective macroscopic viscosity, $\bar{\mu}$, can be computed by the minimization
+Homogenized macroscopic viscosity, $\bar{\mu}$, can be computed by the minimization
 \begin{align}
  \min \frac12 \sum_{ijkl} (\bar{\tf E} - 2 \bar{\mu} \tf I_\dev)_{ijkl}^2 \implies \bar{\mu} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}(\bar{\tf E})_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
 \end{align}
 where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ can be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{\mu} \tf I_\dev$ in standard fashion.
-
 For the RVE in \cref{fig:rve_3d}, one can find for each respective boundary condition; Dirichlet $\bar{\mu}^\Dirichlet = 4.024 \mu_\binder$, periodic $\bar{\mu}^\Periodic = 3.675\mu_\binder$, Neumann $\bar{\mu}^\Neumann = 3.433\mu_\binder$.
 As expected, the Neumann and Dirichlet boundary condition does act as bounds, i.e.\ $\bar{\mu}_\particle \geq \bar{\mu}^\Dirichlet \geq \bar{\mu}^\Periodic \geq \bar{\mu}^\Neumann$.
 %   3.67483  % Periodic
 %   4.02441  % Dirichlet
 %   3.43327  % Neumann
+
+
+The RVE is capable of capturing anisotropic effects, which is something that most macroscopic material models are unable to capture due to only considering the porosity and not the shape.
 
 
 
