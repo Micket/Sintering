@@ -11,7 +11,7 @@ Manufacturing of PM products is based on the ``welding'' (sintering) of particle
 To model and simulate the sintering of hard metals, often including some form of binder metal, is particularly challenging in view of the fact that the sintering process involves both solid and melt states of the constituents.
 In brief, the manufacturing process can be split into three different sequential stages:
 (I) Compaction of powder compound, with initially around \SI{70}{\percent} porosity, into a ``green body'' with roughly \SIrange{20}{40}{\percent} porosity.
-(II) Heating in oven up well above the melting temperature for Co (ca \SI{1500}{\celsius}).
+(II) Heating in oven up well above the melting temperature for the binder.
 (III) Cooling to room temperature.
 
 The purpose is to achieve net-shape already of the green body, whereby the subsequent sintering would result mainly in change of volume (without distortion, i.e. shear deformation).
@@ -24,9 +24,9 @@ During the hold-time at the given temperature, significant compaction (densifica
 The so-called ``sintering stress'', which is a macro-scale manifestation of the surface tension between the constituents and the pores, is the ``driving force'' for compaction; hence, sintering can take place under zero external load of the specimen (known as ``free sintering'').
 However, the residual stresses after compaction will effect the process.
 
-\textbf{Remark:} It is possible to achieve a sintered product below or above the melting temperature of the Co-binder.
-Up to \SI{80}{\percent} of the densification can be achieved in pure solid state sintering, although a completely dense product can only be achieved with liquid phase.
-These two cases are often denoted solid and liquid state sintering, respectively, in the literature.
+% \textbf{Remark:} It is possible to achieve a sintered product below or above the melting temperature of the Co-binder.
+% Up to \SI{80}{\percent} of the densification can be achieved in pure solid state sintering, although a completely dense product can only be achieved with liquid phase.
+% These two cases are often denoted solid and liquid state sintering, respectively, in the literature.
 
 % There are generally two characteristic stages in terms of porosity characteristics:
 % At the early stage of sintering all pores are connected, which leads to quite rapid densification, in particular due to viscous flow of the liquid binder. Later on, within a certain temperature interval, all binder has solidified and the (possibly remaining) pores are closed off (and isolated) into near-equilibrium, which leads to much lower rate of consolidation.
@@ -69,7 +69,7 @@ Most micromechanically based models consider idealized geometrical arrangement, 
 One common approach is to consider grain boundary diffusion, e.g. Helle, et al.\ \cite{helle_hot-isostatic_1985}, McMeeking and Kuhn \cite{mcmeeking_diffusional_1992}, Riedel and Svoboda \cite{riedel_theoretical_1993} and Shinagawa \cite{shinagawa_finite_1996} and particle bridging via diffusion, e.g. Svoboda and Riedel \cite{svoboda_new_1995}, Bient \cite{bient_modeling_2004}, Luque et al.\ \cite{luque_simulation_2005}, as the principal mechanisms for densification.
 In recent work by Pino-Muñoz et al.\ \cite{pino_munoz_direct_2013}, sintering of multiple spherical particles are based on a level-set description and accounts for volume and surface diffusion.
 % TODO: Really?
-Some attempts have been made too include more realistic microstructural arrangements and carry out computational homogenization to obtain response functions, e.g. Mähler and Runesson \cite{mahler_modelling_2000}.
+% Some attempts have been made too include more realistic microstructural arrangements and carry out computational homogenization to obtain response functions, e.g. Mähler and Runesson \cite{mahler_modelling_2000}.
 
 Early attempts to numerically simulate the surface-tension driven reshaping of contacting particles are by Jagota and Dawson \cite{jagota_micromechanical_1988,jagota_micromechanical_1988-1} and van de Vorst \cite{van_de_vorst_integral_1993}.
 In a series of papers, Zhou and Derby \cite{zhou_three-dimensional_1998,zhou_assessment_2001} emphasize efficient finite element algorithms to trace the complex 3-dimensional flow of multi-particle interaction.
@@ -79,9 +79,11 @@ All the mentioned work consider surface tension effects in fluids.
 A recent extension to include surface tension in the context of solid modeling, where anisotropic surface energy may be present, is due to Javili and Steinmann \cite{javili_finite_2010}.
 
 Micro-mechanical analysis must be accompanied by computational homogenization in order to obtain a predictive model for a component.
+In selected references for computational homogenization we find Nemat-Nasser and Hori \cite{nemat-nasser_micromechanics:_1993} and Geers et al.\ \cite{geers_multi-scale_2010}.
+% TODO: Larsson et al (VCH).
 One possibility is socalled upscaling, i. e. to use the subscale modeling to calibrate a macroscopic model.
-A more appealing, but theoretically and computationally more challenging, possibility is to carry out full-fledged simultaneous coupling between the micro- and macro-scales, which is known as Computational Multiscale Modeling (CMM), or the FE\textsuperscript{2} strategy.
-This is certainly the current international trend in material modeling for engineering purposes; however, to our knowledge no work on the fully coupled FE\textsuperscript{2} applied to the sintering problem has been published (at least not in main-stream journals).
+A more appealing, but theoretically and computationally more challenging, possibility is to carry out full-fledged simultaneous coupling between the micro- and macro-scales, which is known as Computational Multiscale Modeling, or the FE\textsuperscript{2} strategy, cf.\ Feyel \cite{feyel_multilevel_2003}.
+This is certainly the current international trend in material modeling for engineering purposes; however, to our knowledge no work on the fully coupled FE\textsuperscript{2} applied to the sintering problem has been published.
 
 \chapter{Aim and Scope of Research}
 
@@ -115,13 +117,13 @@ In order to achieve this goal, the following tasks are identified:
  \draw[-] (3.1,0) -- ++(1,0) node[right] {$\Gamma$};
  \draw[<-] (1.42,0.6) -- (4.1,0.6) node[right] {$\Gamma^\pore$};
 \end{tikzpicture}
-\caption{Green body with approximate macroscopic shape as dashed line. Particles are not to scale}
+\caption{Green body with approximate macroscopic shape as dashed line. Particles are not to scale.}
 \label{fig:greenbody}
 \end{figure}
 
-We consider a generic micro-heterogeneous material in a given ``green body'' whose macroscopic configuration occupies the region $\Omega$ in space with (presumed smooth) boundary $\Gamma$ as seen in \cref{fig:greenbody}.
-However, the actual medium has pores, which means the particle composite only occupies only the region $\Omega^\particle$.
-This configuration is illustrated in \cref{fig:homogenization}.
+We consider a generic micro-heterogeneous material in a given ``green body'' whose macroscopic configuration occupies the region $\Omega$ in space with (presumed smooth) boundary $\Gamma$ as seen in \figref{fig:greenbody}.
+However, the actual medium has pores, which means that the particle composite only occupies the region $\Omega^\particle$.
+This configuration is illustrated in \figref{fig:homogenization}.
 % We are then lead to defining a Representative Volume Element (RVE), that represents the topology of the micro-heterogeneous microstructure, as shown in \Cref{Figure1}.
 % The total domain occupied by the cubic RVE is denoted $\Omega_\rve$ with external boundary $\Gamma_\rve$, while particles within the RVE occupies $\Omega_\rve^\particle$.
 %-----------------------------------------------------------------------------------------------------------------------------
@@ -147,6 +149,7 @@ This configuration is illustrated in \cref{fig:homogenization}.
 % \label{Figure1}
 % \end{figure}
 
+In this setting, the instantaneous velocity field $\bar{\ta v}$ is solved for at any given time, and explicit time-integration is used to drive the deformations.
 We consider a model material as follows: The stress is decomposed in terms of deviator and pressure as $\ts{\sigma} = \ts{\sigma}_\dev - p\ts{I}$.
 With the kinematic definition $\devop[\ta v]\defeq[\ta v\outerp\diff]^\sym-\frac{1}{3}[\ta v\cdot\diff]\ts{I}$, we introduce the constitutive relations
 %------------------------------------------------------------------------------------------------------------
@@ -157,11 +160,9 @@ With the kinematic definition $\devop[\ta v]\defeq[\ta v\outerp\diff]^\sym-\frac
 \end{equation}
 %------------------------------------------------------------------------------------------------------
 Hence, $\hat{\ts{\sigma}}_\dev(\bullet)$ and $\hat{e}(\bullet)$ denote suitable constitutive functions.
-In the simplest case of viscous fluid, we have $\hat{\ts{\sigma}}_\dev(\ts{d}_\dev)=2\mu\ts{d}_\dev$ and $\hat{e}(p)=- C p$, where $\mu(\ta{x}), C(\ta{x})$ for $\ta{x}\in\Omega^\particle$ may fluctuate strongly.
+In the simplest case of a viscous fluid, we have $\hat{\ts{\sigma}}_\dev(\ts{d}_\dev)=2\mu\ts{d}_\dev$ and $\hat{e}(p)=- C p$, where $\mu(\ta{x}), C(\ta{x})$ for $\ta{x}\in\Omega^\particle$ may fluctuate strongly.
 Moreover, intrinsic incompressibility is defined as $\hat{e}(p)=0$ for any value of $p$.
 In the case of flow problems, $C = 0$ is the only reasonable choice, however, the more general form is kept to illustrate the similarity between the fine-scale and macro-scale problem.
-
-In this setting, the instantaneous velocity is solved for at any given time, and explicit time-integration is used to drive the deformations.
 
 \begin{figure}[th!]
     \centering
@@ -169,21 +170,21 @@ In this setting, the instantaneous velocity is solved for at any given time, and
     \caption{Thin shell representing a surface with in-plane forces due to ``surface tension''.}
     \label{fig:surfacestress}
 \end{figure}
-A vital part of the simulation is the modeling of surface tension which acts as the ``driving force'' for liquid-phase sintering.
+A vital part of the simulation is the modeling of surface tension, which acts as the ``driving force'' for liquid-phase sintering.
 An extensive theory on boundary energy potentials has been developed by Steinmann \cite{steinmann_boundary_2008}, which has served as the basis for the surface tension modeling in this work.
-In short; equilibrium across a surface $\mathcal{S}$ represented by a thin shell bounded by the curve $\mathcal{C}$, as in Figure~\ref{fig:surfacestress} can be stated as:
+In short; equilibrium across a surface $\mathcal{S}$ represented by a thin shell bounded by the curve $\mathcal{C}$, as in \figref{fig:surfacestress}, can be stated as:
 \begin{align}
     \ta{t}^+ + \ta{t}^- + \ta{t}_\surf &= \ta{0} \quad \text{on} \,\, \mathcal{S} \quad \text{with } \ta{t}_\surf \defeq \hat{\ts\sigma}\cdot\hat{\diff}
 \label{eq103KR}\\
     \sum_i \hat{\ta t}_i &= \ta{0} \quad \text{on} \,\, \mathcal{C}
 \label{eq104KR}
 \end{align}
-where $\hat\diff \defeq \diff - [\diff\cdot\ta n]\ta n$.
-For an isotropic surface potential one obtains $\hat{\ts\sigma} = \gamma_\surf[\ts I-\ta n\outerp\ts n]$ and the common expression for the surface traction representing surface tension is obtained:
+where $\hat\diff \defeq \diff - [\diff\cdot\ta n]\ta n$ is the surface gradient.
+For an isotropic surface potential one obtains $\hat{\ts\sigma} = \gamma_\surf[\ts I-\ta n\outerp\ts n]$, and the common expression for the surface traction representing surface tension is obtained:
 \begin{align}
- \ta t_\surf = -\kappa \gamma_\surf \ta n,\quad \text{where}\quad \kappa \defeq \ts n\cdot\hat\diff
+ \ta t_\surf = -\kappa \gamma_\surf \ta n
 \end{align}
-where $\kappa$ is the Gaussian curvature.
+where $\kappa \defeq \ta n \cdot\hat{\diff}$ is the Gaussian curvature.
 
 We are now in the position to formulate the strong format of the fine-scale problem under standard quasistatic conditions:
 %------------------------------------------------------------------------------------------------------------
@@ -213,7 +214,7 @@ The corresponding weak format is: Find $\ta v\in\set{V}, p\in\set{P}$ s.t.
 \end{alignat}
 \end{subequations}
 %----------------------------------------------------------------------------------------------------------------------
-where
+where $\set{V}$ and $\set{V}^0$ denotes the trial and test spaces for the velocity, respectively, $\set{P}$ is the trial and test space for the pressure field, and the introduced forms are defined as 
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     a(\ta{v};\ta{w}) &\defeq
@@ -230,20 +231,22 @@ where
     l(\ta{v}) &\defeq \int_{\Omega^\particle} \ta{v}\cdot\ta{f} \dif V + \int_{\Gamma^\Neumann} \ta{v}\cdot \ta t_\prescribed \dif S
 \label{eq3e}
 \end{align}
-
+Here, the term pertaining to surface tension, $l^\pore(\bullet)$, was obtained from \cref{eq103KR} and \cref{eq104KR} using the surface divergence theorem, cf.\ \refpaper{A}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Numerical aspects}
-The mixed $(\ta v,p)$-formulation requires some form of stabilized elements for use with FEM. In this thesis, Taylor-Hood elements (quadratic velocity, linear velocity) and Mini-elements (linear pressure, linear velocity plus a bubble function) have been implemented.
+The mixed $(\ta v,p)$-formulation requires some form of stabilized approximation for use with FEM.
+In this thesis, Taylor-Hood elements (quadratic velocity, linear velocity) and Mini-elements (linear pressure, linear approximation enriched by a bubble function for the velocity) have been implemented.
 Surface tension has been implemented according to \cref{eq3d}.
 
 During the FE-simulation, the mesh eventually becomes very distorted, in particular at sharp corners subjected to surface tension.
 In order to approach full density, pores need to shrink to the point of vanishing. 
 A remeshing strategy was developed in \refpaper{A} to deal with this issue.
 The assumption of viscous flow alleviates part of the problem, as there are no state variables to map to the new mesh.
-Only the updated surfaces needs to be tracked, but that alone is a considerable effort as there are multiple phases and boundary conditions and the remeshing strategy needs to be fully automated.
+Only the updated surfaces need to be tracked.
+However, that alone represents a considerable computational effort since multiple phases and boundary conditions are present.
 
 % \subsection{RVE-problem}
 % \begin{figure}[th!]
@@ -280,17 +283,17 @@ Only the updated surfaces needs to be tracked, but that alone is a considerable 
 
 \section{Preliminaries}
 
-As the amount of detail in the in the fine scale problem becomes excessive, it is advantageous to use homogenization.
-Variationally Consistent Homogenization (VCH) will be used to obtain the two-scale problem, as illustrated in \cref{fig:homogenization}.
+As the amount of detail in the fine scale problem becomes excessive, it is advantageous to use homogenization.
+Variationally Consistent Homogenization (VCH) will be used to obtain the two-scale problem, as illustrated in \figref{fig:homogenization}.
 A general review of VCH can be found in Appendix A in \refpaper{C}.
-With the presence of pores, the volume average used is defined as
+In the presence of pores, the pertinent volume and surface averaging operators are
 \begin{align}
  \homgen{\bullet} \defeq \frac{1}{\volume} \int_{\Omega_\rve^\particle} \bullet \dif V,\quad \Omega_\rve^\particle \defeq \Omega_\rve \cap \Omega^\particle
 \\
  \shomgen{\bullet} \defeq \frac{1}{\volume} \int_{\Gamma^\pore_\rve} \bullet \dif S,\quad \Gamma^\pore_\rve \defeq \Omega_\rve \cap \Gamma^\pore
 \end{align}
-where $\Omega_\rve$ is the window of the Representative Volume Element (RVE) as illustrated in \cref{fig:homogenization} and \cref{fig:rve_example}.
-At the macroscale, the homogenized properties from solving the RVE-problems replace the material law.
+where $\Omega_\rve$ is the ``window'' of the Representative Volume Element (RVE) as illustrated in \figref{fig:homogenization} and \figref{fig:rve_example}.
+At the macroscale, the homogenized properties from solving the RVE-problems replace the material model.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 \begin{figure}[htpb!]
@@ -319,33 +322,35 @@ At the macroscale, the homogenized properties from solving the RVE-problems repl
  \draw[latex-] (-1.33,0.) -- ++(-1,0) node[left] {$\Gamma_\rve$};
  \draw[latex-] (45:0.5) -- +(1.6,0.5) node[right] {$\Gamma_\rve^\pore$};
 \end{tikzpicture}
-\caption{Example of an idealized RVE consisting of a single unit cell of spherical particles in contact}
+\caption{Example of an idealized RVE consisting of a single unit cell of spherical particles in contact.}
 \label{fig:rve_example}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 
 At the core of VCH is the hierarchical split of the unknown primary fields.
-In the present case we have two fields, $\ta v$ and $p$, which we decompose into fluctuations and macroscopic parts $\ta v = \ta v^\macro + \ta v^\fluct$ and $p = p^\macro + p^\fluct$, and depending on how these are chosen different macroscale and RVE-problems are obtained.
+In the present case we have two fields, $\ta v$ and $p$, which we decompose into macroscopic and fluctuating parts, $\ta v = \ta v^\macro + \ta v^\fluct$ and $p = p^\macro + p^\fluct$, and depending on how these are chosen different macroscale and RVE-problems are obtained.
 
-When using VCH, one typically also wish to preserve Galerkin properties, such as symmetry of the macroscale tangent operators. Therefore, is crucial to also satisfy the Variationally Consistent Macrohomogeneity Condition (VCMC).
+When using VCH, one also wish to preserve typical Galerkin properties, such as symmetry of the macroscale tangent operators.
+Therefore, it is crucial also to satisfy the Variationally Consistent Macrohomogeneity Condition (VCMC).
 In the appended papers, a stricter form of VCMC is satisfied, and it can in this form be recognized as the Hill-Mandel condition.
 
 
 \section{VCH for the macroscopically compressible case}
 
-In \refpaper{A}, the chosen split was defined by the first order Taylor expansion of the velocity field, and no macroscale pressure, i.e.
+In \refpaper{A}, the following modeling assumptions are introduced for the macroscale fields $\ta v^\macro$ and $p^\macro$ within each RVE:
+First order Taylor expansion of the velocity, and no macroscale pressure, i.e.
 \begin{align}
  \ta v^\macro &= \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
 \\
  p^\macro &= 0
 \end{align}
-and requirements for the fluctuations that in each RVE
+A constraint on the fluctuations $\ta v^\fluct$ within each RVE is imposed via
 \begin{align}
  \frac{1}{\volume} \int_{\Gamma_\rve} \ta v\outerp\ta n \dif S &= \bar{\ta v}\outerp\diff
 % \\
 %  \homgen{p} &= 0 ??????????????? CHECK!
 \end{align}
-Following this, one obtains a macroscale problem by VCH as follows
+As a consequence, the macroscale problem is obtained as follows:
 \begin{subequations}\label{eq:prototype_macro_A}
 \begin{alignat}{2}
  -\bar{\ts\sigma}\{\bar{\ts d}\}\cdot\diff &= \bar{\ta f} &&\text{ in } \Omega
@@ -359,9 +364,10 @@ Following this, one obtains a macroscale problem by VCH as follows
 \end{alignat}
 \end{subequations}
 where $\bar{\ts d} \defeq [\bar{\ta v}\outerp\diff]^\sym$ and $\bar{\ts\sigma}$ is the homogenized response (derived by VCH) from the RVE-problem.
-It is worth mentioning that only the velocity exists as a primary field at the macroscale.
+It is noted that only the velocity exists as a primary field at the macroscale.
 
-The RVE-problem with Dirichlet boundary conditions becomes
+The RVE-problem with Dirichlet boundary conditions becomes:
+For given $\bar{\ts d}$, compute $(\ta v, p)$ from
 \begin{subequations}
 \begin{alignat}{2}
  -[\hat{\ts\sigma}_\dev(\devop[\ta v]) - p\ts I]\cdot\diff &= \ta f &&\text{ in } \Omega_\rve^\particle
@@ -378,17 +384,18 @@ The RVE-problem with Dirichlet boundary conditions becomes
 \end{alignat}
 \end{subequations}
 
-Unfortunately, the theory breaks down at the macroscopically incompressible limit, where the entire macroscopic rate-of-deformation tensor, $\bar{\ts d}$, can no longer be directly controlled.
+Unfortunately, the theory breaks down at the macroscopically incompressible limit, where the entire macroscopic rate-of-deformation tensor, $\bar{\ts d}$, can no longer be directly controlled, as the volumetric stiffness, $\pd{\bar{\ts\sigma}\dprod\ts I}{\bar{\ts d}\dprod\ts I}$, tends to infinity.
 
 \section{VCH with seamless transition to the macroscopically incompressible case}
 
-In \refpaper{C}, first order Taylor expansion of the velocity (or displacement) field, and zeroth order expansion for the pressure field
+In \refpaper{C}, the model assumptions for the macroscopic fields are as follows:
+First order Taylor expansion of the velocity (or displacement), and zeroth order expansion for the pressure
 \begin{align}
  \ta v^\macro &= \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
 \\
  p^\macro &= \bar{p}
 \end{align}
-and requirements for the fluctuations that in each RVE
+Constraints on the fluctuations $\ta v^\fluct$ and $p^\fluct$ within each RVE are imposed via the requirements
 \begin{align}
  \homgen{\ta v\outerp\diff} &= \bar{\ta v}\outerp\diff
 \\
@@ -414,7 +421,7 @@ where $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are the homogenized response variable
 The intentional similarity of \eqref{eq:prototype_macro} and \eqref{eq1a}--\eqref{eq1d} is emphasized.
 This mixed formulation is capable of seamless transition to the incompressible response, which is identified by $\bar{e} = 0$.
 
-However, in the case when pores and surface tension are present, as in \refpaper{D}, it is necessary to choose the prolongation in a non-standard fashion
+However, in the case when pores and surface tension are present, as in \refpaper{D}, it is necessary to choose the prolongation assumption for the pressure in a non-standard fashion
 \begin{align}
  \ta v^\macro = \bar{\ta v} + [\bar{\ta v}\outerp\diff]\cdot[\ta x - \bar{\ta x}]
 \label{eq:vm_d}
@@ -422,7 +429,7 @@ However, in the case when pores and surface tension are present, as in \refpaper
  p^\macro = \frac{\volume}{|\Omega_\rve^\particle|}[\bar{p} + \frac23\shomgen{\gamma_\surf}]
 \label{eq:pm_d}
 \end{align}
-and the requirements for the fluctuations in each RVE
+The requirements on the fluctuations within each RVE are now formulated as
 \begin{align}
  \frac{1}{\volume}\int_{\Gamma_\rve}\ta v\outerp\ta n\dif S = \bar{\ta v}\outerp\diff
 \label{eq:avg_v_d}
@@ -430,10 +437,11 @@ and the requirements for the fluctuations in each RVE
  \homgen{p} - \frac23\shomgen{\gamma_\surf} = \bar{p}
 \label{eq:avg_p_d}
 \end{align}
-With these choices, we maintain the macroscale problem as \cref{eq:prototype_macro}, as shown in detail in \refpaper{D}.
+With these choices, it is possible to maintain the macroscale problem in \cref{eq:prototype_macro}, as shown in detail in \refpaper{D}.
 
 
-In this setting the RVE-problem with Dirichlet boundary conditions becomes
+As an example, the RVE-problem with Dirichlet boundary conditions now becomes:
+For given $(\bar{\ts d}_\dev, \bar{p})$, compute $(\ta v, p, \bar{e})$ from 
 \begin{subequations}\label{eq:rve}
 \begin{alignat}{2}
  -[\hat{\ts\sigma}_\dev(\devop[\ta v]) - p\ts I]\cdot\diff &= \ta f &&\text{ in } \Omega_\rve^\particle
@@ -442,26 +450,25 @@ In this setting the RVE-problem with Dirichlet boundary conditions becomes
  -\ta v\cdot\diff + \hat{e}(p) &= 0 &&\text{ in } \Omega_\rve^\particle
 \label{eq:rve_b}
 \\
-%  -\frac{1}{\volume} \int_{\Gamma_\rve} \dif &= -\bar{p} &&\text{ in } \Omega_\rve^\particle
-% \label{eq:rve_b}
-% \\
- \ta v &= [\bar{\ts d}_\dev + \frac13\bar{e}\ts I ] \cdot[\ta x - \bar{\ta x}] &&\text{ on } \Gamma_\rve
+  \homgen{p} &= \frac23\shomgen{\gamma_\surf} + \bar{p}&&
+\label{eq:rve_e}
+\\
+ \ta v - \frac13\bar{e}\,[\ta x - \bar{\ta x}] &= \bar{\ts d}_\dev \cdot[\ta x - \bar{\ta x}] &&\text{ on } \Gamma_\rve
 \label{eq:rve_c}
 \\
  \ta t &= \ta t_\surf &&\text{ on } \Gamma_\rve^\pore
 \label{eq:rve_d}
 \end{alignat}
 \end{subequations}
-\textbf{????????????????????????}
-where the unknowns are now $\ta v$, $p$, and $\bar{e}$.
-The Neumann and weakly periodic boundary conditions for the RVE-problem is also possible, and are shown in \refpaper{D}.
+Other possibilities are Neumann and weakly periodic boundary conditions for the RVE-problem, which are elaborated in \refpaper{D}.
 
-As an alternative, the procedure in \refpaper{B} pure algebraic manipulation was used to rewrite \cref{eq:prototype_macro_A} to enable the simulations to transition into the macroscopically incompressible limit.
-This is done by replacing the step $\bar{\ts d} \to \bar{\ts\sigma}$ by split control on the input and output variables $(\bar{\ts d}_\dev,\bar{\ts p}) \to (\bar{\ts\sigma}_\dev, \bar{e})$. Doing this manipulation, one obtains exactly the macroscale and RVE-problem described in \cref{eq:prototype_macro} and \cref{eq:rve} respectively.
+As an alternative, the procedure in \refpaper{B} represents pure algebraic manipulations to rewrite \cref{eq:prototype_macro_A} in order to enable to transition into the macroscopically incompressible limit.
+The used strategy is to replace the step $\bar{\ts d} \to \bar{\ts\sigma}$ by mixed control for the RVE-problem $(\bar{\ts d}_\dev,\bar{p}) \to (\bar{\ts\sigma}_\dev, \bar{e})$. As the result from this manipulation, one obtains exactly the macroscale problem and the RVE-problem described in \cref{eq:prototype_macro} and \cref{eq:rve} respectively.
 
 
 The mixed macroscopic $(\bar{\ta v},\bar{p})$-formulation in \cref{eq:prototype_macro} will also require stabilization and the Taylor-Hood approximation is the obvious choice.
 The RVE-problem also requires unusual boundary conditions, as seen in \cref{eq:rve_c}, and therefore requires a flexible finite element code for implementation.
+The FE\textsuperscript{2} algorithm is available in the open source code OOFEM (cf.\ \cite{patzak_oofem_2000}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -554,12 +561,12 @@ The FE\textsuperscript{2}-format for the weakly periodic boundary condition is s
 \begin{itemize}
  \item In \refpaper{A} and the extension in \refpaper{B}, we find the first variationally consistent multiscale problem for sintering.
    In \refpaper{B} the procedure is extended into the macroscopically incompressible regime. Numerical investigations show how the pore shape strongly influences the ``sintering stress''.
- \item To deal with large topological changes in the RVE-problems, a surface tracking algorithm capable of tracking multiple phases, allowing for vanishing pores, and tracking multiple regions for boundary conditions, was implemented for \refpaper{A}. 
-   This allows for the Lagrangian mesh to follow the free surface flow of the sintered particles to the point of vanishing porosity, as the FE\textsuperscript{2}-simulations in \refpaper{B} demonstrates.
+ \item To deal with large topological changes in the RVE-problems, a surface tracking algorithm capable of tracking multiple phases, allowing for vanishing pores and the tracking multiple regions for boundary conditions, was implemented for \refpaper{A}. 
+   This allow for the Lagrangian mesh to follow the free surface flow of the sintered particles to the point of vanishing porosity, as the FE\textsuperscript{2}-simulations in \refpaper{B} demonstrates.
  \item In \refpaper{C}, VCH is applied to elasticity in mixed $(\ta u,p)$-formulation for the first time.
   Numerical examples investigate the influence of bulk modulus of constituents (to the point of macroscopic incompressibility) on the homogenized shear modulus.
+ \item The weakly periodic, Dirichlet, and Neumann boundary conditions for the RVEs under mixed $(\bar{\ts d}_\dev,\bar{p})$-control are derived for the first time.
  \item Finalizing the thesis with \refpaper{D}, we find VCH applied to mixed formulation, allowing for incompressibility and existence of pore space with surface tension.
-   The weakly periodic, Dirichlet, and Neumann boundary conditions for the RVEs are derived for the first time.
 \end{itemize}
 
 
@@ -568,12 +575,11 @@ The FE\textsuperscript{2}-format for the weakly periodic boundary condition is s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Concluding remarks and Future work}
 
-In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented, replacing the traditional macroscopic constitutive models.
+In this thesis a novel approach to simulate the sintering process as a problem of computational homogenization is presented, replacing traditional (macroscopic) constitutive modeling.
 With the new proposed homogenization procedure, we can ensure a seamless transition from the macroscopically compressible to the incompressible response, which is of vital importance when modeling sintering of particle composites.
 
 Through rigorously applying VCH, we can ensure that the obtained multiscale problem is sound, and by further manipulation we can obtain a simpler and still consistent RVE-problem that retains the same strong form as the fine scale problem.
 These manipulations allows for a straightforward FE-implementation.
-The FE\textsuperscript{2} algorithm is freely available in the open source code OOFEM (cf.\ \cite{patzak_oofem_2000}).
 
 For the homogenization procedure, pores on the RVE-boundaries remain complicated.
 Weakly periodic and Neumann boundary conditions are not applicable, while Dirichlet boundary conditions constrains the closing of pores on the boundary.
@@ -582,7 +588,7 @@ A strongly periodic boundary condition could therefore be a necessity for these 
 
 There are also possible improvements of the subscale modeling, where the bulk- and surface-diffusion is still missing.
 Due to limitations in the remeshing and post-processing software, the microstructural properties of the ``green body'', i.e.\ before the sintering process starts, have so far only been idealized to contacting spheres.
-While these serve the need for demonstrating the homogenization procedure, they fail to capture a realistic microstructure, particularly that of WC-Co.
+While these serve the need for demonstrating the homogenization procedure, they fail to capture a realistic microstructure of many typical sintered products.
 
 An attempt to address the large topological changes have been outlined in \refpaper{A}, but is lacking a robust 3D implementation.
 Alternative methods such as level sets, volume fractions, or particle-FEM could offer a simpler numerical procedure for the fine-scale problem.

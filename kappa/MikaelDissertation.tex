@@ -91,6 +91,8 @@
   }
 }
 
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+
 % User commands
 \title{On Computational Modeling of Sintering based on Homogenization}
 %\subtitle{And Perhaps a Subtitle}
@@ -123,7 +125,7 @@ In this thesis, the intrinsic deformation of both the solid phase and the melt p
 
 The macroscopic properties are derived via computational homogenization that utilizes a highly idealized mesostructure within each Representative Volume Element (RVE).
 2D RVE’s are used predominantly; however, 3D-mesostructures are also analyzed. Within the FE\textsuperscript{2} algorithmic setting, the homogenization is carried out at the Gaussian integration points in the macroscale FE-mesh.
-This allows for the investigation of properties that are not easily captured with traditional macroscopic constitutive models, which inevitably would become highly complex with many material parameters that lack physical interpretation.
+This allow for the investigation of properties that are not easily captured with traditional macroscopic constitutive models, which inevitably would become highly complex with many material parameters that lack physical interpretation.
 
 The finite element mesh of the RVE becomes heavily deformed as the surface tension pulls the particles closer; hence, it was necessary to develop a surface tracking method with remeshing.
 As an element in the mesh reaches a certain deformed state, defined by the condition number of the Jacobian, a new mesh is created.
@@ -167,6 +169,18 @@ The author of this thesis was responsible for the major progress of the work in 
  \item[$f\{\bullet\}$] Curly brackets are used for implicit functions
  \item[$\homgen{\bullet}$] Volume average over particles
  \item[$\shomgen{\bullet}$] Volume average over pore surface
+ %\item[$\ta u$] Displacement
+ \item[$\ta v$] Velocity
+ \item[$p$] Pressure
+ \item[$e$] Volumetric rate of deformation ($\ts d\dprod\ts I$)
+ %\item[$\ts\epsilon$] The symmetric part of the deformation gradient ($[\ta u\outerp\diff]^\sym$)
+ \item[$\ts d$] The symmetric part of the rate of deformation gradient ($[\ta v\outerp\diff]^\sym$)
+ \item[$\ts\sigma$] Cauchy stress
+ \item[$\bar{\tf E}$] $\displaystyle\defeq\pd{\bar{\ts\sigma}}{\bar{\ts d}}$
+ \item[$\bar{\tf E}_\ded$] $\displaystyle\defeq\pd{\bar{\ts\sigma}_\dev}{\bar{\ts d}_\dev}$
+ \item[$\bar{\ts E}_\dep$] $\displaystyle\defeq\pd{\bar{\ts\sigma}_\dev}{\bar{p}}$
+ \item[$\bar{\ts C}_\ded$] $\displaystyle\defeq\pd{\bar{e}}{\bar{\ts d}_\dev}$
+ \item[$\bar{C}_\dep$] $\displaystyle\defeq-\pd{\bar{e}}{\bar{p}}$
 \end{itemize}
 } % Optional
 
