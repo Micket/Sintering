@@ -143,13 +143,13 @@ Multiscale; Computational Homogenization; Incompressibility, Porosity, Surface t
 \end{abstract}
 
 \section{Introduction}
-\todo{from paper 2}
 Powder metallurgy is a versatile technology for the manufacturing of components to (near) net-shape with high product quality.
 For a hardmetal cold compaction of the powder to a ``green body'' is followed by liquid-phase sintering from the subsequent heating.
 This means that the binder metal is heated to melt in order to obtain sufficient mobility via capillary action, i.e.\ via surface traction, stemming from stored surface energy.
 The resulting flow causes gradual filling of the pore space and brings about a macroscopic shrinkage of the particle compact until a completely dense state is obtained, at least ideally.
 To model and quantitatively simulate the sintering process is a challenging task.
 The goal is to (i) estimate the final resulting quality (i.e.\ in terms of porosity) and (ii) to predict the final net shape and size of the sintered component.
+The text-book by German \cite{german_sintering_1996} on liquid phase sintering is still authoritative in the field.
 
 A wealth of literature has been devoted to the modeling and simulation of the sintering process.
 From a mesoscale viewpoint, a classical approach is to consider socalled ``unit problems'', whereby the constitutive modeling is based on diffusion and, most importantly, flow models.
@@ -168,8 +168,8 @@ In the work by Olevsky and German \cite{olevsky_theory_1998}, \cite{olevsky_effe
 
 
 % TODO:
+Since computational homogenization has proven useful in a wide variety of applications, e.g.\ \cite{klinge_application_2012}, \cite{miehe_computational_2002}, \cite{oskay_eigendeformation-based_2007}, \cite{sandstrom_variationally_2012}, \cite{zohdi_model_2001}, it is natural to exploit this technique even for the present type of complex deformation process.
 
-Since computational homogenization has proven useful in a wide variety of applications, e.g.\ \cite{klinge_application_2012}, \cite{miehe_computational_2002}, \cite{oskay_eigendeformation-based_2007}, \cite{sandstrom_variationally_2012}, \cite{zohdi_model_2001}, it is natural to exploit this technique even for the present type of complex deformation process. 
 %
 %
 In a previous paper, \textsc{\"Ohman et al.} \cite{ohman_computational_2013}, computational homogenization was applied to liquid phase sintering of particle agglomerates modeled as viscous fluids subject to surface tension.
@@ -182,12 +182,12 @@ The theory in \cite{ohman_variationally_2014} thus needs to be extended to incor
 
 
 % \todo{TODO}
-% In this work, we aim to combine subscale structure, incompressible medium with pores from [paper2] with the VCH procedure laid out in [paper3].
+% In this work, we aim to combine subscale structure, incompressible medium with pores from [paper2] with the VCH procedure laid out in \cite{ohman_variationally_2014}.
 % In particular, we will show that we obtain the same macroscale and subscale format as in [paper2] for the Dirichlet boundary condition by directly applying VCH to the mixed formulation.
 % 
 % For the case of sintering, we are particularly interested in the scenario where all microconstituents can be considered viscous, incompressible, fluids (negligible elastic deformation).
 % This marks the need for a format that can seamlessly handle the transition from macroscopic compressibility to incompressibility.
-% For simplicity and generality, we will however the equivalent problem of elasticity, cf.\ [paper3], throughout the derivations.
+% For simplicity and generality, we will however the equivalent problem of elasticity, cf.\ \cite{ohman_variationally_2014}, throughout the derivations.,
 % \todo{END}
 
 The paper is outlined as follows:
@@ -326,12 +326,12 @@ The stationarity conditions of $\Pi(\ta v,p)$ are
 %----------------------------------------------------------------------------------------------------------------------
 which are identical to the weak form in \cref{eq2}.
 
-Here we highlight the differences from weak format in the previous work [paper3]:
+Here we highlight the differences from weak format in the previous work \cite{ohman_variationally_2014}:
 \begin{itemize}
 \item The sub-scale domain is only $\Omega^\particle \subseteq \Omega$.
 \item The surface-tension load $l^\pore(\ta v)$ in \eqref{eq2a}
 \end{itemize}
-In the special case that $\Omega^\particle = \Omega$, and thus $\Gamma^\pore = \emptyset$, then we retain exactly the same problem as in [paper3].
+In the special case that $\Omega^\particle = \Omega$, and thus $\Gamma^\pore = \emptyset$, then we retain exactly the same problem as in \cite{ohman_variationally_2014}.
 
 \section{Variationally Consistent Homogenization}
 
@@ -604,10 +604,10 @@ where
 If we consider the macroscale fields, $\bar{\ts\sigma}_\dev$ and $\bar{e}$,  we conclude that they are implicit functions of the fields $\bar{\ta v}$ and $\bar{p}$.
 The macroscale spaces $\bar{\set{V}}$ and $\bar{\set{P}}$ are chosen as the standard ones for the fine-scale problem.
 
-We remark that we have obtained the same macroscale problem as in [paper3].
+We remark that we have obtained the same macroscale problem as in \cite{ohman_variationally_2014}.
 The only difference is how the response variables, $\bar{\ts\sigma}_\dev$ and $\bar{e}$ are identified.
 In order to obtain the desired format in \eqref{eq:macro}, we have to carefully define $p^\macro$ in \eqref{eq12b} to incorporate the volumetric part of the surface tension as well as the volume ratio. However, this particular definition leads to a very simple constraint for the fluctuation $p^\fluct$ in \eqref{eq13b} which will prove useful for the RVE-problem.
-In the special case $\Omega^\particle = \Omega$, we again retain the same expression for $\bar{e}$ and $\bar{\ts\sigma}_\dev$ as in [paper3].
+In the special case $\Omega^\particle = \Omega$, we again retain the same expression for $\bar{e}$ and $\bar{\ts\sigma}_\dev$ as in \cite{ohman_variationally_2014}.
 
 
 
@@ -615,7 +615,7 @@ In the special case $\Omega^\particle = \Omega$, we again retain the same expres
 
 \subsection{Preliminaries -- Concept of weak periodicity of fluctuation velocity}
 
-We will now propose an RVE problem in the same manner as in [paper3], with the modifications that the domain is $\Omega^\particle$ and the inclusion of the surface tension load:
+We will now propose an RVE problem in the same manner as in \cite{ohman_variationally_2014}, with the modifications that the domain is $\Omega^\particle$ and the inclusion of the surface tension load:
 %----------------------------------------------------------------------------
 \begin{subequations}
 \begin{align}
@@ -625,7 +625,7 @@ We will now propose an RVE problem in the same manner as in [paper3], with the m
 \label{eq19b}
 \end{align}
 \end{subequations}
-\todo{skip a lot?}
+\todo{ref [12]?}
 %---------------------------------------------------------------------------
 which is supposed to hold true for all possible $\delta\ta v, \delta p$ in suitable function spaces (as discussed below).
 However, this problem is not solvable without further specification of the solution fields $\ta v, p, \ta{t}$.
@@ -767,7 +767,9 @@ We also conclude that
 d_\rve(\bar{\ts\tau}\cdot \ta n, \ta v^\fluct) = 0\quad \forall\ta v^\fluct\in\set{V}_\rve^\fluct,\;\bar{\ts\tau}\in\set{R}^{3\times3}.
 \label{eq:dtauu0}
 \end{align}
-As a direct consequence of \cref{eq:t_average}, we may introduce the unique split
+%TODO: Do this?
+% As a direct consequence of \cref{eq:t_average}, we may introduce the unique split
+As shown in \cite{ohman_variationally_2014}, we may introduce the unique split
 \begin{align}
  \ta t = \bar{\ts\tau}\cdot\ta n + \ta t^\fluct,\quad \bar{\ts\tau}\in \set{R}^{3\times3},\;\ta t^\fluct\in \set{T}_\rve^\fluct
 \label{eq:t_split}
@@ -778,15 +780,15 @@ where $\set{T}_\rve^\fluct$ is the space of the traction fluctuations that are s
  \label{eq28c}
 \end{align}
 % C2:
-The proof of uniqueness of the split in \cref{eq:t_split} follows from the identity
-\begin{align}
-\ta t = \bar{\ts\tau}[\ta t]\cdot\ta n + [\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n]
-\end{align}
-and the fact that
-\begin{align}
- \bar{\ts\tau}[\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\ta t] = 0
-\end{align}
-Hence, $\ta t^\fluct \defeq \ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\rve^\fluct$. $\Box$
+% The proof of uniqueness of the split in \cref{eq:t_split} follows from the identity
+% \begin{align}
+% \ta t = \bar{\ts\tau}[\ta t]\cdot\ta n + [\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n]
+% \end{align}
+% and the fact that
+% \begin{align}
+%  \bar{\ts\tau}[\ta t - \bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\bar{\ts\tau}[\ta t]\cdot\ta n] = \bar{\ts\tau}[\ta t] - \bar{\ts\tau}[\ta t] = 0
+% \end{align}
+% Hence, $\ta t^\fluct \defeq \ta t - \bar{\ts\tau}[\ta t]\cdot\ta n \in\set{T}_\rve^\fluct$. $\Box$
 
 As preliminaries for establishing the RVE-problem, we establish two identities:
 Firstly, from \cref{eq:dtauu0,eq:t_split} follows that
@@ -839,7 +841,8 @@ In a postprocessing step the homogenized ``fluxes'' can be represented as
 \end{align}
 
 \subsection{Macrohomogeneity condition (VCMC)}
-The Variationally Consistent Macrohomogeneity Condition (VCMC) (or generalized Hill-Mandel condition) is reviewed in [paper3].
+\todo{ref [12]}
+The Variationally Consistent Macrohomogeneity Condition (VCMC) (or generalized Hill-Mandel condition) is reviewed in \cite{ohman_variationally_2014}.
 In order to establish its localized form for the present problem, we first identify the tangent spaces
 \begin{subequations}
 \begin{align}
@@ -1088,7 +1091,7 @@ We now deduce that $\bar{\psi}_\rve$ serves as the ``macroscale energy density''
 \label{eq88}
 \end{equation}
 %----------------------------------------------------------------------------------------------------------------------
-Details of the proof are given in [paper3].
+Details of the proof are given in \cite{ohman_variationally_2014}.
 
 From the solution of the RVE-problem, $\bar{e}$ is obtained directly as a primary variable.
 The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
@@ -1098,9 +1101,9 @@ The deviatoric stress $\bar{\ts\sigma}_\dev$ is obtained by post-processing:
 \end{align}
 
 Using the RVE-potential, it is now straightforward to derive the Dirichlet and Neumann boundary conditions.
-This procedure is henceforth identical to that in [paper3], with the addition of $l_\rve^\pore(\ta v)$ in the definition of $\Lambda_\rve(\ta v,p)$.
-The tangent problem, necessary to obtain the tangent relations between the output variables, $\bar{\ts\sigma}_\dev$ for use in Newton-iterations, are identical to the derivations shown in [paper3].
-We refer to details in [paper3] for these derivations, and will subsequently only show the final RVE-problems for the Dirichlet and Neumann boundary conditions.
+This procedure is henceforth identical to that in \cite{ohman_variationally_2014}, with the addition of $l_\rve^\pore(\ta v)$ in the definition of $\Lambda_\rve(\ta v,p)$.
+The tangent problem, necessary to obtain the tangent relations between the output variables, $\bar{\ts\sigma}_\dev$ for use in Newton-iterations, are identical to the derivations shown in \cite{ohman_variationally_2014}.
+We refer to details in \cite{ohman_variationally_2014} for these derivations, and will subsequently only show the final RVE-problems for the Dirichlet and Neumann boundary conditions.
 
 
 
@@ -1118,7 +1121,7 @@ For given values $\bar{\ts d}_\dev, \bar{p}$, find the subscale fields $(\ta v^\
     &\quad& \forall \delta p &&\in \set{P}_\rve
 \label{eq64b} \\
     b_\rve(p,\delta\bar{e}\,\ta{x}_\mean) &=
-    l_\rve^\pore(\ta x_\mean) - \bar{p}\,\delta\bar{e}
+    l_\rve^\pore(\delta\bar{e}\,\ta x_\mean) - \bar{p}\,\delta\bar{e}
     &\quad& \forall \delta\bar{e} &&\in \set{R}
 \label{eq64c}
 \end{alignat}
@@ -1197,7 +1200,7 @@ Computations were carried out for composite of spherical particles embedded in a
  \hat{\ts\sigma}_{\dev,\binder}(\ts d_\dev) = 2 \mu_\binder \ts d_\dev
 \end{align}
 where $\mu_\particle = 5\mu_\binder$.
-A unit-cell is constructed by particles covered in binder and in partial contact, as seen in \cref{fig:final_neumann} and \cref{fig:rve_3d}.
+A unit-cell is constructed by particles covered in binder and in partial contact, as seen in \cref{fig:final_neumann} (4 particles in 2D) and \cref{fig:rve_3d} (8 particles in 3D).
 
 % \begin{figure}[H]
 %  \centering
@@ -1206,7 +1209,7 @@ A unit-cell is constructed by particles covered in binder and in partial contact
 %  \label{fig:final_dirichlet}
 % \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp!]
  \centering
  \begin{tikzpicture}
   \node at (0,0) {\includegraphics[scale=0.15]{figures/initial_rve}};
@@ -1224,12 +1227,12 @@ A unit-cell is constructed by particles covered in binder and in partial contact
  \label{fig:final_neumann}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp!]
  \centering
 \begin{tikzpicture}
  \begin{axis}[
     width=0.8\linewidth,
-    height=0.4\linewidth,
+    height=0.35\linewidth,
     ylabel={Relative density},xlabel={Time (scaled)},
     xmax=1, xmin=0, ymax=1.01, ymin=0.83,
     cycle list name=linestyles,
@@ -1258,12 +1261,14 @@ A unit-cell is constructed by particles covered in binder and in partial contact
  \label{fig:porosity}
 \end{figure}
 
+In \cref{fig:final_neumann} we see the effects of the Dirichlet and Neumann boundary conditions on a single unit-cell compared to a $2\times 2$ unit-cell.
+As shown in \cite{ohman_variationally_2014}, the Dirichlet and Neumann boundary conditions are bounds for the periodic solution.
+The same idealized RVEs are subjected to zero macroscopic pressure ($\bar{p} = 0$) in \cref{fig:porosity}, where the effects of the boundary condition to the rate of macroscopic densification is clear.
+While the effect of the Dirichlet boundary condition in \cref{fig:final_neumann} is not as visually apparent as the Neumann boundary condition, it can be seen clearly in \cref{fig:porosity} where the $2\times2$ unit-cell is sufficient for the Neumann boundary condition, and the Dirichlet requires at least a $3\times 3$ unit-cell.
 
 
 
-
-
-\begin{figure}[H]
+\begin{figure}[hbp!]
  \centering
  \includegraphics[height=0.3\linewidth]{figures/eightspheres}
  \includegraphics[height=0.3\linewidth]{figures/eightspheres_cut}
@@ -1272,7 +1277,7 @@ A unit-cell is constructed by particles covered in binder and in partial contact
 \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[htbp!]
  \centering
  \includegraphics[width=0.3\linewidth]{figures/eightspheres_d_shear}
  \includegraphics[width=0.3\linewidth]{figures/eightspheres_p_shear}
@@ -1281,7 +1286,7 @@ A unit-cell is constructed by particles covered in binder and in partial contact
  \label{fig:rve_3d_deformed}
 \end{figure}
 
-\begin{table}[H]
+\begin{table}[htbp!]
  \centering
 
 % # IST_DeviatoricStress, IST_Viscosity
@@ -1306,10 +1311,10 @@ A unit-cell is constructed by particles covered in binder and in partial contact
 %  \label{fig:rve_3d_final}
 % \end{figure}
 
-In \cref{fig:rve_3d_deformed} displacements of an RVE can be seen exaggerated as to show the slight differences from the weakly periodic and Neumann boundary condition.
-Homogenized macroscopic viscosity, $\bar{\mu}$, can be computed by the minimization
+In \cref{fig:rve_3d_deformed} displacements of an RVE can be seen exaggerated as to show the slight differences between the boundary the different conditions.
+The isotropic macroscopic viscosity, $\bar{\mu}$, can be computed by the minimization
 \begin{align}
- \min \frac12 \sum_{ijkl} (\bar{\tf E} - 2 \bar{\mu} \tf I_\dev)_{ijkl}^2 \implies \bar{\mu} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}(\bar{\tf E})_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
+ \min \frac12 \sum_{ijkl} (\bar{\tf E}_\ded - 2 \bar{\mu} \tf I_\dev)_{ijkl}^2 \implies \bar{\mu} = \frac12 \frac{\sum_{ijkl}(\tf I_\dev)_{ijkl}(\bar{\tf E})_{ijkl}}{\sum_{ijkl} (\tf I_\dev)_{ijkl}^2}
 \end{align}
 where $\tf I_\dev$ is the deviatoric fourth order identity tensor such that the isotropic part of $\bar{\tf E}$ can be expressed as $\bar{\tf E}_{\mathrm{iso}} = 2 \bar{\mu} \tf I_\dev$ in standard fashion.
 For the RVE in \cref{fig:rve_3d}, one can find for each respective boundary condition; Dirichlet $\bar{\mu}^\Dirichlet = 4.024 \mu_\binder$, periodic $\bar{\mu}^\Periodic = 3.675\mu_\binder$, Neumann $\bar{\mu}^\Neumann = 3.433\mu_\binder$.
@@ -1320,17 +1325,17 @@ As expected, the Neumann and Dirichlet boundary condition does act as bounds, i.
 
 
 The RVE is capable of capturing anisotropic effects, which is something that most macroscopic material models are unable to capture due to only considering the porosity and not the shape.
-
-
+Något anisotropt exempel också?!
+\todo{***}
 
 
 \section{Conclusions and outlook}
 
 In this paper, we have shown a variationally consistent homogenization procedure that allows for internal pores with surface tension, in a medium that may be incompressible.
 When all microconstituents are intrinsically incompressible, we may still obtain macroscopic deformation if pores are present.
-The case of sintering, where pores, driven by surface tension, are allowed to completely vanish, can now be captured in this homogenization scheme. 
+The case of sintering, where pores driven by surface tension are allowed to completely vanish, can now be captured in this homogenization scheme.
 
-By carefully choosing the prolongation of the macroscopic fields onto $\ta v^\macro$ and $p^\macro$, we have shown that one obtains the same simple macroscopic formulation as in \cite{ohman_variationally_2014}, even when taking into account both porosity and surface tension.
+By carefully choosing the prolongation of the macroscopic fields onto $\ta v^\macro$ and $p^\macro$ we have shown that one obtains the same simple macroscopic formulation as in \cite{ohman_variationally_2014}, even when taking into account both porosity and surface tension.
 Furthermore, by isolating the post-processing procedure of the macroscopic variables $\bar{\ts\sigma}_\dev$ and $\bar{e}$ to the RVE-boundary, $\Gamma_\rve$, an identical procedure to that of \cite{ohman_variationally_2014} where pores where not present is obtained.
 Worth pointing out is that deriving the macroscale format and the Dirichlet boundary condition by VCH yields identical results that in \cite{ohman_computational_2013}, where only the velocity field was homogenized.
 
@@ -1340,7 +1345,7 @@ This can play an important role in sintering, where the pores in the metal powde
 This effect is captured naturally in an RVE which can take into account anisotropic effects of pores.
 
 
-In order to derive the weakly periodic and Neumann boundary conditions, we have been required to consider only RVEs that have no pores on the boundary as we need to apply a traction over the entire RVE-boundary.
+In order to derive the weakly periodic and Neumann boundary conditions, we have been required to consider only microstructures that have no pores intersecting the RVE-boundary.
 This puts an ultimate limitation to the realism of the microstructure when using the Neumann and Weakly periodic boundary condition.
 
 
