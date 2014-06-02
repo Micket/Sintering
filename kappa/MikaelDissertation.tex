@@ -113,8 +113,18 @@ Germany
 \oppositiondate{10.00 am, 13\textsuperscript{th} June, 2014 in HA2 Hörsalsvägen 4, Göteborg}
 
 % You should scale the figure according to textwidth and or paperheight.
-%\coverfigure{\includegraphics[width=\textwidth,height=0.4\paperheight,keepaspectratio]{figures/ExampleCover}}
-%\covercaption{Some explanation}
+\coverfigure{
+\includegraphics[width=1\linewidth]{figures/CoverFigure}
+% \begin{center}
+%  \includegraphics[height=0.3\linewidth]{figures/eightspheres}
+%  \includegraphics[height=0.3\linewidth]{figures/eightspheres_cut}
+% \\
+%  \includegraphics[width=0.3\linewidth]{figures/eightspheres_d_shear}
+%  \includegraphics[width=0.3\linewidth]{figures/eightspheres_p_shear}
+%  \includegraphics[width=0.3\linewidth]{figures/eightspheres_n_shear}
+% \end{center}
+}
+\covercaption{Representative Volume Element in undeformed state and subjected to shear. Dirichlet, Periodic and Neumann boundary conditions are visualized on the bottom row.}
 
 \firstabstract{
 Liquid-phase sintering is the process where a precompacted powder, ``green body'', is heated to the point where (a part of) the solid material melts, and the specimen shrinks while keeping (almost) net shape.
@@ -231,6 +241,7 @@ The author of this thesis was responsible for the major progress of the work in 
 \begin{document}
 
 %\makethesisdefence % Should be printed at a5paper size
+%\en d{document}
 \maketitle
 % If you need to do any modifications, you can redefine each page respectively, or just call them manually as;
 %\makecoverpage
@@ -253,14 +264,14 @@ The author of this thesis was responsible for the major progress of the work in 
 
 \part{Appended Papers A--D}
 \paper{\citefield{ohman_computational_2012}{title}}{\fullcite{ohman_computational_2012}}
-%\includepdf[pages=-,width=\paperwidth,trim=0 0 0 0]{33_Oehman.pdf}
+\includepdf[pages=-,width=\paperwidth,trim=0 0 0 0]{MikaelPaperA.pdf}
 
 \paper{\citefield{ohman_computational_2013}{title}}{\fullcite{ohman_computational_2013}}
-%\includepdf[pages=-,width=\paperwidth]{ohman_etal_2013.pdf}
+\includepdf[pages=-,width=\paperwidth,trim=0 0 0 0]{MikaelPaperB.pdf}
 
 \paper{\citefield{ohman_variationally_2014}{title}}{\fullcite{ohman_variationally_2014}}
-%\includepdf[pages=-,width=\paperwidth]{VCCH_incompressible_elasticity.pdf}
+\includepdf[pages=-,width=\paperwidth,trim=20 0 30 0]{MikaelPaperC.pdf}
 
 \paper{\citefield{ohman_new_2014}{title}}{\fullcite{ohman_new_2014}}
-%\includepdf[pages=-,width=\paperwidth]{VCCH_porosity.pdf}
+\includepdf[pages=-,width=\paperwidth]{MikaelPaperD.pdf}
 \end{document}

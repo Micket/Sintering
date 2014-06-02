@@ -134,9 +134,9 @@ The macroscopic ``sintering stress'' is captured through homogenization of the s
 The model framework allows for a contribution also to the deviatoric part of the macroscopic stress, whereas traditional macroscopic modeling only accounts for a mean stress contribution as the driving force for sintering.
 The proposed method can seamlessly handle the transition from macroscopically compressible to incompressible response from the subscale.
 
-For the Representative Volume Elements (RVEs) the weakly periodic, Neumann, and Dirichlet type boundary conditions are established, and it is shown that the Hill-Mandell condition is satisfied.
-The numerical examples show the transient behavior of the Neumann and Dirichlet boundary conditions for a 2D RVE subject to free sintering.
-Effective macroscale properties pertinent to the Dirichlet, Neumann and weakly periodic boundary condition are compared for a 3D microstructure.
+For the Representative Volume Elements (RVEs) the weakly periodic, Neumann, and Dirichlet type boundary conditions are established, and it is shown that the Hill-Mandel condition is satisfied.
+The numerical examples show the transient behavior of a 2D RVE subject to free sintering.
+Effective macroscale properties pertinent to different boundary conditions are compared for a 3D microstructure.
 
 
 \textbf{Keywords}:
@@ -386,7 +386,7 @@ where the RVE-functionals in \crefrange{eq7a}{eq7d} are defined as
     \homgen{ r\,\hat{e}(q) }
 \label{eq8c} \\
     l_\rve^\pore(\ta{v}) &\defeq
-    \shomgen{ \gamma_\surf \hat{\ts I} \dprod [\ta{v}\outerp\diff] }
+    -\shomgen{ \gamma_\surf \hat{\ts I} \dprod [\ta{v}\outerp\diff] }
 \label{eq8d} \\
     l_\rve(\ta{v}) &\defeq
     \homgen{ \ta{v}\cdot\ta{f} }, \quad
@@ -407,7 +407,7 @@ where the RVE-functional $\Lambda_\rve(\ta{v},q)$ is given as
 \begin{align}
     \Lambda_\rve(\ta{v},q) &\defeq
     \homgen{ \psi_u(\devop[\ta{v}])}
-    + l_\rve^\pore(\ta{v}) 
+    - l_\rve^\pore(\ta{v}) 
     - \homgen{  p\,\ta{v}\cdot\diff } + \homgen{ \psi_p^*(q) }
 \label{eqRveBulkPotential}
 \end{align}
@@ -450,7 +450,7 @@ Altogether, these assumptions infer that $\ta v^\macro\in\set{V}^\macro$ and $p^
 \subsection{Explicit format of macroscale (homogenized) problem}
 In practice, the scales are linked  by expressing $\ta v^\macro(\bar{\ta{x}},{\ta{x}})$\footnote{Double arguments, i.e.\ $\ta v(\bar{\ta{x}},\ta{x})$, are used to explicitly point out the underlying scale separation.} and $p^\macro(\bar{\ta x},\ta x)$ using Taylor series expansions of suitable order for $\bar{\ta{x}}\in\Omega$ and $\ta{x}\in\Omega_\rve(\bar{\ta{x}})$
 in terms of the macroscale $\bar{\ta v}(\bar{\ta{x}})$ and $\bar{p}(\bar{\ta x})$, respectively, that are prolonged to each RVE in a suitable fashion.
-However, in this case it is convenient take into account both porosity and surface tension in order to obtain the simplest macroscale format.
+However, in this case it is convenient to take into account both porosity and surface tension in order to obtain the simplest macroscale format.
 We thus introduce the macroscale fields $(\bar{\ta v},\bar{p})\in\bar{\set{V}}\times\bar{\set{P}}$ such that the macroscale solutions $\ta v^\macro, p^\macro$ inside each RVE are expanded as follows:
 %----------------------------------------------------------------------------
 \begin{subequations}\label{eq12}
@@ -562,7 +562,7 @@ Inserting \cref{eq15a,eq15b,eq15c,eq15d,eq15e,eq15f,eq15g} into \cref{eq6}, we g
 %   = \frac{1}{\volume} \Big[\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \int_{\partial\Gamma_\rve^\pore} \hat{\ta t}\outerp[\ta x - \bar{\ta x}]\dif C \Big]
 %  \label{eq:derived_macro_a2}
 % \end{align}
-Since pore boundaries on $\Gamma_\rve$ is not applicable for the weakly periodic or Neumann boundary condition, we henceforth assume that the RVE's have no pores crossing the boundary $\Gamma_\rve$; hence, define the macroscopic deviatoric stress and volumetric strain rate
+Since weakly periodic or Neumann boundary conditions are not applicable in the case when pores intersect the external boundary $\Gamma_\rve$, we henceforth assume that this situation does not occur; hence, we define the macroscopic deviatoric stress and volumetric strain rate as
 %----------------------------------------------------------------------------------------------------------------
 \begin{align}
     \bar{\ts{\sigma}}_\dev \defeq \frac{1}{\volume}\int_{\Gamma_\rve} \ta t \outerp[\ta x-\bar{\ta x}] \dif S + \bar{p}\ts I, \, \quad
@@ -639,7 +639,7 @@ We then \emph{assume} that the subscale fluctuation field $\ta v^\fluct$ is peri
 This model assumption, which may be termed ``micro-periodicity'', is a key ingredient (and frequently adopted) in the literature on mathematical homogenization and can be viewed as an approximation between the stiffer Dirichlet and the weaker Neumann boundary conditions.
 Indeed, both these cases can be obtained as special cases of the most general variational format of periodicity (as will be discussed further below).
 
-In order to formulate the conditions on micro-periodicity, we consider the RVE in \cref{Figure2}, where the boundary $\Gamma_\rve$ has been split into two parts: $\Gamma_\rve=\Gamma_\rve^- \cup \Gamma_\rve^+$.
+In order to formulate the conditions on micro-periodicity, we consider the RVE in \figref{Figure2}, where the boundary $\Gamma_\rve$ has been split into two parts: $\Gamma_\rve=\Gamma_\rve^- \cup \Gamma_\rve^+$.
 Here, $\Gamma_\rve^+$ is the \emph{image boundary} (later chosen as the computational domain for boundary integration), whereas $\Gamma^-$ is the \emph{mirror boundary}.
 We shall now introduce the proper mapping $\ta{\varphi}_\per:\Gamma^+ \rightarrow \Gamma^-$ such that any point $\ta{x}^+\in\Gamma_\rve^+$ is mirrored in a self-similar fashion to the corresponding point $\ta{x}^-\in\Gamma_\rve^-$; hence, $\ta{x}^-=\ta{\varphi}_\per(\ta{x}^+)$.
 %---------------------------------------------------------------------------------
@@ -1206,7 +1206,7 @@ Computations were carried out for composite of spherical particles embedded in a
  \hat{\ts\sigma}_{\dev,\binder}(\ts d_\dev) = 2 \mu_\binder \ts d_\dev
 \end{align}
 where $\mu_\particle = 5\mu_\binder$.
-As this is a linear problem, the surface tension $\gamma_\surf$ is simple set to a unit value, and the time step is adjusted to obtain a stable solution.
+As this is a linear problem, the surface tension $\gamma_\surf$ is simply set to a unit value, and the time step is adjusted to obtain a stable solution.
 A unit-cell is constructed by particles covered in binder and in partial contact, as seen in \figref{fig:final_neumann} (4 particles in 2D) and \figref{fig:rve_3d} (8 particles in 3D).
 
 % \begin{figure}[H]
@@ -1269,8 +1269,8 @@ A unit-cell is constructed by particles covered in binder and in partial contact
 \end{figure}
 
 In \figref{fig:final_neumann} we see the effects of the Dirichlet and Neumann boundary conditions on a single unit-cell compared to a $2\times 2$ unit-cell.
-As shown in \cite{ohman_variationally_2014}, the Dirichlet and Neumann boundary conditions are energy bounds for the periodic solution.
-While it is difficult to visually discern, the solution for the Dirichlet boundary condition in \figref{fig:final_neumann} is not periodic and its effects can be seen clearly in \figref{fig:porosity} where the same RVE is subjected to zero macroscopic pressure ($\bar{p}=0$): The $2\times2$ unit-cell is sufficient for the Neumann boundary condition, while the Dirichlet boundary condition requires at least a $3\times 3$ unit-cell.
+As shown in \cite{ohman_variationally_2014}, the Dirichlet and Neumann boundary conditions give energy bounds for the periodic solution.
+While it is difficult to visually discern, the solution for the Dirichlet boundary condition in \figref{fig:final_neumann} is not periodic, and its effects can be seen clearly in \figref{fig:porosity} where the same RVE is subjected to zero macroscopic pressure ($\bar{p}=0$): The $2\times2$ unit-cell is sufficient for the Neumann boundary condition, while the Dirichlet boundary condition requires at least a $3\times 3$ unit-cell.
 %The same idealized RVEs are subjected to zero macroscopic pressure ($\bar{p} = 0$) in \figref{fig:porosity}, where the effects of the boundary condition on the rate of macroscopic densification is clearly demonstrated.
 
 
@@ -1294,20 +1294,20 @@ While it is difficult to visually discern, the solution for the Dirichlet bounda
  \label{fig:rve_3d_deformed}
 \end{figure}
 
-\begin{table}[htbp!]
- \centering
-
-% # IST_DeviatoricStress, IST_Viscosity
-% 6  0.000474658 0.00255358 -0.00302823  -0.000295588 -0.00137175   0.00186331 1 4.02824 % Dirichlet
-% 6 -0.00144386  0.00113675  0.0013641    0.00308251   0.000218519 -0.00177107 1 3.44272 % Neumann
-% 6 -0.00144378  0.000604311 0.000839466 -0.00175045  -7.27793e-05  0.00321311 1 0.440223 % Periodic
-
-
- %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
- %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
- \caption{Homogenized values from the 3D unit-cell subject to free sintering at time zero}
- \label{tab:rve_3d_homog}
-\end{table}
+% \begin{table}[htbp!]
+%  \centering
+% 
+% % # IST_DeviatoricStress, IST_Viscosity
+% % 6  0.000474658 0.00255358 -0.00302823  -0.000295588 -0.00137175   0.00186331 1 4.02824 % Dirichlet
+% % 6 -0.00144386  0.00113675  0.0013641    0.00308251   0.000218519 -0.00177107 1 3.44272 % Neumann
+% % 6 -0.00144378  0.000604311 0.000839466 -0.00175045  -7.27793e-05  0.00321311 1 0.440223 % Periodic
+% 
+% 
+%  %\includegraphics[width=0.4\linewidth]{figures/eightspheres_d_final}
+%  %\includegraphics[width=0.4\linewidth]{figures/eightspheres_n_final}
+%  \caption{Homogenized values from the 3D unit-cell subject to free sintering at time zero}
+%  \label{tab:rve_3d_homog}
+% \end{table}
 
 
 % \begin{figure}[H]
@@ -1329,16 +1329,17 @@ For the RVE in \figref{fig:rve_3d}, one can find for each respective boundary co
 As expected, the Neumann and Dirichlet boundary conditions do provide bounds, i.e.\ $\bar{\mu}_\particle \geq \bar{\mu}^\Dirichlet \geq \bar{\mu}^\Periodic \geq \bar{\mu}^\Neumann$.
 
 The choice of boundary condition also affects the ``sintering stress'', which can be found by prescribing $\bar{e} = 0$ and computing $\bar{p}$.
-For the unit sized RVE in \figref{fig:rve_3d}, values obtained for $\gamma_\surf = 1$, $\mu_\binder = 1$, $\mu_\binder = 5$ are as follows:
-Dirichlet, $\bar{p}^\Dirichlet = -7.71$, periodic $\bar{p}^\Periodic = -7.89$, Neumann $\bar{p}^\Neumann = -7.95$.
-The shape also has an influence, not only on the magnitude, but can also give rise to anisotropic ``sintering stress''.
-In \figref{fig:aniso} a elliptical pore (with $\gamma_\surf = 1$) is present inside a particle ($\mu_\particle = 5$), and controlling both $\bar{\ts d}_\dev = \ts 0$ and $\bar{e} = 0$ values for the ``sintering stress'' are tabulated in Table~\ref{tab:aniso}.
+For the RVE in \figref{fig:rve_3d}, obtained values are as follows:
+Dirichlet, $\bar{p}^\Dirichlet = -7.71 \frac{\gamma_\surf}{L}$, periodic $\bar{p}^\Periodic = -7.89 \frac{\gamma_\surf}{L}$, Neumann $\bar{p}^\Neumann = -7.95 \frac{\gamma_\surf}{L}$ where $L$ is the particle spacing.
+The shape also has an influence, not only on the magnitude, but it can also give rise to anisotropic ``sintering stress''.
+In \figref{fig:aniso}, macroscopic anisotropy is illustrated by an ellipsoidal pore with surface tension that is present inside a particle (with $\mu = \mu_\particle$) of size $L$.
+By controlling both $\bar{\ts d}_\dev = \ts 0$ and $\bar{e} = 0$, one obtains the values of the ``sintering stress'' that are tabulated in Table~\ref{tab:aniso}.
 
 \begin{figure}[htbp!]
  \centering
  \includegraphics[height=0.3\linewidth]{figures/RVEAniso}
  \includegraphics[height=0.3\linewidth]{figures/RVEAnisoCut}
- \caption{RVE with elliptic pore visible in the crosssection (right)}
+ \caption{RVE with ellipsoidal pore with semi-axes $0.75L$, $0.5L$, $0.5L$. The pore is visible in the crosssection (right)}
  \label{fig:aniso}
 \end{figure}
 
@@ -1350,7 +1351,7 @@ In \figref{fig:aniso} a elliptical pore (with $\gamma_\surf = 1$) is present ins
 % neumann   6 0.244972 -0.1234190 -0.1215530 0.0000855629 0.000399038 0.0000128385   1 -6.96619
 \renewcommand{\arraystretch}{1.75}
  \begin{tabular}{l|c|c}
-  Boundary condition & $\bar{p}$ & $\bar{\ts\sigma}_\dev$ 
+  Boundary condition & $\bar{p}/\frac{\gamma_\surf}{L}$ & $\bar{\ts\sigma}_\dev /\frac{\gamma_\surf}{L} $ 
 \\\hline
   Dirichlet          & -6.96     & $ \left[\begin{smallmatrix} 0.149 & 0 & 0 \\ 0 & -0.075 & 0 \\ 0 & 0 & -0.074 \end{smallmatrix}\right] $
 \\\hline
@@ -1358,7 +1359,7 @@ In \figref{fig:aniso} a elliptical pore (with $\gamma_\surf = 1$) is present ins
 \\\hline
   Neumann            & -6.97     & $ \left[\begin{smallmatrix} 0.245 & 0 & 0 \\ 0 & -0.123 & 0 \\ 0 & 0 & -0.122 \end{smallmatrix}\right] $
  \end{tabular}
- \caption{Homogenized values for an anisotropic RVE subject to $\bar{\ts d}_\dev$ and $\bar{e} = 0$.}
+ \caption{Homogenized values for an anisotropic RVE subject to $\bar{\ts d}_\dev = \ts 0$ and $\bar{e} = 0$.}
  \label{tab:aniso}
 \end{table}
 
@@ -1376,16 +1377,15 @@ It is worth pointing out that deriving the macroscale format and the Dirichlet b
 
 We have also shown that surface tension on micropores can actually give contributions to $\bar{\ts\sigma}_\dev$, which is not captured in traditional macroscale material models of the ``sintering-stress''.
 In such models, the sintering stress is usually defined as an additional macroscopic pressure.
-This can play an important role when the pores in a (metal) powder becomes severely distorted in the compaction process.
-This effect is captured naturally within an RVE which can take into account anisotropic effects of pores.
+This additional anisotropic feature can play an important role when the pores in a (metal) powder becomes severely distorted in the compaction process.
 
 
-In order to derive the weakly periodic and Neumann boundary conditions, only microstructures that have no pores intersecting the RVE-boundary have been considered.
-This puts an ultimate limitation to the realism of the microstructure when using the Neumann and Weakly periodic boundary condition.
+In order to derive the Weakly periodic and Neumann boundary conditions, only microstructures that have no pores intersecting the RVE-boundary have been considered.
+This puts an ultimate limitation to the realism of the microstructure when using these boundary conditions.
 
 
-The large deformations of the RVEs requires remeshing which are particularly challenging for free surface flow in 3D.
-Alternatives to remeshing, such as \cite{pino_munoz_direct_2013} which uses level-sets to describe the geometry of multiple randomized particles can be used to alleviate the need for complicated remeshing strategies.
+The large deformations of the RVEs requires remeshing, which is particularly challenging for free surface flow in 3D.
+As an alternative, the use of level-sets to describe the geometry of multiple randomized particles, as in \cite{pino_munoz_direct_2013}, can be used to alleviate the need for complicated remeshing strategies.
 
 
 \printbibliography
