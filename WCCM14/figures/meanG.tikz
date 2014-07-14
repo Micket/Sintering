@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+  \begin{axis}[ width=0.5\linewidth, height=0.18\linewidth,
+      footnotesize,
+      xlabel=SVE-size $L_\rve$, ylabel=$\mathop{\mathrm{mean}}(\bar{G})/G_\mathrm{mat}$]
+  \addplot table[color=blue,x=size,y=d_mean] {
+size d_mean d_var
+1.000000   1.586624   0.489829
+2.000000   1.299371   0.029517
+3.000000   1.269267   0.007279
+4.000000   1.243507   0.002562
+5.000000   1.235669   0.000874
+6.000000   1.224925   0.000534
+7.000000   1.213449   0.000258
+8.000000   1.202848   0.000205
+9.000000   1.204560   0.000033
+  };
+ \addlegendentry{Dirichlet}
+  \addplot table[color=red,x=size,y=n_mean] {
+size n_mean n_var
+1.000000   1.245017   0.110729
+2.000000   1.133016   0.006438
+3.000000   1.144928   0.002252
+4.000000   1.147371   0.001132
+5.000000   1.152570   0.000572
+6.000000   1.156771   0.000293
+7.000000   1.158645   0.000139
+8.000000   1.153319   0.000129
+9.000000   1.158993   0.000039
+  };
+\addlegendentry{Neumann}
+  \end{axis}
+\end{tikzpicture}

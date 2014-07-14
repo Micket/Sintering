@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+  \begin{axis}[ 
+    width=0.45\linewidth, height=0.28\linewidth,
+    xlabel=$C_\mathrm{mat}\times G_\mathrm{mat}$,
+    ylabel=$\bar{C}\times G_\mathrm{mat}$,
+    extra x ticks={1.09091, 0.75000, 0.46154, 0.21429, 0.00000},
+    extra x tick labels={0.1, 0.2, 0.3, 0.4, 0.5}, 
+    every extra x tick/.style = {
+        xticklabel style = {name=name label},
+        xtick pos = right,
+        xticklabel pos = right,
+        xtick align = outside
+    }
+    ]
+  \addplot table[color=blue,x=M,y=C] {macro_k9.matdata};
+  \end{axis}
+  \node at (2.1,2.8) { $\nu_\mathrm{mat}$ };
+\end{tikzpicture}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}[>=latex,scale=1.8] % Use this to scale the image. Text is always normal-size
+  \def\particleradius{1.05} % Adjust this to change the contact size.
+  \draw[thick,fill=black!10,even odd rule] (0.9,-1.1) 
+  	to[out=190,in=10] (-1.1,-0.9)
+  	to[out=80,in=-110] (-0.9,1.1)
+  	to[out=10,in=-160] (1.1,1.1)
+  	to[out=-100,in=60] (0.9,-1.1) -- cycle
+  	(-0.1,-0.5) to[out=180,in=-45] (-0.2,-0.15) to[out=135,in=-90]
+  	(-0.5,0)    to[out=90,in=-135] (-0.15,0.15)  to[out=45,in=-180]  
+  	(0.1,0.5)   to[out=0,in=135]   (0.2,0.15)   to[out=-45,in=90] coordinate[near start] (GammaF)
+  	(0.5,0)     to[out=-90,in=45]  (0.15,-0.15)  to[out=-135,in=0] (-0.1,-0.5) -- cycle;
+  % Markers
+  \draw[dashed,gray] (-1.1,0) to[out=5,in=-175] (1.1,0) (-0.2,-1.1) -- (0.2,1.1);
+  % Annotations
+  \node at (0.5,-0.6) {$\Omega_\Box^{\mathrm{part}}(t)$};
+  \draw[<-] (GammaF) -- +(0.00,0.15) node[above right] {$\Gamma_\Box^{\mathrm{pore}}(t)$};
+\end{tikzpicture}

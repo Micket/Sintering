@@ -1,0 +1,57 @@
+\begin{tikzpicture}[>=stealth,scale=2]
+  \def\mlength{0.6};
+  % Fill
+  \begin{scope}[red]
+  	\clip (0,0.5) 
+  		to[out=-150,in=-70] (-2,1)
+  		%to[out=90,in=180] (-1,2) 
+  		to[out=90,in=150] (0,2.5)
+  		to[out=-80,in=80] (0,0.5);
+  	\fill[fill=blue!35] (-2,0) rectangle +(5,5);
+  \end{scope}
+  \begin{scope}
+  	\clip (0,0.5) to[out=80,in=-80] (0,2.5) .. controls +(  20:2.7) and +(-20:2.7) .. (0,0.5);
+  	\fill[fill=red!15] (-1,0) rectangle +(5,5);
+  \end{scope}
+  
+  % Lines
+  \draw[thick] (0,0.5) 
+  		to[out=-150,in=-70] coordinate[pos=0.7] (Gamma1) (-2,1)
+  		%to[out=90,in=180] (-1,2) 
+  		to[out=90,in=150] coordinate[midway] (Gamma2)  (0,2.5)
+  		.. controls +(20:2.7) and +(-20:2.7) .. (0,0.5)
+		coordinate[near start] (Gamma3)
+		coordinate[pos=0.50] (t1)
+		coordinate[pos=0.52] (t2)
+		coordinate[pos=0.54] (t3)
+		coordinate[pos=0.7] (n)
+		-- cycle;
+  \draw[dashed,black!80] (0,0.5) to [out=80,in=-80] coordinate[midway] (Gamma4) (0,2.5);
+  \draw[black!80,->] (0,0.5) -- +(-105:\mlength);
+  \draw[black!80,->] (0,2.5) -- +(105:\mlength) node[right,black] {$\ta{m}_\beta^{(4)}$};
+  
+  % Arrows
+  \draw[->,red]  (0,0.5) -- +(180- 20:\mlength);
+  \draw[->,blue] (0,0.5) -- +(180-150:\mlength);
+  \draw[->,blue] (-2,1)  -- +(180- 70:\mlength) node[left,black] {$\ta{m}_\alpha^{(1)}$};
+  \draw[->,blue] (-2,1)  -- +(180+ 90:\mlength) node[left,black] {$\ta{m}_\alpha^{(2)}$};
+  \draw[->,blue] (0,2.5) -- +(180+150:\mlength) node[right,black] {$\ta{m}_\beta^{(2)}$};
+  \draw[->,red]  (0,2.5) -- +(180+ 20:\mlength) node[left,black] {$\ta{m}_\beta^{(3)}$};
+  
+  % Traction
+  \draw[->] (t1) -- +(0.4,0.2);
+  \draw[->] (t2) -- +(0.4,0.2) node[right] {$\ta{t}_p$};
+  \draw[->] (t3) -- +(0.4,0.2);
+
+  % Normal
+  \draw (n)++(50:0.07) -- ++(-40:0.07) -- ++(50:-0.07);
+  \draw[->] (n) -- +(-40:0.5) node[right] {$\ta{n}_3$};
+
+  % Annotations
+  \draw[|->|] (0.1,0.25) to[out=-150,in=-10] (-1,0.05) node[left] {$s$};
+  \draw[<-] (Gamma1) -- +(-0.1,-0.3) node[below] {$\Gamma_{1}$};
+  \draw[<-] (Gamma2) -- +(-0.1,0.3) node[above] {$\Gamma_{2}$};
+  \draw[<-] (Gamma3) -- +( 0.3,0.2) node[right] {$\Gamma_{3}$};
+  \draw[<-] (Gamma4)  -- +( 0.4,0)  node[right] {$\Gamma_{4}=\Gamma_{\mathrm{cont}}$};
+  \node at (-0.8,1.3) {$\Omega$};
+\end{tikzpicture}
