@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+ \newcommand{\ub}{z}
+ \node (A) at(0,0) {$\displaystyle\min_{\ub} \Pi(\ub)$};
+ \node (B) at(0,-2.5) {$\displaystyle\min_{\bar{\ub}} \bar{\Pi}\{\bar{\ub}\}$};
+
+ \node[right] (C) at(4,0) {$\Pi'(\ub;\delta\ub) = 0 \quad\forall \delta\ub$};
+ \node[right] (D) at(4,-2.5) {$\bar{\Pi}'\{\bar\ub;\delta\bar\ub\} = \bar{R}\{\bar\ub;\delta\bar\ub\} = 0 \quad\forall \delta\bar\ub$};
+
+% \node at(5,-3.5) {$=\bar{R}\{\ub;\delta\ub\}$};
+
+ \draw[-latex] (A) -- coordinate(AB) (B);
+ \draw[-latex] (B) -- coordinate(BD) (D);
+
+ \draw[-latex] (A) -- coordinate(AC) (C);
+ \draw[-latex] (C) -- coordinate(CD) (C |- D.north);
+
+ \node[left] at (AB) {VCH};
+ \node[right] at (AB) {(II)};
+
+ \node[below] at (BD) {stat+VCMC};
+ \node[above] at (BD) {(II)};
+
+
+ \node[below] at (AC) {stat};
+ \node[above] at (AC) {(I)};
+
+ \node[left] at (CD) {VCH};
+ \node[right] at (CD) {(I)};
+
+
+\end{tikzpicture}
