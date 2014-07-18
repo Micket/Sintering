@@ -114,7 +114,7 @@ mikael.ohman@chalmers.se
 \begin{itemize}
  \item Mixed formulation for incompressible elasticity
  \item Problem with traditional boundary conditions
- \item Derived macroscale problem
+ \item Macroscale problem
  \item Weakly periodic boundary condition
  \item Conclusions
 \end{itemize}
@@ -245,7 +245,7 @@ Find $(\ta u,p)\in \set U \times \set P$ such that
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
- \frametitle{Choice of prolongation}
+ \frametitle{Hierarchical split}
 \begin{itemize}
  \item First order Taylor expansion of the displacement, and zeroth order expansion of the pressure
 \begin{align*}
@@ -382,10 +382,11 @@ $G_\mathrm{part} = 5 G_\mathrm{mat}$, $C_\mathrm{part} = 0$
 \begin{frame}
  \frametitle{Conclusions}
  \begin{itemize}
+ \item Multiscale problem derived from fine-scale problem with VCH
  \item Seamless transition to macroscopic incompressibility
  \item Methodology is extensible to include pores and surface tension
  %\item Modified Neumann-b.c. at no additional computational cost
- \item Implementation available in the open source code OOFEM \texttt{www.oofem.org}
+ \item Implementation of boundary conditions is available in the open source code OOFEM \texttt{www.oofem.org}
  \end{itemize}
 \end{frame}
 
