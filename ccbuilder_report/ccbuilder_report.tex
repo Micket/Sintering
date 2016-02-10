@@ -85,6 +85,49 @@ cemented carbide composites \sep hardmetal \sep WC-Co
 % The stress distribution in the WC phase was studied using the breadths of the WC diffraction peaks.
 % The full-width at half-maximum (FWHM) values indicate a broad range of strain within WC particles that increases with increasing stress in the WC and is attributed primarily to point-to-point variation in the angular WC particles.
 
+\section*{Program summary}
+
+\textit{Program title:} CemCar(?) CCGenerator
+\\
+\textit{Catalogue identifier:} CCB\_v1\_0?
+\\
+\textit{Program summary URL:} \url{http://cpc.cs.qub.ac.uk/summaries/CCB_v1_0.html}?
+\\
+\textit{Program obtainable from:} CPC Program Library, Queen’s University, Belfast, N. Ireland
+\\
+\textit{Licensing provisions:} GNU General Public License 3 (GPL)
+\\
+\textit{Programming language:} Python 2 or 3
+\\
+\textit{Distribution format:} tar.bz2
+\\
+\textit{Programming language:} Python 
+\\
+\textit{Computer:} Any with a Python 2 or 3 interpreter and a Cython compiler.
+\\
+\textit{Operating system:} Linux
+\\
+\textit{CPC Library Classification:} 7.8, 8
+\\
+\textit{No. of lines in distributed program, including test data, etc.:} ?
+\\
+\textit{No. of bytes in distributed program, including test data, etc.:} ?
+\\
+% External routines: Geant4 (http://geant4.cern.ch/)
+\textit{Nature of problem:}
+Generation of synthetic microstructures of WC-Co hardmetals.
+\\
+\textit{Solution method:}
+Insertion of ideal grain shapes into a voxelized domain with periodic boundary conditions while attempting to minimize overlap.
+Post processing of overlapping regions by minimization based on a Potts model simulation for more realistic final grain shapes.
+\\
+\textit{Restrictions:}
+Missing $\Sigma$2 boundaries inside grains. Potts model simulation only accounts for total grain boundary area instead of the grain boundary energy. 
+\\
+\textit{Running time:}
+Less than 1 minute for a microstructure containing 500 grains with $100^3$ voxels.
+
+
 
 \section{Introduction}
 
@@ -127,6 +170,7 @@ However, none of the grain shapes available in Dream3D resembles the typical tri
 The microstructures that CCBuilder generates are intended to be used with finite element analysis and computational homogenization to do predictive modeling of important engineering properties, such as effective diffusivity or elasticity, plasticity, inter-grain sliding and cracking, thermal residual stresses during manufacturing.
 % Synthetic microstructures allow for numerical predictions of the influence of microstructural parameters such as grain size and sintering time on these important properties, as well as a detailed view into the microstructure behavior.
 With CCBuilder, we are capable of generating realistic microstructures that matches experimental properties, while capturing the shape of individual grains.
+
 % CCBuilder is the first software to generate realistic 3D synthetic microstructures of individual WC grains packed in a Co matrix.
 % TODO: Otydligt:
 Using these microstructures the effective properties can be obtained using only material data on single constituents.
@@ -293,79 +337,6 @@ It is important to note that during the grain placement the grain orientations a
 The effect of a high packing factor is visualized in Figure~\ref{fig:random_vs_packing} where roughly twice as many grains were needed to be inserted to reach the same volume fraction as the one with packing enabled.
 Comparing with Figure~\ref{fig:random_vs_packing} with Figure~\ref{fig:wc-co_hardmetal} we see that the high packing factor produces a visually more realistic grain structure.
 
-
-% % % \begin{figure}[H]
-% % %   \centering
-% % % 
-% % %   \begin{tikzpicture}[font=\footnotesize]
-% % %   \begin{axis}[
-% % %       xmax = 1,
-% % %       xmin = 0.,
-% % %       ymin = 0.0,
-% % %       ymax = 1.0,
-% % %       legend pos=north east,
-% % %       legend style={font=\tiny},
-% % %       legend style={draw=none},
-% % %       xlabel={$v_\Co$},
-% % %       ylabel={$C$}
-% % %       ]
-% % %     \addplot[mark=x, only marks,forget plot] table[x index=8,y index=3]  {luyckx_table.txt};
-% % %     %\addlegendentry{Ultra fine}
-% % %     \addplot[mark=x, only marks,forget plot] table[x index=8,y index=7]  {luyckx_table.txt};
-% % %     %\addlegendentry{Fine}
-% % %     \addplot[mark=x, only marks,forget plot] table[x index=8,y index=12]  {luyckx_table.txt};
-% % %     %\addlegendentry{Medium}
-% % %     \addplot[mark=x, only marks] table[x index=8,y index=16]  {luyckx_table.txt};
-% % %     %\addlegendentry{Coarse}
-% % %     \addlegendentry{Luyckx et al.\ (2006)}
-% % % %     \addplot[mark=*, only marks] coordinates { (0.15, 0.42) };
-% % % %     \addlegendentry{Chang et al.\ (2015)}
-% % %     
-% % %     \addplot[black, dashed] table[x index=0,y index=1]  {exner_table.txt};
-% % %     \addlegendentry{Exner (1979)}
-% % % 
-% % %     \addplot[red]
-% % % 	table[x=co_fracs_mean, y=cont_mean] {stat_vol_random5.0.txt};
-% % %     \addlegendentry{Random placement}
-% % % 
-% % %     \addplot[green]
-% % % 	table[x=co_fracs_mean, y=cont_mean] {stat_vol_preopt5.0.txt};
-% % %     \addlegendentry{Repulsive forces}
-% % %     
-% % %     \addplot[blue]
-% % % 	table[x=co_fracs_mean, y=cont_mean] {stat_vol_packed5.0.txt};
-% % %     \addlegendentry{Random translations}
-% % %   \end{axis}
-% % %   \end{tikzpicture}
-% % %   
-% % % %   \includegraphics[width=0.6\linewidth]{Result_plots/runs1/contiguity}
-% % %   \caption{Typical trends of the contiguity $C$ as function of Co volume fraction $v_\text{Co}$ for the different grain placement strategies compared with experimental values by Luyckx et al. (2006) and Exner (1979).}
-% % %   \label{fig:runs1_contiguity}
-% % % % % 	\\
-% % % % % 	\begin{subfigure}[t]{.49\columnwidth}
-% % % % % 		\centering
-% % % % % 		\includegraphics[width=\linewidth]{Result_plots/runs1/grain_size}
-% % % % % 		\caption{ The average equivalent sphere diameter $d_\text{eq}$ as function of goal WC volume fraction $v_\text{WC,goal}$ for four different simulation methods.}
-% % % % % 		\label{fig:runs1_grain_size}
-% % % % % 	\end{subfigure}
-% % % % 	\caption{A comparison of four different methods of grain placement and simulation.
-% % % % 	The input parameters are chosen such that $L=\SI{5}{\micro\meter}$, $M=200$.
-% % % % 	In the random translation method, $\Delta$ is restricted so that a grain is moved maximally $\SI{0.75}{\micro\meter}$ in any direction and 2500 translations are tested for each grain.
-% % % % 	The Potts simulation is made with $5000 \cdot M^3$ MC iterations with $\tau = 0.5$.
-% % % % 	All results shown are taken as an average of 16 realizations.
-% % % % 	The intervals marks two standard deviations.}
-% % % % 	\label{fig:runs1}
-% % % \end{figure}
-% % % 
-% % % 
-% % % The contiguity measure $C$ is directly related to the grain packing, and has been our main goal to capture.
-% % % 
-% % % The motivation for adopting the strategy of the random translations were due to the fact that the packing obtain was insufficient, in Figure~\ref{fig:runs1_contiguity}.
-% % % It must be noted that the this grain packing is intended to simulate real engineering materials where $v_\Co \leq 0.3$.
-% % % 
-% % % In order to achieve sufficient packing, $\Delta$ needs to be set so high that the initial positions have no influence on the packing result.
-% % % The conclusion was therefor to fix the parameter $\Delta = L/2$ and drop the optimization using the repulsive potential for the results presented in this paper.
-% % % The functionality is left in CCBuilder for possible future use as results can differ depending on many factors, such as volume fraction, grain shape and size distributions.
 
 With computational time that scale with the number of voxels, $M^3$, the grain placement with random translations can take considerable computational time.
 Using a coarse grid the computational time can be sped up significantly.
@@ -617,10 +588,11 @@ For the most results we use $v_{\WC,\text{goal}} = 1.0$ which gives a moderate f
 
 \begin{figure}[H]
  \centering
+  \includegraphics[width=.15\linewidth]{IPF}
   \includegraphics[width=0.3\linewidth]{ccbuilder_random_cs}
   \includegraphics[width=0.3\linewidth]{ccbuilder_packed_cs}
   % 0.859249
-  \caption{\label{fig:random_vs_packing} Cross-section of CCBuilder output with randomly placed grains (left) and with packed grains (right) with equal volume fraction Co}
+  \caption{\label{fig:random_vs_packing} Cross-section of CCBuilder output with randomly placed grains (left) and with packed grains (right) with equal volume fraction Co, $v_\Co$}
 \end{figure}
 
 
@@ -657,7 +629,7 @@ With this in mind, the following function is adopted for curve-fitting
                        \end{cases}
                        \label{eq:inverse_v_wc}
 \end{align}
-where $\alpha = 1.1$ gives a perfect fit with the random translation results in Figure~\ref{fig:sens_vol}.
+where $\alpha = 1.3$ gives a perfect fit with the random translation results in Figure~\ref{fig:sens_vol}.
 Changing any of the shape and size distributions or the packing strategy will affect the obtained volume fraction. 
 
 
@@ -665,8 +637,9 @@ Changing any of the shape and size distributions or the packing strategy will af
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.3\linewidth]{potts_example_before_10percent}
-  \includegraphics[width=.3\linewidth]{potts_example_after_10percent}
+  \includegraphics[width=.15\linewidth]{IPF}
+  \includegraphics[width=.3\linewidth]{ccbuilder_packed_nopotts}
+  \includegraphics[width=.3\linewidth]{ccbuilder_packed_cs}
   \caption{\label{fig:potts_before_after} A slice of a generated microstructure before (left) and after (right) Potts model simulation with grain boundaries highlighted. Binder is shown in black.}
 \end{figure}
 
@@ -855,7 +828,6 @@ The analysis was set up with 5 realizations with $L = \SI{10}{\micro\meter}$ and
 %and the Potts model simulation using $\text{MC}_\text{steps} = 10 M^3$.
 The primary reason for the lowered contiguity is that the increased resolution allows for thinner wedges of Co between grains, effectively increasing the phase boundary area, thus lowering the contiguity.
 For complete convergence, the study indicates that the resolution should be set quite high, possibly $m \geq 30$, to fully capture the thinnest Co layers.
-This is discussed further in Section~\ref{sec:co_matrix}.
 The overall grain structure is however captured well even at lower resolutions, $m \approx $ 10--20.
 
 The packing using random translations works well even with a coarse, and $m_\text{coarse} = 8 L$ is a good trade-off between accuracy and performance.
@@ -1067,8 +1039,8 @@ The results show that using $\text{MC}_\text{steps} = 0.05 M^4$ is sufficient.
  \centering
 %  \includegraphics[width=0.48\linewidth]{co_matrix}
  %\includegraphics[width=0.5\linewidth]{ccbuilder_L10}
- \includegraphics[width=0.5\linewidth]{WC_IPF}
- \caption{Example of CCBuilder output for with WC grains colored by Euler angles with Co-matrix in black} \label{fig:final_example}
+ \includegraphics[width=0.5\linewidth]{WC_IPF.pdf}
+ \caption{Example of CCBuilder output for with WC grains colored by IPF-colors with Co-matrix in black} \label{fig:final_example}
 \end{figure}
 
 \begin{figure}[htbp!]
@@ -1224,9 +1196,8 @@ With the frequent $\Sigma$2 boundaries as seen in Figure \ref{fig:sigma_2}, one 
     \addlegendentry{Luyckx et al.\ (2006)}
     \addplot[gray, mark=*, only marks] coordinates { (0.15, 0.42) };
     \addlegendentry{Chang et al.\ (2015)}
-    
-    \addplot[gray] table[x index=0,y index=1]  {exner_table.txt};
-    \addlegendentry{Exner (1979)}
+    \addplot[gray,mark=square, only marks] table[x index=0,y index=1]  {exner_direct_data.txt};
+    \addlegendentry{Exner (1966)}
     
     \addplot[green!50!black, solid]
 	table[x=co_fracs_mean, y=cont_potts_mean] {stat_vol_U_L10.0.txt};
@@ -1265,7 +1236,6 @@ With the frequent $\Sigma$2 boundaries as seen in Figure \ref{fig:sigma_2}, one 
 
   \end{axis}
   \end{tikzpicture}
-%   \includegraphics[width=0.6\linewidth]{Result_plots/runs1/contiguity}
   \caption{Average contiguity ($C$) for different grain size ($d_\text{eq}$) distributions}
   \label{fig:deq_compare}
 \end{figure}
@@ -1304,9 +1274,8 @@ The repulsive potential gives similar results for both cases while the random tr
     \addlegendentry{Luyckx et al.\ (2006)}
     \addplot[gray, mark=*, only marks] coordinates { (0.15, 0.42) };
     \addlegendentry{Chang et al.\ (2015)}
-    
-    \addplot[gray] table[x index=0,y index=1]  {exner_table.txt};
-    \addlegendentry{Exner (1979)}
+    \addplot[gray,mark=square, only marks] table[x index=0,y index=1]  {exner_direct_data.txt};
+    \addlegendentry{Exner (1966)}
 
     \addplot[green!50!black, solid]
 	table[x=co_fracs_mean, y=cont_potts_mean] {stat_vol_U_L10.0.txt};
@@ -1326,7 +1295,6 @@ The repulsive potential gives similar results for both cases while the random tr
     
   \end{axis}
   \end{tikzpicture}
-%   \includegraphics[width=0.6\linewidth]{Result_plots/runs1/contiguity}
   \caption{Results of different grain shape ($k$) distributions compared with experimental data}
   \label{fig:k_compare}
 \end{figure}
